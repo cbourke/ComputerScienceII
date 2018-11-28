@@ -19,6 +19,7 @@
 *.out
 *.synctex.gz
 *.toc
+#.xwm
 
 #
 *~
