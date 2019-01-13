@@ -6,6 +6,10 @@ This repository hosts documents, files, and other artifacts
 related to Computer Science II (offered as CSCE 156 and CSCE 156H) at 
 the University of Nebraska-Lincoln
 
+## Textbook
+
+A (draft) of a textbook for this course is available here: https://cse.unl.edu/~cbourke/ComputerScienceTwo.pdf
+
 ## YouTube Channel
 
 Though available through Canvas, all lecture and tutorial videos are hosted on my YouTube Channel:
