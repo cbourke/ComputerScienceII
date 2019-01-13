@@ -36,7 +36,7 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ## Course Offerings
 
-### Fall 2018 
+### Spring 2019 
 
 - Course Link: https://canvas.unl.edu/courses/53628
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUzX-W8wQkWPYu5gbkcZYMC
