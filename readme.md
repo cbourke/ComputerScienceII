@@ -35,4 +35,4 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 ### Fall 2018 
 
 - Course Link: https://canvas.unl.edu/courses/53628
-- Lectures: To Come
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUzX-W8wQkWPYu5gbkcZYMC
