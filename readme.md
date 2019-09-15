@@ -18,10 +18,10 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ## Labs
 
-- Lab 01 - Introduction https://github.com/cbourke/CSCE156-Lab01-Introduction
-- Lab 02 - Conditionals & Loops https://github.com/cbourke/CSCE156-Lab02-ConditionalsLoops
-- Lab 03 - Strings & File I/O https://github.com/cbourke/CSCE156-Lab03-StringsFileIO
-- Lab 04 - Classes & Constructors https://github.com/cbourke/CSCE156-Lab04-ClassesConstructors
+- Lab 1.0 - Introduction https://github.com/cbourke/CSCE156-Lab01
+- Lab 2.0 - Conditionals & Loops https://github.com/cbourke/CSCE156-Lab02
+- Lab 3.0 - Strings & File I/O https://github.com/cbourke/CSCE156-Lab03
+- Lab 4.0 - Classes & Constructors https://github.com/cbourke/CSCE156-Lab04
 - Lab 05 - Inheritance https://github.com/cbourke/CSCE156-Lab05-Inheritance
 - Lab 06 - Polymorphism https://github.com/cbourke/CSCE156-Lab06-Polymorphism
 - Lab 07 - SQL I https://github.com/cbourke/CSCE156-Lab07-SQL1
@@ -40,3 +40,9 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 - Course Link: https://canvas.unl.edu/courses/53628
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUzX-W8wQkWPYu5gbkcZYMC
+
+### Spring 2020
+
+- Course Link: To Come
+- Lectures: To Come
+
