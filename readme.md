@@ -22,9 +22,9 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 - Lab 2.0 - Conditionals & Loops https://github.com/cbourke/CSCE156-Lab02
 - Lab 3.0 - Strings & File I/O https://github.com/cbourke/CSCE156-Lab03
 - Lab 4.0 - Classes & Constructors https://github.com/cbourke/CSCE156-Lab04
-- Lab 05 - Inheritance https://github.com/cbourke/CSCE156-Lab05-Inheritance
-- Lab 06 - Polymorphism https://github.com/cbourke/CSCE156-Lab06-Polymorphism
-- Lab 07 - SQL I https://github.com/cbourke/CSCE156-Lab07-SQL1
+- Lab 5.0 - Inheritance https://github.com/cbourke/CSCE156-Lab05
+- Lab 6.0 - Polymorphism https://github.com/cbourke/CSCE156-Lab06
+- Lab 7.0 - SQL I https://github.com/cbourke/CSCE156-Lab07
 - Lab 08 - SQL II https://github.com/cbourke/CSCE156-Lab08-SQL2
 - Lab 09 - JDBC I https://github.com/cbourke/CSCE156-Lab09-JDBCI
 - Lab 10 - JDBC II https://github.com/cbourke/CSCE156-Lab10-JDBCII
