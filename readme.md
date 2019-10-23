@@ -25,14 +25,14 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 - Lab 5.0 - Inheritance https://github.com/cbourke/CSCE156-Lab05
 - Lab 6.0 - Polymorphism https://github.com/cbourke/CSCE156-Lab06
 - Lab 7.0 - SQL I https://github.com/cbourke/CSCE156-Lab07
-- Lab 08 - SQL II https://github.com/cbourke/CSCE156-Lab08-SQL2
-- Lab 09 - JDBC I https://github.com/cbourke/CSCE156-Lab09-JDBCI
-- Lab 10 - JDBC II https://github.com/cbourke/CSCE156-Lab10-JDBCII
-- Lab 11 - Linked Lists https://github.com/cbourke/CSCE156-Lab11-LinkedLists
-- Lab 12 - Recursion https://github.com/cbourke/CSCE156-Lab12-Recursion
-- Lab 13 - Sorting https://github.com/cbourke/CSCE156-Lab13-Sorting
-- Lab 14 - Stacks & Queues https://github.com/cbourke/CSCE156-Lab14-StacksQueues
-- Lab 15 - Binary Search Trees https://github.com/cbourke/CSCE156-Lab15-BST
+- Lab 8.0 - SQL II https://github.com/cbourke/CSCE156-Lab08
+- Lab 9.0 - JDBC I https://github.com/cbourke/CSCE156-Lab09
+- Lab 10.0 - JDBC II https://github.com/cbourke/CSCE156-Lab10
+- Lab 11.0 - Linked Lists https://github.com/cbourke/CSCE156-Lab11
+- Lab 12.0 - Recursion https://github.com/cbourke/CSCE156-Lab12
+- Lab 13.0 - Sorting https://github.com/cbourke/CSCE156-Lab13
+- Lab 14.0 - Stacks & Queues https://github.com/cbourke/CSCE156-Lab14
+- Lab 15.0 - Binary Search Trees https://github.com/cbourke/CSCE156-Lab15
 
 ## Course Offerings
 
