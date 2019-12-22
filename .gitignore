@@ -1,3 +1,15 @@
+# python files
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+#pickle
+*.pkl
+# local dev files
+scripts/python/dev.py
+scripts/handin/
+
+
 # latex temporary files
 *.acn
 *.acr
