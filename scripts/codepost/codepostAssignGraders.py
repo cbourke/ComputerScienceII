@@ -4,11 +4,14 @@ from os import walk
 import codepost
 from config import config
 from course import course
+from fileUtils import getFiles 
 
 # this script interfaces with codepost and brings everything
 # together:
 # 1. It pulls the current roster from Canvas (and separates
 #    instructors/graders/students using the config.py params)
+#    and separates students into groups as assigned in canvas
+#    (students with no group form a "group of one")
 # 2. It attempts to map NUIDs to CSE logins to grab submissions
 #    (failures will be excluded or "orphaned")
 # 3. It then randomizes grading assignments (tries to evenly
@@ -27,9 +30,7 @@ if(len(sys.argv) != 3):
   print("usage: cse_handin_assignment_name codepost_assignment_id")  
   exit(1)
 
-# this may need to be changed relative to where this script is used
-# TODO: consider moving this to config.py
-assignmentDir = "../handin/"+sys.argv[1]+"/"
+assignmentDir = config.handinPath+sys.argv[1]+"/"
 assignmentId = int(sys.argv[2])
 
 codepost.configure_api_key(config.codePostApiKey)
@@ -38,33 +39,26 @@ gradingAssignment = course.getAssignment()
 s = course.assignmentToString(gradingAssignment)
 print(s)
 
-for grader,students in gradingAssignment.items():
-    for s in students:
-        path = assignmentDir+s.cseLogin+"/"
-        print("Looking in " + path)
-        if not os.path.exists(path):
-            print("no files...")
-            filenames = []
-        else:
-            (_, _, filenames) = next(os.walk(assignmentDir+s.cseLogin))
-        if config.fileExtensions:
-            filenames = [ f for f in filenames if f.endswith(tuple(config.fileExtensions)) ]
-        if filenames:
-          submission = codepost.submission.create(
-             assignment=assignmentId,
-             students=[s.canvasEmail],
-             grader=grader.canvasEmail)
-          for fileName in filenames:
-              print("pushing " + path+fileName)
-              contents = open(path+fileName).read()
-              #if the file is empty, add content to accommodate codepost's API
-              if not contents:
-                  contents = "EMPTY FILE"
-              (_,extension) = os.path.splitext(fileName)
-              extension = extension[1:] #chomp period: .c -> c
-              codepost.file.create(
-                 name=fileName,
-                 code=contents,
-                 extension=extension,
-                 submission=submission.id
-              )
+def pushAssignments(gradingAssignment):
+    for grader,groups in gradingAssignment.items():
+        for g in groups:
+            s = g.members[0]
+            path = assignmentDir+s.cseLogin+"/"
+            print("looking in " + path + "...")
+            files = getFiles(path)
+            if files:
+              submission = codepost.submission.create(
+                 assignment=assignmentId,
+                 students=[m.canvasEmail for m in g.members],
+                 grader=grader.canvasEmail)
+              for (fullPath,name,ext),contents in files.items():
+                  print("pushing " + name)
+                  extension = ext[1:] #chomp period: .c -> c
+                  codepost.file.create(
+                     name=name,
+                     code=contents,
+                     extension=extension,
+                     submission=submission.id
+                  )
+
+pushAssignments(gradingAssignment)
