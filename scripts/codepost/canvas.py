@@ -2,6 +2,8 @@ from config import config
 from canvas_api_client.v1_client import CanvasAPIv1
 from person import Person
 import sys
+import http.client
+import json
 
 # create an instance of the canvas API
 # using the configuration in config.py
@@ -22,6 +24,53 @@ import sys
 #  does not; we'll have to manually handle the roles (grader, instructor, etc.)
 #  which might be better anyway
 api = CanvasAPIv1(config.canvasUrl, config.canvasApiKey)
+
+### CUSTOM
+url = "canvas.unl.edu"
+
+def getMembers(groupId):
+  path = ("/api/v1/groups/" + 
+          str(groupId) + 
+          "/memberships/?access_token="+config.canvasApiKey)      
+  connection = http.client.HTTPSConnection(url)
+  connection.request("GET", path)
+  response = connection.getresponse()
+  #print("Status: {} and reason: {}".format(response.status, response.reason))
+  data = response.read().decode()
+  connection.close();
+  members = json.loads(data)
+  result = []
+  for member in members:
+    userId = member['user_id']
+    result.append(userId)
+  return result
+  
+# Returns an array of 3-tuples of groups from canvas
+# (groupId,"name",[membersCanvasIds])
+def getGroups():
+  path = ("/api/v1/courses/" + 
+          config.canvasCourseId + 
+          "/groups/?per_page=100&access_token="+config.canvasApiKey)      
+  connection = http.client.HTTPSConnection(url)
+  connection.request("GET", path)
+  response = connection.getresponse()
+  #print("Status: {} and reason: {}".format(response.status, response.reason))
+  data = response.read().decode()
+  connection.close();
+
+  result = []
+  groups = json.loads(data)
+  for group in groups:
+    numMembers = group['members_count']
+    if numMembers > 1:
+      groupId = group['id']
+      name = group['name']
+      members = getMembers(groupId)
+      result.append( (groupId,name,members) )
+  return result
+
+
+### ROSTER
 
 pages = api.get_course_users(config.canvasCourseId)
 # the API lazy loads elements and uses pagination, 
@@ -60,6 +109,7 @@ for page in pages:
             e = sys.exc_info()[0]
             write_to_page( "<p>Error: %s</p>" % e )
 
+groups = getGroups()
 
 #ex:    
 #{
