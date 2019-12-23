@@ -6,6 +6,7 @@ class Person:
     canvasLogin = None
     canvasEmail = None      
     cseLogin = None
+    group = None
     
     def __init__(self, nuid,
                        name = None,
@@ -20,7 +21,7 @@ class Person:
         self.canvasEmail = canvasEmail      
         self.cseLogin    = cseLogin
     def __str__(self):
-        return "%-40s (%s) %-15s %s"%(self.name,self.nuid,self.cseLogin,self.canvasEmail)
+        return "%-25s (%s) %-15s %s"%(self.name,self.nuid,self.cseLogin,self.canvasEmail)
     def __hash__(self):
         return hash(self.nuid)
         
@@ -28,4 +29,4 @@ class Person:
         return self.nuid == other.nuid
         
     def __lt__(self,other):
-        return (self.nuid < self.nuid)
+        return (self.nuid < other.nuid)
