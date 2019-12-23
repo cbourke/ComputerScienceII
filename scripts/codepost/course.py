@@ -1,12 +1,16 @@
 from canvas import roster
+from canvas import groups
 from config import config
+from group import Group
 import udb
+import copy
 import math
 import random
 
 class Course:
     #all persons will be by NUID
     instructorNuids = []
+    #map: "NUID" => Person
     instructors = {}
 
     graderNuids = []
@@ -20,7 +24,7 @@ class Course:
     def __init__(self, instructorNuids = [], graderNuids = []):
         self.instructorNuids = instructorNuids
         self.graderNuids = graderNuids
-        # 1. load full roster from canvas
+        # 1a. load full roster from canvas
         self.roster = roster
         # 2. get as many cse logins as possible
         # 2a. dump NUIDs to map
@@ -50,6 +54,32 @@ class Course:
                         self.graders[p.nuid] = p
                 else:
                     self.students[p.nuid] = p
+        #4. Update the groups so that every student is in a group
+        #   For those in a canvas group of 2 or more or in their
+        #   own "group of one"
+        #   self.groups data model:
+        #   [(groupId, 'Group Name', [canvasIds])]
+        canvasGroups = groups
+        self.groups = []
+        for group in canvasGroups:
+            #canvasGroupId, canvasGroupname
+            g = Group(group[0], group[1])
+            members = []
+            for memberCanvasId in group[2]:
+                for p in self.roster:
+                    if p.canvasId == memberCanvasId:
+                        members.append(p)
+                        p.group = g;
+                        break
+            g.addMembers(members)
+            self.groups.append(g)
+        # iterate through students and create "group of one"
+        for nuid,s in self.students.items():
+            if s.group is None:
+                g = Group()
+                g.addMembers([s])
+                s.group = g 
+                self.groups.append(g)
 
     def __str__(self):
         r = "Instructors (%d): \n"%(len(self.instructors))
@@ -61,42 +91,49 @@ class Course:
         r += "Students (%d): \n"%(len(self.students))
         for nuid,p in self.students.items():
             r += str(p) + "\n"
+        r += "Orphans (%d): \n"%(len(self.orphans))
+        for nuid,p in self.orphans.items():
+            r += str(p) + "\n"
+        r += "Groups: \n"
+        for g in self.groups:
+            r += str(g)
         return r
 
     # returns a mapping of graders (Person objects) to
-    #  a list of students (Person objects) they are assigned to
+    #  a list of groups (Group objects) they are assigned to
     def getAssignment(self):
         graderNuids = list(self.graders.keys())
-        studentsNuids = list(self.students.keys())
+        groups = copy.deepcopy(self.groups)
         random.shuffle(graderNuids)
-        random.shuffle(studentsNuids)
+        random.shuffle(groups)
         assignment = {}
         #initialize lists 
         for gNuid in graderNuids:
             assignment[self.graders[gNuid]] = []
         i = 0
-        for sNuid in studentsNuids:
-            g = self.graders[graderNuids[i]]
-            assignment[g].append(self.students[sNuid])
-            i = (i+1)%len(graderNuids)
+        n = len(graderNuids)
+        for group in groups:
+            grader = self.graders[graderNuids[i]]
+            assignment[grader].append(group)
+            i = (i+1)%n
         return assignment
         
     def assignmentToString(self,assignment):
         r  = "Assigned Grading\n"
         r += "================\n"
-        min = math.floor(len(self.students) / len(self.graders))
-        max = math.ceil(len(self.students) / len(self.graders))
-        r += "Each grader will grade %d - %d students\n"%(min,max)
+        min = math.floor(len(self.groups) / len(self.graders))
+        max = math.ceil(len(self.groups) / len(self.graders))
+        r += "Each grader will grade %d - %d groups\n"%(min,max)
         #dump graders to list of Person objects
         graders = list(assignment.keys())
         graders.sort(key=lambda x: x.name)
         for grader in graders:
-          students = assignment[grader];
-          students.sort(key=lambda x: x.name)
-          n = len(students)
+          groups = assignment[grader];
+          groups.sort(key=lambda x: x.members[0].name)
+          n = len(groups)
           r += "%s (%d assigned)\n"%(grader.name,n)
-          for s in students:
-            r += "\t"+str(s)+"\n"
+          for g in groups:
+            r += str(g)
         return r
 
 course = Course(instructorNuids=config.instructorNuids, 
