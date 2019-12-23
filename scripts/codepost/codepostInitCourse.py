@@ -4,40 +4,6 @@ from course import course
 
 codepost.configure_api_key(config.codePostApiKey)
 
-numHacks = 14
-pointsPerHack = 25
-#points per category must be integers
-hackRubricCategories = [('Style', 2), ('Documentation', 2), ('Design', 5), ('Correctness', 16)]
-assignRubricCategories = [('Style', 4), ('Documentation', 4), ('Design', 10), ('Correctness', 32)]
-hackRubricCategoriesComments = {
-  'Style': [
-            ('Significant improper or inconsistent use of whitespace', 1),
-            ('Significant improper identifier naming or inconsistent naming conventions', 1)
-            ],
-  'Documentation': [
-            ('Missing header documentation', 1),
-            ('Substantial blocks (functions, complex code) are not properly documented', 1),
-            ('Overly verbose or useless comments', 1)
-            ],
-  'Design': [
-            ('Compiler warnings have not been addressed', 1),
-            ('Dead or extraneous code remains', 1),
-            ('Insufficient error handling regardless of webgrader behavior', 1),
-            ('Extraneous or unnecessary output (debugging or error statements)', 1),
-            ('Redundant code', 1),
-            ('Improper or incorrect patterns, variable types, etc.', 1),
-            ('Contains obvious memory leaks or misuse of data types', 1)            
-            ],
-  'Correctness': [
-            ('Output is not reasonably readable', 1),
-            ('Output does not report as much information as expected', 1)
-            ],
-}
-
-
-numAssignments = 5
-pointsPerAssignment = 50
-
 def addRubric(assignmentId, categories, categoryComments):
     for i,(name,points) in enumerate(categories):
         my_rubric_category = codepost.rubric_category.create(
@@ -45,50 +11,12 @@ def addRubric(assignmentId, categories, categoryComments):
           name=name,
           pointLimit=points,
           sortKey=i)
-        for j,(text,pointDelta) in enumerate(categoryComments[name]):
-            my_rubric_comment = codepost.rubric_comment.create(
-              text=text,
-              pointDelta=pointDelta,
-              category=my_rubric_category.id,
-              sortKey=j)
-
-def initHacks():
-  for i in range(1, numHacks+1):
-    name = "Hack %.1f"%(i)
-    h = codepost.assignment.create(
-      name=name,
-      points=pointsPerHack,
-      course=config.codePostCourseId,
-      sortKey=(i+100))
-    addRubric(h.id, hackRubricCategories, hackRubricCategoriesComments)
-    print("%s created with ID = %d"%(name,h.id))
-
-def initAssign():  
-  for i in range(1, numAssignments+1):
-    name = "Assignment %.1f"%(i)
-    h = codepost.assignment.create(
-      name=name,
-      points=pointsPerAssignment,
-      course=config.codePostCourseId,
-      sortKey=i)
-    addRubric(h.id, assignRubricCategories, hackRubricCategoriesComments)
-    print("%s created with ID = %d"%(name,h.id))
-
-def initAssignments():
-  initHacks()
-  initAssign()
-  h = codepost.assignment.create(
-    name="Midterm",
-    points=100,
-    course=config.codePostCourseId)
-  addRubric(h.id, hackRubricCategories, hackRubricCategoriesComments)
-  print("%s created with ID = %d"%(h.name,h.id))
-  h = codepost.assignment.create(
-    name="Final",
-    points=150,
-    course=config.codePostCourseId)
-  addRubric(h.id, hackRubricCategories, hackRubricCategoriesComments)
-  print("%s created with ID = %d"%(h.name,h.id))
+#        for j,(text,pointDelta) in enumerate(categoryComments[name]):
+#            my_rubric_comment = codepost.rubric_comment.create(
+#              text=text,
+#              pointDelta=pointDelta,
+#              category=my_rubric_category.id,
+#              sortKey=j)
   
 # graders and students are only valid if they have cse logins
 # alternatively, we could use the email address from Canvas but
@@ -125,5 +53,31 @@ def updateRoster():
       superGraders=graderEmails,
       courseAdmins=instructorEmails)
 
-#initAssignments()
+
+# CSCE 156
+# Assignment setup
+# 7 code-based assignments
+# point totals: (100+125+175+135+100+145+110) = 890
+
+rubricCategories = [
+  [('Style/Documentation', 5), ('Design', 10), ('Test Cases', 10), ('Correctness', 75)], 
+  [('Style', 10), ('Documentation', 10), ('Design', 30), ('Test Cases', 15), ('Correctness', 60), ('Bonus/Honors', 0)], 
+  [('Style', 10), ('Documentation', 10), ('Design', 65), ('Test Cases', 15), ('Correctness', 75), ('Bonus/Honors', 0)], 
+  [('Style', 10), ('Documentation', 5), ('Design', 50), ('Test Cases', 20), ('Correctness', 50), ('Bonus/Honors', 0)], 
+  [('Style', 10), ('Documentation', 5), ('Design', 35), ('Correctness', 50), ('Bonus/Honors', 0)], 
+  [('Style', 10), ('Documentation', 10), ('Design', 50), ('Correctness', 75), ('Bonus/Honors', 0)], 
+  [('Style', 5), ('Documentation', 5), ('Design', 60), ('Correctness', 40), ('Bonus/Honors', 0)], 
+]
+
+for i,categories in enumerate(rubricCategories):
+  total = sum([x[1] for x in categories])
+  a = codepost.assignment.create(
+    name="Assignment "+str(i+1),
+    points=total,
+    course=config.codePostCourseId,
+    sortKey=i)
+  addRubric(a.id, 
+    categories, 
+    {})
+
 updateRoster()
