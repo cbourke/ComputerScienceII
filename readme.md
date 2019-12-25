@@ -43,6 +43,6 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ### Spring 2020
 
-- Course Link: To Come
-- Lectures: To Come
+- Course Link: https://canvas.unl.edu/courses/75741
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWV9pWLAc1XiPlKXpXS3X8v
 
