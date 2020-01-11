@@ -88,13 +88,11 @@ for page in pages:
             else:
                 print("ERROR: no login_id for user")
                 print(u)
-                sys.exit(1)
             if 'email' in u:
                 canvasEmail = u['email']
             else:
                 print("ERROR: no email for user")
                 print(u)
-                sys.exit(1)
             p = Person(
               nuid        = u['sis_user_id'],
               canvasId    = u['id'],
@@ -107,7 +105,7 @@ for page in pages:
             print("Problem with record:")
             print(u)
             e = sys.exc_info()[0]
-            write_to_page( "<p>Error: %s</p>" % e )
+            print( "<p>Error: %s</p>" % e )
 
 groups = getGroups()
 
