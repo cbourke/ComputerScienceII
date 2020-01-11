@@ -18,10 +18,6 @@ def addRubric(assignmentId, categories, categoryComments):
 #              category=my_rubric_category.id,
 #              sortKey=j)
   
-# graders and students are only valid if they have cse logins
-# alternatively, we could use the email address from Canvas but
-# students may have opted out of sharing this and it would not
-# be available from the API.  
 
 def updateRoster():
     graderEmails = []
@@ -69,15 +65,17 @@ rubricCategories = [
   [('Style', 5), ('Documentation', 5), ('Design', 60), ('Correctness', 40), ('Bonus/Honors', 0)], 
 ]
 
-for i,categories in enumerate(rubricCategories):
-  total = sum([x[1] for x in categories])
-  a = codepost.assignment.create(
-    name="Assignment "+str(i+1),
-    points=total,
-    course=config.codePostCourseId,
-    sortKey=i)
-  addRubric(a.id, 
-    categories, 
-    {})
+def initAssignments():
+    for i,categories in enumerate(rubricCategories):
+      total = sum([x[1] for x in categories])
+      a = codepost.assignment.create(
+        name="Assignment "+str(i+1),
+        points=total,
+        course=config.codePostCourseId,
+        sortKey=i)
+      addRubric(a.id, 
+        categories, 
+        {})
 
+#initAssignments()
 updateRoster()
