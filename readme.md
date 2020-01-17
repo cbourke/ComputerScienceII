@@ -46,3 +46,7 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 - Course Link: https://canvas.unl.edu/courses/75741
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWV9pWLAc1XiPlKXpXS3X8v
 
+#### Honors Section
+
+- Course Link: https://canvas.unl.edu/courses/81909
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZXyqMhz_gcbDLGO1e_LbBX3
