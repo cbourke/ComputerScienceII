@@ -20,9 +20,7 @@
 
 ```php
 <?php
-
   print "Hello World\n";
-
 ?>
 ```
 
@@ -153,7 +151,225 @@ is_infinite($a);
 
 * PHP doesn't have arrays
 * PHP has "associative arrays"
-* Be default, associative arrays can be treated like tradiational 0-indexed arrays
+* Be default, associative arrays can be treated like traditional 0-indexed arrays
 * No fixed size (grow dynamically)
 * Under the hood: hash maps
+
+```php
+
+//empty array:
+$arr = array();
+
+$arr = array(10, 20, 30);
+
+//mixed type array
+$arr = array(10, 3.5, "ten");
+
+//add an element to the end:
+$arr[30] = "hello";
+
+$arr["ten"] = 10;
+
+$arr["3.5"] = "40foo";
+
+//try: find the size of the array
+$n = count($arr);
+print "there are $n things in the array!\n";
+for($i=0; $i<$n; $i++) {
+  print $arr[$i] . "\n";
+}
+
+//better solution: use a foreach loop
+foreach($arr as $key => $val) {
+  print $key . " maps to " . $val . "\n";
+}
+
+$arr = array(
+  "Christopher" => "Chris",
+  "Joseph" => "Joe",
+  "Angela" => "Angie"
+
+
+);
+
+//other syntax:
+$arr[30] = "foo";
+$arr[40] = "bar";
+$arr[] = "baz";
+
+
+print_r($arr);
+
+//delete "baz"
+unset($arr[41]);
+
+//delete the entire array:
+unset($arr);
+
+```
+
+# Command Line Arguments
+
+* Are stored in an array called `$argv`, the number of arguments is stored in `$argc` or you can use the `count($argv)` function
+* The first argument is always the script file's name
+
+
+# File I/O
+
+* Basics: open the file, process it, close it
+* PHP Supports `fopen`, `fclose`, `fgets`
+
+```php
+$fileName = "input.txt";
+
+//check before you open that it exists:
+if( !file_exists($fileName) ) {
+  printf("ERROR: cannot open file %s\n", $fileName);
+  exit(1);
+}
+
+$h = fopen($fileName, "r");
+
+//read one line of the input file:
+$line = fgets($h);
+
+//remove the endline character:
+$line = trim($line);
+
+printf("%s\n", $line);
+
+//read all the lines:
+while( !feof($h) ) {
+  $line = fgets($h);
+  $line = trim($line);
+  printf("%s\n", $line);
+}
+
+fclose($h);
+
+//file output:
+$out = fopen("output.txt", "w");
+fprintf($out, "this is some output");
+fprintf($out, "this is too and a number: %d\n", 123);
+fclose($out);
+```
+
+* Short cuts: PHP has a `file_get_contents()`
+* Short cut for output: `file_put_contents()`
+* Very cool extensions: you can use any protocol or URL with PHP's file I/O functions
+
+```php
+$contents = file_get_contents("input.txt")
+
+//it need not be a file:
+$contents = file_get_contents("http://espn.com");
+
+file_put_contents("output.txt", $outputString);
+
+file_put_contents("sftp://cse.unl.edu/~cbourke/", $outputString);
+
+```
+
+## Functions
+
+* You can declare your own functions using the `function` keyword
+
+```php
+function foo($a, $b, $c) {
+  if($a > 0) {
+    return "hello";
+  } else if($a === 0) {
+    return 42;
+  } else {
+    return array();
+  }
+}
+```
+
+* later on, use a function by invoking it: `foo(10, 20, 30)`
+* HOWEVER: function names are case insensitive, `Foo()`, `foo()` and `FoO()` are all the same function calls
+* HOWEVER: there is no function overloading (there can only ever be *one* function named `foo`)
+* THEREFORE: all arguments (parameters) become *optional*
+* You an specify function parameter *defaults* so that if someone does not provide a parameter, a default will still be available
+
+```php
+
+function addOne(&$arr) {
+  for($i=0; $i<count($arr); $i++) {
+    $arr[$i]++;
+  }
+}
+
+function swap($a, $b) {
+  $t = $a;
+  $a = $b;
+  $b = $t;
+  return;
+}
+
+function swapByRef(&$a, &$b) {
+  $t = $a;
+  $a = $b;
+  $b = $t;
+  return;
+}
+
+$x = 10;
+$y = 20;
+swap($x, $y);
+
+printf("x = %d, y = %d\n", $x, $y);
+
+
+swapByRef($x, $y);
+
+printf("x = %d, y = %d\n", $x, $y);
+
+$myArray = array(10, 20, 30, 40);
+print_r($myArray);
+addOne($myArray);
+print_r($myArray);
+
+//you get a "deep" copy for "free":
+$copy = $myArray;
+$copy[0] = 42;
+print_r($copy);
+print_r($myArray);
+
+//you can have reference assignment too
+//even though you don't have pointers
+$a = 10;
+$b = &$a;
+$a = 42;
+printf("%d\n", $a);
+printf("%d\n", $b);
+
+```
+
+# Exceptions
+
+* PHP does support exceptions, actually only really one
+
+
+```php
+//you can throw an exception:
+throw new Exception("message of what got donked here");
+
+try {
+  //potentially dangerous code here
+} catch($e) {
+  print "Exception occurred: " . $e->getMessage() . "\n";
+}
+```
+
+
+
+
+
+
+
+
+
+
+
 

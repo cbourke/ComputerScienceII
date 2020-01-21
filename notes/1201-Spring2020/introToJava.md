@@ -160,7 +160,204 @@ if( x == 10 )
     System.out.println("equal to ten");
   }
 ```
-  
+
+## Loops
+
+* For loops are supported as well as while loops
+
+```java
+for(int i=1; i<=10; i++) {
+  System.out.println(i);
+}
+
+System.out.println("=========");
+
+int i = 1;
+while(i <= 10) {
+  System.out.println(i);			
+  i++;
+}
+```
+
+* "Enhanced" for loop (for each loop)
+
+```java
+int arr[] = { 2, 3, 5, 7, 11, 13, 17 };
+		for(int i=0; i<7; i++) {
+			System.out.println("element = " + arr[i] );
+		}
+		
+		for(int x : arr) {
+			System.out.println("element = " + x);
+		}
+
+    
+String names[] = { "Chris", "Joe", "Jane", "Kris", "Anthony", "Nolan" };
+for(String name : names) {
+  System.out.println(name);
+}
+```
+
+## Arrays
+
+* Java supports traditional arrays
+* No memory management, so technically no `malloc`
+* Instead: to create new dynamic arrays use the `new` keyword
+
+```java
+
+		int arr[] = new int[10];
+		
+		arr[0] = 42;
+		arr[9] = 101;
+		
+		for(int i=0; i<arr.length; i++) {
+			System.out.println(arr[i]);
+		}
+		
+		double brr[] = new double[10];
+		String crr[] = new String[10];
+```
+
+### Dynamic Collections
+
+* Plain old arrays suck
+* Instead, prefer to use dynamic collections: `List`, `Set`, `Map`
+
+```java
+
+		List<Integer> numbers = new ArrayList<int>();
+		numbers.add(10);
+		numbers.add(20);
+		numbers.add(30);
+		System.out.println(numbers);
+		numbers.add(0, 40);
+		System.out.println(numbers);
+		numbers.remove(3);
+		System.out.println(numbers);
+		System.out.println("size of list is " + numbers.size());
+		for(Integer x : numbers) {
+			System.out.println(x);
+		}
+		for(int i=0; i<numbers.size(); i++) {
+			System.out.println(numbers.get(i));
+		}
+```
+
+* A `Set` is an *unordered* collection of *unique* elements (no duplicates are allowed)
+
+```java
+Set<String> names = new HashSet<String>();
+names.add("Chris");
+names.add("Joe");
+names.add("Jane");
+System.out.println(names);
+names.add("Jane");
+System.out.println(names);
+names.remove("Chris");
+System.out.println(names);
+//String s = names.get(0);
+//		for(int i=0; i<names.size(); i++) {
+//			System.out.println(names.get(i));
+//		}
+for(String name : names) {
+  System.out.println(name);
+}
+```
+
+* A `Map` is a key-value pair collection
+* Elements can be accessed using a key which maps to a value
+
+```java
+Map<Integer, String> myMap = new HashMap<>();
+myMap.put(10, "Ten");
+myMap.put(20, "Twenty");
+myMap.put(30, "Foo");
+System.out.println(myMap);
+//iterating:
+//for each key in the map myMap:
+for(Integer key : myMap.keySet()) {
+  String value = myMap.get(key);
+  System.out.println(key + " => " + value);
+}
+myMap.put(30, "Bar");
+myMap.put(40, "Bar");
+System.out.println(myMap);
+
+//dump the keyset to a list:
+List<Integer> keys = new ArrayList<>();
+for(Integer key : myMap.keySet()) {
+  keys.add(key);
+}
+Collections.sort(keys);
+for(Integer key : keys) {
+  String value = myMap.get(key);
+  System.out.println(key + " maps to " + value);
+}
+```
+
+## Strings
+
+* Java provides a huge standard library of methods to compute and manipulate strings
+* Just RTM: Read The Manual
+
+```java
+String fullName = "Christopher Michael Bourke";
+		
+		String middleName = fullName.substring(12, 19).toUpperCase();
+		System.out.println(middleName+"|");
+		
+		String data = "Chris,Bourke,1234,Schorr 105";
+		String tokens[] = data.split(",");
+		System.out.println(Arrays.toString(tokens));
+```
+
+* Strings are immutable, but you can use `StringBuilder` to get a mutable string		
+```java
+StringBuilder sb = new StringBuilder();
+sb.append("Chris");
+sb.append(" Bourke");
+
+System.out.println(sb);
+sb.append(", PhD");
+System.out.println(sb);
+
+sb.insert(5, " Michael");
+System.out.println(sb);
+
+String fullName = sb.toString();
+System.out.println(fullName);
+```
+
+## Methods
+
+* In Java, "functions" are called "methods"
+* For now, all our methods will be `static` methods: the methods belong to the class and not to instances of the class
+* You can access/invoke/run static methods using the classname + dot + the method name (plus any parameters you want to pass to it)
+
+```java
+
+public class Demo {
+	
+	public static int factorial(int n) {
+		int result = 1;
+		for(int i=2; i<=n; i++) {
+			result = result * i;
+		}
+		return result;
+	}
+	
+	public static void main(String args[]) {
+
+		int n = -10;
+		int fact = Demo.factorial(n);
+		System.out.printf("%d! = %d\n", n, fact);
+
+	}
+
+
+}
+```
 
 
 
