@@ -336,28 +336,196 @@ System.out.println(fullName);
 * You can access/invoke/run static methods using the classname + dot + the method name (plus any parameters you want to pass to it)
 
 ```java
+package unl.cse;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * This is my demo class
+ * 
+ * @author cbourke
+ *
+ */
 public class Demo {
-	
-	public static int factorial(int n) {
-		int result = 1;
-		for(int i=2; i<=n; i++) {
-			result = result * i;
+
+	/**
+	 * This method computes arbitrarily large factorial values, for more information
+	 * see <a href="https://en.wikipedia.org/wiki/Factorial">wikipedia</a>
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public static BigInteger factorial(int n) {
+		BigInteger result = BigInteger.ONE;
+		for (int i = 2; i <= n; i++) {
+			result = result.multiply(BigInteger.valueOf(i));
 		}
 		return result;
 	}
-	
+
+	/**
+	 * Computes the Euclidean Distance between the two 
+	 * points <code>(x1,y1)</code> and <code>(x2,y2)</code>
+	 * @param x1 the x component of the first point
+	 * @param y1 the y component of the first point
+	 * @param x2 the x component of the second point
+	 * @param y2 the y component of the second point
+	 * @return
+	 */
+	public static double euclideanDistance(double x1, double y1, double x2, double y2) {
+
+		return Math.sqrt( Math.pow((x1-x2), 2) +  Math.pow((y1-y2), 2));
+		
+	}
+
 	public static void main(String args[]) {
 
-		int n = -10;
-		int fact = Demo.factorial(n);
-		System.out.printf("%d! = %d\n", n, fact);
+		int n = 1000;
+		BigInteger fact = Demo.factorial(n);
+		System.out.printf("%d! = %s\n", n, fact.toString());
 
 	}
 
+}
+
+```
+
+# Error Handling
+
+* Java supports using Exceptions for error handling
+* An exception is an interruption of the normal flow of control
+* Potentially dangerous code can be surrounded by a `try-catch` block
+* If an exception is thrown, and you catch that type of exception, then you can *handle* it with any code you put in the catch block
+* Example:
+
+``java
+package unl.cse;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * This is my demo class
+ * 
+ * @author cbourke
+ *
+ */
+public class Demo {
+
+	/**
+	 * This method computes arbitrarily large factorial values, for more information
+	 * see <a href="https://en.wikipedia.org/wiki/Factorial">wikipedia</a>
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public static BigInteger factorial(int n) {
+		
+		if(n < 0) {
+			throw new RuntimeException("factorial is undefined for negative values");
+		}
+		
+		BigInteger result = BigInteger.ONE;
+		for (int i = 2; i <= n; i++) {
+			result = result.multiply(BigInteger.valueOf(i));
+		}
+		return result;
+	}
+
+	/**
+	 * Computes the Euclidean Distance between the two 
+	 * points <code>(x1,y1)</code> and <code>(x2,y2)</code>
+	 * @param x1 the x component of the first point
+	 * @param y1 the y component of the first point
+	 * @param x2 the x component of the second point
+	 * @param y2 the y component of the second point
+	 * @return
+	 */
+	public static double euclideanDistance(double x1, double y1, double x2, double y2) {
+
+		return Math.sqrt( Math.pow((x1-x2), 2) +  Math.pow((y1-y2), 2));
+		
+	}
+
+	public static void main(String args[]) {
+
+		try {
+			int n = -10;
+			BigInteger fact = Demo.factorial(n);
+			System.out.printf("%d! = %s\n", n, fact.toString());
+			
+			int x = Integer.parseInt("hello");
+			System.out.println(x);
+		} catch(NumberFormatException nfe) {
+			//you can decide how to handle the exception here
+			//TODO: reread the input from the user
+		} catch(RuntimeException re) {
+			//handle this exception slightly differently
+		} catch(Exception e) {
+			//okay, I don't know what happened, let's rethrow it:
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		System.out.println("okay..");
+	}
 
 }
 ```
+
+## File I/O
+
+```java
+
+		try {
+			// 1. open a file and process it for input
+			Scanner s = new Scanner(new File("data/input.txt"));
+
+			// 2. scan the input: get each line and process it
+			while (s.hasNextLine()) {
+				String line = s.nextLine();
+				// also strip all whitespace from the line:
+				line = line.replaceAll("\\s+", "");
+				System.out.println(line);
+			}
+
+			// 3. close it
+			s.close();
+
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (InputMismatchException ime) {
+			throw new RuntimeException("bad file man");
+		}
+
+		// file output
+
+		try {
+			File output = new File("data/output.txt");
+			PrintWriter pw = new PrintWriter(output);
+			pw.println("Hello, this is the first line");
+			pw.print("another line, put in your own endline character\n");
+			pw.printf("%d, %10.2f", 123, Math.PI);
+			pw.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+```
+
 
 
 

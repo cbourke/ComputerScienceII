@@ -362,13 +362,139 @@ try {
 }
 ```
 
+# Exercise: DNA Translation
+
+* Read a file full of DNA nucleotides, translate it to RNA and then
+translate trigrams to Proteins.  
+
+```php
+<?php
+
+$rnaToProtein = array(
+  "AAA" => 'K',
+  "AAC" => 'N',
+	  "AAG" =>  'K',
+	  "AAU" =>  'N',
+	  "ACA" =>  'T',
+	  "ACC" =>  'T',
+	  "ACG" =>  'T',
+	  "ACU" =>  'T',
+	  "AGA" =>  'R',
+	  "AGC" =>  'S',
+	  "AGG" =>  'R',
+	  "AGU" =>  'S',
+	  "AUA" =>  'I',
+	  "AUC" =>  'I',
+	  "AUG" =>  'M',
+	  "AUU" =>  'I',
+	  "CAA" =>  'Q',
+	  "CAC" =>  'H',
+	  "CAG" =>  'Q',
+	  "CAU" =>  'H',
+	  "CCA" =>  'P',
+	  "CCC" =>  'P',
+	  "CCG" =>  'P',
+	  "CCU" =>  'P',
+	  "CGA" =>  'R',
+	  "CGC" =>  'R',
+	  "CGG" =>  'R',
+	  "CGU" =>  'R',
+	  "CUA" =>  'L',
+	  "CUC" =>  'L',
+	  "CUG" =>  'L',
+	  "CUU" =>  'L',
+	  "GAA" =>  'E',
+	  "GAC" =>  'D',
+	  "GAG" =>  'E',
+	  "GAU" =>  'D',
+	  "GCA" =>  'A',
+	  "GCC" =>  'A',
+	  "GCG" =>  'A',
+	  "GCU" =>  'A',
+	  "GGA" =>  'G',
+	  "GGC" =>  'G',
+	  "GGG" =>  'G',
+	  "GGU" =>  'G',
+	  "GUA" =>  'V',
+	  "GUC" =>  'V',
+	  "GUG" =>  'V',
+	  "GUU" =>  'V',
+	  "UAA" =>  'x',
+	  "UAC" =>  'Y',
+	  "UAG" =>  'x',
+	  "UAU" =>  'Y',
+	  "UCA" =>  'S',
+	  "UCC" =>  'S',
+	  "UCG" =>  'S',
+	  "UCU" =>  'S',
+	  "UGA" =>  'x',
+	  "UGC" =>  'C',
+	  "UGG" =>  'W',
+	  "UGU" =>  'C',
+	  "UUA" =>  'L',
+	  "UUC" =>  'F',
+	  "UUG" =>  'L',
+	  "UUU" =>  'F');
+
+$dna = file_get_contents("dna.txt");
+
+$rna = str_replace("T", "U", $dna);
+
+$rna = preg_replace('/\s+/', '', $rna);
+
+//printf("%s\n", $rna);
+
+$trigrams = str_split($rna, 3);
+
+foreach($trigrams as $trigram) {
+  $protein = $rnaToProtein[$trigram];
+  if( strcmp($protein, 'x') == 0) {
+    break;
+  }
+  printf("%s", $protein);
+}
 
 
+?>
+```
 
+### Exercise: Break My Password
 
+Passwords are often stored as hashed strings.  One such (bad) hash function supported directly in PHP is SHA-1 (using `sha1("password")`):
 
+$$password -> 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8$$
 
+What's my password if my hash is 
+ $$b9b8cf57aeeda5f21ae6fc3b3447e7f69beb7480$$
+Hint: my password is a dictionary word from `/usr/share/dict/american` with a 4 digit number appended.
 
+```php
+<?php
+
+$hash = "b9b8cf57aeeda5f21ae6fc3b3447e7f69beb7480";
+
+$h = fopen("american", "r");
+
+while( !feof($h) ) {
+  $line = trim(fgets($h));
+
+  for($i=0; $i<1; $i++) {
+    //append a 4 digit number...
+    $line = $line . 2019;
+
+    $lineHash = sha1($line);
+
+    //printf("%s => %s\n", $line, $lineHash);
+
+    if( strcmp($lineHash, $hash) == 0) {
+      printf("Possible match found: %s\n", $line);
+    }
+  }
+}
+printf("Done");
+
+?>
+```
 
 
 
