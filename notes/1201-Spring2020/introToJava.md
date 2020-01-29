@@ -526,7 +526,293 @@ public class Demo {
 		}
 ```
 
+# Exercise: Protein Translation
 
+```java
+package unl.cse;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+/**
+ * This is my demo class
+ * 
+ * @author cbourke
+ *
+ */
+public class Demo {
+
+	public static Map<String, Character> rnaToProtein = new HashMap<>();
+
+	static {
+		rnaToProtein.put("AAA", 'K');
+		rnaToProtein.put("AAC", 'N');
+		rnaToProtein.put("AAG", 'K');
+		rnaToProtein.put("AAU", 'N');
+		rnaToProtein.put("ACA", 'T');
+		rnaToProtein.put("ACC", 'T');
+		rnaToProtein.put("ACG", 'T');
+		rnaToProtein.put("ACU", 'T');
+		rnaToProtein.put("AGA", 'R');
+		rnaToProtein.put("AGC", 'S');
+		rnaToProtein.put("AGG", 'R');
+		rnaToProtein.put("AGU", 'S');
+		rnaToProtein.put("AUA", 'I');
+		rnaToProtein.put("AUC", 'I');
+		rnaToProtein.put("AUG", 'M');
+		rnaToProtein.put("AUU", 'I');
+		rnaToProtein.put("CAA", 'Q');
+		rnaToProtein.put("CAC", 'H');
+		rnaToProtein.put("CAG", 'Q');
+		rnaToProtein.put("CAU", 'H');
+		rnaToProtein.put("CCA", 'P');
+		rnaToProtein.put("CCC", 'P');
+		rnaToProtein.put("CCG", 'P');
+		rnaToProtein.put("CCU", 'P');
+		rnaToProtein.put("CGA", 'R');
+		rnaToProtein.put("CGC", 'R');
+		rnaToProtein.put("CGG", 'R');
+		rnaToProtein.put("CGU", 'R');
+		rnaToProtein.put("CUA", 'L');
+		rnaToProtein.put("CUC", 'L');
+		rnaToProtein.put("CUG", 'L');
+		rnaToProtein.put("CUU", 'L');
+		rnaToProtein.put("GAA", 'E');
+		rnaToProtein.put("GAC", 'D');
+		rnaToProtein.put("GAG", 'E');
+		rnaToProtein.put("GAU", 'D');
+		rnaToProtein.put("GCA", 'A');
+		rnaToProtein.put("GCC", 'A');
+		rnaToProtein.put("GCG", 'A');
+		rnaToProtein.put("GCU", 'A');
+		rnaToProtein.put("GGA", 'G');
+		rnaToProtein.put("GGC", 'G');
+		rnaToProtein.put("GGG", 'G');
+		rnaToProtein.put("GGU", 'G');
+		rnaToProtein.put("GUA", 'V');
+		rnaToProtein.put("GUC", 'V');
+		rnaToProtein.put("GUG", 'V');
+		rnaToProtein.put("GUU", 'V');
+		rnaToProtein.put("UAA", 'x');
+		rnaToProtein.put("UAC", 'Y');
+		rnaToProtein.put("UAG", 'x');
+		rnaToProtein.put("UAU", 'Y');
+		rnaToProtein.put("UCA", 'S');
+		rnaToProtein.put("UCC", 'S');
+		rnaToProtein.put("UCG", 'S');
+		rnaToProtein.put("UCU", 'S');
+		rnaToProtein.put("UGA", 'x');
+		rnaToProtein.put("UGC", 'C');
+		rnaToProtein.put("UGG", 'W');
+		rnaToProtein.put("UGU", 'C');
+		rnaToProtein.put("UUA", 'L');
+		rnaToProtein.put("UUC", 'F');
+		rnaToProtein.put("UUG", 'L');
+		rnaToProtein.put("UUU", 'F');
+	}
+
+	public static void main(String args[]) {
+
+		String dna = "";
+
+		// read in the contents of a file containing DNA:
+		try {
+			Scanner s = new Scanner(new File("data/dna.txt"));
+
+			while (s.hasNextLine()) {
+				String line = s.nextLine();
+				dna = dna + line;
+			}
+			s.close();
+
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+		dna = dna.replaceAll("\\s+", "");
+		dna = dna.replace('T', 'U');
+		
+		String proteinSequence = "";
+
+		for (int i = 0; i < dna.length(); i += 3) {
+			String trigram = dna.substring(i, i + 3);
+			//System.out.println(trigram);
+			char protein = Demo.rnaToProtein.get(trigram);
+			if(protein == 'x') {
+				break;
+			}			
+			proteinSequence += protein;
+		}
+		System.out.println(proteinSequence);
+
+	}
+
+}
+```
+
+```java
+
+
+		List<Integer> a = Arrays.asList(-42, 4, 7, 3, 8, 2, 1, null);
+//		System.out.println(a);
+//		Collections.sort(a);
+//		System.out.println(a);
+
+		// create a comparator to order integers in decreasing order:
+		Comparator<Integer> descCmp = new Comparator<>() {
+
+			@Override
+			public int compare(Integer a, Integer b) {
+				// nulls first...
+				if (a == null && b == null) {
+					return 0;
+				} else if (a == null && b != null) {
+					return 1;
+				} else if (a != null && b == null) {
+					return -1;
+				} else {
+
+					if (a < b) {
+						return 1;
+					} else if (a > b) {
+						return -1;
+					} else {
+						return 0;
+					}
+				}
+			}
+
+		};
+
+		Collections.sort(a, descCmp);
+		System.out.println(a);
+
+		List<String> names = Arrays.asList("chris", "Chris", "Joe", "Jane", "123", "9", "Zamfir", "Zelda", "Chris");
+		Collections.sort(names);
+		System.out.println(names);
+
+		Comparator<String> cmpDescStr = new Comparator<String>() {
+
+			@Override
+			public int compare(String a, String b) {
+				return b.compareTo(a);
+			}
+
+		};
+
+		Collections.sort(names, cmpDescStr);
+		System.out.println(names);
+		
+		//searching:
+		
+		int key = 3;
+		//does the list a contain the key 8?
+		// via linear search:
+		if(a.contains(key)) {
+			System.out.println("Yes it does");
+		}
+		
+		//binary search:
+		int index = Collections.binarySearch(a, key, descCmp);
+		System.out.println("found key " + key + " at index " + index);
+		
+		//linear search but resulting in the index for successful searches:
+		index = a.indexOf(key);
+		System.out.println("found key " + key + " at index " + index);
+		
+```
+
+# Exercise: Suffix "Arrays"
+
+```java
+
+package unl.cse;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+/**
+ * This is my demo class
+ * 
+ * @author cbourke
+ *
+ */
+public class Demo {
+
+	public static void main(String args[]) {
+		
+		if(args.length != 1) {
+			System.err.println("Error: provide a string please");
+			System.exit(1);
+		}
+		
+		String s = args[0];
+		
+		List<String> suffixes = new ArrayList<>();
+		for(int i=0; i<s.length(); i++) {
+			suffixes.add(s.substring(i));
+		}
+		
+		Collections.sort(suffixes);
+		
+		for(String suffix : suffixes) {
+			System.out.println(suffix);
+		}
+		
+		//above uses lexicographic ordering.
+		//let's use "alphabetic" ordering
+		Comparator<String> cmpIgnoreCase = new Comparator<String>() {
+
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}
+			
+		};
+
+		Collections.sort(suffixes, cmpIgnoreCase);
+		
+		for(String suffix : suffixes) {
+			System.out.println(suffix);
+		}
+
+	}
+
+}
+```
+
+# Objects/Classes
+
+* Java is an *object-oriented* programming language (OOP)
+* Encapsulation:
+  1. Grouping of data
+  2. Protection of data
+  3. Grouping of functionality (methods) that act on that data
+* Abstraction
 
 
 
