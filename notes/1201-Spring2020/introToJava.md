@@ -805,15 +805,6 @@ public class Demo {
 }
 ```
 
-# Objects/Classes
-
-* Java is an *object-oriented* programming language (OOP)
-* Encapsulation:
-  1. Grouping of data
-  2. Protection of data
-  3. Grouping of functionality (methods) that act on that data
-* Abstraction
-
 
 
 
