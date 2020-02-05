@@ -6,7 +6,7 @@ from config import config
 from course import course
 from fileUtils import getFiles 
 
-# this script interfaces with codepost and brings everything
+# This script interfaces with codepost and brings everything
 # together:
 # 1. It pulls the current roster from Canvas (and separates
 #    instructors/graders/students using the config.py params)
@@ -38,6 +38,11 @@ codepost.configure_api_key(config.codePostApiKey)
 gradingAssignment = course.getAssignment()
 s = course.assignmentToString(gradingAssignment)
 print(s)
+
+csv = course.assignmentToCSV(gradingAssignment)
+f = open(sys.argv[1]+".csv", "w")
+f.write(csv)
+f.close()
 
 def pushAssignments(gradingAssignment):
     for grader,groups in gradingAssignment.items():
