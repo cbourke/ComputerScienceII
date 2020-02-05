@@ -128,12 +128,23 @@ class Course:
         graders = list(assignment.keys())
         graders.sort(key=lambda x: x.name)
         for grader in graders:
-          groups = assignment[grader];
+          groups = assignment[grader]
           groups.sort(key=lambda x: x.members[0].name)
           n = len(groups)
           r += "%s (%d assigned)\n"%(grader.name,n)
           for g in groups:
             r += str(g)
+        return r
+
+    def assignmentToCSV(self,assignment):
+        r = ""
+        graders = list(assignment.keys())
+        graders.sort(key=lambda x: x.name)
+        for grader in graders:
+            groups = assignment[grader]
+            groups.sort(key=lambda x: x.members[0].name)
+            for g in groups:
+                r += "%s;%s\n"%(grader.name,g.members[0].canvasEmail)
         return r
 
 course = Course(instructorNuids=config.instructorNuids, 
@@ -144,4 +155,5 @@ def printCourse():
 
 if __name__ == "__main__":
     printCourse()
+
 
