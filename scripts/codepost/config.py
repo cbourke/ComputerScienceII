@@ -10,19 +10,19 @@ class Config:
     # Canvas API configuration
     canvasUrl      = "https://canvas.unl.edu/api/v1/"
     canvasApiKey   = ""
-    canvasCourseId = "" 
+    canvasCourseId = ""
     
     # codepost.io configuration
     codePostApiKey = ""
-    codePostCourseId = None 
+    codePostCourseId = None
     
     # file extensions/types to include in codepost push
     # leave empty to include all files
     fileExtensions = [".java", ".php", ".jar", ".sql"]
         
-    # Relative CSE Handin Path
-    # By default, these scripts are assumed to be in ~/codepost
-    handinPath = "../handin/"
+    # CSE Handin Path - this needs to be an *absolute* path
+    # since the script may run without the HOME enviro variable
+    handinPath = "/home/grad/Classes/cse156/handin/"
     
     # CSE User Database configuration (udb on cse-apps)
     # cse-apps.unl.edu is firewalled for 3306 except from cse/csce
@@ -40,8 +40,8 @@ class Config:
     #   grade.  An instructor must also be a grader if you want them to be
     #   assigned grading duties.
     instructorNuids = ["35140602", # Bourke
-                       ]
+                      ]
     graderNuids = ["35140602", # Bourke
-                 ]
+                  ]
 
 config = Config()
