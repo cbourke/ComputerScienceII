@@ -23,7 +23,7 @@ class Group:
         self.canvasGroupId   = canvasGroupId
         self.canvasGroupName = canvasGroupName
     def __str__(self):
-        if len(self.members) > 2:
+        if len(self.members) > 1:
           s = "  %-20s (%s) \n"%(self.canvasGroupName,self.canvasGroupId)
         else:
           s = "  %-20s \n"%("Group of One")
