@@ -26,7 +26,7 @@ def getFiles(path):
         extracted = extractArchiveFiles(fileName)
         files = {**files, **extracted}
       else:
-        contents = open(path+fileName).read()
+        contents = open(path+fileName, errors='ignore').read()
         #if the file is empty, add content to accommodate codepost's API
         if not contents:
           contents = "EMPTY FILE"
