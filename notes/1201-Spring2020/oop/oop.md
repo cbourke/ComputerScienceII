@@ -81,12 +81,50 @@
 * You *use* the function, you don't need to worry about its details
 * How does `LocalDate` represent a date?
   * 3 integers (year, day, month)
-  * ISO 8601 formatted string "2020-02-06T12:04:15:0.000CDT"
+  * ISO 8601 formatted string `"2020-02-06T12:04:15:0.000CDT"`
   * a single number: unix epoch
   * Who cares?
 * Abstraction: you don't need to worry about how an object is *represented* internally,
 only how to use it
 * Example: how does Java's `String` class work?
+
+## Inheritance
+
+* Inheritance is a mechanism by which objects can be *extended* to:
+  * Inherit state and behavior from its *superclass* and/or
+  * *Override* or augment state and behavior to provide more *specific* functionality
+* Provides a way to *reuse* code
+* Provides a way to *organize* code
+
+* In Java, you can create a subclass by using the `extends` keyword
+* If class `A extends B` then A is a subclass (child class), B is a super class (parent class)
+* The `protected` keyword can be used to make variables and methods visible to subclasses (`private` fields are not visible to the subclass)
+* All methods and state is inherited by the subclass
+* Inheritance defines an *is-a* relation: a subclass IS AN instance of its super class (covariance), BUT, a superclass is *not necessarily* an instance of its subclass (contravariance), two "sibling" or "cousin" classes are NEVER an instance of each other (invariance)
+
+* Sometimes you don't want to allow (by design) people to create a particular "generic" class 
+* To disallow a user to create a "generic" class, make it `abstract`
+
+* With inheritance, a class may be referred to as its superclass; ex: 
+* To determine which method actually is called, Java uses "dynamic dispatch": a message is sent to the instance (object) and the object determines which method actually is called/invoked
+* Dynamic Dispatch is achieved through a *virtual table*: a table of references to methods created at instantiation 
+
+```java
+Bird b1 = new Robin();
+b1.move(); //prints "flying"
+Bird b2 = new Ostrich();
+b2.move(); //prints "runs"
+```
+
+* Sometimes, you may NOT want a class to be subclasses: you DON'T want anyone to create or extend the behavior of a class
+* Why?  You may not want them to change established behavior
+* In java, you can prevent someone from extending your class by making it `final`
+  * Other uses of `final` in Java: makes a variable into a constant (you cannot reassign the variable)
+  * Using the `final` keyword on a method prevents subclasses from *overriding* the method
+* Example: Java does not want you to extend the `Integer` class; it has well-defined and expected behavior.  Changing this well-understood behavior would be counter to expectations.
+
+
+
 
 
 
