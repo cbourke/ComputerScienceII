@@ -108,3 +108,27 @@
 * Key idea: Abstraction and encapsulation often work together: abstraction allows access to an object's behavior and encapsulation hides the details
 
 # Inheritance
+
+* Inheritance is a mechanism by which objets can be *extended* to:
+  * Inherit state and behavior form a *superclass* and/or
+  * *Override* or augment state and behavior to provide more specific functionality
+* Provides a way to *reuse* code
+* Provides a way to *organize* code
+
+* Example: `SavingsAccount`
+  * IN Java, you can create subclasses using the `extends` keyword
+  * If class `A extends B` then `A` is a subclass (child), `B` is a superclass (parent)
+  * The `protected` keyword can be used to make variables visible to subclasses (`private` means only the class can see it)
+  * All methods and state are *inherited* by the subclass
+  * Inheritance defines an *is-a* relationship: `SavingsAccount` is a `BankAccount` and `CheckingAccount` is a `BankAccount`
+  * Question: is a `BankAccount` a `SavingsAccount`?  Not necessarily (contravariance)
+  * Question: is a `SavingsAccount` a `CheckingAccount`? Absolutely not (invariance)
+  * A subclass can always be treated as its superclass (covariance)
+  * A superclass *may* be treated as its subclass but it is not a very good idea (contravariance) 
+  * A class may never be treated as its sibling/cousin (invariance)
+  * The `abstract` keyword can be used in a class to make the class abstract: meaning you cannot instantiate instances of the class (useful if you design class such that the superclass is "incomplete")
+  * An abstract class may have a mixture of `abstract` methods (methods with no defined implementation/no method body) and non-abstract methods (methods with an implementation).
+  * Non-abstract subclasses of an abstract class *must* define an implementation for these methods
+  * A *pure abstract* class in Java is an `interface`
+  * A class `implements` an interface and must provide implementations of all the methods it defines
+
