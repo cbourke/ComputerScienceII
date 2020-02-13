@@ -123,10 +123,96 @@ b2.move(); //prints "runs"
   * Using the `final` keyword on a method prevents subclasses from *overriding* the method
 * Example: Java does not want you to extend the `Integer` class; it has well-defined and expected behavior.  Changing this well-understood behavior would be counter to expectations.
 
+## More on Abstraction & Interfaces
 
+* An `abstract` class is a class that:
+  * Cannot be instantiated (you cannot create instances of the class)
+  * You generally use an abstract class when it doesn't make sense to have instances of it (it may be too generic to create)
+  * Within an `abstract` class you can have `abstract` methods: methods with no body/no implementation because you may not know how they *should* be implemented
+* An *interface* is a *pure* abstract class: ALL of its methods are abstract and have no implementation
+* Abstract classes lock you into a hierarchy of inheritance
+* Interfaces can be implemented by any class (subclasses, subsets of subclasses, etc.) it doesn't lock you into a hierarchy
+* Interfaces allow you to define (somewhat) multiple inheritance: you can implement as many interfaces as you want
+* Example: Lab
+* Example: Collections Library
 
+### Pitfalls
 
+* Some languages support *multiple inheritance*
+  * Animal, Cat, Dog
+  * Maybe (don't know why) you want to create a `CatDog`
+  * Results in the "diamond problem" if you inherit from multiple classes, which method(s) actually get inherited
+  * Ambiguity: you have to *explicitly* code which class you end up inheriting from (C++)
+  * In Java: multiple inheritance is not allowed: you can only ever `extends` one class
+  * But: Java *does* allow you to implement multiple interfaces
+  * Java 8: interfaces can now have a `default` behavior
+* Problem: Yo-yo antipattern
+  * Deep inheritance hierarchies can get very complicated
+  * Deep hierarchies cause you to look up and down to make sense of the design
+  * Instead: keep your hierarchies shallow
+  * Instead: use composition instead of inheritance
+* Rectangle Problem:
+  * Suppose we create classes for `Shape, Square, Rectangle`
+  * Usually results from a flawed hierarchy design
+  * Semantically, a Square may be changed so that it is no longer a square
+  * Instead: do not lock yourself into a rigid hierarchy *if* you objects have the potential to change
+  * Make sure your hierarchies are well-thought out and thoroughly tested
 
+## Polymorphism
 
+* Polymorphism = Poly=many + morph=form = Many forms
+* Code: a variable, method, or class may be applicable to many different types of variables or classes (have many forms)
+  * C: how do you sort? `qsort`: it takes a generic array and a comparator: it is GENERIC, it can be applied to an array of any type
+* Subtype polymorphism
+  * A class can be treated as any of its superclasses
+  * Example: you want an array (list) to hold multiple types of accounts
+  * You can refer to each subtype as its super type (`BankAccount`) so you only need to worry about having one list
+  * You can iterate over them and/or treat them all the same (as the same super type)
 
+* Function overloading: 
+  * In C, there are several functions to compute the absolute value: `fabs(), labs(), llabs(), abs()`, etc.
+  * Function overloading is the ability to define multiple functions with the same name but *different* parameters
+  * Example: Java's `Math.abs()`: there are 4 different absolute value functions, all operating on different types
+  * You can have as many functions with the same name as long as they differ in either the number (arity) or type of parameters
+  * The compiler can tell *which* function you want to call based on the argument(s) you give it.
+  * Determining which function is actually called is called "static dispatch" (because it is done at compile time)
 
+* Operator Overloading
+  * In Java: `String + String` means: concatenation
+  * In Java: `int + int` means: addition
+  * In Java: `String + int` means: concatenation
+  * Some operators (like +, etc.) may have different meanings in different contexts and depending on the types used with it
+  * What would `Set + Set` mean? 
+    * Union
+  * What would `List + List` mean?
+    * Union?
+    * Append?
+    * What?
+  * What would `Time + Time` mean?
+  * Arbitrary operator overloading is supported in *some* languages: C++
+  * Java provides *some* operator overloading, but does not allow you to define your own
+  * Operator overloading can be extremely ambiguous: you are taking operators (+, -, =, etc) with *well understood* meanings and *changing them* 
+  * Generally you should avoid (but understand) operator overloading
+  * PHP: there is no overloading, + *always* means addition, to get concatenation, you use `.`
+  * Python:
+    * `String + String` means concatenation
+    * `number + number` means addition
+    * `number + String` is a runtime error
+
+```c
+char *msg = "Hello";
+int x = 10;
+int y = x + msg;
+```
+
+```python
+
+a = 10
+b = "hello, "
+#error: msg = b + a
+msg = b + str(a)
+```
+  
+  
+  
+  

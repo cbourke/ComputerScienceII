@@ -132,3 +132,138 @@
   * A *pure abstract* class in Java is an `interface`
   * A class `implements` an interface and must provide implementations of all the methods it defines
 
+* When do you use an interface, abstract class or (non-abstract) regular class
+  * If you you don't have any state and NO implementations: use an interface
+  * When you do use an interface: keep it small!
+  * Interfaces are more flexible because they don't lock you into a hierarchy
+  * Interfaces are also more flexible because a class can implement multiple interfaces
+  * You can only `extends` from one class 
+  * If you DO have (some) state and *some* functionality: maybe an `abstract class` is what you want
+    * Do you want to disallow users from instantiating your class (yes: you may want an abstract class)
+    * Do you have some implementations but others are too generic ("abstract") to implement: then you probably want an abstract class so you can have some `abstract` methods
+  * Otherwise, if you have a fully defined object (all state all methods), then make a non-abstract class!
+
+### Inheritance Pitfalls
+
+* Some languages do support *multiple inheritance* (C++)
+  * Animal, Dog, Cat
+  * What if you inherited from both a Dog and a Cat?
+  * You'd be a `CatDog`
+  * Diamond Problem: which class does the subclass inherit from?
+  * C++: you have to explicitly say which class each method is derived from
+  * Java does not support multiple inheritance
+  * Java does allow you to implement multiple interfaces
+  * Java 8 did (unfortunately) introduce default methods in interfaces
+* Yo-yo antipattern
+  * Deep inheritance hierarchies can be very complex
+  * Instead in general prefer to have *shallow* hierarchies
+  * Instead you could prefer *composition* over inheritance
+* Rectangle Problem
+  * If you have a flawed inheritance hierarchy and/or mutator functions that can *semantically* change what an object is, then you may run into the Rectangle problem.
+  * Code-wise, the object is still of the subclass, but its properties redefine what it *is* (its semantics)
+  * Solution: make sure your design is well-thoughout because it is VERY difficult to change a hierarchy later
+
+## Polymorphism
+
+* Poly=many, morph=form; polymorphism = having many forms
+* IN the context of code, polymorphism is the ability for one variable, class or method to have multiple forms at different points in a program
+* Example: Sorting in C: `qsort`: you have one function that can operate on any type (provided you give the appropriate comparator)
+* Java: you can write a variable or method or class to apply to more than one type
+* Example: collections illustrate parameterized polymorphism (that you can create a class that can be parameterized to any type)
+* The following is a "raw type" that parameterizes to `Object` (do not do this)
+
+```java
+List numbers = new ArrayList();
+```
+
+### Subtype Polymorphism
+
+* You can refer to any subclass as its super class
+* Called covariance
+
+```java
+SavingsAccount s = new SavingsAccount(...);
+BankAccount b = s;
+```
+* It allows you to utilize a common interface and treat all subtypes the same (as its supertype), reduces code, future proofs your code (if new subtypes are introduced later on)
+
+### Function Overloading
+
+* In C there are several functions to compute the absolute value: `fabs(), labs(), llabs(), abs()`, etc.
+* Function overloading is the ability to define multiple functions with the same name but different parameters
+* Example: `Math.abs()` there are four methods with the same name, but different parameter types
+* As long as a function differs in the arity (number of) or type of parameters, the compiler can deduce which one you are calling
+* The compiler is able to tell which one to call using *static dispatch*
+
+### Operator Overloading
+
+* An operator may have more than one meaning depending on the context
+* In Java: 
+  * `String + String` means: concatenation
+  * `int + int` means: addition
+  * `String + int` means: concatenation
+* In PHP:
+  * `String + String` means: juggle both and add
+  * `String . String` means concatenation
+* C++: MOST operators can be overloaded
+  * `Set + Set`: union
+  * `List + List`: Appending or union or maybe something else
+  * `Time + Time`: way too many interpretations
+* In general you want to avoid operator overloading
+  * Far too ambiguous
+  * At the end of the day, you have to write code to implement the operator overloading any way
+  * If you have to write code, put it into a function, 
+  * If you have a function, give a good name
+  * If you have a good name, you have a well defined explanation
+
+```java
+String b = " World";
+String s = "Hello" + b;
+
+String b = " World";
+String s = new StringBuilder().append("Hello").append(b).toString();
+```  
+
+* Python:
+  * `String + String`: concatenation
+  * `number + number`: addition
+  * `String + number`: error: you'd have to wrap the number in `str()`
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
