@@ -2,15 +2,25 @@ from zipfile import ZipFile
 from config import config
 import os
 
-# Returns a map of 
-#   { (fullPath,fileName,extension) => fileContents }
-# of all files in the specified path according to config.fileExtensions
-# If the configuration includes jar or zip files, it extracts
-# files within the archive files but only one level deep
-#
-# The fullPath is included to ensure that duplicate files are not
-# clobbered
 def getFiles(path):
+  """
+  Returns a map of 
+  
+    { (fullPath,fileName,extension) => fileContents }
+
+  of all files in the given path according to config.fileExtensions
+  If the configuration includes jar or zip files, it extracts
+  files within the archive files but only one level deep (it does
+  not recursively extract archives within archives).  
+  
+  The key consists of a triple: the fullPath is included to ensure 
+  that duplicate files are not excluded from the map; the fileName
+  and extension (c, md, java for example, sans period) are included
+  for convienience.  The value in the map is the contents of the file
+  with any non-decodable characters excluded.
+  
+  path -- the path in which to retrieve files
+  """
   files = {}
   if not os.path.exists(path):
     return files
@@ -23,7 +33,7 @@ def getFiles(path):
       (_,extension) = os.path.splitext(fileName)
       extension = extension[1:] #chomp period: .c -> c
       if extension == 'jar' or extension == 'zip':        
-        extracted = extractArchiveFiles(fileName)
+        extracted = extractArchiveFiles(path + fileName)
         files = {**files, **extracted}
       else:
         contents = open(path+fileName, errors='ignore').read()
@@ -33,10 +43,17 @@ def getFiles(path):
         files[(path+fileName,fileName,extension)] = contents
   return files
 
-# Extracts files from the given archive file (.tar, .zip), returning a map:
-#  { (fullPath,fileName,extension) => fileContents }
-# of all of them
 def extractArchiveFiles(fileName):
+  """
+  Extracts files from the given archive file (.tar, .zip), returning a map:
+    
+    { (fullPath,fileName,extension) => fileContents }
+  
+  of all of them according to the config.fileExtensions similar to 
+  getFiles(path)
+  
+  fileName -- the path/file of the archive file to extract from
+  """
   files = {}
   with ZipFile(fileName, 'r') as zip: 
     for z in zip.infolist():
