@@ -49,8 +49,13 @@ def pushAssignments(gradingAssignment):
         for g in groups:
             s = g.members[0]
             path = assignmentDir+s.cseLogin+"/"
-            print("looking in " + path + "...")
-            files = getFiles(path)
+            print("looking in " + path + "...")            
+            try:
+              files = getFiles(path)
+            except: 
+              e = sys.exc_info()[0]
+              print("Error: %s" % e )
+              files = {}
             if files:
               submission = codepost.submission.create(
                  assignment=assignmentId,
