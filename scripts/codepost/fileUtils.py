@@ -40,6 +40,9 @@ def getFiles(path):
         #if the file is empty, add content to accommodate codepost's API
         if not contents:
           contents = "EMPTY FILE"
+        #if the file contains a null byte, likely it is binary, we ignore its contents
+        elif '\0' in contents:
+          contents = "BINARY"
         files[(path+fileName,fileName,extension)] = contents
   return files
 
@@ -60,6 +63,10 @@ def extractArchiveFiles(fileName):
       if not config.fileExtensions or (z.filename.endswith(tuple(config.fileExtensions)) and not z.filename.endswith(tuple(['.jar', '.zip'])) ):
           (path,basename) = os.path.split(z.filename)
           (_,extension) = os.path.splitext(basename)
-          contents = zip.read(z).decode()
+          contents = zip.read(z).decode(errors='ignore')
+          if not contents:
+            contents = "EMPTY FILE"
+          elif '\0' in contents:
+            contents = "BINARY"
           files[(z.filename,basename,extension)] = contents
   return files
