@@ -144,7 +144,7 @@ class Course:
             groups = assignment[grader]
             groups.sort(key=lambda x: x.members[0].name)
             for g in groups:
-                r += "%s;%s\n"%(grader.name,g.members[0].canvasEmail)
+                r += "%s\t%s\n"%(grader.name,g.members[0].canvasEmail)
         return r
 
 course = Course(instructorNuids=config.instructorNuids, 
