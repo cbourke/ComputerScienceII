@@ -230,6 +230,73 @@ String s = new StringBuilder().append("Hello").append(b).toString();
   * `String + number`: error: you'd have to wrap the number in `str()`
   
   
+  ## Parameterized Polymorphism
+
+  * Java allows you to *parameterize* a class, method or variable
+  * Effectively makes the variable's *type* also variable
+  * You essentially want to use parameterization to make as generic of code as possible so that you can apply it to as many different TYPES as you can
+  * Saves you from having many multiple implementations for different types
+  * You can also place *bounds* on your parameters to give you a *minimal interface*  using the `<T extends Foo>` syntax: then you are guaranteed that `T` is of type `Foo` (at least)
+
+  # SOLID Principles
+
+  * collection of design principles for OOP created by Robert Martin, Michael Feathers early 2000s
+
+  ## S = Single Responsibility Principle
+
+  * Encapsulation: a class should only have one responsibility
+  * Classes should not be "god" classes
+  * A `Person` class should be responsible for `Person` things, an `Address`
+  class should be responsible for `Address` things
+  * Load data from CSV files, then serialize it to XML or JSON files
+  * Classes should generally be small
+  * Large classes = more responsibility = less reusability
+
+  ## O = Open/Closed Principle
+
+  * Every unit (module or class) should be *open for extension* and *closed for modification*
+  * Classical inheritance: extend the behavior in subclasses, but DO NOT modify the behavior in the super class
+  * You can add fields or methods to subclasses to augment its state or behavior
+  * Superclasses provide more general behavior that should NOT be modifiable: it should work *generally* and *generically* for all current types and any future types
+  * Have a good, well-thought out inheritance because it is extremely difficult if not impossible to change later on
+
+  ## Liskov Substitution Principle
+
+  * If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+  * Recall: the Shape-Rectangle-Square problem: having mutable methods that can semantically change an object's type violate the Liskov Substitution Principle
+
+  ## Interface Segregation Principle
+
+  * No client code should be forced to depend on methods it does not use
+  * Example: `ClickEventHandler` interface that specified *both* `onClick()` and `onDoubleClick()` methods
+  * When designing an interface: keep them as small as possible, maybe 1 or 2 methods at most (or even zero methods!)
+
+  ## Dependency Inversion Principle
+
+  * High-level modules (classes) should not depend on low-level modules
+  * Both Should depend on abstractions
+  * Example: say you have 3 libraries on a phone app that compute location
+  * Library A: `double GPSLocator.getLatitude(), double GPSLocator.getLongitude()`
+  * Library B: `AndroidLocation AndroidNative.getLocation()` (`AndroidLocation.getLatitude(), AndroidLocation.getLongitude()`
+  * Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+  ```java
+  if(Library A) {
+  return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+  } else if(Library B) {
+  AndroidLocation l =  AndroidNative.getLocation();
+  return new Location(l.getLatitude(), l.getLongitude());  
+  } else if(Library C) {
+  return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()), Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+  }
+  ```
+
+  * The code above is the "client" code: it depends on the low-level classes `GPSLocator, AndroidNative, CellTowerGPS`
+  * You can invert the dependency: define an interface `Locator` that specifies one method: `Location getLocation()`
+  * You can implement 3 wrapper classes: `GPSLocator`, `AndroidLocator`, `CellLocator`, each one owns an instance (via composition) of a GPS locator library
+  * Each wrapper class `implements` the interface
+
+  
   
   
   
