@@ -223,22 +223,107 @@ select p.name as publisherName, count(g.gameId) as numGames from publisher p
 
 ```sql
 
+use cbourke;
 
+drop table if exists ActorFilm;
 drop table if exists Film;
+drop table if exists Director;
+drop table if exists Actor;
+
+create table if not exists Director (
+  directorId int primary key not null auto_increment,
+  firstName varchar(100),
+  lastName varchar(100)  
+);
 
 create table if not exists Film (
   filmId int primary key not null auto_increment,
   title varchar(255) not null,
-  releaseDate varchar(50) default '0000-00-00',
+  releaseDate varchar(50) not null default '0000-00-00',
   imdbRating double,
   grossEarnings double,
   eidr varchar(100) unique key,
-  -- TODO: model a director 
-  check (imdbRating >= 0 and imdbRating <= 10)
+  directorId int not null,
+  check (imdbRating >= 0 and imdbRating <= 10),
+  foreign key (directorId) references Director(directorId)
 );
 
-show tables;
+insert into Director (firstName, lastName) values 
+  ("George", "Lucas"),
+  ("Martin", "Scorcese"),
+  ("Steven", "Speilberg"),
+  ("Guermo", "Del Toro");
 
--- TODO: make sure that the EIDR is unique!
+insert into Film (title, directorId) values
+  ("Star Wars", (select directorId from Director where lastName = "Lucas")),
+  ("American Graffiti", (select directorId from Director where lastName = "Lucas")),
+  ("THX 1138", (select directorId from Director where lastName = "Lucas")),
+  ("Pan's Labyrinth", (select directorId from Director where lastName = "Del Toro")),
+  ("Hellboy", (select directorId from Director where lastName = "Del Toro"));
 
+create table if not exists Actor (
+  actorId int primary key not null auto_increment,
+  firstName varchar(100),
+  lastName varchar(100)  
+);
+
+create table if not exists ActorFilm (
+  actorFilmId int primary key not null auto_increment,
+  actorId int not null,
+  filmId int not null,
+  -- you can put other data here too: wonAward boolean,
+  foreign key (actorId) references Actor(actorId),
+  foreign key (filmId) references Film(filmId),
+  constraint `uniqueActorFilmCombo` unique (actorId,filmId)
+);
+
+insert into Actor (firstName, lastName) values
+  ("Mark", "Hamil"),
+  ("Carrie", "Fisher"),
+  ("Harrison", "Ford");
+
+insert into ActorFilm (actorId, filmId) values
+  ((select actorId from Actor where lastName = "Hamil"), (select filmId from Film where title = "Star Wars")),
+  ((select actorId from Actor where lastName = "Fisher"), (select filmId from Film where title = "Star Wars")),
+ -- ((select actorId from Actor where lastName = "Fisher"), (select filmId from Film where title = "Star Wars")),
+  ((select actorId from Actor where lastName = "Ford"), (select filmId from Film where title = "Star Wars"));
+
+select * from Film f
+  join ActorFilm af on f.filmId = af.filmId
+  join Actor a on a.actorId = af.actorId;
+  
 ```
+
+## Normalization
+
+* Three basic normal forms: 1-NF, 2-NF, 3-NF
+* First Normal Form: each attribute in a table only has atomic values
+  * Every column in a table holds only one value
+  * Violation: not having a first name/last name in seprate columns
+  * Violation: a CSV string of multiple emails
+  * Solution: split things out into their own columns or another table, defining a one to many relation
+  * Violation: if you hardcode "enough" columns
+* Second Normal Form: it has to be 1-NF and no non-prime attribute is dependent on a proper subset of prime attributes
+  * If you always have an auto-incremented PK you get 2-NF for free!
+  * Violation: a purchase record may contain a customerId, storeId, storeLocation
+  * Solution: split things out into their own tables
+* Third normal form: 2-NF AND no non-prime column is transitively dependent on the key
+  * Suppose you had a `pricePerUnit` and a `numberOfUnit` and you *stored* a `totalCost` = pricePerUnit * numberOfUnit in a column
+* Bottom line: Normalization is common sense or good design/intuition 
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help me Codd
+
+* There is a lot more to learn about DBs!
+  * Triggers, Views, stored procedures, etc.
+  * Security: don't store passwords!!!
+  * at least unhashed
+* Hard vs soft deletes: a hard delete means you actually `delete` a record from the database; soft delete: every record would have an `isActive` column (`boolean`)
+
+* OOP Model vs Relational Model
+  * OOP has inheritance and behavior
+  * Relational model: does not 
+  * How to resolve this disconnect?
+  * How do you "model" inheritance in a RDBMS
+  * You can use a single table and use a *discriminator column/value* 
+  * KISS Principle = Keep It Simple Stupid!
+  * Alternatives: table per class or a table per subclass (stub) strategies 
+

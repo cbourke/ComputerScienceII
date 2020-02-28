@@ -297,19 +297,97 @@ select p.name, count(g.gameId) as numGames from publisher p
 * Let's design a database to hold film data
 
 ```sql
+use cbourke;
 
-create table Film (
+drop table if exists ActorFilm;
+drop table if exists Film;
+drop table if exists Actor;
+drop table if exists Director;
+
+create table if not exists Director (
+  directorId int primary key not null auto_increment,
+  firstName varchar(100),
+  lastName varchar(100) not null  
+);
+
+create table if not exists Film (
   filmId int primary key not null auto_increment,
   title varchar(255) not null,
   releaseDate varchar(50) not null default '0000-00-00',
   grossEarnings double,
   imbdRating float,
-  eidr varchar(100) unique key 
+  eidr varchar(100) unique key,
+  directorId int not null,
+  foreign key (directorId) references Director(directorId),
+  constraint `nonNegativeRatingConstraint` check (imdbRating >= 0 and imdbRating <=10)
 );
 
--- issues:
--- 1. We dont' want our database identifiers to be dependent on external entities
--- 2. We still want to keep track of the external ID (eidr, ssn, nuid, etc.) or "natural keys"
--- 3. we need to make sure that the external "natural" key is unique
+insert into Director (firstName, lastName) values 
+  ("Quentin", "Tarantino"),
+  ("David", "Lynch"),
+  ("Martin", "Scorcese"),
+  ("Taika", "Waititi");
 
+select * from Director;
+
+insert into Film (eidr, title, directorId) values
+  (1, "Jojo Rabbit", (select directorId from Director where lastName = "Waititi")),
+  (2, "Thor: Ragnorak", (select directorId from Director where lastName = "Waititi")),
+  (3, "Hunt for the Wilderpeople", (select directorId from Director where lastName = "Waititi"));
+
+insert into Film (title, directorId) values
+  ("Pulp Fiction", (select directorId from Director where lastName = "Tarantino")),
+  ("Hateful Eight", (select directorId from Director where lastName = "Tarantino"));
+
+select * from Film;
+
+create table if not exists Actor (
+  actorId int primary key not null auto_increment,
+  firstName varchar(100),
+  lastName varchar(100) not null  
+);
+
+create table if not exists ActorFilm (
+  actorFilmId int primary key not null auto_increment,
+  actorId int not null,
+  filmId int not null,
+  foreign key (actorId) references Actor(actorId),
+  foreign key (filmId) references Film(filmId)
+);
 ```
+
+## Normalization
+
+* Three basic normal forms: 1-NF, 2-NF, 3-NF
+* First Normal: each attribute in a table has only atomic values
+  * Every column in a table holds only one value
+  * Violation of 1-NF: having a comma delimited list of emails
+  * Also a violation to simply hardcode "enough" columns
+  * Simply make another table for any one-to-many relation
+* Second Normal Form: it has to be 1-NF AND no non-prime attribute is dependent on a proper subset of prime attributes
+  * If you always create a auto-incremented primary key, you get 2-NF for free
+  * Violation: a purchase record may contain a customerId, storeId, storeLocation
+  * split everything out into its own table
+* Third normal form: 2-NF AND no non-prime column is transitively dependent on the key
+  * Suppose you had pricePerUnit and a numberOfUnits,
+  totalPrice = pricePerUnit * numberOfUnits
+  * If you stored all three as columns, it is a violation of 3-NF: totalPrice is transitively dependent on the other two columns
+* Bottom line: 3-NF is common sense/intuition
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+* There is alot more to databases to learn
+  * Triggers, Views, stored procedures, etc.
+  * Security: don't store passwords!!!
+  * at least unhashed
+  * hard vs soft deletes: a hard delete means you actually `delete` a record from the database; soft delete: every record would have an `isActive` column (`boolean`)
+
+* OOP Model vs Relational Model
+  * OOP has inheritance and behavior
+  * Relation Model (DB) do not
+  * To resolve the disconnect between the two models you need some way to "model" inheritance
+  * Easiest way to deal with inheritance: discriminator value or column: you denote which *type* of class a record corresponds to with a single character (or other value, `enum`)
+
+
+
+
+
