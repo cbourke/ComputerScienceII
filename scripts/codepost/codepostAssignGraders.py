@@ -63,7 +63,6 @@ def pushAssignments(gradingAssignment):
                  grader=grader.canvasEmail)
               for (fullPath,name,ext),contents in files.items():
                   print("pushing " + name)
-                  extension = ext[1:] #chomp period: .c -> c
                   codepost.file.create(
                      name=name,
                      code=contents,
