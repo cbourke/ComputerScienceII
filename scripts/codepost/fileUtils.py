@@ -1,5 +1,6 @@
 from zipfile import ZipFile 
 from config import config
+import base64
 import os
 
 def getFiles(path):
@@ -31,16 +32,24 @@ def getFiles(path):
   if filenames:
     for fileName in filenames:
       (_,extension) = os.path.splitext(fileName)
-      extension = extension[1:] #chomp period: .c -> c
+      if extension[0] == '.':
+        extension = extension[1:] #chomp period: .c -> c
       if extension == 'jar' or extension == 'zip':        
         extracted = extractArchiveFiles(path + fileName)
         files = {**files, **extracted}
+      elif extension == 'pdf': 
+        encoded = base64.b64encode(open(path+fileName, "rb").read())
+        contents = "data:application/pdf;base64," + encoded.decode('utf-8')
+        files[(path+fileName,fileName,extension)] = contents
       else:
         contents = open(path+fileName, errors='ignore').read()
         #if the file is empty, add content to accommodate codepost's API
         if not contents:
           contents = "EMPTY FILE"
-        #if the file contains a null byte, likely it is binary, we ignore its contents
+        # If the file contains a null byte, likely it is binary, 
+        # we ignore its contents.  In order to support binary files
+        # additional support along with an appropriate media (MIME) 
+        # type prefix tag; see https://www.iana.org/assignments/media-types/media-types.xhtml
         elif '\0' in contents:
           contents = "BINARY"
         files[(path+fileName,fileName,extension)] = contents
