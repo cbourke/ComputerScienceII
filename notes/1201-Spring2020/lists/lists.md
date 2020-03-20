@@ -30,8 +30,28 @@ Integer numbers[] = new Integer[n];
   * Each element is stored in a `Node`
   * Each node stores a reference to the next node in the list
   * Each node thus is linked together or "chained" to each other
-  * Inserting a new node at the *head* of a linked list becomes fairly simple and "free"
+  * Inserting a new node at the *head* of a linked list becomes fairly simple and "free" (efficient)
   * Other operations: inserting at an arbitrary index (or at the end) or retrieving an element become expensive, O(n)
 
-* Next time: 
+* Demonstration:
+  * insert at head
+  * convenience methods: `size(), toString()` 
+  * remove from head
+  * insert at end (take care to keep track of previous)
+  * index-based insert
+  * retrieval
+  * removal (index-based)
+  
+* Variations
+  * Doubly Linked Lists
+  * Circularly Linked Lists
+  * Unrolled Linked Lists
+  * Skip Lists
+  
+  
+  
+  
+  
+  
+  
   
