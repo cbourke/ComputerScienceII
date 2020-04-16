@@ -152,7 +152,14 @@
   * Approach A: find the cross over point where one function becomes larger than the other (fixing $c = 1$ and finding $n_0$ so that all $n \geq n_0$ the inequality holds)
   * Approach B: given two functions, find an inequality that works for some $n_0$: that is, fix $n_0$ and find $c$
 
+## Searching & Sorting Revisited
 
+* Demonstrations
+* Binary Search (Recursive)
+* Master Theorem
+* Insertion Sort
+* Quick Sort
+* Merge Sort
 
 
 
