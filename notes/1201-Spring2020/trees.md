@@ -11,7 +11,7 @@
   * Deletion
 * Lists:
   * Linked Lists:
-    * O(1) time operations for insertion/retrieival/deletion from the head and tail
+    * O(1) time operations for insertion/retrieval/deletion from the head and tail
     * O(n) for most other arbitrary operations
   * Array-based: 
     * If sorted, O(log(n)) search feature
@@ -61,7 +61,44 @@
 * Postorder traversal
   * Recursively visits nodes in a left-right-root manner
 
-## More
+### Implementations
+
+* Basic Java Implementation
+* Recursive Implementations
+* Stack-based Implementations
+* Tree Walk
+* Breadth First Search
+
+## Binary Search Trees
+
+* A *binary search tree* is a binary tree such that every node u holds a key k such that
+  * *Every* node in u's left sub-tree has a key value less than k
+  * *Every* node in u's right sub-tree has a key value greater than k
+
+* Three basic operations:
+  * Search (find a particular node)
+  * Insert elements (preserving the BST property)
+    * You always insert a new element as a leaf
+    * Existing elements (inserting duplicates) can be treated as a no-op
+  * Delete elements
+    * Step 1: find the element
+    * Step 2: delete
+      * Case 1: if it is a leaf, simply rearrange the references
+      * Case 2: if it has only one child, simply promote that child up
+      * Case 3: if it has *both* children: 
+        * Retrieve the minimum element in the right-subtree or the maximum element in the left subtree and move its key to replace the key you're deleting
+        * Remove the "promoted" key (which is guaranteed to have at most one child)
+
+
+* All three operations will be O(d) where d is the depth of the BST
+  * If the BST is balanced, then d = O(log(n)) where n is the number of keys, thus giving us O(log(n)) performance!
+  * Unfortunately, in general, there is no guarantee that the depth will be O(log(n))
+  * There can be degenerative cases where the d = O(n)
+
+
+
+
+
 
 
 
