@@ -95,7 +95,25 @@
   * Unfortunately, in general, there is no guarantee that the depth will be O(log(n))
   * There can be degenerative cases where the d = O(n)
 
+## Heaps
 
+* Motivation: BST are not necessarily *balanced*
+* Balanced BSTs to exist: AVL, 2-3, Red-Black, etc. 
+* Work by efficiently *rebalancing* nodes
+* Alternative: Heaps
+* A heap is a binary tree that has the following properties
+  * It is is a *full* binary tree: at every level every node is present except possibly the last row which is full-to-the-left ()
+  * It satisfies the "heap property": the key in any node is less (min heap) than *both* of its children
+* Observations
+  * Fullness guarantees the depth of the tree is logarithmic d = O(log(n))
+  * The root node (top of the heap) contains the minimum element in the heap
+* Heaps support two basic operations:
+  * getMin - retrieves and removes the minimum element from the heap
+  * insert - adds an element to the heap
+
+* Applications
+  * Priority Queue: insert things (according to a priority), remove the next "highest" priority element: offers both efficient O(log(n)) operations 
+  * Application: heap sort: put stuff into a heap, take stuff out of a heap!
 
 
 
