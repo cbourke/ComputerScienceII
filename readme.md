@@ -36,17 +36,17 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ## Course Offerings
 
-### Spring 2019 
+### Spring 2021
 
-- Course Link: https://canvas.unl.edu/courses/53628
-- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUzX-W8wQkWPYu5gbkcZYMC
+- Course Link:
+- Lectures: 
 
 ### Spring 2020
 
 - Course Link: https://canvas.unl.edu/courses/75741
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWV9pWLAc1XiPlKXpXS3X8v
 
-#### Honors Section
+### Spring 2019 
 
-- Course Link: https://canvas.unl.edu/courses/81909
-- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZXyqMhz_gcbDLGO1e_LbBX3
+- Course Link: https://canvas.unl.edu/courses/53628
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUzX-W8wQkWPYu5gbkcZYMC
