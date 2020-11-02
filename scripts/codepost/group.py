@@ -26,7 +26,7 @@ class Group:
         if len(self.members) > 1:
           s = "  %-20s (%s) \n"%(self.canvasGroupName,self.canvasGroupId)
         else:
-          s = "  %-20s \n"%("Group of One")
+          s = "  %-20s \n"%("Group of One\n")
         for member in self.members:
           s += "    %s\n"%(member)
         return s
