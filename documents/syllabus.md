@@ -81,6 +81,116 @@ solving should be modified to ask and answer design questions first:
 
 -   Trees; Binary Search Trees
 
+## COVID-19 Accommodations & Policies
+
+Several sections of this course have been established for the spring 2021
+offering in order to accommodate a variety of student attendance preferences.
+
+* Section 150 - This **In-Person** course meets TR 11:00AM - 12:15AM and is
+delivered in a hybrid mode where students are welcome to attend in person as 
+often as social distancing and room restrictions allow.  Currently, students 
+will be allowed to come every other lecture based on the following schedule.  
+  * If your NUID ends with an even number, you *may* attend lecture in
+    person on Tuesdays, but *must* attend remotely on Thursdays
+  * If your NUID ends with an odd number, you *may* attend lecture in
+    person on Thursdays, but *must* attend remotely on Tuesdays
+Students *may* opt to attend remotely for all lectures.  For those attending
+remotely, all lectures are livestreamed via YouTube during the regular lecture 
+time.  Live Q&A will be available through Piazza.  Recordings of the lecture 
+are provided immediately after through YouTube.
+
+* Section 160 - This **Web Conferencing** section is the same course as section
+150, however students in this section *must* attend lecture remotely for all
+lectures and may not attend lectures in person.
+
+* Section 700 - This **Online** section is the same course as section 150 but
+is a purlely online section.  Students must attend remotely for all lectures
+and labs.  
+
+### Labs
+
+Students in sections 150 and 160 may choose to attend their lab section either 
+in-person or remotely (via zoom).  Students in the online 700 section will 
+complete their labs remotely but may attend virtual lab sessions via zoom.  
+
+### Office Hours
+
+All office hours by instructors and Learning Assistants will be offered 
+*online only* via zoom.  
+
+### Face Covering Policy
+
+**Required Use of Face Coverings for On-Campus Shared Learning Environments**
+
+As of July 17, 2020 and until further notice, all University of 
+Nebraska--Lincoln (UNL) faculty, staff, students, and visitors 
+(including contractors, service providers, and others) are required 
+to use a facial covering at all times when indoors except under 
+specific conditions outlined in the COVID 19 face covering policy 
+found at: <https://covid19.unl.edu/face-covering-policy>. This 
+statement is meant to clarify classroom policies for face coverings:
+
+To protect the health and well-being of the University and wider 
+community, UNL has implemented a policy requiring all people, 
+including students, faculty, and staff, to wear a face covering 
+that covers the mouth and nose while on campus. The classroom is 
+a community, and as a community, we seek to maintain the health 
+and safety of all members by wearing face coverings when in the 
+classroom. Failure to comply with this policy is interpreted as 
+a disruption of the classroom and may be a violation of UNL's 
+Student Code of Conduct.
+
+Individuals who have health or medical reasons for not wearing 
+face coverings should work with the Office of Services for 
+Students with Disabilities (for students) or the Office of 
+Faculty/Staff Disability Services (for faculty and staff) to 
+establish accommodations to address the health concern. Students 
+who prefer not to wear a face covering should work with their 
+advisor to arrange a fully online course schedule that does 
+not require their presence on campus.
+
+Students in the classroom:
+  * If a student is not properly wearing a face covering, 
+  the instructor will remind the student of the policy and ask 
+  them to comply with it.
+  * If the student will not comply with the face covering policy, 
+  the instructor will ask the student to leave the classroom, 
+  and the student may only return when they are properly wearing 
+  a face covering.
+  * If the student refuses to properly wear a face covering 
+  or leave the classroom, the instructor will dismiss the class 
+  and will report the student to Student Conduct & Community 
+  Standards for misconduct, where the student will be subject 
+  to disciplinary action.
+
+Instructors in the classroom:
+  * If an instructor is not properly wearing a face covering, 
+  students will remind the instructor of the policy and ask them 
+  to comply with it.
+  * If an instructor will not properly wear a face covering, 
+  students may leave the classroom and should report the misconduct 
+  to the department chair or via the TIPS system for disciplinary 
+  action through faculty governance processes.
+
+### Social Distancing & Attendance
+
+Due to the continuing COVID-19 pandemic, the following 
+policies and accommodations will be made for this course.  
+
+  * No assessment will be made based on any synchronous attendance 
+  for instructional sessions (which includes lecture, lab, hack, and 
+  office hours).  Attendance of any face-to-face instructional session
+  is **entirely optional** and is left to each student's own 
+  reasonable judgement.  If you have a medical condition or other 
+  consideration or simply do not wish to unnecessarily expose yourself
+  or others to potential infection, you are *encouraged* to refrain
+  from any and all face-to-face sessions.  You will not be judged 
+  nor will you be required to provide any documentation.
+  
+  * If you feel sick, have a fever or other related symptoms of
+  think you may have been exposed to a COVID-19 positive individual, you
+  *may not* attend face-to-face sessions.  Please attend remotely.
+
 ## University Services
 
 ### Accommodations for Students with Disabilities
