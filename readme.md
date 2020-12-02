@@ -8,7 +8,8 @@ the University of Nebraska-Lincoln
 
 ## Textbook
 
-A (draft) of a textbook for this course is available here: https://cse.unl.edu/~cbourke/ComputerScienceTwo.pdf
+A (draft) of a textbook for this course is available here:  
+https://bitbucket.org/chrisbourke/computerscienceii/src/master/ComputerScienceTwo.pdf
 
 ## YouTube Channel
 
@@ -38,8 +39,8 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ### Spring 2021
 
-- Course Link:
-- Lectures: 
+- Course Link: https://canvas.unl.edu/courses/100756/
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZXhmNjYCPQwRs4ItqCbuCpz
 
 ### Spring 2020
 
