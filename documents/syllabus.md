@@ -104,7 +104,7 @@ are provided immediately after through YouTube.
 lectures and may not attend lectures in person.
 
 * Section 700 - This **Online** section is the same course as section 150 but
-is a purlely online section.  Students must attend remotely for all lectures
+is a purely online section.  Students must attend remotely for all lectures
 and labs.  
 
 ### Labs
@@ -219,10 +219,10 @@ provides fun events, innovative education, and dynamic services to help
 students understand emotions, manage stress, build strength, connect
 with others, develop grit and navigate transitions.
 
-## Grading
+## Assessment
 
-Grading will be based on labs and assignments.  There are 14 labs, 20 points 
-each comprising about 18.6% of your grade.  There are 8 assignments whose 
+Assessment (grading) will be based on labs and assignments.  There are 14 labs, 20 points 
+each comprising about 18.6% of your grade.  There will be 7-8 assignments whose 
 point values vary, but whose total is 1220 points comprising about 81.4% of
 your final grade.
 
@@ -381,6 +381,22 @@ In addition, there are is an anonymous suggestion box that you may use
 to voice your concerns about any problems in the course if you do not
 wish to be identified. It is available at
 <https://cse.unl.edu/contact-form>.
+
+### Learning Assistant Program (LAP)
+
+This course is supported by the CSE Learning Assistant Program (LAP).  
+The mission of the LAP is to improve student comprehension and 
+retention in computing fields by focusing on the learner's experience. 
+This course will be supplemented by Learning Assistants (LAs) and Course 
+Leaders (CLs) to help improve your learning. LAs and CLs are other 
+undergraduate students who have taken the same or similar courses 
+and have been trained to help you succeed in this course. Your LAs 
+and CLs will hold regular office hours, help with grading, and assist 
+you with labs/assignments.
+
+I strongly encourage you to utilize the LAs and CLs when you are 
+completing coursework. More information can be found in the Learning 
+Assistant Program Module on Canvas.
 
 ### Getting Help
 
