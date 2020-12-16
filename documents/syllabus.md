@@ -191,6 +191,23 @@ policies and accommodations will be made for this course.
   think you may have been exposed to a COVID-19 positive individual, you
   *may not* attend face-to-face sessions.  Please attend remotely.
 
+### Self-Care Curricular Adjustments
+
+The UNL Faculty Senate passed a [resolution](https://www.unl.edu/facultysenate/senate/Resolutions/Spring%202021%20Curriculum%20resolution.pdf) on 
+December 1st, 2020 encouraging instructors to make adjustments to 
+courses and curricula in an effort to promote self-care and to 
+relieve stress and promote mental well-being during the pandemic 
+crisis.
+
+As such, the following accommodations and changes have been made
+to this course:
+ - The midterm exam and final exam have been eliminated
+ - The final assignment (assignment 8, typically a written, 
+   theory-based assignment) is still assigned and required, but 
+   it will not be graded.
+ - The number of labs has been reduced to 14 to accommodate the
+   COVID schedule.  Further, we will drop your lowest lab grade.
+     
 ## University Services
 
 ### Accommodations for Students with Disabilities
@@ -228,9 +245,9 @@ your final grade.
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Labs        | 14     | 280    |
-| Assignments | 8      | 1220   |
-| Total       |        | 1500   |
+| Labs        | 13     | 260    |
+| Assignments | 7      | 740    |
+| Total       |        | 1000   |
 
 ### Scale
 
