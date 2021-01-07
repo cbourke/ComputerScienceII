@@ -207,7 +207,11 @@ to this course:
    it will not be graded.
  - The number of labs has been reduced to 14 to accommodate the
    COVID schedule.  Further, we will drop your lowest lab grade.
-     
+ - For those in the honors section, the usual requirement that 
+   "bonus" items are required and part of your regular grade will
+   be removed and the items will be optional and treated as bonus
+   if completed.
+
 ## University Services
 
 ### Accommodations for Students with Disabilities
