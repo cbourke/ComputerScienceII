@@ -20,8 +20,10 @@ class Person:
         self.canvasLogin = canvasLogin
         self.canvasEmail = canvasEmail      
         self.cseLogin    = cseLogin
+        
     def __str__(self):
         return "%-25s (%s) %-15s %s"%(self.name,self.nuid,self.cseLogin,self.canvasEmail)
+
     def __hash__(self):
         return hash(self.nuid)
         
@@ -30,3 +32,6 @@ class Person:
         
     def __lt__(self,other):
         return (self.nuid < other.nuid)
+
+    def toCsv(self):
+        return "%s,%s,%s,%s,%s,%s\n"%(self.nuid,self.name,self.canvasId,self.canvasEmail,self.canvasLogin,self.cseLogin)

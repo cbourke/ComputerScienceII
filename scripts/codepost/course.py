@@ -97,6 +97,10 @@ class Course:
         r += "Groups: \n"
         for g in self.groups:
             r += str(g)
+        r += "CSV Data:\n"
+        r += "nuid,name,canvasId,canvasEmail,canvasLogin,cseLogin\n"
+        for nuid,p in self.students.items():
+            r += p.toCsv()
         return r
 
     # returns a mapping of graders (Person objects) to
