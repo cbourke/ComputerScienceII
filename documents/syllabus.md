@@ -242,9 +242,9 @@ with others, develop grit and navigate transitions.
 
 ## Assessment
 
-Assessment (grading) will be based on labs and assignments.  There are 14 labs, 20 points 
-each comprising about 18.6% of your grade.  There will be 7-8 assignments whose 
-point values vary, but whose total is 1220 points comprising about 81.4% of
+Assessment (grading) will be based on labs and assignments.  There are 14 labs, 
+20 points each comprising about 26% of your grade.  There will be 7 assignments 
+whose point values vary, but whose total will comprise the remaining 76% of 
 your final grade.
 
 | Category    | Number | Points |
