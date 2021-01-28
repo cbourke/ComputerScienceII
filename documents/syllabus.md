@@ -243,9 +243,9 @@ with others, develop grit and navigate transitions.
 ## Assessment
 
 Assessment (grading) will be based on labs and assignments.  There are 14 labs, 
-20 points each comprising about 26% of your grade.  There will be 7 assignments 
-whose point values vary, but whose total will comprise the remaining 76% of 
-your final grade.
+20 points each comprising about 26% of your grade.  There will be several 
+assignments whose point values vary, but whose total will comprise the 
+remaining 76% of your final grade.
 
 | Category    | Number | Points |
 |-------------|--------|--------|
@@ -258,7 +258,7 @@ your final grade.
 Final letter grades will be awarded based on the following standard
 scale. This scale may be adjusted upwards if the instructor deems it
 necessary based on the final grades only. No scale will be made for
-individual assignments or exams.
+individual assignments.
 
 | Letter Grade | Percent |
 |--------------|---------|
