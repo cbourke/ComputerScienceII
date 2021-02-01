@@ -10,7 +10,7 @@ This subdirectory hosts documents specific to the honors section
 ### Spring 2021
 
 - Course Link: see main readme file
-- Lectures: 
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWP1J2bZViUl5Hob2NQeXVN
 
 ### Spring 2020
 
