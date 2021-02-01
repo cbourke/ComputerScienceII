@@ -31,7 +31,7 @@ class Config:
         
     # CSE Handin Path - this needs to be an *absolute* path
     # since the script may run without the HOME enviro variable
-    handinPath = "/home/grad/Classes/cse156/handin/"
+    handinDirectory = "/home/grad/Classes/cse156/handin/"
     
     # CSE User Database configuration (udb on cse-apps)
     # cse-apps.unl.edu is firewalled for 3306 except from 
