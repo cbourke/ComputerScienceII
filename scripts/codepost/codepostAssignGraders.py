@@ -52,7 +52,7 @@ assignmentId = int(sys.argv[2])
 
 codepost.configure_api_key(config.codePostApiKey)
 
-gradingAssignment = course.getAssignment()
+gradingAssignment = course.getGradingAssignment()
 s = course.assignmentToString(gradingAssignment)
 print(s)
 
