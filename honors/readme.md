@@ -9,7 +9,7 @@ This subdirectory hosts documents specific to the honors section
 
 ### Spring 2021
 
-- Course Link: see main readme
+- Course Link: see main readme file
 - Lectures: 
 
 ### Spring 2020
