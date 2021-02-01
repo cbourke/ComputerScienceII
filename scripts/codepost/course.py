@@ -1,6 +1,34 @@
+"""
+A class and module to support an entire course.  A
+course is connected to both a Canvas course as well
+as a CSE course account.
+
+This module loads data from the Canvas course using 
+its API (see canvas.py) and then interfaces with the
+CSE User Database (see udb.py) to connect users with
+their CSE logins.
+
+Using the configuration module (see config.py), users
+are separated according to instructors (non-graders),
+graders, and students.  If a user cannot be connected
+to a CSE login, they are separated into an "orphan"
+group.
+
+The Course class itself maintains these groups both
+as lists of NUIDs (strings) and maps of NUID => Person (object).
+
+When used as an executable file, all course data is 
+loaded and printed to the standard output.  Otherwise, 
+a global object (course) is made available.  
+
+In addition to the course data, two functions provide
+functionality to randomly create a grading assignment 
+(see getAssignment() and assignmentToString()).
+"""
+
+from config import config
 from canvas import roster
 from canvas import groups
-from config import config
 from group import Group
 import udb
 import copy
@@ -10,13 +38,13 @@ import random
 class Course:
     #all persons will be by NUID
     instructorNuids = []
-    #map: "NUID" => Person
     instructors = {}
 
     graderNuids = []
     graders = {}
     
     students = {}
+    groups = []
     
     #students with no cse login for some reason
     orphans = {}
@@ -24,62 +52,44 @@ class Course:
     def __init__(self, instructorNuids = [], graderNuids = []):
         self.instructorNuids = instructorNuids
         self.graderNuids = graderNuids
-        # 1a. load full roster from canvas
+        # 1. load full roster from canvas
+        # {NUID => Person}
         self.roster = roster
         # 2. get as many cse logins as possible
         # 2a. dump NUIDs to map
-        nuids = [p.nuid for p in self.roster]
+        nuids = self.roster.keys()
         nuidsToCseLogins = dict(zip(nuids, [None for x in nuids]))
-        # 2b. update
+        # 2b. update from UDB
         nuidsToCseLogins = udb.mapNuidsToCseLogins(nuidsToCseLogins,config.nuidToCseLoginPickle)
-        # 2c. update roster instances
-        for p in self.roster:
-            if p.nuid in nuidsToCseLogins and nuidsToCseLogins[p.nuid] is not None:
-                p.cseLogin = nuidsToCseLogins[p.nuid]
+        # 2c. update cse logins for all roster instances
+        for nuid,p in self.roster.items():
+          if nuid in nuidsToCseLogins and nuidsToCseLogins[nuid] is not None:
+            p.cseLogin = nuidsToCseLogins[nuid]
                 
         #3. filter into the appropriate group
         #   This is done manually as the "role" is not available from canvas 
         #   using the canvas API and we want more fine-grained control anyway
-        #   - If there is no cse login, they are ignored
+        #   - If there is no cse login, they are "orphaned"
         #   - Otherwise, they are either a student XOR instructor/grader
         #     - instructors can be graders
-        for p in self.roster:
+        for nuid,p in self.roster.items():
             if p.cseLogin is None:
-                self.orphans[p.nuid] = p
+                self.orphans[nuid] = p
             else:
-                if p.nuid in instructorNuids or p.nuid in graderNuids:
-                    if p.nuid in instructorNuids: 
-                        self.instructors[p.nuid] = p
-                    if p.nuid in graderNuids: 
-                        self.graders[p.nuid] = p
+                if nuid in instructorNuids or nuid in graderNuids:
+                    if nuid in instructorNuids: 
+                        self.instructors[nuid] = p
+                    if nuid in graderNuids: 
+                        self.graders[nuid] = p
                 else:
-                    self.students[p.nuid] = p
-        #4. Update the groups so that every student is in a group
-        #   For those in a canvas group of 2 or more or in their
-        #   own "group of one"
-        #   self.groups data model:
-        #   [(groupId, 'Group Name', [canvasIds])]
-        canvasGroups = groups
+                    self.students[nuid] = p
+        # update groups to exclude instructors and graders [Group]
         self.groups = []
-        for group in canvasGroups:
-            #canvasGroupId, canvasGroupname
-            g = Group(group[0], group[1])
-            members = []
-            for memberCanvasId in group[2]:
-                for p in self.roster:
-                    if p.canvasId == memberCanvasId:
-                        members.append(p)
-                        p.group = g;
-                        break
-            g.addMembers(members)
+        # for each group in canvas.groups:
+        for g in groups:
+          # if the group leader (first listed) is a student, then add them
+          if g.members[0].nuid in self.students:
             self.groups.append(g)
-        # iterate through students and create "group of one"
-        for nuid,s in self.students.items():
-            if s.group is None:
-                g = Group()
-                g.addMembers([s])
-                s.group = g 
-                self.groups.append(g)
 
     def __str__(self):
         r = "Instructors (%d): \n"%(len(self.instructors))
@@ -103,9 +113,16 @@ class Course:
             r += p.toCsv()
         return r
 
-    # returns a mapping of graders (Person objects) to
-    #  a list of groups (Group objects) they are assigned to
-    def getAssignment(self):
+    def getGradingAssignment(self):
+        """
+        Returns a randomized mapping of graders (Person objects) 
+        to a list of students (Group objects) they are assigned 
+        to grade.
+        
+        Assignments are made in a round-robin manner so that the 
+        same grader(s) are not always assigned more (or fewer) to
+        grade.
+        """
         graderNuids = list(self.graders.keys())
         groups = copy.deepcopy(self.groups)
         random.shuffle(graderNuids)
@@ -114,15 +131,22 @@ class Course:
         #initialize lists 
         for gNuid in graderNuids:
             assignment[self.graders[gNuid]] = []
-        i = 0
+        i = 0        
         n = len(graderNuids)
         for group in groups:
-            grader = self.graders[graderNuids[i]]
-            assignment[grader].append(group)
+            g = self.graders[graderNuids[i]]
+            assignment[g].append(group)
             i = (i+1)%n
         return assignment
         
     def assignmentToString(self,assignment):
+        """
+        Given an assignment (a mapping of Person objects to a
+        list of Person objects) as generated by getAssignment(), 
+        this function will create a human-readable string of the
+        grading assignments.  For convenience, the printed string
+        is in order of name for both graders and students
+        """
         r  = "Assigned Grading\n"
         r += "================\n"
         min = math.floor(len(self.groups) / len(self.graders))
@@ -147,17 +171,25 @@ class Course:
         for grader in graders:
             groups = assignment[grader]
             groups.sort(key=lambda x: x.members[0].name)
+            nameTokens = grader.name.split(",")
+            graderLast = nameTokens[0].strip()
+            graderFirst = nameTokens[1].strip()
             for g in groups:
-                r += "%s\t%s\n"%(grader.name,g.members[0].canvasEmail)
+                nameTokens = g.members[0].name.split(",")
+                studentLast = nameTokens[0].strip()
+                studentFirst = nameTokens[1].strip()
+                r += "%s,%s,%s,%s,%s,%s,%s,%s\n"%(grader.nuid,graderLast,graderFirst,g.members[0].nuid,studentLast,studentFirst,g.members[0].cseLogin,g.members[0].canvasEmail)
         return r
 
 course = Course(instructorNuids=config.instructorNuids, 
            graderNuids=config.graderNuids)
+"""
+The course object for this module initialized with with
+the course data defined in config.py
+"""
 
 def printCourse():
     print(course)
 
 if __name__ == "__main__":
     printCourse()
-
-

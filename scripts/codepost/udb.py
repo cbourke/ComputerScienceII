@@ -1,6 +1,5 @@
 import pickle
 import os.path
-import pyodbc
 from config import config
 
 # For pyodbc you can find your odbc ini file using:
@@ -13,28 +12,26 @@ from config import config
 #  for x in pyodbc.drivers():
 #    print(x)
 
-
-"""
-Maps NUIDs to CSE login IDs.  Given the map of NUIDs
-(some of which may already be mapped) it updates the
-map by querying the udb (User Database) on the cse-apps
-server, including any missing logins in the returned 
-map.
-
-If the specified pickleFileName is provided, the method
-first tries to load (but does not overwrite) any missing
-logins from the serialized pickle file to avoid going
-to the database (a database query is still made for any
-remaining missing records).  Further, the resulting
-map is persisted back to the pickle file (overwriting 
-the original) before it is returned.
-
-@param nuidToCseLogin: the given map of (possibly incomplete) NUIDs-to-CSE Logins
-@param pickleFileName: the name of the pickle file to persist from/to
-@return: an updated NUID-to-CSE Login map
-"""
 def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
+  """
+    Maps NUIDs to CSE login IDs.  Given the map of NUIDs
+    (some of which may already be mapped) it updates the
+    map by querying the udb (User Database) on the cse-apps
+    server, including any missing logins in the returned 
+    map.
 
+    If the specified pickleFileName is provided, the method
+    first tries to load (but does not overwrite) any missing
+    logins from the serialized pickle file to avoid going
+    to the database (a database query is still made for any
+    remaining missing records).  Further, the resulting
+    map is persisted back to the pickle file (overwriting 
+    the original) before it is returned.
+
+    @param nuidToCseLogin: the given map of (possibly incomplete) NUIDs-to-CSE Logins
+    @param pickleFileName: the name of the pickle file to persist from/to
+    @return: an updated NUID-to-CSE Login map
+  """
   if pickleFileName is not None:
     if os.path.isfile(pickleFileName):
       print('loading from data file '+pickleFileName+'...')
@@ -53,6 +50,7 @@ def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
     
   # if missing logins, try to get them from the DB:
   if missingLogins:
+    import pyodbc
     try:
       print("loading missing logins from db...")
       print(missingLogins)
@@ -88,12 +86,3 @@ def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
     outFile.close()
 
   return nuidToCseLogin
-
-#nuids = ['35140602', '12345678', '49883755', '61910486']
-#b = dict(zip(nuids, [None for x in nuids]))
-#for nuid,login in b.items():
-#  print(nuid + " -> " + str(login))
-
-#b = mapNuidsToCseLogins(b, config.nuidToCseLoginPickle)
-#for nuid,login in b.items():
-#  print(nuid + " -> " + str(login))
