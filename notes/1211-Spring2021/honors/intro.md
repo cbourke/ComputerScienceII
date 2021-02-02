@@ -79,3 +79,5 @@ $area = PI * $radius * $radius;
 //you can NOT redefine constants:
 define('PI', 3);
 ```
+
+# Type Juggling
