@@ -218,7 +218,123 @@ System.out.println(i);
 			System.out.println(s);			
 		}
 ```
-    
+
+## Maps
+
+* A `Map` can map an arbitrary type of object to any other type of object
+
+```java
+
+
+		Map<String, String> nickNames = new HashMap<>();
+		//maps map keys to values
+		nickNames.put("Christopher", "Chris");
+		nickNames.put("Thomas", "Tommy");
+		System.out.println(nickNames);
+
+		String s = nickNames.get("Christopher");
+		System.out.println(s);
+		s = nickNames.get("Michael");
+		System.out.println(s);
+		
+		Map<String, Integer> ages = new HashMap<>();
+		ages.put("Tommy", 21);
+		ages.put("Chris", 30);
+		
+		String name = nickNames.get("Christopher");
+		int age = ages.get(name);
+		System.out.println(age);
+```
+
+# Strings
+
+* Java has a `String` class, no null terminating character, `'\0'`, no figuring out how big of an array you need, etc.  Java takes care of it for you.
+* You can concatenate strings or any other type of object (which gives you a "string representation of it") using the `+` string concatenation operator
+* In Java, `String`s are *immutable*: once created they cannot be changed
+
+```java
+
+		String s = "Hello World";
+		System.out.println(s);
+		String subs = s.substring(6);
+		System.out.println(subs);
+		
+//		String t = s;
+//		s = "Goodbye World!";
+//		System.out.println(s);
+//		System.out.println(t);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("Hello, ");
+		sb.append(" how are you?");
+		System.out.println(sb);
+		sb.deleteCharAt(6);
+		System.out.println(sb);
+```
+
+# Methods
+
+* In Java we call functions "methods" because in Java everything is a class or belongs to a class
+* For now, all our methods will be `static` methods: the methods belong to the class and not to instances of the class
+* You can access/invoke methods using the class name + method name separated by a dot
+* For now, we'll make all of our methods `public` so that any piece of code can use them/invoke them
+* After `public static` you define the return type: `void, double, String,` etc. and use the `return` keyword
+
+
+```java
+/**
+ * Computes the Euclidean Distance between the two 
+ * points <code>(x1,y1)</code> and <code>(x2,y2)</code>
+ * @param x1 the x component of the first point
+ * @param y1 the y component of the first point
+ * @param x2 the x component of the second point
+ * @param y2 the y component of the second point
+ * @return
+ */
+public static double euclideanDistance(double x1, double y1, double x2, double y2) {
+
+  return Math.sqrt( Math.pow((x1-x2), 2) +  Math.pow((y1-y2), 2));
+  
+}
+```
+
+# File I/O
+
+## File Input
+
+* There are dozens of ways of doing this; I'll show you the easiest
+
+```java
+
+		try {
+			Scanner s = new Scanner(new File("data/data.csv"));
+			
+			//TODO: process the file
+			while(s.hasNextLine()) {
+				//a. read the line
+				String line = s.nextLine();
+				if(!line.isEmpty()) {
+					// b. process the line: tokenize it along commas
+					String tokens[] = line.split(",");
+					// c. find the age and print it
+
+					int age = Integer.parseInt(tokens[4]);
+					System.out.println(tokens[0] + " is " + age + " years old");
+				}
+			}
+			
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+```
+
+# File Output
+
+* The easiest way is to use a `PrintWriter`
+
+
     
 ```text
 
