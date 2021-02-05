@@ -268,6 +268,164 @@ $y = doubleval($argv[2]);
 ?>
 ```
 
+# File I/O
+
+## File Input
+
+* Three steps: open the file, process it, close it
+
+```php
+$fileName = "data.txt";
+
+//you can check if a file exists:
+if( !file_exists($fileName) ) {
+  printf("ERROR: cannot open file %s\n", $fileName);
+  exit(1);
+}
+//get a file "handle"
+$h = fopen($fileName, "r");
+
+//read a line:
+$line = fgets($h);
+
+//remove the endline character:
+$line = trim($line);
+
+//read until the end of the file:
+while ( !feof($h) ) {
+  $line = fgets($h);
+  $line = trim($line);
+  print("%s\n", $line);
+}
+
+fclose($h);
+```
+
+* Convenience methods:
+
+```php
+$contents = file_get_contents($fileName);
+```
+
+# File Output
+
+```php
+$out = fopen("output.txt", "w");
+fprintf($out, "this is some output");
+fprintf($out, "%d \t %.2f", 42, 89.4);
+fclose($out);
+```
+
+* Convenience method:
+
+```php
+$output = "hello world";
+flie_put_contents("outfile.txt", $output);
+```
+
+* Somewhat cool: you can post/get an arbitrary protocol over the network (ex: https)
+
+# Functions
+
+* You can declare a function using the `function` keyword
+* You can declare it anywhere
+* All function names are case *insensitive* (!?!)
+* Advice: still use the `lowerCamelCasing` convention everywhere
+* PHP parameters can be made "optional" or you can provide a default value
+
+```php
+
+function foo($a, $b = null, $c = 101) {
+    $result = $a + $b + $c;
+    printf("Hello, result = %d\n", $result);
+    return $result;
+}
+
+$r = foo(10, 32);
+
+printf("r = %f\n", $r);
+```
+
+* By default, all parameters are passed by value
+```php
+
+
+function swap(&$a, &$b) {
+  //printf("a = %d, b = %d\n", $a, $b);
+  $t = $a;
+  $a = $b;
+  $b = $t;
+  return;
+}
+
+function addOne(&$arr) {
+    for($i=0; $i<count($arr); $i++) {
+        $arr[$i] = $arr[$i] + 1;
+    }
+}
+
+
+$x = 10;
+$y = 20;
+
+printf("x = %d, y = %d\n", $x, $y);
+swap($x, $y);
+printf("x = %d, y = %d\n", $x, $y);
+
+$arr = array(10, 20, 30);
+print_r($arr);
+addOne($arr);
+print_r($arr);
+```
+
+# Exceptions
+
+* PHP does support exceptions, actually only one
+
+```php
+
+<?php
+
+throw new exception("message of what happened");
+
+$a = 10;
+$b = 0;
+
+if($b === 0) {
+  throw new exception("cannot divide by zero");  
+} else {
+    $c = $a / $b;
+}
+
+try {
+    if($b === 0) {
+      throw new exception("cannot divide by zero");  
+    } else {
+        $c = $a / $b;
+    }
+    //potentially dangerous code
+} catch(Exception $e) { //older: catch($e)
+    print "Exception occurred: " . $e->getMessage() . "\n";
+}
+
+
+?>
+```
+
+# Sorting
+
+
+
+### Exercise: Break My Password
+
+Passwords are often stored as hashed strings.  One such (bad) hash function supported directly in PHP is SHA-1 (using `sha1("password")`):
+
+$$password -> 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8$$
+
+What's my password if my hash is 
+ $$b9b8cf57aeeda5f21ae6fc3b3447e7f69beb7480$$
+Hint: my password is a dictionary word from `/usr/share/dict/american` with a 4 digit number appended.
+
 
 ```text
 
