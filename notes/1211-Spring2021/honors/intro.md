@@ -414,6 +414,10 @@ try {
 
 # Sorting
 
+* `sort` - a natural sort
+* `usort` - provide a comparator as a string
+* more: https://www.php.net/manual/en/array.sorting.php 
+
 
 
 ### Exercise: Break My Password
@@ -426,6 +430,71 @@ What's my password if my hash is
  $$b9b8cf57aeeda5f21ae6fc3b3447e7f69beb7480$$
 Hint: my password is a dictionary word from `/usr/share/dict/american` with a 4 digit number appended.
 
+```php
+<?php
+
+class Student {
+    
+    private $firstName;
+    private $lastName;
+    private $nuid;
+    private $gpa;
+
+    public function __construct($lastName, $firstName, $nuid, $gpa) {
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->nuid = $nuid;
+        $this->gpa = $gpa;
+    }
+    
+    public function __toString() {
+        return $this->getName();
+    }
+
+    public function getName() {
+      return $this->lastName . ", " . $this->firstName;   
+    }
+    
+    public function getFirstName() {
+        return $this->firstName;
+    }
+
+    public function getLastName() {
+        return $this->lastName;
+    }
+    
+    public function setLastName($lastName) {
+        if($lastName === "" ||
+           gettype($lastName) !== "string") {
+               //bad data
+               throw Exception("You must provide a non-empty string as a last name");
+           }
+        $this->lastName = $lastName;
+    }
+    
+}
+
+$s1 = new Student("Burke", "Chris", "1234", 4.0);
+$s1->setLastName("Bourke");
+$s2 = new Student("Smith", "Joe", "5678", 2.0);
+$s3 = new Student("Apple", "Jane", "1212", 3.0);
+$s4 = new Student("Apple", "Alison", "1213", 3.5);
+$roster = array($s1, $s2, $s3, $s4);
+
+function cmpStudentByName($a, $b) {
+    $result = strcmp($a->getLastName(), $b->getLastName());
+    if($result === 0) {
+        $result = strcmp($a->getFirstName(), $b->getFirstName());
+    }
+    return $result;
+}
+
+usort($roster, "cmpStudentByName");
+foreach($roster as $s) {
+    print($s."\n");
+}
+?>
+```
 
 ```text
 

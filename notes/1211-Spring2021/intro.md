@@ -334,8 +334,107 @@ public static double euclideanDistance(double x1, double y1, double x2, double y
 
 * The easiest way is to use a `PrintWriter`
 
+```java
+File outputFile = new File("data/output2.txt");
+try {
+  PrintWriter pw = new PrintWriter(outputFile);
+  pw.println("Hello, this is on one line");
+  pw.print("there is no endline");
+  pw.printf("%s, %d, %f\n", "Hello", 42, 3.14);
+  pw.close();
+} catch (FileNotFoundException e) {
+  // TODO Auto-generated catch block
+  e.printStackTrace();
+}
+```
 
+# Error Handling
+
+* Java supports using Exceptions for error handling
+* An exception is an interuption fo the normal flow of control
+* Potentially dangerous code can be surrounded by a `try-catch` block
+* If an exception is *thrown* then the `catch` block will catch it and you can handle it in that block
+* Java has two types of exceptions: a "checked" exception which *requires* you to surround the operation with a `try-catch` block and an "unchecked" exception
+* So for most "checked" excpetions: go ahead and `try-catch` them, but then, release it: by throwing it as a new `RuntimeException`
     
+```java
+
+
+		int n = 0;
+		File f = new File("data/input001.txt");
+		try (Scanner s = new Scanner(f)){
+			String str = s.nextLine();
+			int x = Integer.parseInt(str);
+			double y = x / n;
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (NumberFormatException e) {
+			//TODO: use a sensible default value
+			System.out.println("Computing with default values...");
+		} catch (ArithmeticException e) {
+			//TODO: deal with this somehow
+		} catch (Exception e) {
+			//TODO: deal with a generic exception somehow
+			throw new RuntimeException(e);
+		}
+		
+		System.out.println("end of program");
+
+//also, you can throw your own exceptions:
+if(n == 0) {
+  throw new RuntimeException("you cannot divide by zero, man!");
+} else {
+  double y = x / n;
+}
+		
+```
+
+## Searching & Sorting
+  
+```java
+
+		List<Integer> a = Arrays.asList(-42, 4, 7, 3, 8, 2, 1);
+		List<String> b = Arrays.asList("Apple", "apple", "zebra", "Banana", "orange");
+		System.out.println(a);
+		Collections.sort(a);
+		System.out.println(a);
+		
+		System.out.println(b);
+		Collections.sort(b);
+		System.out.println(b);
+		
+		Comparator<Integer> cmpIntDesc = new Comparator<>() {
+
+			@Override
+			public int compare(Integer a, Integer b) {
+				if(a < b) {
+					return 1;
+				} else if(a > b) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+			
+		};
+		
+		System.out.println(a);
+		Collections.sort(a, cmpIntDesc);
+		System.out.println(a);
+		
+		Comparator<String> cmpStringCaseInsensitive = new Comparator<>() {
+
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}
+			
+		};
+		
+		System.out.println(b);
+		Collections.sort(b, cmpStringCaseInsensitive);
+		System.out.println(b);
+```    
 ```text
 
 
