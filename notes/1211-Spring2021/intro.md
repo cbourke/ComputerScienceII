@@ -435,6 +435,9 @@ if(n == 0) {
 		Collections.sort(b, cmpStringCaseInsensitive);
 		System.out.println(b);
 ```    
+
+* Several variations of `Collections.binarySearch()`  are also available
+
 ```text
 
 
