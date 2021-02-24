@@ -22,3 +22,14 @@
   * Thus, in general, your variables should all be `private`: so nothing outside your class can access or change them 
   * You can then control access through getters and setters
   * You can generally auto-generate this boilerplate code
+
+
+```text
+
+
+
+
+
+
+
+```
