@@ -50,13 +50,106 @@ Usually is comprised of three things:
 * Provides a way to *reuse* code
 * Provides a way to *organize* code
 
-IN Java:
+In Java:
 * In java you use the `extends` keyword
 * If $A$ `extends` $B$ then $A$ is a subclass, $B$ is the superclass
 * In Java, all non-private methods are inherited and all non-private state can be seen by the subclass
 * A subclass *is-a* (an) instance of its superclass:
   * Robin is a Bird
   * Bird is not necessarily an Ostrich
+
+## Polymorphism
+
+* Polymorpism = poly = many, morph = forms
+* Code: a variable, method or class may be applicable to many different types of variables or classes
+  * C: how do you sort? You use ONE function to sort *any* type of variable(s): `qsort`
+  * You have "generic" coding: code that can be applied to multiple pieces of data
+* Subtype Polymorphism:
+
+```java
+Robin r = new Robin();
+Ostrich o = new Ostrich();
+Bird b = r; //b is referencing a Robin
+b = o; //b is referencing an Ostrich
+
+//contravariance:
+r = b; //at this point, b is referencing an Ostrich, this is dangerous
+ //a Ostrich cannot become a Robin
+o = r;
+```
+
+* In general you *should* use subtype polymorphism: treat variable as its most general type.  
+* Only treat a variable as its subtype if you absolutely need to;
+* Ex: when you create copies of objects, they need to be the same type!
+
+```java
+//treat the array list as just a List:
+List<String> names = new ArrayList<>();
+//treat the array list as a collection
+Collection<String> names = new ArrayList<>();
+```
+
+### Function overloading
+  * In C: what function or functions do you use to compute the absolute value? `abs(), fabs(), labs, llabs()...`
+  * In programming languages *without* function overloading, any function must have a unique name.  you cannot have multiple functions with the same name
+  * A programming language that supports function overloading allows you to create multiple functions with the same name as LONG AS you have a different number of different type of parameters
+```java
+
+public static void foo(int) { ... }
+
+public static void foo(double) { ... }
+
+public static void foo(String) { ... }
+...
+
+Utils.foo("hello");
+```
+  * Static dispatch: the compiler can figure out which function you meant to call based on the types of variables you passed to it
+
+### Operator Overloading
+
+* In Java: 
+  * `String + String` (concatenation)
+  * `int + int` (addition)
+  * `String + int` (concatenation)
+  * `Object + String` (concatenation: all objects have a `toString()`)
+* C++:
+  * `int + int` (addition)
+  * `Set + Set` (add the first to the second, union, disjoint union, multiset?)
+  * `List + List` (union, appending, component-wise addition ie vector addition)
+  * `Time + Time` (?!?!)
+* Python:
+    * `String + String` means concatenation
+    * `number + number` means addition
+    * `number + String` is a runtime error
+* PHP:
+  * `number + number` means addition
+  * `number + String` try to parse the string as a number, if you fail, treat it as zero
+  * `string + string`: try to parse BOTH as numbers
+  * String concatenation: `$s . $t`
+
+* Some languages allow you to provide custom operator overloading
+  * in general this is a Bad Idea: the meaning is left up to interpretation
+  * In any case, to enable operator overloading, you have to define how it works; ie you have to write a function!
+
+## Parameterized Polymorphism
+
+* Java allows you to *parameterize* a class, method or variable to be applicable to any type, `T`
+
+```java
+//a is a variable whose VALUE can vary
+int a;
+a = 42;
+a = 101;
+//BUT, a's type is always fixed, it is an int
+
+//x is a variable whose *value* can vary
+//The "type" can ALSO vary
+T x;
+```
+
+* Effectively makes the variable's *type* also variable
+* You essentially want to use parameterization to make as generic of code as possible so that you can apply it to as many different TYPES as you can
 
 ```text
 
