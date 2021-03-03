@@ -151,6 +151,120 @@ T x;
 * Effectively makes the variable's *type* also variable
 * You essentially want to use parameterization to make as generic of code as possible so that you can apply it to as many different TYPES as you can
 
+## Best Practices & Pitfalls 
+
+### Encapsulation
+
+* Single responsibility: classes should only ever be responsible for one thing.
+* In general, keep member variables `private` unless there is a Very Good Reason&trade;
+* In fact, you should prefer *immutable* objects, the `final` keyword is your friend
+* Use alternatives: use *copy constructors*  use *patterns*
+* Don't break encapsulation by locating behavior outside of a class
+
+## Abstraction
+
+* Don't use *leaky abstractions*
+* Poor design requires a "user" to know the internal workings of a class in order to use it
+* Washing machine: `wash()`, it could be a series of `fill(), spin(), empty(), fill(), spin(), empty(), spin()`
+* Ex: strings in C versus strings in Java
+* `LocalDate` is not leaky: we simply had to use it
+- Ex: `List.addAtIndex(x, i)` just works.  Leaky: would require you to    `List.shiftAt(i)` to make room, THEN `List.addAtIndex(x, i)`
+
+## Inheritance
+
+* Some languages support *multiple inheritance* 
+  * Leads to the "diamond problem": where do you inherit your behavior from?
+  * Animal, Cat, Dog
+  * Maybe (don't know why) you want to create a `CatDog`
+* Problem: yo-yo antipattern
+  * Deep inheritance hierarchies can get very complicated
+  * Deep hierarchies cause you to look up and down to make sense of the design
+  * Instead: keep your hierarchies shallow
+  * Better yet: "prefer composition to inheritance"
+* Rectangle Problem:
+  * Suppose we have classes to model a `Shape, Square, Rectangle`
+  * Usually results from a flawed hierarchy design
+  * Semantically, a Square may be changed so that it is no longer a square
+  * Instead: do not lock yourself into a rigid hierarchy *if* you objects have the potential to change
+  * Make sure your hierarchies are well-thought out and thoroughly tested
+
+  ## Polymorphism
+
+  - avoid operator overloading; prefer well-named methods
+  - PECS: Producer Extends, Consumer Super
+    - A collection is a *producer* of elements; you wish to pull them out and do something with them.  You need a minimal amount of information `<T extends Foo>`
+    - a collection is a *consumer* of elements: you wish to put stuff into the collection (but you don't really care what is already in it): use `<? super Bar>`
+    - Make parameterizations as general as you can, but not too general
+
+# SOLID principles
+
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should only have one responsibility
+* don't have god classes
+* A `Person` class should be responsible for `Person` things, an `Address`
+class should be responsible for `Address` things
+* DRY = Don't Repeat Yourself
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance: extend the behavior in subclasses, but DO NOT modify behavior in the superclass
+* In general, you can add fields or methods to a subclass, but you don't want to change the methods/fields in a superclass
+* Superclasses provide more general behavior that should NOT be modifiable.  
+* If there is no "general" or "default" behavior, then DONT DEFINE IT: instead make your class/methods `abstract` 
+* Alternative: break functionality down into smaller parts
+* Have a good, well-thought out inheritance because it is extremely difficult if not impossible to change later on
+
+## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+
+## Interface Segregation Principle
+
+* No client code should be forced to depend on methods it does not use or care about
+* Example: `ClickEventHandler` interface
+* Suppose that interface deifned TWO methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* You are *forced* to define what happens in both events
+* When designing an interface, keep them as simple as possible: maybe only 1 or two (or NO) methods
+
+## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Both should depend on abstractions
+* Example: say you have 3 libraries on a  phone app that compute location
+  * Library A:  
+`double GPSLocator.getLatitude()`  
+`double GPSLocator.getLongitude()`
+* Library B:  
+`AndroidLocation AndroidNative.getLocation()`  
+ `AndroidLocation.getLatitude()`   `AndroidLocation.getLongitude()`
+ * Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+ ```java
+ if(Library A) {
+   return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+ } else if(Library B) {
+   AndroidLocation l =  AndroidNative.getLocation();
+   return new Location(l.getLatitude(), l.getLongitude());  
+ else if(Library C) {
+    return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()), Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+ }
+```
+
+* The above is the "client" code: high level module 
+* THe libraries are the low level modules
+* We have a *tight coupling* with the high/low modules
+* Alternative: define an interface: `Location getLocation()`
+* You can then implement 3 "wrapper" classes that handle the complexity of each: 
+`GPSLocator`, `AndroidLocator`, `CellLocator`, each `implements LocationGetter`
+* Each one may "own" an instance of their lower library library via composition, 
+* logic to convert the library's location representation into *our* `Location` representation is inside each wrapper class
+* Now our client code doesn't have to worry about low level modules: we only have to program toward `Location getLocation()`
+* Another example: database connectivity
+
 ```text
 
 
