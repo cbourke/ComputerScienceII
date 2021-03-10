@@ -1,7 +1,6 @@
 # Databases & SQL
 ## CSCE 156H - Spring 2021
 
-
 ### Introduction/Overview
 
 * Video Game CSV file
@@ -95,6 +94,96 @@ delete from game where gameId in (29, 30);
 select * from game;
 select * from publisher;
 ```
+
+### Aggregate Functions
+
+```sql
+
+
+-- you can use aggregate function such as count() to process some of
+-- your queries
+select count(*) as numberOfGames from game;
+select count(*) as numPublishers from publisher;
+-- you can use the distinct keyword to only select unique values:
+select distinct name from game;
+-- combo:
+select count(distinct name) from game;
+select count(distinct publisherId) from game;
+
+-- you can use other aggregate functions and math!
+select min(publishYear) from availability;
+select max(publishYear) from availability;
+select avg(publishYear) from availability;
+select 2021 - avg(publishYear) from availability;
+```
+
+```sql
+
+
+-- you can use the where clause to *filter* results
+-- you can use basic numerical and string operators:
+-- >, <, <=, >= !=, = 
+select * from game where gameId >= 10;
+select * from game where gameId is null;
+select * from game where gameId is not null;
+
+-- you can also use string comparisons:
+select * from game where name = "GTa 3";
+-- you can also search for partial strings using the
+-- wildcard % and the like clause
+select * from game where name like "G%";
+select * from game where name like "%a%";
+select * from game where name like "%a";
+-- you can use the underscore to match ONE single character
+select * from game where name like "_a%";
+
+-- you can combine conditions using
+-- or, and, not
+select * from game where gameId > 10 or name like "G%";
+
+select * from game where gameId = 1 or gameId = 5 or gameId = 27;
+select * from game where gameId in (1, 5, 27);
+select * from game where gameId in (
+  select gameId from availability 
+);
+```
+
+## ORder by
+
+```sql
+
+-- order of columns and rows can be manipulated
+select publisherId, name as title from game order by name desc;
+-- order by publisherIds then by name, descending
+select publisherId, name as title from game 
+  order by publisherId asc, name desc;
+```
+
+## Data Projections
+
+```sql
+
+-- goal: I want to know how many games each publisher has published
+select publisherId, count(*) from game group by publisherId;
+-- remember we have some duplicates: Splatoon 3, Among use
+select publisherId, count(distinct name) from game group by publisherId;
+-- you can also use the having clause to further filter your results
+select publisherId, count(distinct name) as numGames
+  from game 
+  where name > "L"
+  group by publisherId
+  having numGames >= 3;
+-- where filters are applied BEFORE the projection
+-- having filters are applied AFTER the projection
+```
+
+$$A \times B$$
+$$\{a, b, c\} \times \{1, 2\} = \{(a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)\}$$
+$$\mathbb{R} \times \mathbb{R}$$
+
+$$A \times B$$
+
+$$R \subseteq A \times B = \{(a, b) | a < b\}$$
 
 ```text
 
