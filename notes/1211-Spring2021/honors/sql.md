@@ -185,6 +185,107 @@ $$A \times B$$
 
 $$R \subseteq A \times B = \{(a, b) | a < b\}$$
 
+## Joins
+
+```sql
+
+-- you can join one or more tables together using a 
+-- join statement
+
+-- a cross join is a full cartesian product of records:
+select * from publisher cross join game;
+
+-- usually you want to make a join that makes sense:
+-- usually you join records that are actually *related*
+select * from publisher p join game g 
+  on p.publisherId = g.publisherId;
+
+-- use in conjunction with column selection to limit your query results:
+select 
+  p.name as publisherName, 
+  g.name gameName 
+from publisher p join game g 
+on p.publisherId = g.publisherId;
+
+-- a regular join (above) will only match on records that exist
+-- publisher to the game table will only match publishers that actually
+-- have published a game
+-- we want ALL publishers, even if they have not published a game
+-- you will want to use a "left join"
+select 
+  p.name as publisherName, 
+  g.name gameName 
+from publisher p left join game g 
+on p.publisherId = g.publisherId;
+
+select 
+  p.name as publisherName, 
+  g.name gameName 
+from publisher p left join game g 
+on p.publisherId = g.publisherId
+where g.name is null;
+-- you can also use right joins that join the other way
+select 
+  p.name as publisherName, 
+  g.name gameName 
+from game g right join publisher p
+on p.publisherId = g.publisherId;
+
+-- you can also use right joins in the same order:
+select 
+  p.name as publisherName, 
+  g.name gameName 
+from publisher p right join game g
+on p.publisherId = g.publisherId;
+
+-- reproduce the flat file from assignment 1:
+select 
+  p.name as publisherName, 
+  g.name as title,
+  a.publishYear as year,
+  platform.name as platform
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform on a.platformId = platform.platformId;
+  
+
+select 
+  p.name as publisherName, 
+  g.name as title,
+  a.publishYear as year,
+  platform.name as platform
+  from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform on a.platformId = platform.platformId;  
+  
+  -- you can union two results together:
+  select 
+  p.name as publisherName, 
+  g.name as title,
+  a.publishYear as year,
+  platform.name as platform
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform on a.platformId = platform.platformId
+union
+select 
+  p.name as publisherName, 
+  g.name as title,
+  a.publishYear as year,
+  platform.name as platform
+  from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform on a.platformId = platform.platformId;  
+```
+
+# Database Design
+
+* Design a database to model data on films, actors, directors
+
 ```text
 
 

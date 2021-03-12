@@ -320,10 +320,96 @@ select
   right join platform on a.platformId = platform.platformId;  
 ```
 
+# Database Design
+
+* Design a database to model data on films, actors, and directors
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Don't pluralize table names
+  * Be consistent on your naming conventions
+  * Suggestion table names are `UpperCamelCase`, column names `lowerCamelCase`
+* Design tips:
+  * Always have a primary key field (suggestion: make it an integer, not null, `auto_increment`) and name it after the `tableName + Id`
+  * Foreign keys should have the same name and type of the key they reference (usually)
+  * Join tables can be defined with multiple foreign keys to model a many-to-many relation
+  * Be sure to insert plenty of test data to test your database!  You can auto-generate mock data and you can easily convert existing (CSV) data to SQL insert statements using a tool!
+  * Check and uniqueness constraints can be used to enforce *data integrity*
   
+```sql
+use cbourke;
+
+drop table if exists FilmActor;
+drop table if exists Actor;
+drop table if exists Film;
+drop table if exists Director;
+
+-- TODO: add proper documentation
+create table if not exists Director (
+  directorId int primary key not null auto_increment,
+  firstName varchar(255),
+  lastName varchar(255) not null
+);
+
+-- This table models a film
+create table if not exists Film  (
+  filmId int primary key not null auto_increment,
+  title varchar(255) not null,
+  releaseDate varchar(10) not null default "0000-00-00",
+  imdbRating double,
+  directorId int not null,
+  eidr varchar(100) not null unique key,
+  foreign key (directorId) references Director(directorId),
+  constraint `zeroToTenConstraint` check (imdbRating >= 0 and imdbRating <= 10)
+);
+
+insert into Director (directorId, lastName, firstName) values 
+  (1, "Russo", "Anthony");
+insert into Director (directorId, lastName, firstName) values 
+  (2, "Favreau", "Jon");
+
+select * from Director;  
+
+insert into Film (filmId, title, releaseDate, imdbRating, directorId, eidr) values
+  (42, "End Game", "2019-07-01", -9.5, 1, "abc"),
+  (43, "Swingers", "1992-01-01", 4.5, 2, "xyz"),
+  (44, "Iron Man", "2005-01-01", 7.5, 2, "ijk");
+
+select * from Film;
   
+create table if not exists Actor (
+  actorId int primary key not null auto_increment,
+  firstName varchar(255),
+  lastName varchar(255) not null
+);
+
+-- This join table models a many-to-many relation
+-- between the Actor table and the Film table:
+create table if not exists FilmActor (
+  filmActorId int primary key not null auto_increment,
+  actorId int not null,
+  filmId int not null,
+  foreign key (actorId) references Actor(actorId),
+  foreign key (filmId) references Film(filmId)
+);
+
+insert into Actor (actorId, firstName, lastName) values
+  (101, "Robert", "Downey"),
+  (102, "Paul", "Rudd"),
+  (103, "Jon", "Favreau");
   
-  
+select * from Actor;
+
+insert into FilmActor(actorId, filmId) values 
+  (101, 42),
+  (102, 42),
+  (103, 42),
+  (103, 43),
+  (101, 44);
+
+select * from Film f 
+  join FilmActor fa on f.filmId = fa.filmId
+  join Actor a on fa.actorId = a.actorId;
+```
   
   
   
