@@ -1,7 +1,7 @@
 """
-This script interfaces with canvas, CSE's User Database and 
-codepost to assign graders to student submissions for a particular
-assignment including pushing all submission files to codepost.
+This script interfaces with canvas, CSE's User Database (udb) and 
+codepost.io to assign graders to student submissions for a particular
+assignment and pushes all submission files to codepost.io.
 
 Usage: python3 codepostAssignGraders.py cse_handin_assignment_name codepost_assignment_id
 
@@ -11,9 +11,9 @@ where
   - codepost_assignment_id is the codepost assignment (database) ID.
     You can retrieve this by first running codepostListCourseInfo.py
 
-In detail this script:
+In detail:
 
- 1. It pulls the current roster from Canvas (and separates
+ 1. It loads the current roster from Canvas (and separates
     instructors/graders/students using the config.py params)
  2. It attempts to map NUIDs to CSE logins to grab submissions
     (failures will be excluded or "orphaned")
@@ -30,25 +30,38 @@ to codepost already.  Preexisting submissions will result
 in a fatal error (so it is best to do this cleanly and/or 
 wipe the assignment on codepost.io and restart)
 """
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("cseHandinAssignmentNumber", help=
+  """The CSE Handin Assignment number which is also the
+  name of the directory in which files are stored.  
+  Example: A1 would be expected to be in ~/handin/A1)
+  """
+  )
+parser.add_argument("codepostAssignmentId", help=
+  """The codepost.io assignment ID number (a run of
+  codepostListCourseInfo.py or codepostValidateCourse.py
+  may be necessary to find this)
+  """, type=int)
+args = parser.parse_args()
+
+cseHandinAssignmentNumber = args.cseHandinAssignmentNumber
+codepostAssignmentId = args.codepostAssignmentId
+
 import sys
-
-if(len(sys.argv) != 3):
-  print("usage: cse_handin_assignment_name codepost_assignment_id")  
-  exit(1)
-
 import os
 import codepost
 from config import config
 from course import course
 from fileUtils import getFiles 
 
-assignmentDir = config.handinDirectory + sys.argv[1]+"/"
+assignmentDir = config.handinDirectory + cseHandinAssignmentNumber + "/"
 if not os.path.exists(assignmentDir):
     print("assignment directory: " + assignmentDir + " does not seem to exist")
     print("perhaps you need more practice operating your computer machine")
     exit(1)
 
-assignmentId = int(sys.argv[2])
 
 codepost.configure_api_key(config.codePostApiKey)
 
@@ -57,7 +70,7 @@ s = course.assignmentToString(gradingAssignment)
 print(s)
 
 csv = course.assignmentToCSV(gradingAssignment)
-f = open(sys.argv[1]+".csv", "w")
+f = open(cseHandinAssignmentNumber+".csv", "w")
 f.write(csv)
 f.close()
 
@@ -75,7 +88,7 @@ def pushAssignments(gradingAssignment):
         files = {}
       if files:
         submission = codepost.submission.create(
-          assignment=assignmentId,
+          assignment=codepostAssignmentId,
           students=[m.canvasEmail for m in g.members],
           grader=grader.canvasEmail)
         for (fullPath,name,ext),contents in files.items():
