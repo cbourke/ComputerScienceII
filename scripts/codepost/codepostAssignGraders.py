@@ -44,10 +44,16 @@ parser.add_argument("codepostAssignmentId", help=
   codepostListCourseInfo.py or codepostValidateCourse.py
   may be necessary to find this)
   """, type=int)
+parser.add_argument("--push", action='store_true', help=
+  """Push the assignment source files to codepost.io. The
+  default is to not push files so a test run of assignments 
+  can be made.  
+  """)
 args = parser.parse_args()
 
 cseHandinAssignmentNumber = args.cseHandinAssignmentNumber
 codepostAssignmentId = args.codepostAssignmentId
+pushToCodePost = args.push
 
 import sys
 import os
@@ -100,4 +106,8 @@ def pushAssignments(gradingAssignment):
             submission=submission.id
           )
 
-pushAssignments(gradingAssignment)
+if pushToCodePost:
+  pushAssignments(gradingAssignment)
+else:
+  print("Cowardly refusing to push source files to codepost.io; rerun with --push if you wanna.")
+
