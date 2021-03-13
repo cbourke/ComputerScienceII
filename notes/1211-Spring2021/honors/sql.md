@@ -286,6 +286,67 @@ select
 
 * Design a database to model data on films, actors, directors
 
+```sql
+use cbourke;
+
+drop table if exists FilmActor;
+drop table if exists Actor;
+drop table if exists Film;
+drop table if exists Director;
+
+create table if not exists Director (
+  directorId int not null primary key auto_increment,
+  lastName varchar(255),
+  firstName varchar(255)
+);
+
+-- this table models films
+create table if not exists  Film (
+  filmId int not null primary key auto_increment,
+  title varchar(255) not null,
+  eidr varchar(255) not null unique key,
+  runTime int,
+  releaseDate varchar(10) default "0000-00-00",
+  directorId int not null,
+  foreign key (directorId) references Director(directorId)
+);
+
+insert into Director (directorId, firstName, lastName) values
+  (1, "Quentin", "Tarantino"),
+  (2, "J.J.", "Abrams"),
+  (3, "David", "Lynch");
+  
+insert into Film (filmId,title,eidr,directorId) values 
+  (1, "Eraserhead", "xyz", 3),
+  (2, "Hateful Eight", "abc", 1),
+  (3, "Star Trek 90210", "abd", 2);
+
+select * from Film f 
+  join Director d on f.directorId = d.directorId;
+
+create table if not exists Actor (
+  actorId int not null primary key auto_increment,
+  lastName varchar(255),
+  firstName varchar(255)
+);
+
+insert into Actor (actorId, firstName, lastName) values
+  (1, "Samuel", "Jackson"),
+  (2, "Chris", "Pine"),
+  (3, "Kurt", "Russell");
+
+create table if not exists FilmActor (
+  filmActorId int not null primary key auto_increment,
+  actorId int not null,
+  filmId int not null,
+  salary double,
+  foreign key (actorId) references Actor(actorId),
+  foreign key (filmId) references Film(filmId)
+);
+
+-- TODO: insert records into the join table
+```
+
 ```text
 
 
