@@ -389,7 +389,9 @@ create table if not exists FilmActor (
   actorId int not null,
   filmId int not null,
   foreign key (actorId) references Actor(actorId),
-  foreign key (filmId) references Film(filmId)
+  foreign key (filmId) references Film(filmId),
+  -- this constraint limits redundant records:
+  constraint `uniqueActorFilmCombo` unique (actorId,filmId)
 );
 
 insert into Actor (actorId, firstName, lastName) values
@@ -411,9 +413,42 @@ select * from Film f
   join Actor a on fa.actorId = a.actorId;
 ```
   
-  
-  
-  
+## Normalization
+* 1-NF, 2-NF, 3-NF
+* First Normal Form: "each attribute in a table has only atomic values"
+  * Every column in a table holds only one value
+  * Violation of 1-NF: storing comma-delimited values in a single column
+  * Violation: store a fixed number of values (Email1, Email2, Email3)
+  * Simply define another table to model any one-to-many relation
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Using a PK auto-generated, non-null key gets you 2-NF for free
+  * Violation: a purchase record may contain a `customerId`, `storeId`, `storeLocation`
+  * If the key is the *combination* of `customerId/storeId` then it violates 2nd form: `storeLocation` is only dependent on one of those things
+  * It is often useful and necessary to define combination keys, but *keep them secondary*!
+  * You split everything out into its own table
+* Third Normal form: 2-NF (by transitivity, 1-NF): no non-prime column is transitively dependent on the key
+  * Suppose you had a `pricePerUnit`, `numberOfUnits`; `totalCost = pricePerUnit * numberOfUnits`
+  * If you *stored* `totalCost` as a column, it is a violation of 3-NF
+  * `totalCost` is *transitively* dependent on 2 other column values, so we *don't store it*, we recompute it as needed
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is *alot* more to learn about databases
+  * Triggers, Views, Stored Procedures, variables
+  * Transactions: an all or nothing series of queries
+  * Security issues: do not store sensitive info in a database unhashed/unencrypted
+  * Soft vs Hard deletes: a hard delete is a result of a `delete` statement.  A soft delete involves defining a boolean column `isActive` that is true if the record is active, false if it is "deleted"
+* OOP Model vs Relational Model
+  * OOP model allows *inheritance* 
+  * RDBMs do not have inheritance
+  * You need a way to resolve the difference in these two models
+  * You can create a table per class/subclass
+  * You can create a table per stub class: only one table per subclass that has no subclasses
+  * You can use a "single table inheritance strategy"
+  * You can create one table for all subtypes and use a *discriminator column* 
+  * you use a string to indicate the subtype of the class.  
+  * Some columns may be relevant to some subtypes, others may irrelevant; simply allow them to be null to model this
   
 ```text
 

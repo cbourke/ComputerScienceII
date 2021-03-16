@@ -308,7 +308,8 @@ create table if not exists  Film (
   runTime int,
   releaseDate varchar(10) default "0000-00-00",
   directorId int not null,
-  foreign key (directorId) references Director(directorId)
+  foreign key (directorId) references Director(directorId),
+  constraint `positiveRuntime` check (runTime > 0)
 );
 
 insert into Director (directorId, firstName, lastName) values
@@ -326,8 +327,11 @@ select * from Film f
 
 create table if not exists Actor (
   actorId int not null primary key auto_increment,
+  typeOfActor varchar(20) not null, 
   lastName varchar(255),
-  firstName varchar(255)
+  firstName varchar(255),
+  constraint `validValuesOnly` check (typeOfActor = "Voice" 
+    OR typeOfActor = "Theatre" OR ...)
 );
 
 insert into Actor (actorId, firstName, lastName) values
@@ -341,11 +345,51 @@ create table if not exists FilmActor (
   filmId int not null,
   salary double,
   foreign key (actorId) references Actor(actorId),
-  foreign key (filmId) references Film(filmId)
+  foreign key (filmId) references Film(filmId),
+  -- you can form a compound unique key:
+  constraint `uniqueRecord` unique (actorId,filmId)
 );
 
 -- TODO: insert records into the join table
 ```
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* First Normal Form: "each attribute in a table has only atomic values"
+  * Every column in a table holds only a single value
+  * Violation: storing multiple pieces of data separated by a comma
+  * Somewhat of a violation: store multiple pieces of data in multiple columns: Email1, Email2, Email3
+  * Simply define another table to model the one-to-many relation
+* Second Normal Form: has to be 1-NF and also: "no non-prime attribute is dependent on a proper subset of attributes"
+  * Having an auto-generated PK gives this to you for free
+  * Violation: a purchase record may contain `customerId`, `storeId`, `storeAddress`
+  * Suppose the key is `customerId/storeId`
+  * But: `storeAddress` only depends on the second part of the key
+  * Solution: keep things separate
+* Third normal form: it has to be 2-NF (by transitivity 1-NF): and "no non-prime attribute is transitively dependent on the key"
+  * Suppose you had a `pricePerUnit`, `numberOfUnits` columns but also 
+  * `totalCost = pricePerUnit * numberOfUnits`, suppose this is *stored* in a third column
+  * Solution: don't store it, recompute it as needed
+  * Why? It introduces a failure point for data anomalies
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is a *lot* more to learn about databases
+  * Triggers, Views, Stored Procedures, Variables, etc.
+  * Transactions: all or nothing series of queries
+  * Security issues: never store sensitive info or passwords unhashed or unencrypted in a database
+  * Hard vs Soft deletes: hard delete is using a `delete` query (lost and gone forever); soft = use an `isActive` column (`boolean`) and set it to 1 = active, 0 = inactive
+* OOP Model vs Relational Model
+  * Only OOP has behavior (methods) and inheritance
+  * Relational model does not
+  * You need a way to reconcile these two models
+  * You could have a table-per-class strategy: each class and subclass has a separate table
+  * You could use a table per stub class (only classes that do not have subclasses) 
+  * Single Table Inheritance strategy: use only a single table to represent all subclasses
+    * Use a *discriminator column* to determine the type: a `varchar` or an `enum`
+    * You can have multiple unused columns depending on the type
 
 ```text
 

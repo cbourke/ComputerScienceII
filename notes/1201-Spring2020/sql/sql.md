@@ -367,6 +367,7 @@ create table if not exists ActorFilm (
 * Second Normal Form: it has to be 1-NF AND no non-prime attribute is dependent on a proper subset of prime attributes
   * If you always create a auto-incremented primary key, you get 2-NF for free
   * Violation: a purchase record may contain a customerId, storeId, storeLocation
+  * Key is `customerId/storeId` but `storeAddress` is only dependent on one of them
   * split everything out into its own table
 * Third normal form: 2-NF AND no non-prime column is transitively dependent on the key
   * Suppose you had pricePerUnit and a numberOfUnits,
