@@ -48,6 +48,7 @@ public class Film {
 		String user = "cbourke";
 		String password = "Just4156";
 
+		//String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
 		// 1. Load the JDBC Driver
 //		try {
 //			Class.forName(DRIVER_CLASS).newInstance();
