@@ -19,6 +19,13 @@ Integer numbers[] = new Integer[n];
 * Problem: our first iteration was only for integers!
 * Goal: create one list that can hold ANY type
 
+<!-- 
+  
+  addToEnd
+  print
+  incorporate size
+  
+  -->
 * Problem:
   * Adding an element to the start of an array-based list requires shifting elements down
   * If you had 1 million elements, this is 1 million operations
