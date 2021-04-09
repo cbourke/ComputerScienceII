@@ -43,7 +43,7 @@
 * We want to analyze algorithms from an *abstract perspective* 
 * What matters is the performance of an algorithm with respect to its *input size*, not any particular machine, language, architecture, etc.
 * We are interested in the *growth rate* of the resources consumed by the algorithm
-* Algorithms are *indepdent* of the hardware they are run on
+* Algorithms are *indepedent* of the hardware they are run on
   * Algorithms predate the modern computer by thousands of years!
   * Algorithms do not suddenly become efficient because you upgrade your hardware
   * Individual operations become faster and more efficient, but the *number* of operations remains the same
@@ -91,7 +91,32 @@
   * assume n > m, then $n*m < n^2$
   * or, just simplify it to one dimension: $n$
 * A single integer, $x$: 
-  * Is it just one?
+  * Is it *not* just "one" input
+  * Numbers have a *representation* in a computer (or on paper)
+  * The input size of a number is the number of bits used to represent that number, $n = \log_2(x)$
+  * All of our bases's will be base-2 and we simply write, $\log(x)$
+
+### Elementary Operation
+
+* Ultimately: we only want to focus on ONE operation in an algorithm
+* You generally want to choose the most:
+  * expensive or
+  * common or
+  * relevant operation
+* You generally also exclude operations that are necessary for the control structures of the algorithm
+* examples:
+  * Comparisons
+  * Arithmetic operations: additions/subtractions, multiplications/division
+  * traversing nodes in a linked list
+  
+### Analysis
+
+* Analyze how many times the elementary operation is executed with respect to the input size, $n$
+* You come up with a *resource function*:
+* $t: \mathbb{N} \rightarrow \mathbb{R}^+$ (input sizes to a resource measure such as time)
+* It may require some art, some summations or other calculations, finding closed forms solutions or even super advanced math
+* In general, you want to assume the *worst case* scenario: you want to provide an *upperbound* on the worst running time or other resource that the algorithm could cost you.
+  
   
 ```text
 

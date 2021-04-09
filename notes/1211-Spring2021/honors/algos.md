@@ -80,6 +80,31 @@
   * Further: just consider the larger dimension, $n$
   * Number: input is a single integer, $x$?
     * Naive answer: '1'
+    * Correct answer: the size of a number is the number of bits required to represent it, $n = \log_2(x)$
+    * In CS, all of our bases are base-2, so, $\log(n)$
+
+### Elementary Operation
+
+* Ultimately: you want to characterize the algorithm's complexity; the amount of "work" it does
+* We need ONE operation to represent this work
+* In general, we want the most:
+  * common or
+  * most expensive
+  * most relevant operation
+* Any operation necessary for the control structures of the algorithm are generally not relevant
+* examples:
+  * Comparisons
+  * Arithmetic operations: additions/subtractions, multiplications/divisons
+  * node or vertex traversal in a list or graph
+
+### Analysis
+
+* You analyze the algorithm to determine how many times the elementary operation is executed with respect to the input size, $n$
+* That is, we come up with a *resource function*:
+  $$f:\mathbb{N} \rightarrow \mathbb{R}^+$$
+(input sizes to a resource measure)
+* May involve coming up with a summation, solving it, etc.
+* In general, you want to focus on the worst case scenario to provide an absolute *upperbound* on the resource(s) required to run an algorithm
 
 ```text
 
