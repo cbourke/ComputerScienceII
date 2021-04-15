@@ -117,6 +117,52 @@
 * It may require some art, some summations or other calculations, finding closed forms solutions or even super advanced math
 * In general, you want to assume the *worst case* scenario: you want to provide an *upperbound* on the worst running time or other resource that the algorithm could cost you.
   
+## Asymptotics
+
+* Motivation: want to characterize an algorithm's performance and efficiency with respect to its input size
+* We're interested in its performance as $n$ (input size) *grows
+* For larger and larger inputs, how does the growth rate of the function that characterizes and algorithm's efficiency: what kind of "order" can we give it
+* We want to: 
+  * ignore contsants
+  * ignore lower order terms
+* The tool we use for this is "Big-O" analysis
+  
+### Definition
+
+Definition: let $f(n)$, $g(n)$ be functions, we say that $f(n)$ is Big-O of $g(n)$ if there is a positive constant $c$ and an integer $n_0$ such that 
+  $$f(n) \leq c g(n)$$
+for all $n \geq n_0$  
+* Big-O characterizes a function's order of growth as $n \rightarrow \infty$
+* It allows you to ignore lower order terms
+* It allows you to ignore constants 
+* It allows you to focus on the most significant term in a function
+* Misc:
+  * We usually write $f(n) = O(g(n))$
+  * The "real" way to write this is $f(n) \in O(g(n))$
+  * The definition is not "tight": that it establishes a *relative* ordering of function rates of growth
+  * $3n + 3 = O(n)$
+  * It is also true that $3n+3 = O(n^2)$
+  * It is also true that $3n+3 = O(2^n)$
+
+### Proofs
+
+* Given two functions, $f(n), g(n)$ how do you prove that $f(n) = O(g(n))$
+* Two techniques:
+  * Approach A: find the "cross over" point where one function will become larger for all values larger than that cross over point: it is essentially fixing $c = 1$ in the inequality and finding $n_0$  
+  * Approach B: we fix $n_0 = 0$ and then find a $c$ such that the inequality holds: start with $f(n)$ and make it bigger and bigger until you get $g(n)$
+
+## Searching & Sorting revisisted...
+
+* Binary Search
+* Master Theorem
+* Quick Sort
+* Merge Sort
+
+### aNalyzing recursive algorithms
+
+1. You define a function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of how much *non*-recursive work you do, and then how much recursive work you do.
+3. You solve the recurrence or you use Master Theorem
   
 ```text
 
