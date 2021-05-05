@@ -76,8 +76,27 @@ More definitions:
 
 * Three basic operations:
   * Search (find a particular node)
-
+  * Insert
+  * Delete
   
+## Binary Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* Balanced BSTs to exist: AVL, 2-3, Red-Black, etc. 
+* Work by efficiently *rebalancing* nodes
+* A heap is a binary tree that has the following properties
+  * It is a *full* binary tree: at every level all nodes are present except for (possibly) the last (deepest) level which is "full-to-the-left"
+  * It satisfies the "heap" property: the key in any node is less than (min heap) or greater than (max heap) *BOTH* of its children
+* OBservation: 
+  * In a max (min) heap, the maximum (minimum) element is always at the root
+  * Because of the fullness property, the depth of a binary heap, $d = O(\log{n})$
+* Heaps support 2 basic operations:
+  * insert - adds ane element to the heap
+  * getMin (getMax)
+  
+
+
+
 ```text
 
 

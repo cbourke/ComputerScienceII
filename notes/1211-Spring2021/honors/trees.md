@@ -78,3 +78,28 @@
   * to search only requires a number of comparisons proportional to they key's *depth*
   * The maximum number of comparisons is $d+1 = O(d)$
   * If you can ensure a "balanced" or "full" tree, then $d = O(\log(n))$ ie search will be $O(\log{n})$
+* Basic Operations
+  * search
+  * insert
+  * delete
+
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* Balanced BSTs to exist: AVL, 2-3, Red-Black, etc. 
+* Work by efficiently *rebalancing* nodes
+* Alternative: heap
+* A *heap* is a binary tree that has the following properties:
+  * It is a *full* tree: all nodes are present at all levels except possibly the last level which is "full to the left"
+  * Every key in every node is greater (max heap) or less than (min heap) *BOTH* of its children
+* OBservations:
+  * Due to the fullness property, the depth is guaranteed to be logarithmic!
+  * the min (or max) is located at the root!
+* We can exploit this structure for two efficient operations:
+  * getMax (max heap)
+  * insert 
+  
+  
+  
+  
+  
