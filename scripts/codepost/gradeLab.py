@@ -1,6 +1,7 @@
 import argparse
 import subprocess
 import os
+import glob
 
 """ 
 Mapping of non-standard lab packages.  In general the 
@@ -8,7 +9,11 @@ default batch tester package/class will be unl.cse.BatchTest
 """
 labToPackage = {
     "L04": "unl.cse.library.BatchTest",
-    "L05": "com.cinco.payroll.BatchTest"
+    "L05": "com.cinco.payroll.BatchTest",
+    "L09": "unl.cse.albums.BatchTest",
+    "L10": "unl.cse.albums.BatchTest",
+    "L11": "unl.cse.trucks.BatchTest",
+    "L13": "unl.cse.sorting.BatchTest"
 }
 
 parser = argparse.ArgumentParser()
@@ -44,6 +49,8 @@ basePath = "/home/grad/Classes/cse156/handin/"
 stagingDir = "lab_staging"
 java = "/usr/bin/java"
 javac = "/usr/bin/javac"
+output = "DEBUG INFO:\n"
+debug = False
 
 csvResult = "cseLogin,canvasId,points,pass,fail,totes\n"
 
@@ -65,13 +72,25 @@ for nuid,p in students.items():
     os.system("cp -R ../common/* ./"+stagingDir)
     os.system("cp *.java " + stagingDir)
     os.chdir(stagingDir)
-    os.system(javac + " -cp ./lib/*.jar -d . *.java")
-    args = " -cp .:lib/* " + batchTestClass + " "
-    result = subprocess.run([java+args, ""], shell=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
+
+    jars = ":".join(glob.glob("./lib/*.jar"))
+    javacCmd = javac + " -cp ./:"+jars+" -d . *.java"
+
+    if debug:
+      print(javacCmd)
+    os.system(javacCmd)
+
+    javaCmd = java + " -cp ./:"+jars+" "+batchTestClass
+    if debug:
+      print(javaCmd)
+      
+    result = subprocess.run([javaCmd, ""], shell=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
     if not result:
       result = "0,-2,-2,-2" #submitted but failed
     csvResult += "%s,%s,%s\n"% (login,canvasId,result)
     os.chdir("..")
     os.system("rm -rf "+stagingDir)
-    
+
+if debug:
+    print(output)
 print(csvResult)
