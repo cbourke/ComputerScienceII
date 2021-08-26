@@ -1,23 +1,15 @@
+import mariadb
+import sys
 import pickle
 import os.path
 from config import config
-
-# For pyodbc you can find your odbc ini file using:
-# 
-#   odbcinst -j
-# Which will list the ODBC drivers on the system.
-# Alternatively, you can use pyodbc directly to list
-# all known drivers:
-#
-#  for x in pyodbc.drivers():
-#    print(x)
 
 def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
   """
     Maps NUIDs to CSE login IDs.  Given the map of NUIDs
     (some of which may already be mapped) it updates the
     map by querying the udb (User Database) on the cse-apps
-    server, including any missing logins in the returned 
+    server, including any missing logins in the returned
     map.
 
     If the specified pickleFileName is provided, the method
@@ -25,7 +17,7 @@ def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
     logins from the serialized pickle file to avoid going
     to the database (a database query is still made for any
     remaining missing records).  Further, the resulting
-    map is persisted back to the pickle file (overwriting 
+    map is persisted back to the pickle file (overwriting
     the original) before it is returned.
 
     @param nuidToCseLogin: the given map of (possibly incomplete) NUIDs-to-CSE Logins
@@ -47,38 +39,12 @@ def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
   for nuid,login in nuidToCseLogin.items():
     if login is None:
       missingLogins.append(nuid)
-    
+
   # if missing logins, try to get them from the DB:
   if missingLogins:
-    import pyodbc
-    try:
-      print("loading missing logins from db...")
-      print(missingLogins)
-      nuidParam = "'" + '\', \''.join(missingLogins) + "'"
-      query = 'SELECT login,nuid FROM view_login_nuid where nuid in ('+nuidParam+')'
-
-      connStr = ("Driver=%s;"
-                 "Server = %s;"
-                 "Database = %s;"
-                 "uid = %s;"
-                 "password = %s;"
-                 "Trusted_Connection = yes;")%(
-                 config.udb.driver,
-                 config.udb.host,
-                 config.udb.database,
-                 config.udb.username,
-                 config.udb.password
-                 )
-
-      conn = pyodbc.connect(connStr)
-      cursor = conn.cursor()
-      cursor.execute(query)
-      for row in cursor:
-        (login,nuid) = row
-        nuidToCseLogin[nuid] = login
-    except pyodbc.Error as e:
-      print("unable to connect to db")
-      print(e)
+    pairs = getLoginsByNuid(missingLogins)
+    for (login,nuid) in pairs:
+      nuidToCseLogin[nuid] = login
 
   if pickleFileName is not None:
     outFile = open(pickleFileName, 'wb')
@@ -86,3 +52,46 @@ def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
     outFile.close()
 
   return nuidToCseLogin
+
+def getLoginsByNuid(nuids):
+  """
+  Returns a list of tuples of (nuid,login) pairs corresponding
+  to the given nuids.
+  """
+  try:
+    conn = mariadb.connect(
+      user=config.udb.username,
+      password=config.udb.password,
+      host=config.udb.host,
+      port=3306,
+      database=config.udb.database
+    )
+  except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
+
+  parameterStr = ','.join(['%s'] * len(nuids))
+  cursor = conn.cursor()
+  result = []
+  try:
+    cursor.execute(
+      "SELECT login,nuid FROM view_login_nuid where nuid in (%s)"%parameterStr,
+      tuple(nuids)
+    )
+    for (login,nuid) in cursor:
+      result.append( (nuid, login) )
+    return result
+  except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
+
+def udbConnTest():
+  """
+  Makes a connection to UDB for troubleshooting.
+  """
+  pairs = getLoginsByNuid(['12345678', '35140602'])
+  for (nuid,login) in pairs:
+      print(nuid,"->",login)
+
+if __name__ == "__main__":
+    udbConnTest()
