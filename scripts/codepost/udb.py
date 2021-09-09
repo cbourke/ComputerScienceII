@@ -43,7 +43,7 @@ def mapNuidsToCseLogins(nuidToCseLogin, pickleFileName = None):
   # if missing logins, try to get them from the DB:
   if missingLogins:
     pairs = getLoginsByNuid(missingLogins)
-    for (login,nuid) in pairs:
+    for (nuid,login) in pairs:
       nuidToCseLogin[nuid] = login
 
   if pickleFileName is not None:
