@@ -1,9 +1,10 @@
 # Computer Science II
-**[Department of Computer Science & Engineering](https://cse.unl.edu)**  
+**[School of Computing](https://computing.unl.edu/)**  
+**[College of Engineering](https://engineering.unl.edu/)**
 **[University of Nebraska-Lincoln](https://unl.edu)**
 
 This repository hosts documents, files, and other artifacts
-related to Computer Science II (offered as CSCE 156 and CSCE 156H) at 
+related to Computer Science II (offered as CSCE 156 and CSCE 156H) at
 the University of Nebraska-Lincoln
 
 ## Textbook
@@ -37,6 +38,11 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ## Course Offerings
 
+### Spring 2022
+
+- Course Link: https://canvas.unl.edu/courses/123248
+- Lectures:
+
 ### Spring 2021
 
 - Course Link: https://canvas.unl.edu/courses/100756/
@@ -47,7 +53,7 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 - Course Link: https://canvas.unl.edu/courses/75741
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWV9pWLAc1XiPlKXpXS3X8v
 
-### Spring 2019 
+### Spring 2019
 
 - Course Link: https://canvas.unl.edu/courses/53628
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUzX-W8wQkWPYu5gbkcZYMC

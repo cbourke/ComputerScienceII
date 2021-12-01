@@ -1,7 +1,7 @@
 # Computer Science II
 
-### CSCE 156 - Syllabus - Spring 2021
- [Department of Computer Science & Engineering](https://cse.unl.edu/)  
+### CSCE 156 - Syllabus - Spring 2022
+ [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska Lincoln](https://unl.edu/)  
 
@@ -14,7 +14,7 @@
 
 ## Course Info
 
-**Prerequisites**: [MATH 106](https://catalog.unl.edu/search/?P=MATH%20106) 
+**Prerequisites**: [MATH 106](https://catalog.unl.edu/search/?P=MATH%20106)
 or equivalent and a grade of C or better in [CSCE 155](https://catalog.unl.edu/search/?P=CSCE%20155E)
 
 **Description**: Data structures, including linked lists, stacks,
@@ -25,10 +25,15 @@ implementation of a multilayer application with SQL database.
 
 **Credit Hours**: 4
 
-**Postrequisites**: This course is a prerequisite for 
+**Postrequisites**: This course is a prerequisite for
 [CSCE 310](https://catalog.unl.edu/search/?P=CSCE%20310) - Data
 Structures & Algorithms. A grade of C or better is required to move on
 to CSCE 310.
+
+## University Policies, Resources & Services
+
+Students are responsible for knowing the university policies and
+resources found on this page: https://go.unl.edu/coursepolicies
 
 ## Skills Objectives
 
@@ -72,7 +77,7 @@ solving should be modified to ask and answer design questions first:
 
 -   Object Oriented Programming, OOP in Java
 
--   Database Design, SQL, Database Connectivity (JDBC), multi-tier
+-   Database Design, SQL, Database Connectivity, multi-tier
     design
 
 -   Lists (array-based, linked; circular doubly-linked), Stacks & Queues
@@ -81,176 +86,57 @@ solving should be modified to ask and answer design questions first:
 
 -   Trees; Binary Search Trees
 
-## COVID-19 Accommodations & Policies
+## Course Format & Delivery
 
-Several sections of this course have been established for the spring 2021
-offering in order to accommodate a variety of student attendance preferences.
-
-* Section 150 - This **In-Person** course meets TR 11:00AM - 12:15AM and is
-delivered in a hybrid mode where students are welcome to attend in person as 
-often as social distancing and room restrictions allow.  Currently, students 
-will be allowed to come every other lecture based on the following schedule.  
-  * If your NUID ends with an even number, you *may* attend lecture in
-    person on Tuesdays, but *must* attend remotely on Thursdays
-  * If your NUID ends with an odd number, you *may* attend lecture in
-    person on Thursdays, but *must* attend remotely on Tuesdays
-Students *may* opt to attend remotely for all lectures.  For those attending
-remotely, all lectures are livestreamed via YouTube during the regular lecture 
-time.  Live Q&A will be available through Piazza.  Recordings of the lecture 
-are provided immediately after through YouTube.
-
-* Section 160 - This **Web Conferencing** section is the same course as section
-150, however students in this section *must* attend lecture remotely for all
-lectures and may not attend lectures in person.
-
-* Section 700 - This **Online** section is the same course as section 150 but
-is a purely online section.  Students must attend remotely for all lectures
-and labs.  
+This course is offered in multiple sections. The main offering has
+two sections:
+  * Section 150 is the in-person lecture with lecture on  TR 11:00AM - 12:15AM.
+    Lecture is livestreamed via YouTube and recordings of the lecture are
+    available immediately after.
+  * Section 700 is the online section.  Students enrolled in this section may
+    attend virtually by watching the livestream and utilizing either YouTube
+    chat or our online forum Piazza to ask questions.  Students in the online
+    section may "attend" *any* lab section virtually via zoom.  A substantial s
+    et of pre-prepared video tutorials and lectures is also available for
+    students wishing to work asynchronously.
+  * There are two separate honors sections for CSCE 156H (sections
+    150 and 700) with the same format as the main sections.  Generally, the
+    there are higher expectations (each assignment has 10-15% extra work
+    required for the honors section) and we do go a bit faster in order to
+    cover some extra topics as time permits.  The section is also smaller.
 
 ### Labs
 
-Students in sections 150 and 160 may choose to attend their lab section either 
-in-person or remotely (via zoom).  Students in the online 700 section will 
+Students in in-person sections may choose to attend their lab section either
+in-person or remotely (via zoom).  Students in the online 700 section will
 complete their labs remotely but may attend virtual lab sessions via zoom.  
 
 ### Office Hours
 
-All office hours by instructors and Learning Assistants will be offered 
-*online only* via zoom.  
+All office hours by instructors and Learning Assistants will be offered
+both in-person in the School of Computing
+[Student Resource Center](https://computing.unl.edu/current-undergraduate#SRC)
+as well as online only via zoom.  
 
-### Face Covering Policy
+### Continuation of Instruction
 
-**Required Use of Face Coverings for On-Campus Shared Learning Environments**
-
-As of July 17, 2020 and until further notice, all University of 
-Nebraska--Lincoln (UNL) faculty, staff, students, and visitors 
-(including contractors, service providers, and others) are required 
-to use a facial covering at all times when indoors except under 
-specific conditions outlined in the COVID 19 face covering policy 
-found at: <https://covid19.unl.edu/face-covering-policy>. This 
-statement is meant to clarify classroom policies for face coverings:
-
-To protect the health and well-being of the University and wider 
-community, UNL has implemented a policy requiring all people, 
-including students, faculty, and staff, to wear a face covering 
-that covers the mouth and nose while on campus. The classroom is 
-a community, and as a community, we seek to maintain the health 
-and safety of all members by wearing face coverings when in the 
-classroom. Failure to comply with this policy is interpreted as 
-a disruption of the classroom and may be a violation of UNL's 
-Student Code of Conduct.
-
-Individuals who have health or medical reasons for not wearing 
-face coverings should work with the Office of Services for 
-Students with Disabilities (for students) or the Office of 
-Faculty/Staff Disability Services (for faculty and staff) to 
-establish accommodations to address the health concern. Students 
-who prefer not to wear a face covering should work with their 
-advisor to arrange a fully online course schedule that does 
-not require their presence on campus.
-
-Students in the classroom:
-  * If a student is not properly wearing a face covering, 
-  the instructor will remind the student of the policy and ask 
-  them to comply with it.
-  * If the student will not comply with the face covering policy, 
-  the instructor will ask the student to leave the classroom, 
-  and the student may only return when they are properly wearing 
-  a face covering.
-  * If the student refuses to properly wear a face covering 
-  or leave the classroom, the instructor will dismiss the class 
-  and will report the student to Student Conduct & Community 
-  Standards for misconduct, where the student will be subject 
-  to disciplinary action.
-
-Instructors in the classroom:
-  * If an instructor is not properly wearing a face covering, 
-  students will remind the instructor of the policy and ask them 
-  to comply with it.
-  * If an instructor will not properly wear a face covering, 
-  students may leave the classroom and should report the misconduct 
-  to the department chair or via the TIPS system for disciplinary 
-  action through faculty governance processes.
-
-### Social Distancing & Attendance
-
-Due to the continuing COVID-19 pandemic, the following 
-policies and accommodations will be made for this course.  
-
-  * No assessment will be made based on any synchronous attendance 
-  for instructional sessions (which includes lecture, lab, hack, and 
-  office hours).  Attendance of any face-to-face instructional session
-  is **entirely optional** and is left to each student's own 
-  reasonable judgement.  If you have a medical condition or other 
-  consideration or simply do not wish to unnecessarily expose yourself
-  or others to potential infection, you are *encouraged* to refrain
-  from any and all face-to-face sessions.  You will not be judged 
-  nor will you be required to provide any documentation.
-  
-  * If you feel sick, have a fever or other related symptoms of
-  think you may have been exposed to a COVID-19 positive individual, you
-  *may not* attend face-to-face sessions.  Please attend remotely.
-
-### Self-Care Curricular Adjustments
-
-The UNL Faculty Senate passed a [resolution](https://www.unl.edu/facultysenate/senate/Resolutions/Spring%202021%20Curriculum%20resolution.pdf) on 
-December 1st, 2020 encouraging instructors to make adjustments to 
-courses and curricula in an effort to promote self-care and to 
-relieve stress and promote mental well-being during the pandemic 
-crisis.
-
-As such, the following accommodations and changes have been made
-to this course:
- - The midterm exam and final exam have been eliminated
- - The final assignment (assignment 8, typically a written, 
-   theory-based assignment) is still assigned and required, but 
-   it will not be graded.
- - The number of labs has been reduced to 14 to accommodate the
-   COVID schedule.  Further, we will drop your lowest lab grade.
- - For those in the honors section, the usual requirement that 
-   "bonus" items are required and part of your regular grade will
-   be removed and the items will be optional and treated as bonus
-   if completed.
-
-## University Services
-
-### Accommodations for Students with Disabilities
-
-The University strives to make all learning experiences as accessible as
-possible. If you anticipate or experience barriers based on your
-disability (including mental health, chronic or temporary medical
-conditions), please let me know immediately so that we can discuss
-options privately. To establish reasonable accommodations, I may request
-that you register with [Services for Students with Disabilities](https://www.unl.edu/ssd/) 
-(SSD). If you are eligible for services and register with their office, make
-arrangements with me as soon as possible to discuss your accommodations
-so they can be implemented in a timely manner. SSD contact information:
-117 Louise Pound Hall; 402-472-3787.
-
-### Counseling and Psychological Services
-
-UNL offers a variety of options to students to aid them in dealing with
-stress and adversity. [Counseling and Psychological Services](https://caps.unl.edu/) 
-(CAPS) is a multidisciplinary team of psychologists and counselors that works
-collaboratively with Nebraska students to help them explore their
-feelings and thoughts and learn helpful ways to improve their mental,
-psychological and emotional well-being when issues arise. CAPS can be
-reached by calling 402-472-7450. Big Red Resilience & Well-Being
-provides fun events, innovative education, and dynamic services to help
-students understand emotions, manage stress, build strength, connect
-with others, develop grit and navigate transitions.
+If in-person classes are canceled by the University during a lecture
+day, lecture will still be livestreamed.  If in-person classes are canceled
+by the University during a lab/hack day, in-person attendance will not be
+required, help will be made available via zoom and you will still be
+expected to complete the work remotely.
 
 ## Assessment
 
-Assessment (grading) will be based on labs and assignments.  There are 14 labs, 
-20 points each comprising about 26% of your grade.  There will be several 
-assignments whose point values vary, but whose total will comprise the 
-remaining 76% of your final grade.
+Assessment (grading) will be based on labs and assignments.  There are 14 labs,
+20 points each comprising 28% of your grade.  There will be several
+assignments whose point values vary, but whose total will comprise the
+remaining 72% of your final grade.
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Labs        | 13     | 260    |
-| Assignments | 7      | 740    |
+| Labs        | 14     | 280    |
+| Assignments | 7      | 720    |
 | Total       |        | 1000   |
 
 ### Scale
@@ -285,17 +171,17 @@ with additional information and details not necessarily covered in
 lecture. Each lab will come with some starter code and exercises that
 you have to complete.  You will submit your code as specified through
 the webhandin and we will grade your lab using the webgrader.
- 
-Labs are setup as a *peer programming* experience. If you are attending 
-lab *in person*, you may be randomly paired with a partner. One of you 
-will be the *driver* and the other will be the *navigator*. The navigator 
-will be responsible for reading the instructions and guiding the driver. 
-The driver will be in charge of the keyboard and will type the code. Both 
-driver and navigator are responsible for developing and working through 
+
+Labs are setup as a *peer programming* experience. If you are attending
+lab *in person*, you may be randomly paired with a partner. One of you
+will be the *driver* and the other will be the *navigator*. The navigator
+will be responsible for reading the instructions and guiding the driver.
+The driver will be in charge of the keyboard and will type the code. Both
+driver and navigator are responsible for developing and working through
 solutions *together*.  Neither the navigator nor the driver is "in charge."
 This is an equal collaboration and all efforts should be equally shared.
-Beyond your immediate pairing, you are encouraged to help and interact 
-and with other pairs in the lab.  If you are attending lab remotely or 
+Beyond your immediate pairing, you are encouraged to help and interact
+and with other pairs in the lab.  If you are attending lab remotely or
 online, you may be paired up with another person virtually if you choose
 or you may complete the lab on your own.
 
@@ -406,17 +292,17 @@ wish to be identified. It is available at
 ### Learning Assistant Program (LAP)
 
 This course is supported by the CSE Learning Assistant Program (LAP).  
-The mission of the LAP is to improve student comprehension and 
-retention in computing fields by focusing on the learner's experience. 
-This course will be supplemented by Learning Assistants (LAs) and Course 
-Leaders (CLs) to help improve your learning. LAs and CLs are other 
-undergraduate students who have taken the same or similar courses 
-and have been trained to help you succeed in this course. Your LAs 
-and CLs will hold regular office hours, help with grading, and assist 
+The mission of the LAP is to improve student comprehension and
+retention in computing fields by focusing on the learner's experience.
+This course will be supplemented by Learning Assistants (LAs) and Course
+Leaders (CLs) to help improve your learning. LAs and CLs are other
+undergraduate students who have taken the same or similar courses
+and have been trained to help you succeed in this course. Your LAs
+and CLs will hold regular office hours, help with grading, and assist
 you with labs/assignments.
 
-I strongly encourage you to utilize the LAs and CLs when you are 
-completing coursework. More information can be found in the Learning 
+I strongly encourage you to utilize the LAs and CLs when you are
+completing coursework. More information can be found in the Learning
 Assistant Program Module on Canvas.
 
 ### Getting Help
@@ -482,5 +368,3 @@ the material and getting help in this course:
     explain a problem to someone (or, lacking a live person, a rubber
     duck), then you can usually identify the problem yourself. Or, at
     the very least, get some insight as to what might be wrong.
-
-
