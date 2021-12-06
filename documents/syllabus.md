@@ -129,15 +129,18 @@ expected to complete the work remotely.
 ## Assessment
 
 Assessment (grading) will be based on labs and assignments.  There are 14 labs,
-20 points each comprising 28% of your grade.  There will be several
-assignments whose point values vary, but whose total will comprise the
-remaining 72% of your final grade.
+20 points each.  They are graded based on completion and your lowest lab
+grade will be dropped.  The vast majority of your assessment will be based
+on assignments whose point values vary.  To start you out on the right foot,
+you have been awarded 15 free starter points.  You are currently earning an
+A in this course; keep it up!
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Labs        | 14     | 280    |
-| Assignments | 7      | 720    |
-| Total       |        | 1000   |
+| Starter Pts | 1      |   15   |
+| Labs        | 13     |  260   |
+| Assignments | 9      |  975   |
+| Total       |        | 1250   |
 
 ### Scale
 
