@@ -41,7 +41,7 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 ### Spring 2022
 
 - Course Link: https://canvas.unl.edu/courses/123248
-- Lectures:
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWXYbp7veWtvG9WZMWkRqLx
 
 ### Spring 2021
 
