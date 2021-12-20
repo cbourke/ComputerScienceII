@@ -42,10 +42,9 @@ However, only 4 scripts are intended to be run directly:
 - `course.py` will load all data from Canvas and UDB and print a
   roster.  It will also print a raw list of email addresses if you
   need them for (say) Piazza or other communication tools.
-- `codepostInitCourse.py` - a collection of functions to setup
-  assignments, rubrics and roster.  Take care to not run the
-  assignment setup more than once or it may result in duplicates.
-  The roster can be updated using this same script (RTM).
+- `codepostInitRoster.py` - Initializes (or updates) the roster
+  in codepost using canvas (enrolled students and TAs) and the
+  roles defined in `config.py`
 - `codepostListCourseInfo.py` - this will list relevant data including
   necessary assignment IDs and roster from codepost.
 - `codepostAssignGraders.py` - a script that (randomly) assigns
