@@ -16,7 +16,7 @@ References:
 
 Note: the CanvasAPIv1 is somewhat limited.  There is no way way
 to get the role of a user directly (student, TA, etc.).  In any
-case, the course.py module is designed to manually define the 
+case, the course.py module is designed to manually define the
 role of graders and (non-grader) instructors so that we have finer
 grained control on who is assigned to grade.
 """
@@ -36,12 +36,12 @@ api = CanvasAPIv1(config.canvasUrl, config.canvasApiKey)
 
 def getGroupCategoryId(groupSetName):
   """
-  Retrieves the Canvas "Group Set" ID (internally this is 
-  designated as a Group Category) given the name of the 
-  group such as "Assignment Pairs".  If no match is found, 
+  Retrieves the Canvas "Group Set" ID (internally this is
+  designated as a Group Category) given the name of the
+  group such as "Assignment Pairs".  If no match is found,
   None is returned.
   """
-  path = ("/api/v1/courses/" + 
+  path = ("/api/v1/courses/" +
           config.canvasCourseId +
           "/group_categories/?access_token=" +
           config.canvasApiKey)
@@ -61,9 +61,9 @@ def getMembers(groupId):
   Retrieves the canvas user IDs of the members of the given
   canvas group.
   """
-  path = ("/api/v1/groups/" + 
-          str(groupId) + 
-          "/memberships/?access_token="+config.canvasApiKey)      
+  path = ("/api/v1/groups/" +
+          str(groupId) +
+          "/memberships/?access_token="+config.canvasApiKey)
   connection = http.client.HTTPSConnection(canvasHost)
   connection.request("GET", path)
   response = connection.getresponse()
@@ -75,24 +75,24 @@ def getMembers(groupId):
     userId = member['user_id']
     result.append(userId)
   return result
-  
+
 def getGroupTuples(groupSetName=None):
   """
   Retrieves groups and members from Canvas based on the
   given Group Set (group category).  If none is provided,
   every group is retrieved.  Only groups with more than
   one member are included though.
-  
+
   Returns an array of 3-tuples consisting of:
     (groupId,"groupName",[membersCanvasIds])
-    
+
   """
   groupCategoryId = None
   if groupSetName is not None:
     groupCategoryId = getGroupCategoryId(groupSetName)
-  path = ("/api/v1/courses/" + 
-          config.canvasCourseId + 
-          "/groups/?per_page=100&access_token="+config.canvasApiKey)      
+  path = ("/api/v1/courses/" +
+          config.canvasCourseId +
+          "/groups/?per_page=100&access_token="+config.canvasApiKey)
   connection = http.client.HTTPSConnection(canvasHost)
   connection.request("GET", path)
   response = connection.getresponse()
@@ -113,16 +113,16 @@ def getRoster():
   """
   Retrieves the complete roster of the course from Canvas
   including all students, instructors, TAs, etc.
-  
+
   Returns a mapping of {NUID => Person objects}
   """
   roster = {}
   pages = api.get_course_users(config.canvasCourseId)
-  # the API lazy loads elements and uses pagination, 
+  # the API lazy loads elements and uses pagination,
   # so a double iteration is necessary.
   for page in pages:
     for u in page:
-      try: 
+      try:
         canvasLogin = None
         canvasEmail = None
         if 'login_id' in u:
@@ -135,7 +135,6 @@ def getRoster():
         else:
           print("ERROR: no email for user")
           print(u)
-          sys.exit(1)
         p = Person(
           nuid        = u['sis_user_id'],
           canvasId    = u['id'],
@@ -152,13 +151,13 @@ def getRoster():
   return roster
 
 def getGroups(roster):
-  """  
-  Returns a list of Group objects from Canvas based on 
+  """
+  Returns a list of Group objects from Canvas based on
   the Group Set name in the configuration file.  If no such
-  group set exists or if an individual is not part of a group, 
+  group set exists or if an individual is not part of a group,
   they are placed in a group of one.
-  
-  In addition, each Person object in the given roster is 
+
+  In addition, each Person object in the given roster is
   associated with its group.
   """
   groups = []
@@ -176,14 +175,14 @@ def getGroups(roster):
             break
       g.addMembers(members)
       groups.append(g)
-    
+
   # iterate through roster and create groups of one:
   for nuid,p in roster.items():
     # but only if they have not already been assigned to a group
     if p.group is None:
       g = Group()
       g.addMembers([p])
-      p.group = g 
+      p.group = g
       groups.append(g)
   return groups
 
