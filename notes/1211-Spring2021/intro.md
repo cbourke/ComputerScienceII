@@ -32,20 +32,20 @@ public class HelloWorld {
 ```
 
 
-* C-style Syntax: 
+* C-style Syntax:
   * You have a `main` method that acts as a main entry point
   * Curly brackets denote code blocks and can be nested
   * Semicolons end executable lines of code
   * Square brackets are used for arrays
   * String literals: strings are denoted with double quotes
-* There is no (direct) memory management: it has automatic *garbage collection* 
+* There is no (direct) memory management: it has automatic *garbage collection*
   * Portable: write once, compile once, run anywhere (as long as you have a JVM)
   * Backwards compatible (mostly)
   * Comments?
     * Single line comments: `//`
     * Multiline comments: `/* foo bar baz */`
     * Javadoc style comments
-  
+
 
 # Variables
 
@@ -60,7 +60,7 @@ public class HelloWorld {
     boolean isStudent = true;
     isStudent = false;
     ```    
-    
+
 * Java has a "built in" `String` class that is really easy to use
 
 ```java
@@ -102,7 +102,7 @@ if ( !foo ) {
   System.out.println("Hello");
 } else if(x >= 10) {
   System.out.println("Goodbye");
-} else { 
+} else {
   System.out.println("Uh...");			
 }
 ```
@@ -118,10 +118,10 @@ for(int i=1; i<=10; i++) {
 
 int i = 1;
 while(i <= 10) {
-  System.out.println(i);	
+  System.out.println(i);
   i++;
 }
-System.out.println(i);	
+System.out.println(i);
 ```
 
 # Arrays and Collections
@@ -136,7 +136,7 @@ System.out.println(i);
 		for (int i = 0; i < primes.length; i++) {
 			System.out.println(primes[i]);
 		}
-		
+
 		int arr[] = new int[5];
 		for (int i = 0; i < arr.length; i++) {
 			System.out.println(arr[i]);
@@ -195,7 +195,7 @@ System.out.println(i);
 		for (Double price : prices) {
 			System.out.println(price);
 		}
-			
+
 ```
 
 ## Sets
@@ -236,11 +236,11 @@ System.out.println(i);
 		System.out.println(s);
 		s = nickNames.get("Michael");
 		System.out.println(s);
-		
+
 		Map<String, Integer> ages = new HashMap<>();
 		ages.put("Tommy", 21);
 		ages.put("Chris", 30);
-		
+
 		String name = nickNames.get("Christopher");
 		int age = ages.get(name);
 		System.out.println(age);
@@ -258,12 +258,12 @@ System.out.println(i);
 		System.out.println(s);
 		String subs = s.substring(6);
 		System.out.println(subs);
-		
+
 //		String t = s;
 //		s = "Goodbye World!";
 //		System.out.println(s);
 //		System.out.println(t);
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("Hello, ");
 		sb.append(" how are you?");
@@ -283,7 +283,7 @@ System.out.println(i);
 
 ```java
 /**
- * Computes the Euclidean Distance between the two 
+ * Computes the Euclidean Distance between the two
  * points <code>(x1,y1)</code> and <code>(x2,y2)</code>
  * @param x1 the x component of the first point
  * @param y1 the y component of the first point
@@ -294,7 +294,7 @@ System.out.println(i);
 public static double euclideanDistance(double x1, double y1, double x2, double y2) {
 
   return Math.sqrt( Math.pow((x1-x2), 2) +  Math.pow((y1-y2), 2));
-  
+
 }
 ```
 
@@ -308,7 +308,7 @@ public static double euclideanDistance(double x1, double y1, double x2, double y
 
 		try {
 			Scanner s = new Scanner(new File("data/data.csv"));
-			
+
 			//TODO: process the file
 			while(s.hasNextLine()) {
 				//a. read the line
@@ -322,7 +322,7 @@ public static double euclideanDistance(double x1, double y1, double x2, double y
 					System.out.println(tokens[0] + " is " + age + " years old");
 				}
 			}
-			
+
 			s.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -356,7 +356,7 @@ try {
 * If an exception is *thrown* then the `catch` block will catch it and you can handle it in that block
 * Java has two types of exceptions: a "checked" exception which *requires* you to surround the operation with a `try-catch` block and an "unchecked" exception
 * So for most "checked" excpetions: go ahead and `try-catch` them, but then, release it: by throwing it as a new `RuntimeException`
-    
+
 ```java
 
 
@@ -377,7 +377,7 @@ try {
 			//TODO: deal with a generic exception somehow
 			throw new RuntimeException(e);
 		}
-		
+
 		System.out.println("end of program");
 
 //also, you can throw your own exceptions:
@@ -386,11 +386,11 @@ if(n == 0) {
 } else {
   double y = x / n;
 }
-		
+
 ```
 
 ## Searching & Sorting
-  
+
 ```java
 
 		List<Integer> a = Arrays.asList(-42, 4, 7, 3, 8, 2, 1);
@@ -398,11 +398,11 @@ if(n == 0) {
 		System.out.println(a);
 		Collections.sort(a);
 		System.out.println(a);
-		
+
 		System.out.println(b);
 		Collections.sort(b);
 		System.out.println(b);
-		
+
 		Comparator<Integer> cmpIntDesc = new Comparator<>() {
 
 			@Override
@@ -415,22 +415,22 @@ if(n == 0) {
 					return 0;
 				}
 			}
-			
+
 		};
-		
+
 		System.out.println(a);
 		Collections.sort(a, cmpIntDesc);
 		System.out.println(a);
-		
+
 		Comparator<String> cmpStringCaseInsensitive = new Comparator<>() {
 
 			@Override
 			public int compare(String a, String b) {
 				return a.compareToIgnoreCase(b);
 			}
-			
+
 		};
-		
+
 		System.out.println(b);
 		Collections.sort(b, cmpStringCaseInsensitive);
 		System.out.println(b);
@@ -446,6 +446,3 @@ if(n == 0) {
 
 
 ```    
-    
-    
-    
