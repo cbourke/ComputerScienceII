@@ -151,12 +151,17 @@ while(i < 10) {
 			System.out.println("numbers[" + i + "] = " + numbers[i]);
 		}
 
+    //"enhanced" (for each) loop
 		for(int x : numbers) {
 			System.out.println(x);
 		}
   ```
 
 ## Lists
+
+* A `List` is an ordered collection of elements
+* Typically you use an `ArrayList`
+* It dynamically and automatically grows/shrinks as you add/remove stuff
 
 ```java
 
@@ -182,6 +187,108 @@ while(i < 10) {
 		System.out.println(names);
 ```
 
+* A `Set` is an *unordered* collection of *unique* elements
+* No order (no first element, no second, etc.)
+* No duplicates, adding stuff multiple times has no effect
+* Use an enhanced for loop to iterate over a set
+
+```java
+
+		Set<String> names = new HashSet<>();
+
+		names.add("Chris");
+		names.add("Joe");
+		names.add("Jane");
+		names.add("John");
+		names.add("Darrell");
+		names.add("Darrell");
+		System.out.println(names);
+		names.add("Bob");
+		System.out.println(names);
+
+		for(String name : names) {
+			System.out.println(name);
+		}
+		//names.remove("Chris");
+		System.out.println(names);
+		if(names.contains("CHRIS")) {
+			System.out.println("I'm still in there!");
+		}
+		```
+
+```java
+
+		//map names to ages...
+		//string (keys) representing names
+		// will map to values representing an age
+		Map<String, Integer> names = new HashMap<>();
+
+		names.put("Chris", 32);
+		names.put("Joe", 45);
+		names.put("Jane", 39);
+		names.put("John", 22);
+		names.put("Darrell", 24);
+		names.put("Darrell", 23);
+		names.put("Bob", 92);
+		System.out.println(names);
+
+		names.put("Bob", 20);
+		System.out.println(names);
+		names.remove("Bob");
+		System.out.println(names);
+
+		Integer joesAge = names.get("Joe");
+		System.out.println(joesAge);
+
+		for(String name : names.keySet()) {
+			Integer value = names.get(name);
+			System.out.println(name + " is " + value + " years old!");
+		}
+```
+
+# Strings
+
+* Java has a `String` class:
+  * no memory management
+	* No null terminating character!
+	* concatenation: use the `+`
+* Strings are immutable: once created, they cannot be changed
+
+```java
+
+		String msg = "Hello World!";
+		String converted = msg.toUpperCase();
+
+		System.out.println(msg);
+		System.out.println(converted);
+
+		//get a particular character from a string:
+		char c = msg.charAt(0);
+		System.out.println(c);
+
+		//substring?
+		String sub = msg.substring(6, 11);
+		System.out.println(sub);
+
+		String csvData = "Chris,Bourke,Schorr,105";
+		String toks[] = csvData.split(",");
+		System.out.println(Arrays.toString(toks));
+		List<String> tokens = List.of(toks);
+		System.out.println(tokens);
+		Set<String> uTokens = Set.of(toks);
+		System.out.println(uTokens);
+
+
+				StringBuilder sb = new StringBuilder();
+				sb.append("hello");
+				sb.append(" World!");
+				sb.append("\n");
+				System.out.println(sb);
+				sb.setCharAt(0, 'H');
+				System.out.println(sb);
+				String finalStr = sb.toString();
+				System.out.println(finalStr);
+```
 
 
 ```text

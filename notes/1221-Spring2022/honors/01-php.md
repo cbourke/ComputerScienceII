@@ -242,8 +242,147 @@ $brr = array(
   10 => 3.14159
 );
 
+for($i=0; $i<count($arr); $i++) {
+    print($arr[$i] . "\n");
+}
+
+foreach($arr as $key => $value) {
+    print($key . " maps to " . $value . "\n");
+}
 ?>
 ```
+
+## Command Line Arguments
+
+* `$argc` is the number of arguments
+* `$argv` is a 0-indexed array of arguments
+* `$argv[0]` is the script name
+
+```php
+
+
+$a = 10;
+print("a = $a\n");
+
+printf("number of arguments: %d\n", $argc);
+foreach($argv as $index => $arg) {
+    printf("argv[%d] = %s\n", $index, $arg);
+}
+
+$x = intval($argv[4]);
+$y = doubleval($argv[5]);
+
+printf("end of program\n");
+
+```
+
+# File I/O
+
+* Three basic steps:
+  1. Open a file
+  2. Process it
+  3. Close
+
+```php
+
+$contents = file_get_contents("data.txt");
+
+printf($contents);
+
+//$lines = preg_split("/\n/", $contents);
+$lines = explode("\n", $contents);
+
+print_r($lines);
+
+//file output:
+$h = fopen("otherData.txt", "w");
+fprintf($h, "hello world\n");
+$a = 3.14;
+fprintf($h, "%.20f\n", $a);
+
+fclose($h);
+
+//oneliner:
+$msg = "Hello World how are you?";
+file_put_contents("newFile.txt", $msg);
+$msg = "new message";
+file_put_contents("newFile.txt", $msg);
+
+printf("end of program!\n");
+
+```
+
+# Functions
+
+* You can declare a function using the `function` keyword
+* You can declare it anywhere, however
+* Function names are case *insensitive*
+
+```php
+
+function sum($a, $b = null, $c = 50) {
+  $total = $a + $b + $c;
+  return $total;
+}
+
+
+$x = 10;
+$y = 20;
+$z = 30;
+
+$result = sum($x);
+print($result);
+
+```
+
+Pass by value/reference:
+
+```php
+
+function swap(&$a, &$b) {
+printf("swap: %d, %d\n", $a, $b);
+    $t = $a;
+    $a = $b;
+    $b = $t;
+printf("swap: %d, %d\n", $a, $b);
+}
+
+
+$x = 10;
+$y = 20;
+
+printf("%d, %d\n", $x, $y);
+swap($x, $y);
+printf("%d, %d\n", $x, $y);
+
+
+
+function sumArr(&$a) {
+    $total = 0;
+    for($i=0; $i<count($a); $i++) {
+        $a[$i] = $a[$i] + 1;
+    }
+    foreach($a as $k => $val) {
+        $total += $val;
+    }
+    return $total;
+}
+
+$arr = array(10, 20, 30);
+print_r($arr);
+$s = sumArr($arr);
+print_r($arr);
+printf("total = %d\n", $s);
+```
+
+# Exceptions
+
+* PHP does support Exceptions and exception handling, but ONLY one type: `Exception`
+
+# Sorting
+
+* `sort` - a "natrual" sort
+* `usort` - user-defined sort
 
 ```text
 
