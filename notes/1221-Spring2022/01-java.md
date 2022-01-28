@@ -290,6 +290,88 @@ while(i < 10) {
 				System.out.println(finalStr);
 ```
 
+### Methods
+
+* In java functions are called "methods"
+* Methods must be defined within a class
+* For now, all our methods will be `static`: they will belong to the class
+* It is either necessary or best practice to access/call those methods using the dot operator: ex: `Math.sqrt()`, `Isotope.getMass()`
+* For now, all of our methods will be `public`
+* The visibility keywords:
+  * `public` - any other piece of code can "see" and thus call that method
+	* `private` - only the class can "see" the method
+	* `protected` - the class and its subclasses can "see" it
+	* (no keyword) - "package" protected and any class in the same package can "see" it
+* You also specify a return type: the type of variable the method returns
+* If non-`void` you MUST return a value, you use the keyword `return` (for `void` methods you should still use a `return;` statement)
+* All non-trivial methods need documentation!
+
+## File I/O
+
+### File Input
+
+```java
+//read in a file and process it line by line
+		try( Scanner s = new Scanner(new File("data/file.txt")) ) {
+			while(s.hasNextLine()) {
+				String line = s.nextLine();
+				System.out.println(line);				
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String contents;
+		try {
+			contents = Files.readString(Paths.get("data/file.txt"));
+			System.out.println(contents);
+
+			List<String> lines = Files.readAllLines(Paths.get("data/file.txt"),
+					  StandardCharsets.UTF_8);
+			System.out.println(lines);
+
+
+
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+```
+
+### File Output
+
+```java
+try {
+	PrintWriter pw = new PrintWriter(new File("src/unl/cse/Demo.java"));
+	pw.println("Hello world!");
+	pw.println("Hello world!");
+	pw.println("Hello world!");
+	pw.print("no endline!");
+	pw.printf("%s, %d\n", "goodbye", 42);
+	pw.close();
+} catch (FileNotFoundException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+```
+
+# Error Handling
+
+* Java supports using Exceptions for error handling
+* An exception is an interruption of the normal flow of control
+* You can surround a *potentially dangerous* piece of with a `try-catch` block
+* If/when an exception or error is `throw`n control flow goes to the first or most appropriate `catch` block in which you can decide how to *handle* the excpetion
+* Generally you allow or want exceptions to be fatal: to end the program
+  * You can provide some reasonable default "handling" code if you want
+	* You can print an error message/stack trace and exit
+	* Ignore it
+	* You can rethrow it and let the JVM handle it
+
+## Searching & Sorting
+
+## Creating and Designing Classes
 
 ```text
 

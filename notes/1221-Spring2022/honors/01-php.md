@@ -384,6 +384,49 @@ printf("total = %d\n", $s);
 * `sort` - a "natrual" sort
 * `usort` - user-defined sort
 
+```php
+function cmpStudentByName($a, $b) {
+    if($a->getLastName() < $b->getLastName()) {
+        return -1;
+    } else if($a->getLastName() > $b->getLastName()) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+class Student {
+  private $firstName;
+  private $lastName;
+  private $nuid;
+
+  public function __construct($lastName, $firstName, $nuid) {
+    $this->firstName = $firstName;
+    $this->lastName = $lastName;
+    $this->nuid = $nuid;
+  }
+
+  public function __toString() {
+      return sprintf("%s, %s (%08s)\n", $this->lastName, $this->firstName, $this->nuid);
+  }
+
+  public function getLastName() {
+      return $this->lastName;
+  }
+
+}
+
+$roster = array(
+    new Student("Zoe", "Jane", "123413"),
+    new Student("Bourke", "Chris", "1234"),
+    new Student("Johnson", "Bob", "123412")
+);
+print_r($roster);
+usort($roster, "cmpStudentByName");
+print_r($roster);
+
+```
+
 ```text
 
 
