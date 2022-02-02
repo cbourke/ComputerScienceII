@@ -369,9 +369,164 @@ try {
 	* Ignore it
 	* You can rethrow it and let the JVM handle it
 
+```java
+
+		int n = 0;
+		File f = new File("data/file.txt");
+		Scanner s;
+		try {
+			s = new Scanner(f);
+			String lineOne = s.nextLine();
+			int x = Integer.parseInt(lineOne);
+			int c = x / n;
+		} catch(FileNotFoundException e)  {
+			//e.printStackTrace();
+			//TODO: do something else
+			//System.exit(1);
+			throw new RuntimeException(e);
+		} catch(NumberFormatException e) {
+			//define a default: x = 10;
+			throw new RuntimeException(e);
+		} catch(Exception e) {
+			throw new RuntimeException(e);			
+		} finally {
+			//s.close();
+		}
+
+//		if(n == 0) {
+//			throw new RuntimeException("You cannot divide by zero, noob");
+//		}
+
+		System.out.println("end program");
+```
+
 ## Searching & Sorting
 
-## Creating and Designing Classes
+* IN Java, you use the built-in sorting method, `Collections.sort`
+* To get a custom ordering you need a `Comparator`
+* General contract:
+  * It takes two objets, `a, b`
+	* It returns *something* negative if `a < b`
+	* It returns *something* positive if `a > b`
+	* It returns zero if `a == b`
+
+```java
+
+		//create "something" to sort integers in *decreasing order*
+		Comparator<Integer> cmpIntDescending = new Comparator<>() {
+			@Override
+			public int compare(Integer a, Integer b) {
+				if(a < b) {
+					return 1;
+				} else if(a > b) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}			
+		};
+
+		Comparator<String> cmpStrIgnoreCase = new Comparator<>() {
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}			
+		};
+
+		Comparator<Character> cmpCharsDesc = new Comparator<>() {
+			@Override
+			public int compare(Character a, Character b) {
+				return -a.compareTo(b);
+			}			
+		};
+
+		List<Integer> list = Arrays.asList(8, 3, 9, 2, 7, 1, 0, 4, 7);
+		System.out.println(list);
+		Collections.sort(list, cmpIntDescending);
+		System.out.println(list);
+
+		List<String> names = Arrays.asList("Chris", "bob", "Joe", "Anita", "Anita", "Bob");
+		System.out.println(names);
+		Collections.sort(names, cmpStrIgnoreCase);
+		System.out.println(names);
+
+		List<Character> chars = Arrays.asList('a', 'A', 'B', '!', 'z', 'b', 'q', 'y');
+		System.out.println(chars);
+		Collections.sort(chars, cmpCharsDesc);
+		System.out.println(chars);
+
+		List<Student> roster = Arrays.asList(
+				new Student("Chris", "Bourke", "1234", 3.5),
+				new Student("Joe", "Bourke", "4567", 3.25),
+				new Student("Anita", "Bourke", "2222", 3.75),
+				new Student("J.", "Anderson", "08392", 3.15),
+				new Student("Q.", "Zoe", "328179", 2.5)	);		
+
+		Comparator<Student> cmpStudentByName = new Comparator<>() {
+			@Override
+			public int compare(Student a, Student b) {
+				int r = a.getLastName().compareTo(b.getLastName());
+				if(r == 0) {
+					//must break the same last name tie using the first name...
+					return a.getFirstName().compareTo(b.getFirstName());
+				}
+				return r;
+			}			
+		};
+
+//		Comparator<Student> cmpStudentByGpa = new Comparator<>() {
+//			@Override
+//			public int compare(Student a, Student b) {
+//				if(a.getGpa() < b.getGpa()) {
+//					return 1;
+//				} else if(a.getGpa() > b.getGpa()) {
+//					return -1;
+//				} else {
+//					return 0;
+//				}
+//			}			
+//		};
+
+		Comparator<Student> cmpStudentByGpa = Comparator.comparing(Student::getGpa).reversed();
+
+		Comparator<Student> cmpStudent = Comparator.comparing(Student::getLastName)
+				.thenComparing(Student::getFirstName)
+				.thenComparing(Student::getGpa)
+				.reversed();
+
+
+		System.out.println(roster);
+		Collections.sort(roster, cmpStudentByGpa);
+		System.out.println(roster);
+
+
+```
+
+Searching:
+
+```java
+
+		int key = 7;
+
+		List<Integer> list = Arrays.asList(8, 3, 9, 2, 7, 7, 7, 7, 7, 1, 0, 4, 7);
+		System.out.println(list);
+
+		//basic linear search:
+		int index = list.indexOf(key);
+		System.out.printf("\"found\" %d at index %d\n", key, index);
+
+		//linear search on sets:
+		Set<Integer> setOfNums = new HashSet<>(list);
+		boolean exists = setOfNums.contains(key);
+		System.out.println(exists);
+
+		Collections.sort(list);
+		System.out.println(list);
+
+		//binary search on lists:
+		index = Collections.binarySearch(list, key);
+		System.out.printf("\"found\" %d at index %d\n", key, index);
+```
 
 ```text
 
