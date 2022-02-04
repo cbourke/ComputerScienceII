@@ -2,7 +2,7 @@
 
 ## Objects
 
-* Formally, an object is a general entity characterized by: 
+* Formally, an object is a general entity characterized by:
 1. Identity: an aspect of the object that distinguishes it from all other instances
 2. State: a collection of properties (elements, attributes, data, fields, *member variables*)
 3. Behavior: the functionality of the object or what it *does* or the services it provides
@@ -13,13 +13,13 @@
   * In Java, by default a no-arg constructor is provided (it assigns default `null` or zero values to an object's state)
   * In Java if you define a constructor (you can define as many as you want), the default goes away
   * Copy constructors, partial constructors, etc.
-* Objects are designed: 
+* Objects are designed:
   * A general approach is that "semantics dictate design"
   * You break a real-world entity into smaller parts until...
     * It is simple enough to just represent it directly (String, number, etc.) or:
     * An object already exists for it: just (re)use it
 * Generally prefer *composition* when relating objects to each other (alternatively: inheritance, more on that later)
-* Avoid the god-antipattern: a class should only know about its own stuff, it should not *know everything, do everything, be everything* 
+* Avoid the god-antipattern: a class should only know about its own stuff, it should not *know everything, do everything, be everything*
 
 ## Four Pillars:
 
@@ -108,7 +108,7 @@ Utils.foo("hello");
 
 ### Operator Overloading
 
-* In Java: 
+* In Java:
   * `String + String` (concatenation)
   * `int + int` (addition)
   * `String + int` (concatenation)
@@ -151,7 +151,7 @@ T x;
 * Effectively makes the variable's *type* also variable
 * You essentially want to use parameterization to make as generic of code as possible so that you can apply it to as many different TYPES as you can
 
-## Best Practices & Pitfalls 
+## Best Practices & Pitfalls
 
 ### Encapsulation
 
@@ -172,7 +172,7 @@ T x;
 
 ## Inheritance
 
-* Some languages support *multiple inheritance* 
+* Some languages support *multiple inheritance*
   * Leads to the "diamond problem": where do you inherit your behavior from?
   * Animal, Cat, Dog
   * Maybe (don't know why) you want to create a `CatDog`
@@ -212,7 +212,7 @@ class should be responsible for `Address` things
 * Classical inheritance: extend the behavior in subclasses, but DO NOT modify behavior in the superclass
 * In general, you can add fields or methods to a subclass, but you don't want to change the methods/fields in a superclass
 * Superclasses provide more general behavior that should NOT be modifiable.  
-* If there is no "general" or "default" behavior, then DONT DEFINE IT: instead make your class/methods `abstract` 
+* If there is no "general" or "default" behavior, then DONT DEFINE IT: instead make your class/methods `abstract`
 * Alternative: break functionality down into smaller parts
 * Have a good, well-thought out inheritance because it is extremely difficult if not impossible to change later on
 
@@ -254,13 +254,13 @@ class should be responsible for `Address` things
  }
 ```
 
-* The above is the "client" code: high level module 
+* The above is the "client" code: high level module
 * THe libraries are the low level modules
 * We have a *tight coupling* with the high/low modules
 * Alternative: define an interface: `Location getLocation()`
-* You can then implement 3 "wrapper" classes that handle the complexity of each: 
+* You can then implement 3 "wrapper" classes that handle the complexity of each:
 `GPSLocator`, `AndroidLocator`, `CellLocator`, each `implements LocationGetter`
-* Each one may "own" an instance of their lower library library via composition, 
+* Each one may "own" an instance of their lower library library via composition,
 * logic to convert the library's location representation into *our* `Location` representation is inside each wrapper class
 * Now our client code doesn't have to worry about low level modules: we only have to program toward `Location getLocation()`
 * Another example: database connectivity
