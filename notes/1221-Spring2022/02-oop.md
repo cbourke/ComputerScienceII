@@ -86,9 +86,51 @@ customer may purchase any number of them (ex: USB memory stick).
 Subscriptions have an annual rate and are purchased based
 on the start date and end date.
 
-* Inheritance allows you to reuse a clas by `extends`ing it and creating a *subclass*
-  * Common functionality and state/behavior is located in the "super" class
+* Inheritance allows you to reuse a class by `extends`ing it and creating a *subclass*
+  * Common functionality and state/behavior is located in the `super` class
   * Specific behavior/specialization is provided or *overridden* in the subclass
+* If a class $A$ `extends` a class $B$:
+  * $A$ is the subclass, $B$ is the superclass
+  * $A$ is the child class, $B$ is the parent class
+* Inheritance defines an "is-a" relationship
+* A subclass *is-a* (an) instance of its superclass:
+  * Robin is a Bird (covariance)
+  * Bird is not necessarily an Ostrich (contravariant)
+  * Never safe: invariance you cannot make a Robin into an Ostrich
+* One thing you *can* use is `instanceof` (but should probably not unless absoutely necessary)
+  * Generally you only use this with constructors (copy constructors)
+* Motivation:
+  * Provides a way to *reuse* code, avoid repeating code (by placing in the super class)
+  * Provides a way to *organize* code
+* If you have a class that is not well-defined, make it `abstract`
+  * `abstract` classes may have state and methods
+  * `abstract` classes may have `abstract` methods: methods that do not have a body but force subclases to specify behavior
+  * With `abstract` classes you can prevent someone from creating instances of them
+* Sometimes you want to *prevent* subclassing
+  * You make your class `final`
+  * You can also make a method `final`: it prevents any subclass from overriding that method
+  * By default in Java, all methods are "virtual": they *can* be overridden in the subclass
+  * By placing `final` in front, they are no longer virtual, they are non-virtual
+* A *pure* abstract class is one in which NO functions are defined, ie all functions are `abstract`
+   * in Java, you would use an `interface`
+   * This allows you in Java to `implements` an interface and more so...
+   * In Java you can only `extends` on class (single inheritance hierarchy) but
+   * you can `implements` multiple interfaces
+
+### Pitfalls
+
+* Some languages support *multiple inheritance*: you can inherit or "extend" from multiple classes (not interfaces)
+  * Java is not one of them
+  * C++ does allow this
+  * Diamond Problem:
+  * Cat, Dog are both Animals
+  * Create a class `CatDog` that inherits from *both* a `Cat` and a `Dog`
+  * The inheritance is ambiguous, not well-defined
+  * Java avoids this by forcing a single-inheritance hierarchy: you can only `extends` one class!
+* Antipattern: yo-yo problem
+  * Inheritance hierarchies should generally be shallow
+  * Deep heirarchies mean you are always looking up and down the chain to identify state/behavior
+* Antipattern: Rectangle Problem
 
 ```text
 

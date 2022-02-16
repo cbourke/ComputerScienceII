@@ -63,11 +63,11 @@ Usually is comprised of three things:
 
 ## Inheritance
 
-  Scenario: a retail store sells products and subscription
-  services.  Products are items that have a price and a
-  customer may purchase any number of them (ex: USB memory stick).
-  Subscriptions have an annual rate and are purchased based
-  on the start date and end date.
+Scenario: a retail store sells products and subscription
+services.  Products are items that have a price and a
+customer may purchase any number of them (ex: USB memory stick).
+Subscriptions have an annual rate and are purchased based
+on the start date and end date.
 
 * KISS = Keep It Simple Stupid
 * YAGNI = You Aint Gonna Need It
@@ -75,6 +75,53 @@ Usually is comprised of three things:
 
 * Inheritance allows you to create "super classes" with common, general behavior and/or state
 * Then you can *derive* or `extends` to "subclasses" with more specific behavior or specialized behavior
+* If a class $A$ `extends` class $B$ then
+  * $A$ is the subclass, $B$ is the superclass
+  * $A$ is the child class, $B$ is the parent class
+  * Inheritance forms an *is-a* relationship:
+    * `Product` is-a `Item`
+    * `Subscription` is-a `Item`
+    * Is an `Item` necessarily a `Product`?
+    * Is a `Product` a `Subscription`?
+  * Inheritance is achieved at runtime by building "virtual tables": the methods and state for a particular object are created at *instantiation* (`new` keyword) and stored in a v-table
+  * When calling an object's methods, *dynamic dispatch* is used to 'lookup' the appropriate method in the vtable and execute its code
+* Advantages:
+  * We like organization; a hierarchy is a natural organized structure
+  * We like code reuse and reduction of redundancy
+  * Also: subtype polymorphism (later)
+
+### Misc
+
+* Sometimes you don't *want* to allow someone to subclass your class, you can make it `final` to prevent them
+  * Making a method `final` makes it "non-virtual" and you cannot override it in any subclass
+  * By default in Java, all methods are virtual, you make them non-virtual with the `final` keyword
+  * Contrast: C++: all methods are non-virtual, you must make them virtual using the keyword `virtual`
+* You can make a class `abstract` and it may have `abstract` methods
+  * An `abstract` class cannot be instantiated
+  * `abstract` methods have no body/no definition
+  * In any non-abstract subclass you MUST provide a definition/implementation
+* An `interface` is a pure-abstract class
+  * All of its methods are `abstract`
+  * Java is a single-inheritance heirarchy: you can only `extends` one class
+  * In general, a hierarchy *locks you in* to that design; it is not easy to change
+  * However, you can `implements` multiple interfaces with no problem
+  * Often you do this to leave your hierarchy flexible and use "mixins"
+
+### Pitfalls
+
+* Some languages support *multiple inheritance*
+  * Ex: `Dog, Cat` are both `Animal`
+  * Suppose I create a `CatDog` class that inherits from both `Dog` and `Cat`
+  * Problem: ambiguity: `speak()`: does it inherit from `Cat` or `Dog`?
+  * Diamond Problem: you don't know where the inheritance comes from without reading the documentation!
+  * In Java: no problem, single inheritance only
+* Antipattern: Yo-Yo problem
+  * In general, keep your inheritance hierarchy shallow and simple!
+  * Reason: once created, you are pretty much locked into that heirarchy
+* Rectangle Problem:
+  * SUppose we ahve a `Shape, Square, Rectange`
+  * changes can change an instance's properties, but hte type cannot change!
+  * Violation of the Liskov Substitution Principle
 
 ```text
 
