@@ -188,7 +188,7 @@ T x;
   * Instead: do not lock yourself into a rigid hierarchy *if* you objects have the potential to change
   * Make sure your hierarchies are well-thought out and thoroughly tested
 
-  ## Polymorphism
+## Polymorphism
 
   - avoid operator overloading; prefer well-named methods
   - PECS: Producer Extends, Consumer Super

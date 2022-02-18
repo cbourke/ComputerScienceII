@@ -123,7 +123,90 @@ on the start date and end date.
   * changes can change an instance's properties, but hte type cannot change!
   * Violation of the Liskov Substitution Principle
 
+
+## Polymorphism
+
+* Polymorphism = Poly=many + morph=form = Many forms
+* Code: a variable, method, or class may be applicable to many different types of classes or have many forms
+  * C: how do you sort?  `qsort()`: it operated on generic (void) types
+  * Its generic programming: you can create one variable, method or class to have a general generic solution to multiple types
+  * Java: there are several different forms of polymorphism
+
+### Subtype Polymorphism
+
+* You can treat a class as its superclass
+* Example:
+
+```java
+Item i1 = new Product(...);
+Item i2 = new Subscription(...);
+Collection<Items> receipt = new HashSet<>();
+receipt.add(i1);
+receipt.add(i2);
+```
+
+### Method Overloading
+
+* Ex: how do you compute the absolute value in C?
+* `abs(int), fabs(double), labs(), llabs()`
+* Same functionality, but different names
+* Java: `Math.abs()`: there are 4 diffent methods each taking a different type of parameter, but doing the same thing!
+* BUT: in an OOP language, we can use the same function name, this is known as function overloading
+* Careful: function overriding is with inheritance (subclasses can *override* inherited virtual functions)
+* How does this work?  Compilers are dumb, but they are smart enough to figure out what type of variable you are passing
+* This mechanism is called static dispatch
+
+### Operator Overloading
+
+* Operators in a language may have multiple meanings depending on their operands
+* Example Java:
+  * `String + String`: concatenation
+  * `int + int`: addition
+  * `String + int`: convert the number to a string and concatenate
+* PHP:
+  * `int + int`: addition
+  * `String + int`: type juggle the string to a number (if possible) and addition
+  * `String + String`: type juggle x2 and add
+  * string concatenation: `string . string`
+* Python
+  * `int + int`: addition
+  * `string + string`: concatenation
+  * `string + int`: error
+* other contexts:
+  * `List + List`: append, union, vector addition
+  * `Set + Set`: ??
+  * `Duration + Duration`
+  * `Time + Time`: ill defined
+* Some languages (PHP, Java, Python) have pre-defined meanings for operator overloading
+* Some languages (C++) allow you to arbitrarily overload operators!
+  * You *could* define anything you want
+  * You *could* redefine + to be subtraction
+  * Not a good idea to use this in practice
+  * In any case, even if you do, you're ultimately writing a function to do so
+
+### Parameterized Polymorphism
+
+* In Java, you can create variables:
+
+`int x = 43;`
+* When declared, a variable has a set *type*
+* You can parameterize a variable, method, or class so that the type is NOT set
+
+`T x;`
+
+* `T` refers to a generic variable type that is not known as compile time (necessarily)
+
+* PECS: Producer Extends, Consumer Super
+  * A collection is a *producer* of elements if you take stuff out and do something with it.  You need a minimal amount of information: `<T extends Item>`
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: you don't care about what is in the collection already, you just want to put some new stuff in it
+* In general, if you care about the type, you need to use a named parameter `<T>`
+* If you don't care, you *might* be able to use the wildcard: `<?>`
+
 ```text
+
+
+
+
 
 
 

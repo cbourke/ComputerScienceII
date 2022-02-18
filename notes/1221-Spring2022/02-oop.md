@@ -132,7 +132,90 @@ on the start date and end date.
   * Deep heirarchies mean you are always looking up and down the chain to identify state/behavior
 * Antipattern: Rectangle Problem
 
+
+## Polymorphism
+
+* Polymorph: poly = many, morph = form => many forms
+* Code: a variable, method, or class may be generically programmed so that it can apply or be used with/on many different types
+  * C: you have a single `qsort()` function: it is generic and can be applied to any type
+  * In Java: polymorphism appears in many different forms
+
+### Subtype polymorphism
+
+* When you use inheritance, you can treat a *subclass* as an instance of its superclass
+* examples
+```java
+Bird b = new Robin();
+List<Integers> numbers = new ArrayList<>();
+Collection<Integer> otherNumbers = numbers;
+
+```
+
+### Function Overloading
+
+* When you use inheritance and change the behavior of a method in a subclass it is called *overriding*
+* Overloading does not involve inheritance
+* In C: how do you compute the absolute value of a variable?  `abs(), fabs(), llabs(), labs()`
+* Overloading of functions means that you can define multiple functions with the same name but with different types (and which may have different code)
+* Java: `Math.abs()`
+* At compile time the compiler is smart enough to deduce which function you actually meant to call
+* This mechanism is known as "static dispatch"
+* as long as the number of type of parameters is different, the function is different and the compiler is able to determine which one you mean by looking at the input parameters
+
+### Operator Overloading
+
+* In Java: `String + String`: means concatenation
+* In Java: `int + int`: means addition
+* In Java: `String + int`: means concatenation
+* An operator can have multiple meanings depending on the types you apply it to
+* In C: no operator overloading; everything has one and only one meaning
+* In PHP: no operator overloading
+  * `string + string`: convert both strings to numbers (if you can) and add them
+  * `int + int`: addition
+  * `string + int`: convert the second to a string and add
+  * concatenation: `string . string`
+* Python:
+  * `string + string` concatenation
+  * `int + string`: throws an error
+  * `int + int`: addition
+* C++:
+  * wild wild west, YOU can redefine any operator that you want!
+  * `Date + Date = ?` (who knows)
+  * `Duration + Duration = Duration`
+  * `List + List = ?` append the second to the end of the first; OR: vector addition; OR minkowski sum (??); throw an error
+  * `Set + Set` = union, multiset conversion, etc.
+* Ultimately, using operator overloading is not very good practice
+  * Depending on the language/context it could be confusing or ill-defined
+  * In any case, to define what an operator does, you need to write a function anyway!
+* Java does not allow user-defined operator overloading (good thing); but does have some limited operator overloading
+
+## Parameterized Polymorphism
+
+* Java allows you to use a parameterized class, method or variable
+
+```java
+List<Integers> numbers; //only holds integers
+List<Product> products; //only holds products
+
+int x; //x is an integer, but its value is *variable*
+
+//the following type of declaration means that
+// both the variable and its type can vary:
+T a;
+
+```
+
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+    of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection alrady, you can simply use `Item`
+
+
 ```text
+
+
+
+
 
 
 
