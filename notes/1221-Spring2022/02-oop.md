@@ -208,7 +208,96 @@ T a;
 * PECS: Producer Extends, Consumer Super
   * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
     of type type being used)
-  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection alrady, you can simply use `Item`
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Simple restatement of good encapsulation
+* A class (or method) should be responsible for one thing: do one thing and do it well
+* Don't have god classes
+* A `Person` class should be responsible for person things, an `Address` class should be responsible for `Address` things
+* DRY = Don't Repeat Yourself
+* Phase 1: Data loading, serialized to XML, serialized it to JSON
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide *general* behavior that should not be modified (once the heirarchy has been designed)
+  * Subclasses provide *specific* behavior that *can* be modified
+* Suppose you had some well-defined functionality in a superclass and you had 5 subclasses that all depended on it.  
+  * Suppose you have a new subclass that requires different behavior
+  * Solution: modify the superclass
+* If there is no general or "default" behavior: don't define it!!  Keep it `abstract`
+* Alternative: break functionality down into smaller parts
+* Have a good, well-thought out inheritance because it is extremely difficult if not impossible to change later on
+* Should an `Integer` class be subclassed to redefine what an integer is?  Java made this *closed* for modificadtion by making it `final`
+* Lab 5:
+  * `getTaxes()`: gross pay * tax rate
+* Project:
+  * Closed for modification: how gains or losses are computed
+  * Open for extension: how a value is computed
+
+## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+* Subtype polymorphism!
+
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+LinkedList<Integer> numbers2 = new LinkedList<>();
+List<Integer> someList = numbers;
+someList = numbers2;
+
+```
+
+* Violation: Rectangle/Square example
+* Project: think about how many *types* of options there are:
+  * Call and Put likely are good types, but
+  * long vs short: depend on the stock price
+
+## Interface Segregation Principle
+
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* Instead: all interfaces should be as small as possible
+* no one should be *forced* to implement everything
+* Project: interface that had both a `getAddress()` and `getName()`
+  * Assets also have a "name" (label)
+  * `Labelable`: all assets have a label, *maybe* a person is labelable: their name
+
+## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Both should depend on abstractions
+* Example: say you have 3 libraries on a  phone app that compute location
+* Library A:  
+`double GPSLocator.getLatitude()`  
+`double GPSLocator.getLongitude()`
+* Library B:  
+`AndroidLocation AndroidNative.getLocation()`  
+ `AndroidLocation.getLatitude()`   `AndroidLocation.getLongitude()`
+ * Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+ ```java
+
+ if(Library A) {
+   return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+ } else if(Library B) {
+   AndroidLocation l =  AndroidNative.getLocation();
+   return new Location(l.getLatitude(), l.getLongitude());  
+ else if(Library C) {
+    return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()), Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+ }
+```
+
+* "Inverting" a dependency means creating an interface between the "highlevel" object/class/thing and the low-level library that `implements` it
+* In general, you should prefer *loose coupling* so that software components can easily be interchanged
 
 
 ```text

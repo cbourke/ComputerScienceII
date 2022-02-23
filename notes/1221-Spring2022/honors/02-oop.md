@@ -202,6 +202,98 @@ receipt.add(i2);
 * In general, if you care about the type, you need to use a named parameter `<T>`
 * If you don't care, you *might* be able to use the wildcard: `<?>`
 
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should represent one thing and represent it well
+* Don't have god-classes
+* A `Person` class should be responsible for person things, an `Address` class should be responsible for address things
+* DRY = Don't Repeat Yourself!
+* YAGNI = You Ain't Gonna Need It
+* Avoid "leaky abstractions":
+  * Design A: A person owns a `List<String> emails` which is provided at instantiation
+  * Design B: A person has an `addEmail()` method
+* Project Phase 1: Loading data, persisting/serializing as JSON, persisting as XML
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance: you can/should extend specialized behavior in subclasses without having to *modify* behavior in the super classes
+* In general in subclasses you can add methods/variables, but you should *Not* break things
+* Suppose you create a general class with some functionality and 5 subclasses all use that functionality
+  * You have a new subclass that needs to do things differently: should you modify the behavior in the super class?
+* Recall: the `Integer` class is `final`
+* Methods can be made `final` to prevent modification, etc.
+* If there is no well-defined general behavior, make things `abstract` and force subclasses to define them
+* THink about what is universal behavior and *close* it for modification, think about specialized behavior and make it possible to extend it!
+* Lab 5:
+  * Universal: `getTaxes()`: gross * tax rate
+  * Specialized: the actual rate, `getGrossPay()`
+* Project:
+  * Specialization: the value of an asset
+  * General: gain or loss
+
+## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+* Subtype polymorphism
+
+```java
+List<Integer> numbers;
+
+numbers = new ArrayList<>();
+numbers = new LinkedList<>();
+```
+
+* Recall: rectangle-square problem
+* You need to make sure your objects are in a well-defined heirarchy so that properties do not contradict the semantic meaning of the object
+* Project:
+  * How many Options types are there?
+  * 2: Put and Call
+  * 4: Short calls, long calls, short put, long put
+
+## Interface Segregation Principle
+
+* No client code should be forced to depend on methods it does not use or care about
+* Example: `ClickEventHandler` interface that defined:
+  * `onClick()`
+  * `onDoubleClick()`
+* similar to "checked exceptions"
+* Forcing a user to do something or do something in a specific way is far less flexible
+* In general, interfaces should be kept as small as possible, 1-3 methods at most
+
+## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Both should depend on abstractions
+* Example: say you have 3 libraries on a  phone app that compute location
+  * Library A (degrees):  
+`double GPSLocator.getLatitude()`  
+`double GPSLocator.getLongitude()`
+* Library B:  
+`AndroidLocation AndroidNative.getLocation()`  
+ `AndroidLocation.getLatitude()`   `AndroidLocation.getLongitude()`
+* Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+
+ ```java
+ if(Library A) {
+   return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+ } else if(Library B) {
+   AndroidLocation l =  AndroidNative.getLocation();
+   return new Location(l.getLatitude(), l.getLongitude());  
+ } else if(Library C) {
+    return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()), Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+ }
+```
+
+### GRASP Principles
+
+* 9 more (really restatements):
+
+https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)
+
 ```text
 
 

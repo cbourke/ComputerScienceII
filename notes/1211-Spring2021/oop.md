@@ -265,6 +265,8 @@ class should be responsible for `Address` things
 * Now our client code doesn't have to worry about low level modules: we only have to program toward `Location getLocation()`
 * Another example: database connectivity
 
+
+
 ```text
 
 
