@@ -13,7 +13,6 @@
   * Organization problems: not sorted, it is in one big file (no multithreaded or multiuser capability)
   * There is no security!
 
-  
 * Solution: use a RDBMS (Relational Database Management System)
   * 1970 Edgar Codd (1970, IBM)
   * Key aspects: data is stored in *tables*
@@ -21,13 +20,13 @@
   * Records are stored as rows
   * Each row may have a unique identifier (Primary Key, PK)
   * Rows (records) in different tables may be related through Foreign Keys (FK)
-  
+
 * You can interact with a RDBMS through CRUD:
   * Create (`insert`)
   * Retrieve (`select`)
   * Update (`update`)
   * Destroy (`delete`)
-  
+
 ## CRUD Demonstration
 
 ![Vidya Games](gamedb.png "Game DB")
@@ -40,7 +39,7 @@
 ```sql
 insert into publisher (name) values ("Activision");
 insert into publisher (name) values ("Mojang");
-  
+
 -- insert multiple records with one query:
 insert into platform (name) values
   ("Vive"),
@@ -49,7 +48,7 @@ insert into platform (name) values
 ```
 
 * You can, but generally should *not*, hard code primary key values
-* Key management is a difficult problem, let the database handle it 
+* Key management is a difficult problem, let the database handle it
 * You can/should hardcode key values for initialization/test data though
 
 ```sql
@@ -71,7 +70,7 @@ insert into game (name, publisherId) values ("Destiny 2",
 
 ```sql
 update game set name = "Destiny II" where gameId = 103;
-update game set name = "Destiny II" where gameId = 
+update game set name = "Destiny II" where gameId =
   (select gameId from game where name = "Destiny 2");
 ```
 
@@ -83,7 +82,7 @@ update game set name = "Destiny II" where gameId =
   * keywords are case insensitive
   * old school style: use `ALL UPPER CASE`
   * modern style: use all `lower case`
-  * you can align/go to the next line as necessary to avoid long lines 
+  * you can align/go to the next line as necessary to avoid long lines
 
 ### D = Destroy existing records
 
@@ -108,8 +107,8 @@ delete from game where gameId = 103;
 ```sql
 select name, publisherId from game;
 -- sometimes its also helpful to rearrange and rename or "alias" your columns:
-select name as gameTitle, 
-		   publisherId as pubId 
+select name as gameTitle,
+		   publisherId as pubId
 from game;
 ```
 * You can use basic logic operators using a `where` clause:
@@ -140,22 +139,22 @@ select * from game where name like '%g';
 
 * You can combine one or more tables by *joining* them together
 * Should be joined using some criteria
-* Usually tables are designed to have a foreign key/primary key relation 
+* Usually tables are designed to have a foreign key/primary key relation
 * You join together tables `on` some criteria
 * These are `inner join`s, but you can shorten it and just use `join`:
 
 ```sql
-select * from game 
+select * from game
   join publisher on game.publisherId = publisher.publisherId;
 
 -- you can shorten up a long query by aliasing the table names as well:
-select g.name as gameTitle, 
+select g.name as gameTitle,
        p.name as publisherName
-from game g 
+from game g
 join publisher p on g.publisherId = p.publisherId;
 
 -- join 3 tables:
-select * from game g 
+select * from game g
   join publisher p on g.publisherId = p.publisherId
   join availability a on a.gameId = g.gameId
   join platform pub on pub.platformId = a.platformId;
@@ -165,7 +164,7 @@ select * from game g
 * A `left outer join` or just `left join` will preserve all records in table A even if they have no matches in table B
 
 ```sql
-select * from game g 
+select * from game g
   left join publisher p on g.publisherId = p.publisherId
   left join availability a on a.gameId = g.gameId
   left join platform pub on pub.platformId = a.platformId;
@@ -177,15 +176,15 @@ select * from game g
 * You can use a `right join` to preserve records from the (right) table back to the (left) table
 
 ```sql
-select * from publisher p 
+select * from publisher p
   join game g on p.publisherId = g.publisherId;
 
-select * from publisher p 
+select * from publisher p
   left join game g on p.publisherId = g.publisherId;
 
 -- not necessary as a game cannot exist
 -- without a publisher:
-select * from publisher p 
+select * from publisher p
   right join game g on p.publisherId = g.publisherId;
 ```
 
@@ -196,7 +195,7 @@ select * from publisher p
 select * from game g
   left join availability a on g.gameId = a.gameId
   left join platform p on a.platformId = p.platformId;
-  
+
 -- all platforms even without games on them:  
 select * from game g
   right join availability a on g.gameId = a.gameId
@@ -209,7 +208,7 @@ select * from game g
 select * from game g
   left join availability a on g.gameId = a.gameId
   left join platform p on a.platformId = p.platformId
-union 
+union
 select * from game g
   right join availability a on g.gameId = a.gameId
   right join platform p on a.platformId = p.platformId;
@@ -232,7 +231,7 @@ select * from availability where publishYear = 1988 or publishYear = 2005 or pub
 select * from availability where publishYear in (1998, 2005, 1992);
 
 -- comes in handy with a nested query:
-select * from availability where publishYear in 
+select * from availability where publishYear in
   (select publishYear from availability where gameId > 10);
 ```
 
@@ -280,10 +279,10 @@ select round(min(publishYear) / max(publishYear)) from availability;
 * Can filter after projection using `having`
 
 ```sql
-select * from publisher p 
+select * from publisher p
   left join game g on p.publisherId = g.publisherId;
-  
-select p.name, count(g.gameId) as numGames from publisher p 
+
+select p.name, count(g.gameId) as numGames from publisher p
   left join game g on p.publisherId = g.publisherId
   where p.name > "Nintendo"
   group by p.name
@@ -322,7 +321,7 @@ create table if not exists Film (
   constraint `nonNegativeRatingConstraint` check (imdbRating >= 0 and imdbRating <=10)
 );
 
-insert into Director (firstName, lastName) values 
+insert into Director (firstName, lastName) values
   ("Quentin", "Tarantino"),
   ("David", "Lynch"),
   ("Martin", "Scorcese"),
@@ -387,8 +386,3 @@ create table if not exists ActorFilm (
   * Relation Model (DB) do not
   * To resolve the disconnect between the two models you need some way to "model" inheritance
   * Easiest way to deal with inheritance: discriminator value or column: you denote which *type* of class a record corresponds to with a single character (or other value, `enum`)
-
-
-
-
-

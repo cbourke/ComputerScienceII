@@ -13,12 +13,12 @@
   * Organization problems: not sorted, it is in one big file (no multithreaded or multiuser capability)
   * There is no security!
 * Solution: use a RDBMS (Relational Database Management System)
-  * 1970 Edgar Codd 
+  * 1970 Edgar Codd
   * Key aspects: data is stored in *tables*
   * Tables have columns and rows
   * Columns define fields or pieces of data for each record
   * Rows correspond to a single record
-  * A database typically has *multiple tables* that are *related* 
+  * A database typically has *multiple tables* that are *related*
   * Each row may have a unique identifier: *Primary Key* or PK for short
   * Rows in different tables may be related to each other throuogh *foreign keys* FKs for short
     * May define a *many-to-one* or *one-to-many* relation
@@ -40,27 +40,27 @@
 ```sql
 -- insert a publisher record using the hard-coded primary
 -- key value 14:
-insert into publisher (publisherId, name) 
+insert into publisher (publisherId, name)
   values (14, "EA Sports");
 
 -- Let the database determine the next available key value:
-insert into publisher (name) 
+insert into publisher (name)
   values ("EA Sports");
-  
-  
+
+
 -- insert a game record, refering the inserted EA Sports record
 insert into game (name, publisherId) values ("Maddon 21", 14);
-  
+
 -- insert a game record and refer to EA Sports using a *nested query*:
-insert into game (name, publisherId) values ("Maddon 22", 
+insert into game (name, publisherId) values ("Maddon 22",
   (select publisherId from publisher where name = "EA Sports"));
 
-  
+
   -- insert multiple records with one query:
-  insert into game (name,publisherId) values 
+  insert into game (name,publisherId) values
     ("Madden 21", 14),
     ("Madden 22", 14);
-    
+
 ```
 
 ## Update Data
@@ -145,7 +145,7 @@ select avg(publishYear) from availability;
 -- basic math is also supported:
 select (max(publishYear) + 10) *2 from availability;
 
--- you can also query based on partial string matches 
+-- you can also query based on partial string matches
 -- using a combination of wildcards, % and the like clause:
 select * from game where name like "GTA%";
 -- select any game title that has an 'a' in it:
@@ -206,7 +206,7 @@ select * from game where gameId in (
 
 ```sql
 
--- projections: 
+-- projections:
 -- goal: find out how many games each publisher published
 select * from game;
 -- project the data down to 2 dimensions: (publisherId, number of games they published)
@@ -216,7 +216,7 @@ select name, count(*) from game group by name;
 
 -- after your projection you may want to limit your query further
 -- using the having clause allows you to filter your records further:
-select publisherId, count(*) as numGames from game 
+select publisherId, count(*) as numGames from game
   group by publisherId
   having numGames >= 3;
 -- the where clause is executed BEFORE the projection/group by clause
@@ -227,7 +227,7 @@ select publisherId, count(*) as numGames from game
 
 ```sql
 
--- you can join one or more tables together using a 
+-- you can join one or more tables together using a
 -- join statement
 
 -- a cross join is a full cartesian product of records:
@@ -235,14 +235,14 @@ select * from publisher cross join game;
 
 -- usually you want to make a join that makes sense:
 -- usually you join records that are actually *related*
-select * from publisher p join game g 
+select * from publisher p join game g
   on p.publisherId = g.publisherId;
 
 -- use in conjunction with column selection to limit your query results:
-select 
-  p.name as publisherName, 
-  g.name gameName 
-from publisher p join game g 
+select
+  p.name as publisherName,
+  g.name gameName
+from publisher p join game g
 on p.publisherId = g.publisherId;
 
 -- a regular join (above) will only match on records that exist
@@ -250,35 +250,35 @@ on p.publisherId = g.publisherId;
 -- have published a game
 -- we want ALL publishers, even if they have not published a game
 -- you will want to use a "left join"
-select 
-  p.name as publisherName, 
-  g.name gameName 
-from publisher p left join game g 
+select
+  p.name as publisherName,
+  g.name gameName
+from publisher p left join game g
 on p.publisherId = g.publisherId;
 
-select 
-  p.name as publisherName, 
-  g.name gameName 
-from publisher p left join game g 
+select
+  p.name as publisherName,
+  g.name gameName
+from publisher p left join game g
 on p.publisherId = g.publisherId
 where g.name is null;
 -- you can also use right joins that join the other way
-select 
-  p.name as publisherName, 
-  g.name gameName 
+select
+  p.name as publisherName,
+  g.name gameName
 from game g right join publisher p
 on p.publisherId = g.publisherId;
 
 -- you can also use right joins in the same order:
-select 
-  p.name as publisherName, 
-  g.name gameName 
+select
+  p.name as publisherName,
+  g.name gameName
 from publisher p right join game g
 on p.publisherId = g.publisherId;
 
 -- reproduce the flat file from assignment 1:
-select 
-  p.name as publisherName, 
+select
+  p.name as publisherName,
   g.name as title,
   a.publishYear as year,
   platform.name as platform
@@ -286,10 +286,10 @@ select
   left join game g on p.publisherId = g.publisherId
   left join availability a on g.gameId = a.gameId
   left join platform on a.platformId = platform.platformId;
-  
 
-select 
-  p.name as publisherName, 
+
+select
+  p.name as publisherName,
   g.name as title,
   a.publishYear as year,
   platform.name as platform
@@ -297,10 +297,10 @@ select
   right join game g on p.publisherId = g.publisherId
   right join availability a on g.gameId = a.gameId
   right join platform on a.platformId = platform.platformId;  
-  
+
   -- you can union two results together:
-  select 
-  p.name as publisherName, 
+  select
+  p.name as publisherName,
   g.name as title,
   a.publishYear as year,
   platform.name as platform
@@ -309,8 +309,8 @@ select
   left join availability a on g.gameId = a.gameId
   left join platform on a.platformId = platform.platformId
 union
-select 
-  p.name as publisherName, 
+select
+  p.name as publisherName,
   g.name as title,
   a.publishYear as year,
   platform.name as platform
@@ -334,7 +334,7 @@ select
   * Join tables can be defined with multiple foreign keys to model a many-to-many relation
   * Be sure to insert plenty of test data to test your database!  You can auto-generate mock data and you can easily convert existing (CSV) data to SQL insert statements using a tool!
   * Check and uniqueness constraints can be used to enforce *data integrity*
-  
+
 ```sql
 use cbourke;
 
@@ -362,9 +362,9 @@ create table if not exists Film  (
   constraint `zeroToTenConstraint` check (imdbRating >= 0 and imdbRating <= 10)
 );
 
-insert into Director (directorId, lastName, firstName) values 
+insert into Director (directorId, lastName, firstName) values
   (1, "Russo", "Anthony");
-insert into Director (directorId, lastName, firstName) values 
+insert into Director (directorId, lastName, firstName) values
   (2, "Favreau", "Jon");
 
 select * from Director;  
@@ -375,7 +375,7 @@ insert into Film (filmId, title, releaseDate, imdbRating, directorId, eidr) valu
   (44, "Iron Man", "2005-01-01", 7.5, 2, "ijk");
 
 select * from Film;
-  
+
 create table if not exists Actor (
   actorId int primary key not null auto_increment,
   firstName varchar(255),
@@ -398,21 +398,21 @@ insert into Actor (actorId, firstName, lastName) values
   (101, "Robert", "Downey"),
   (102, "Paul", "Rudd"),
   (103, "Jon", "Favreau");
-  
+
 select * from Actor;
 
-insert into FilmActor(actorId, filmId) values 
+insert into FilmActor(actorId, filmId) values
   (101, 42),
   (102, 42),
   (103, 42),
   (103, 43),
   (101, 44);
 
-select * from Film f 
+select * from Film f
   join FilmActor fa on f.filmId = fa.filmId
   join Actor a on fa.actorId = a.actorId;
 ```
-  
+
 ## Normalization
 * 1-NF, 2-NF, 3-NF
 * First Normal Form: "each attribute in a table has only atomic values"
@@ -440,16 +440,16 @@ select * from Film f
   * Security issues: do not store sensitive info in a database unhashed/unencrypted
   * Soft vs Hard deletes: a hard delete is a result of a `delete` statement.  A soft delete involves defining a boolean column `isActive` that is true if the record is active, false if it is "deleted"
 * OOP Model vs Relational Model
-  * OOP model allows *inheritance* 
+  * OOP model allows *inheritance*
   * RDBMs do not have inheritance
   * You need a way to resolve the difference in these two models
   * You can create a table per class/subclass
   * You can create a table per stub class: only one table per subclass that has no subclasses
   * You can use a "single table inheritance strategy"
-  * You can create one table for all subtypes and use a *discriminator column* 
+  * You can create one table for all subtypes and use a *discriminator column*
   * you use a string to indicate the subtype of the class.  
   * Some columns may be relevant to some subtypes, others may irrelevant; simply allow them to be null to model this
-  
+
 ```text
 
 
@@ -461,6 +461,3 @@ select * from Film f
 
 
 ```
-
-  
-  
