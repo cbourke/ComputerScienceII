@@ -124,7 +124,106 @@ select max(publishYear) from availability;
 select avg(publishYear) from availability;
 ```
 
-$$A \times B$$
+## Data Projections
+
+* Goal: how many games did each publisher publish (assignment 1)
+  * Limit to those with more than 1 game
+  * Names?
+
+## Joins
+
+$$A = \{1, 2, 3\}$$
+$$B = \{a, b\}$$
+$$A \times B = \{(1, a), (1, b), (2, a), (2, b), (3, a), (3, b)\}$$
+
+$$A \cup B$$
+
+```sql
+use cbourke;
+-- 16 publishers, 24 games 384 = 16 * 24
+select * from publisher;
+select * from game;
+
+select * from game g
+  left join availability a
+  on g.gameId = a.gameId
+  left join platform p
+  on p.platformId = a.platformId;
+
+select publisherId, count(gameId) as numberOfGames from game group by publisherId;
+
+-- join:
+select *
+  from publisher p
+  join game g
+  on p.publisherId = g.publisherId;
+
+select *
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId;
+
+select *
+  from publisher p
+  right join game g
+  on p.publisherId = g.publisherId;
+
+select *
+  from game g
+  right join publisher p
+  on p.publisherId = g.publisherId;
+
+-- join + data projection
+-- where clauses filter results before a projection
+-- having clauses filter after
+select p.name as company,
+       count(gameId) as numberOfGames
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId
+  having numberOfGames < 3;
+
+-- report: games and the number of
+--  platforms they are available on
+select g.name as title,
+  count(a.platformId) as numberOfPlatforms
+  from game g
+  left join availability a
+  on g.gameId = a.gameId
+  group by g.gameId;
+
+-- flatten the entire data model and
+-- reproduce a CSV-like result (assignment 1)
+
+select * from publisher join platform;
+
+select p.name as company,
+       g.name as title,
+       a.publishYear as publishYear,
+       pl.name as platform
+  from publisher p
+  left join game g
+    on g.publisherId = p.publisherId
+  left join availability a
+    on g.gameId = a.gameId
+  left join platform pl
+    on a.platformId = pl.platformId
+union
+select p.name as company,
+       g.name as title,
+       a.publishYear as publishYear,
+       pl.name as platform
+  from publisher p
+  right join game g
+    on g.publisherId = p.publisherId
+  right join availability a
+    on g.gameId = a.gameId
+  right join platform pl
+    on a.platformId = pl.platformId;
+
+
+```
 
 ```text
 

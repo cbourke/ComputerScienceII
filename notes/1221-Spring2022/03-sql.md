@@ -159,13 +159,45 @@ select publisherId, count(*) as numberOfGamesPublished from game group by publis
 select gameId, count(*) from availability group by gameId;
 select platformId, count(*) from availability group by platformId;
 
-
-
 ```
 
 ## Data Projections
 
-* Goal: reunite the data in the video game database
+```sql
+
+-- where clause filters results before a projection
+-- having clause filters results after a projection
+select publisherId,
+       count(publisherId) as numberOfGames
+from game
+group by publisherId
+having numberOfGames > 1;
+
+
+```
+
+## Join
+
+$$A = \{a, b, c\}$$
+$$B = \{1, 2\}$$
+$$A \times B = \{(a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)\}$$
+
+* Goal: flatten the entire data model, make it pretty, reproduce the data from assignment 1
+
+$$A \cup B$$
+
+# Database Design
+
+* Design a database to model films, actors, directors
+* Semantics dictate design: you usually have one table per "entity"
+* When creating tables: use consistent naming conventions!
+  * Don't pluralize your tables
+  * Generally: use `UpperCamelCasing` for table names
+  * Use `lowerCamelCasing` for column names
+  * Name primary keys after the table + `Id`
+  * Name foreign keys *exactly* as the primary keys they reference!
+
+
 
 ```text
 
