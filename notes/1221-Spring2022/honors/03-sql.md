@@ -225,6 +225,179 @@ select p.name as company,
 
 ```
 
+# Database Design
+
+* Design a database to model data on films, actors, and directors
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Don't pluralize table names
+  * Be consistent on your naming conventions
+  * Suggestion table names are `UpperCamelCase`, column names `lowerCamelCase`
+* Design tips:
+  * Always have a primary key field (suggestion: make it an integer, not null, `auto_increment`) and name it after the `tableName + Id`
+  * Foreign keys should have the same name and type of the key they reference (usually)
+  * Join tables can be defined with multiple foreign keys to model a many-to-many relation
+  * Be sure to insert plenty of test data to test your database!  You can auto-generate mock data and you can easily convert existing (CSV) data to SQL insert statements using a tool!
+  * Check and uniqueness constraints can be used to enforce *data integrity*
+
+```sql
+
+
+-- Database to model films, actors, and directors
+--   An actor can appear in multiple films
+--   A film may have multiple actors
+--   A director can direct multiple films, but
+--     a film has one director
+
+drop table if exists FilmActor;
+drop table if exists Film;
+drop table if exists Director;
+drop table if exists Actor;
+
+create table if not exists Director (
+  directorId int not null primary key auto_increment,
+  firstName varchar(255),  
+  lastName varchar(255) not null
+);
+
+create table if not exists Film (
+  -- surrogate key
+  filmId int not null primary key auto_increment,
+  title varchar(255) not null,
+  releaseDate varchar(100), -- 2022-03-01
+  imdbRating double default 0.0,
+  -- "natural" key: external unique ID for each record
+  eidr varchar(100) not null unique key,
+  directorId int not null,
+  foreign key (directorId) references Director(directorId)
+  -- constraint `foo` check (imdbRating >= 0.0 and imdbRating <= 10)
+);
+
+create table if not exists Actor (
+  actorId int not null primary key auto_increment,
+  firstName varchar(255),  
+  lastName varchar(255) not null
+);
+
+create table if not exists FilmActor (
+  filmActorId int not null primary key auto_increment,
+  actorId int not null,
+  filmId int not null,
+  role varchar(100),
+  foreign key (actorId) references Actor(actorId),
+  foreign key (filmId) references Film(filmId),
+  -- constraint will ensure that the triple combination
+  --  of (actorId,filmId,role) are unique
+  constraint `uniqueRoles` unique (actorId,filmId,role)
+);
+
+insert into Director (directorId,lastName,firstName) values
+  (1, "Reeves", "Matt"),
+  (2, "Nolan", "Christopher"),
+  (3, "Lucas", "George"),
+  (4, "Spielberg", "Steven"),
+  (5, "Lynch", "David");
+
+insert into Film (filmId,title,eidr,directorId) values
+  (10, "The Batman", "batman2022", 1),
+  (11, "Cloverfield", "cl2010", 1),
+  (12, "Inception", "tenetFan2000", 2),
+  (13, "Star Wars", "foostarWars", 3),
+  (14, "Eraserhead", "weird01", 5);
+
+insert into Actor (actorId,lastName,firstName) values
+  (100, "Pattinson", "Robert"),
+  (101, "Dano", "Paul"),
+  (102, "Fischer", "Carrie"),
+  (103, "DiCaprio", "Leonardo"),
+  (104, "Ford", "Harrison");
+
+insert into FilmActor (actorId,filmId,role) values
+ (100, 10, "Batman"),
+ (100, 10, "Bruce Wayne"),
+ (101, 10, "Riddler"),
+ (102, 13, "Leia Organa"),
+ (103, 12, "Inception Man");
+
+select * from Director d
+  left join Film f on f.directorId = d.directorId
+  left join FilmActor fa on fa.filmId = f.filmId
+  left join Actor a on a.actorId = fa.actorId
+union
+select * from Director d
+  right join Film f on f.directorId = d.directorId
+  right join FilmActor fa on fa.filmId = f.filmId
+  right join Actor a on a.actorId = fa.actorId;
+
+```
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* First Normal Form: "each attribute (column) in a table has only atomic values"
+  * Every column must hold ONE value
+  * Violation: a comma delimited list of emails: `email1,email2,email3`
+  * Another violation: if you simply add another column, `Email1` and `Email2`, and `Email3`  
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Auto generated primary keys give you this for free
+  * Violation: a purchase record may contain a `customerId`, `storeId`, `storeLocation`
+* Third Normal form: 2-NF (by transitivity, 1-NF): no non-prime column is transitively dependent on the key
+  * Suppose you had a `pricePerUnit`, `numberOfUnits`; `totalCost = pricePerUnit * numberOfUnits`
+  * Storing `totalCost` is a violation of 3-NF
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is *alot* more to learn about databases
+  * Triggers, Views, Stored Procedures, variables, loop, etc.
+  * Transactions: these are an all-or-nothing interaction with the database
+  * ACID
+    * Atomicity
+    * Consistency
+    * Isolation
+    * Durability
+  * Security issues: do not store sensitive info in a database unhashed/unencrypted
+  * Soft vs Hard deletes: a hard delete is a result of a `delete` statement.  A soft delete involves defining a boolean column `isActive` that is true if the record is active, false if it is "deleted"
+
+* OOP Model vs Relational Model
+  * classes are roughly equal to tables
+  * OOP has behavior (methods), relational model does not
+  * OOP has inheritance and polymorphism, relational model does not
+  * How can we "resolve" the differences in these two models?
+* Several strategies:
+  * Table per class/subclass strategy: each class has its own table
+  * Table per stub class: every terminal class gets its own table (with potentially repeated columns)
+  * Single table inheritance strategy: one table to represent all subtypes
+    * Some columns will be relevant to some records, others will not be (`null`)
+    * To tell the difference between the types, you use a "discriminator column"
+
+# JDBC - Java Database Connectivity API
+
+* Goal: programmatically connect to and interact with our database
+* Most languages have some support for *database connectivity*
+* API = Application Programmer Interface
+* Perfect illustration of *Dependency Inversion*
+* Don't program toward a specific database, but a generic interface
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+
+### Demonstration
+
+* Setup: download and include a Connector/J *driver* from oracle
+
+#### Process:
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. You clean up after yourself: close your resources
+
+
 ```text
 
 

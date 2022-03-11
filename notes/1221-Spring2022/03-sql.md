@@ -196,12 +196,173 @@ $$A \cup B$$
   * Use `lowerCamelCasing` for column names
   * Name primary keys after the table + `Id`
   * Name foreign keys *exactly* as the primary keys they reference!
+* You can use `unique key` to create a unique constrain on a column or columns
+* `foreign key FOO references TABLE(BAR)` can be used to define foreign keys
 
 
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* First Normal Form: "each attribute (column) in a table only has atomic values"
+  * Every column in a table holds only one value
+  * Violation: if a column has (say) multiple values using some delimiter `email1,email2,email3`
+  * Violation: simply creating multiple columns for multiple fields (columns: `Email1` and `Email2` and `Email3`)
+* Second normal form: it is both 1NF and no non-prime attribute is dependent on a proper subset of prime attributes
+  * If you have a PK auto-generated, you get this for free!
+  * Violation: a purchase record may contain a `customerId`, `storeId`, `storeLocation`
+* Third Normal Form: it must be 2NF and "no non-prme column is transitively dependent on the key"
+  * $a \rightarrow b \textrm{ and } b \rightarrow c \textrm{ then } a \rightarrow c$
+  * Suppose you had a `pricePerUnit`, `numberOfUnits`;
+  the `totalCost = pricePerUnit * numberOfUnits`
+  * DO NOT *store* the `totalCost`
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+
+```sql
+
+use cbourke;
+
+-- describe Director;
+
+-- A database to model films, actors, and directors
+
+drop table if exists FilmActor;
+drop table if exists Film;
+drop table if exists Director;
+drop table if exists Actor;
+
+-- one director can direct multiple films
+-- a film only has one director
+create table Director (
+  directorId int primary key not null auto_increment,
+  firstName varchar(255),
+  lastName varchar(255)
+);
+
+create table Film (
+  filmId int primary key not null auto_increment,
+  title varchar(255) not null,
+  releaseDate varchar(50),
+  imdbRating double default 0.0,
+  eidr varchar(255) not null unique key,
+  directorId int not null,
+  foreign key (directorId) references Director(directorId)
+);
+
+create table Actor (
+  actorId int primary key not null auto_increment,
+  firstName varchar(255),
+  lastName varchar(255)
+);
+
+-- create a join table to model a many-to-many relation between
+-- actor and film
+create table FilmActor (
+  filmActorId int primary key not null auto_increment,
+  filmId int not null,
+  actorId int not null,
+  role varchar(255),
+  foreign key (filmId) references Film(filmId),
+  foreign key (actorId) references Actor(actorId)
+);
+
+insert into Director (directorId, firstName, lastName) values
+  (1, "Denis", "Villeneuve"),
+  (2, "Quentin", "Tarantino"),
+  (3, "Tim", "Burton"),
+  (4, "Michael", "Bay"),
+  (5, "Matt", "Reeves");
+
+insert into Film (filmId, title, eidr, directorId) values
+  (10, "The Batman", "1234foo", 5),
+  (11, "Batman", "1989abc", 3),
+  (12, "Dune", "2021bar", 1),
+  (13, "Transformers", "123999", 4),
+  (14, "Bad Boys", "3333", 4);
+
+insert into Actor (actorId,lastName,firstName) values
+  (100, "Pattinson", "Robert"),
+  (101, "Smith", "Will"),
+  (102, "Smith", "Willow"),
+  (103, "Nicholson", "Jack"),
+  (104, "Keaton", "Michael");
+
+insert into FilmActor (actorId,filmId,role) values
+  (100, 10, "Batman"),
+  (101, 14, "Some Cop"),
+  (103, 11, "Jack Napier"),
+  (104, 11, "Batman");
+
+
+select * from Director d
+  left join Film f on d.directorId = f.directorId
+  left join FilmActor fa on fa.filmId = f.filmId
+  left join Actor a on a.actorId = fa.actorId
+union
+select * from Director d
+  right join Film f on d.directorId = f.directorId
+  right join FilmActor fa on fa.filmId = f.filmId
+  right join Actor a on a.actorId = fa.actorId;
+
+
+
+```
+
+## Misc
+
+* There is a *lot* more about databases
+  * Triggers, Views, Stored Procedures, variables, loops
+  * Transactions: are how you interact with a database, they are an all-or-nothing thing: success = commit, failure = rollback
+  * Transactions guarantee ACID principles
+    * Atomicity
+    * Consistency
+    * Isolation
+    * Durability
+  * Security Issues: where to store passwords, how to grant access or restrict it, etc.
+  * Soft vs hard deletes: a hard delete would remove a record using the `delete` query; a soft delete would make a record "inactive" using (say) an `isActive` boolean column
+
+### OOP Model vs Relational Model
+
+* Relational model only has data
+* Object model has behavior and inheritance
+* There are several inheritance strategies:
+  * Table per class strategy: each class (intermediate, subclasses, and superclasses) all have one table each
+  * Table per stub class: one table for each "terminal" class that you make (subclasses)
+  * Single table inheritance strategy
+    * one table for all sub types in a hierarchy
+    * You may have some columns that are used in some records and ignored in others
+    * Example: all assets have a code: so all asset records would specify this
+    * Example: only stocks/options have a share price: so for stock instances it is present, for properties, it would be `null`
+    * to distinguish types you use a "discriminator" column: a single string or character to denote the type
+
+# JDBC - Java Database Connectivity API
+
+* Goal: programmatically connect to and interact with our database
+* Most languages have some support for *database connectivity*
+* API = Application Programmer Interface
+* Perfect illustration of *Dependency Inversion*
+* Don't program toward a specific database, but a generic interface
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+### Demonstration
+
+* Setup: download and include a Connector/J *driver* from oracle
+
+#### Process:
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. You clean up after yourself: close your resources
 
 ```text
-
-
 
 
 
