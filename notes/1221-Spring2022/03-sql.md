@@ -362,6 +362,19 @@ select * from Director d
 3. Process your results
 4. You clean up after yourself: close your resources
 
+## Best Practices
+
+1. *ALWAYS* use prepared statements
+  * It protects against *injection attacks*
+  * Consistency is best
+2. Do not use a wildcards, `*` in JDBC
+  * Wastes resources if columns are not used, database changes
+  * Enumerate columns
+  * Use aliases
+3. Close your resources!
+4. Don't store (unencrypted) sensitive data
+5. Use a proper logging system; example: log4j
+
 ```text
 
 
