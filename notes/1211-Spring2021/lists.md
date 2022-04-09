@@ -1,4 +1,4 @@
-# Lists & List-based Data Structures 
+# Lists & List-based Data Structures
 ## CSCE 156 - Spring 2021
 
 ### Introduction/Overview
@@ -26,13 +26,13 @@ Integer numbers[] = new Integer[n];
   * A way to copy one list to another (copy constructor!)
   * Find a particular element (search)
   * insert at the beginning
-  
+
 * Linked Lists
   * No underlying array, instead elements are stored inside of individual "nodes"
   * Each node references its *element* and the *next* node
   * Each node is "chained" or "linked" together
   * Each basic operation involves *traversing* the list
-  
+
 * Variations
   * Doubly linked list: you keep track of the `next` and the `previous`
   * You can also keep track of the tail for easy access to the end of the list
@@ -44,7 +44,7 @@ Integer numbers[] = new Integer[n];
 
 * Stacks are a *restricted access data structure*
 * Collections (lists, sets): these are a bit "unstructured" - they just hold stuff
-* Lists are ordered but not *sorted* 
+* Lists are ordered but not *sorted*
 * Sorting a list *imposes* an order on a collection's *state*
 * *Restricted Access Data Structures* impose an ordering on a collection's *behavior*
 * We really like structure because it can be exploited for more efficient operations
@@ -57,7 +57,7 @@ Integer numbers[] = new Integer[n];
   * Option: what happens when you pop from an empty stack
   * Option: do you impose a capacity?
   * Option: how do you implement a stack?
-  
+
 ## Queue
 
 * A queue is a line: FIFO = First-In, First-Out data structure

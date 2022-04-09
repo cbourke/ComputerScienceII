@@ -130,4 +130,3 @@ insert into availability (gameId, platformId, publishYear) values (15, 4, 2004);
 #--Lucas Arts
 insert into availability (gameId, platformId, publishYear) values (17, 7, 1994);
 insert into availability (gameId, platformId, publishYear) values (18, 7, 1997);
-

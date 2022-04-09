@@ -9,7 +9,8 @@
     async task3;
     task4;
     ```
-  * Multithreading: multiple threads running independent (may be on one core, 
+    * Ex: https://cse.unl.edu/~cbourke/synchronicity/
+  * Multithreading: multiple threads running independent (may be on one core,
     allowing for scheduling, waiting processes; waiting on I/O)
   * Parallel Computing: multiple processes or threads running on different cores
     (generally same machine) at the same time
@@ -23,7 +24,7 @@
       * Synchronization
       * Race conditions
       * Starvation
-      * Not all problems are parallelizable 
+      * Not all problems are parallelizable
 
 ## Demonstrations
 
@@ -33,9 +34,13 @@
 * Demo: fork bomb?
 * Demo: `limit`
 
+* Mac: `sysctl -n hw.ncpu`
+* CSE:
+`lscpu`
+
 * A *thread* is an entity *within* a process that can execute
 independent of other threads.  Threads have their own *context*
-(own local memory, stack, etc.) but may *share* resources 
+(own local memory, stack, etc.) but may *share* resources
 
 * Java:
   * `Thread` (full thread implementation)
@@ -45,3 +50,6 @@ independent of other threads.  Threads have their own *context*
   asked for a result that is not complete)
 
 * Demonstration
+
+* Exercise: design a connection pool
+  * 

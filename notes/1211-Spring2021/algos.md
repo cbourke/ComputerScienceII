@@ -2,14 +2,14 @@
 # Algorithms & Algorithm Analysis
 ## CSCE 156 - Computer Science II - Spring 2021
 
-### Motivating Demonstration 
+### Motivating Demonstration
 
 * Consider searching a linked list (`indexOf` method)
 * Our "elementary operation" is traversing a node in the list
 * For the "naive" approach:
   * required about $n^2$ traversals
   * The "algorithm" in this case was a "quadratic" algorithm
-  * This is *extremely slow* 
+  * This is *extremely slow*
   * For every order of magnitude increase in the list size, we have a 100-fold increase in time complexity (the time it takes to execute the algorithm)
 
 * How bad is this in reality?
@@ -17,8 +17,8 @@
   * There is at most 1 traversal per node
   * The "complexity" of this algorithm can be quantified witha  linear function: $n$
   * if we increase the input size by 10 fold, then the algorithm will only be 10 times slower
-  
-* Perspective: 
+
+* Perspective:
   * Quadratic regression (Correlation Coefficient: 0.994):
       $$t(n) = 6.4101E{-4}n^2 -0.11168n + 9.7822$$
   * 10 million elements: 17.59 hours
@@ -28,7 +28,7 @@
   * 10 million elements: < 1second
   * 100 million: 10 seconds
   * 1 billion: 2 minutes
-  
+
 ## Introduction
 
 * It should be clear that programs/algorithms require computational resources
@@ -40,7 +40,7 @@
   * idleness/utilization
 * The above are extremely important *engineering* considerations
 * From a theoretical perspective, we need an abstract notion of "resource" that is not tied to a particular machine
-* We want to analyze algorithms from an *abstract perspective* 
+* We want to analyze algorithms from an *abstract perspective*
 * What matters is the performance of an algorithm with respect to its *input size*, not any particular machine, language, architecture, etc.
 * We are interested in the *growth rate* of the resources consumed by the algorithm
 * Algorithms are *indepedent* of the hardware they are run on
@@ -64,12 +64,12 @@
 * Note:
   * there are no "rules" for good pseudocode, only guidelines
   * Adopt any style you like, keep it consistent
-  
+
 ## Algorithm Analysis
 
 1. Identify the input
 2. Identify the input size, $n$
-3. Identify the *elementary operation* 
+3. Identify the *elementary operation*
 4. Determine how many times the elementary operation is executed with respect to the input size
 5. Characterize the algorithm's behavior (growth rate) using Big-O analysis
 
@@ -90,7 +90,7 @@
   * n*m
   * assume n > m, then $n*m < n^2$
   * or, just simplify it to one dimension: $n$
-* A single integer, $x$: 
+* A single integer, $x$:
   * Is it *not* just "one" input
   * Numbers have a *representation* in a computer (or on paper)
   * The input size of a number is the number of bits used to represent that number, $n = \log_2(x)$
@@ -108,7 +108,7 @@
   * Comparisons
   * Arithmetic operations: additions/subtractions, multiplications/division
   * traversing nodes in a linked list
-  
+
 ### Analysis
 
 * Analyze how many times the elementary operation is executed with respect to the input size, $n$
@@ -116,25 +116,25 @@
 * $t: \mathbb{N} \rightarrow \mathbb{R}^+$ (input sizes to a resource measure such as time)
 * It may require some art, some summations or other calculations, finding closed forms solutions or even super advanced math
 * In general, you want to assume the *worst case* scenario: you want to provide an *upperbound* on the worst running time or other resource that the algorithm could cost you.
-  
+
 ## Asymptotics
 
 * Motivation: want to characterize an algorithm's performance and efficiency with respect to its input size
 * We're interested in its performance as $n$ (input size) *grows
 * For larger and larger inputs, how does the growth rate of the function that characterizes and algorithm's efficiency: what kind of "order" can we give it
-* We want to: 
+* We want to:
   * ignore contsants
   * ignore lower order terms
 * The tool we use for this is "Big-O" analysis
-  
+
 ### Definition
 
-Definition: let $f(n)$, $g(n)$ be functions, we say that $f(n)$ is Big-O of $g(n)$ if there is a positive constant $c$ and an integer $n_0$ such that 
+Definition: let $f(n)$, $g(n)$ be functions, we say that $f(n)$ is Big-O of $g(n)$ if there is a positive constant $c$ and an integer $n_0$ such that
   $$f(n) \leq c g(n)$$
 for all $n \geq n_0$  
 * Big-O characterizes a function's order of growth as $n \rightarrow \infty$
 * It allows you to ignore lower order terms
-* It allows you to ignore constants 
+* It allows you to ignore constants
 * It allows you to focus on the most significant term in a function
 * Misc:
   * We usually write $f(n) = O(g(n))$
@@ -163,7 +163,7 @@ for all $n \geq n_0$
 1. You define a function that captures the idea of "work" or the elementary operation
 2. You setup a recursion: you capture the notion of how much *non*-recursive work you do, and then how much recursive work you do.
 3. You solve the recurrence or you use Master Theorem
-  
+
 ```text
 
 
