@@ -144,11 +144,74 @@ while(left <= right):
 output None
 ```
 
+### More Examples
+
+* Searching & Sorting
+* Selection Sort
+* Insertion Sort
+* Quick Sort
+* Merge Sort
+* Binary Search
+
 ### Asymptotics
 
-* $O(n)$
+* Motivation: want to characterize an algorithm's performance or complexity with respect to its input size
+* $t(n)$ (time): the number of elementary operations executed with respect to the input size, $n$
+* We're more interested in how the algorithm will perform with larger and larger inputs
+* IE as $n \rightarrow \infty$
+* Ultimately:
+  * Ignore lower order terms (only focus on the most significant term that contributes to the growth of the function)
+  * Ignore constants (you can always upgrader your hardware!)
+* the tool we use is Big-O analysis
+
+### Definition
+
+**Definition** Let $f(n)$, $g(n)$ be functions (suppose that these function characterize two algorithms, $A, B$) we say that $f(n)$ is "big-O" of $g(n)$ and write that $f(n) = O(g(n))$ if there exists a positive constant $c$ and an integer $n_0$ such that
+  $$f(n) \leq c g(n)$$
+for all $n \geq n_0$
+  * Big-O characterizes the growth rate or order of growth of a function
+  * $g(n)$'s growth rate is *at least* as big as $f(n)$
+  * $f(n)$'s growth rate is *bounded above* by $g(n)$
+* It is not a strict relative comparison:
+  * $3n+5 = O(n)$
+  * $3n+5 = O(n\log(n))$
+  * $3n+5 = O(n^2)$
+  * $3n+5 = O(n^3)$
+  * $3n+5 = O(2^n)$
+* THe following are NOT true:
+  * $3n^2 + 5n = O(n)$
+  * $2^n = O(n)$
+  * We do NOT write: $O(n) = 3n+ 5$
+* Take note of the notation:
+  * Strictly speaking, the equality is not correct
+  * LHS: is a function
+  * RHS: class of functions; it is a *set* of functions
+  * Technically correct notation: $f(n) \in O(g(n))$
+* Example: $f(n) = 175n^2 + 50n$, $g(n) = n^3$
+  * Intuitively: $f(n) = O(g(n))$
+
+### Proofs
+
+* Given two functions, $f(n), g(n)$ how do you prove that $f(n) = O(g(n))$
+* Two techniques:
+  * Approach A: find the "cross over" point where one function becomes larger than the other for all values greater than the point: fix $c = 1$ and find $n_0$
+  * Approach B: Fix $n_0 = 0$ and find a $c$ such that the inequality is satisfied
+* By setting up an inequality and finding roots, you take the largest value of $n$ (largest root value) and then the inequality will hold for $n_0$ being the largest value and $c = 1$
+
+### Asymptotics on Recursive Algorithms
+
+* Recall Quick Sort:
+  * Setup a function, $C(n)$ = number of comparisons by Quick Sort on an array of size $n$
+  * $C(n) = 2C(n/2) + n - 1$
+  * $n-1$ comparisons to partition the array into two *roughly* equal sub arrays
+  * Two recursive calls to each sub array, each requiring $C(n/2)$ comparsisons
+
+`.DS_Store`
 
 ```text
+
+
+
 
 
 
