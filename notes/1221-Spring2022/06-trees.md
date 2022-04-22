@@ -66,6 +66,19 @@
 
 ### Implementation (Java)
 
+* Demonstration
+
+### Tree Traversals
+
+* In general, you start at the root
+* Goal: be able to enumerate/view/traverse every single node without missing any
+* Preorder traversal
+  * Recursively visits nodes in a root-left-right manner
+* Inorder traversal
+  * Recursively visits nodes in a left-root-right manner
+* Postorder traversal
+  * Recursively visits nodes in a left-right-root manner
+
 
 
 ```text

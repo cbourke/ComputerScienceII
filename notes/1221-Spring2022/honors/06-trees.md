@@ -63,7 +63,13 @@
   * Preorder Traversal
   * Inorder Traversal
   * Postorder Traversal
+* Implementations
 
+## Binary Search Trees
+
+* A *binary search tree* is a binary tree such that every node u holds a key k such that
+  * *Every* node in u's left sub-tree has a key value less than k
+  * *Every* node in u's right sub-tree has a key value greater than k
 
 ```text
 
