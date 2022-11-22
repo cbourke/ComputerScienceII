@@ -57,12 +57,6 @@
 * It also requires that the tree be (at least nearly) full!
 * You can have a binary tree that is NOT full! Skewed trees
 
-### More structure
-
-* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
-* Binary Search Tree: all nodes have a *key* element, $k$
-* For every node, the key value of all nodes in its "left-sub-tree" have a key value strictly less than $k$
-* For every node, the key value of all nodes in its "right-sub-tree" have a key value strictly greater than $k$
 
 ### Implementation (Java)
 
@@ -80,6 +74,31 @@
   * Recursively visits nodes in a left-right-root manner
 
 
+## Binary Search Trees
+
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* Binary Search Tree: all nodes have a *key* element, $k$
+* For every node, the key value of all nodes in its "left-sub-tree" have a key value strictly less than $k$
+* For every node, the key value of all nodes in its "right-sub-tree" have a key value strictly greater than $k$
+
+### Implementation & Operations
+
+* Demonstration
+
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* BSTs in general may have $d = O(n)$ which kills efficiency on all of the operations
+* Solution: "balanced" BSTs, AVL, 2-3/B-trees, Red-Black trees; each guaranteeing that $d = O(\log(n))$
+* A *heap* is a binary tree that has the following properties:
+  * It is *full*: every child is present at every level except possibly the last one, which is "full to the left"
+  * It satisfies the heap property: every key node value is less than *BOTH* of its children (min-heap)
+* The fullness property guarantees that the depth is logarithmic
+* It is not a general access data structure: restricted access data structure
+  * get and remove the minimum element
+  * add elements to the heap
+* Heap is a nice implementation of a Priority Queue
+* You can use a heap to implement heap sort
 
 ```text
 

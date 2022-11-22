@@ -71,6 +71,34 @@
   * *Every* node in u's left sub-tree has a key value less than k
   * *Every* node in u's right sub-tree has a key value greater than k
 
+### Implementation & Operations
+
+* Demonstration
+
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* Balanced BSTs to exist: AVL, 2-3, Red-Black, etc.
+* Work by efficiently *rebalancing* nodes
+* A *heap* is a binary tree that has the following properties:
+  * It is *full*: at every level, all children are present except possibly the last level; but hte last level will be "full to the left"
+  * It satisfies the Heap Property: the key in every node is less than *both* of its children
+* Observation:
+  * Fullness property guarantees that $d = O(\log(n))$
+  * The minimum element is always at the root
+* Basic Operations:
+  * Retrieve and remove the min element
+    * Save off the root element for a return value
+    * Promote the "last" node to the root node
+    * "Heapify" (fix the heap) by swapping with the minimum child until the heap property is satisfied
+    * Complexity: number of swaps/comparisons is proportional to the depth, $d = O(\log(n))$
+  * Add an element
+    * You add the new node at the "end" of the heap: the lowest possible level, all the way to the left
+    * You heapify *upward* swapping with the parent until the heap property is satisified
+    * IF we have access to the last position, then adding is $O(1)$, heapifying is still $O(d) = O(\log(n))$
+* Heaps are not general purpose data structures: they are *restricted access* data structures
+* Heaps are an efficient priority queue implementation
+
 ```text
 
 
