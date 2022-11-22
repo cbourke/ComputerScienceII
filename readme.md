@@ -2,6 +2,7 @@
 **[School of Computing](https://computing.unl.edu/)**  
 **[College of Engineering](https://engineering.unl.edu/)**
 **[University of Nebraska-Lincoln](https://unl.edu)**
+**[University of Nebraska-Omaha](https://unomaha.edu)**
 
 This repository hosts documents, files, and other artifacts
 related to Computer Science II (offered as CSCE 156 and CSCE 156H) at
@@ -37,6 +38,18 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 - Lab 15.0 - Binary Search Trees https://github.com/cbourke/CSCE156-Lab15
 
 ## Course Offerings
+
+### Spring 2023
+
+- Course Link: https://canvas.unl.edu/courses/145553
+- Lectures: TBD
+
+#### University of Nebraska-Omaha
+
+During the spring 2023 semester, this course is offered at UNO as ECEN 194:
+
+- Course Link: https://canvas.unl.edu/courses/150967
+- Lectures: TBD
 
 ### Spring 2022
 
