@@ -6,7 +6,7 @@ __pycache__/
 #pickle
 *.pkl
 # local dev files
-scripts/codepost/devOld/
+scripts/codepost/dev/
 scripts/handin/
 
 
