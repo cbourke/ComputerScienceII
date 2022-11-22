@@ -113,7 +113,7 @@ class Course:
             r += p.toCsv()
         r += "Emails:\n"
         for nuid,p in self.students.items():
-            r += p.canvasEmail + "\n"
+            r += str(p.canvasEmail) + "\n"
         return r
 
     def getGradingAssignment(self):
