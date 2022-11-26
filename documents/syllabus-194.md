@@ -1,6 +1,6 @@
 # Computer Science II
 
-### CSCE 156 - Syllabus - Spring 2023
+### ECEN 194 - Syllabus - Spring 2023
  [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska-Lincoln](https://unl.edu/)  
@@ -15,26 +15,14 @@
 
 ## Course Info
 
-**Prerequisites**: [MATH 106](https://catalog.unl.edu/search/?P=MATH%20106)
-or equivalent and a grade of C or better in [CSCE 155](https://catalog.unl.edu/search/?P=CSCE%20155E)
+**Prerequisites**: Unofficially, you need to have successfully
+completed Computer Science I or equivalent.
 
 **Description**: Data structures, including linked lists, stacks,
 queues, and trees; algorithms, including searching, sorting, and
 recursion; programming language topics, including object-oriented
 programming; pointers, references, and memory management; design and
 implementation of a multilayer application with SQL database.
-
-**Credit Hours**: 4
-
-**Postrequisites**: This course is a prerequisite for
-[CSCE 310](https://catalog.unl.edu/search/?P=CSCE%20310) - Data
-Structures & Algorithms. A grade of C or better is required to move on
-to CSCE 310.
-
-## University Policies, Resources & Services
-
-Students are responsible for knowing the university policies and
-resources found on this page: https://go.unl.edu/coursepolicies
 
 ## Skills Objectives
 
@@ -87,50 +75,41 @@ solving should be modified to ask and answer design questions first:
 
 -   Trees; Binary Search Trees
 
+## University Services
+
+### Accessibility Accommodations
+
+It is my goal that this class be an accessible and welcoming experience for
+all students. Reasonable accommodations are provided for students who are
+registered with Accessibility Services Center (ASC) and make their requests
+sufficiently in advance. For more information, contact ASC (Location: 104
+H&K, Phone: 402.554.2872, Email: unoaccessibility@unomaha.edu)
+
+Accessibility Services Center:
+
+https://www.unomaha.edu/student-life/accessibility/faculty-and-staff.php
+
 ## Course Format & Delivery
 
-This course is offered in multiple sections. The main offering has
-two sections:
-  * Section 150 is the in-person lecture with lectures livestreamed via
-    YouTube.  Recordings of the lecture are available immediately after.
-  * Section 700 is the online section.  Students enrolled in this section may
-    attend virtually by watching the livestream and utilizing either YouTube
-    chat or our online forum Piazza to ask questions.  Students in the online
-    section may "attend" *any* lab section virtually via zoom.  A substantial
-    set of pre-prepared video tutorials and lectures is also available for
-    students wishing to work asynchronously.
-  * There are two separate honors sections for CSCE 156H (sections
-    150 and 700) with the same format as the main sections.  Generally, the
-    there are higher expectations (each assignment has 10-15% extra work
-    required for the honors section) and we do go a bit faster in order to
-    cover some extra topics as time permits.  The section is also smaller.
+Lectures are livestreamed via YouTube.  Recordings of the lecture
+are available immediately after.  
 
 ### Labs
 
-Students in in-person sections may choose to attend their lab section either
-in-person or remotely (via zoom).  Students in the online 700 section will
-complete their labs remotely but may attend virtual lab sessions via zoom.  
-
-### Office Hours
-
-All office hours by instructors and Learning Assistants will be offered
-both in-person in the School of Computing
-[Student Resource Center](https://computing.unl.edu/current-undergraduate#SRC)
-as well as online only via zoom.  
+Lab/help sessions are held twice per week.  Attendance is not required,
+but highly encouraged.  
 
 ### Continuation of Instruction
 
 If in-person classes are canceled by the University during a lecture
-day, lecture will still be livestreamed.  If in-person classes are canceled
-by the University during a lab/hack day, in-person attendance will not be
-required, help will be made available via zoom and you will still be
-expected to complete the work remotely.
+day, lecture will still be livestreamed.  
 
 ## Assessment
 
 Assessment (grading) will be based on labs and assignments.  There are 14 labs,
-20 points each.  They are graded based on completion and your lowest lab
-grade will be dropped.  The vast majority of your assessment will be based
+20 points each.  They are graded based on completion.  Credit is only awarded
+if 100% of all unit tests pass.  Your lowest lab grade will be dropped.  The
+vast majority of your assessment will be based
 on assignments whose point values vary.  To start you out on the right foot,
 you have been awarded 15 free starter points.  You are currently earning an
 A in this course; keep it up!
@@ -194,7 +173,7 @@ There are 8 assignments. Assignments will be due 1 second before
 midnight Friday evening the week that they are due. Code and other
 relevant *artifacts* must be submitted using CSE’s webhandin. If there
 are written portions of the homework, they should be typed. You should
-typeset code snippets using a monotype font (Courier for example) for
+typeset code snippets using a monotype font (courier for example) for
 readability. Figures may be hand drawn, but you are encouraged to use
 some sort of software to render them.
 
@@ -259,20 +238,6 @@ failing grade for the course itself. The most recent version of the
 Academic Integrity Policy can be found at
 <http://cse.unl.edu/academic-integrity>
 
-## Honors Section
-
-For those in the Honors section of this course topics will be covered at
-a faster pace so that additional "advanced" topics can also be covered.
-
-In addition, each assignment may contain additional requirements or
-problems that must be completed. There may also be additional
-assignments. Bottom line, there will be higher expectations with regard
-to the quality and quantity of work in this course compared to the
-regular section. As a student in this course, you will be expected to
-meet or exceed those expectations which may require more of your time
-and a more proactive approach to studying and greater diligence in
-completely assignments.
-
 ## Communication & Getting Help
 
 The primary means of communication for this course is Piazza, an online
@@ -291,22 +256,6 @@ In addition, there are is an anonymous suggestion box that you may use
 to voice your concerns about any problems in the course if you do not
 wish to be identified. It is available at
 <https://cse.unl.edu/contact-form>.
-
-### Learning Assistant Program (LAP)
-
-This course is supported by the CSE Learning Assistant Program (LAP).  
-The mission of the LAP is to improve student comprehension and
-retention in computing fields by focusing on the learner's experience.
-This course will be supplemented by Learning Assistants (LAs) and Course
-Leaders (CLs) to help improve your learning. LAs and CLs are other
-undergraduate students who have taken the same or similar courses
-and have been trained to help you succeed in this course. Your LAs
-and CLs will hold regular office hours, help with grading, and assist
-you with labs/assignments.
-
-I strongly encourage you to utilize the LAs and CLs when you are
-completing coursework. More information can be found in the Learning
-Assistant Program Module on Canvas.
 
 ### Getting Help
 
@@ -339,15 +288,6 @@ the material and getting help in this course:
     likely fastest way to get help with your questions. Also, be sure to
     read other student’s posts and questions and feel free to answer
     yourself!
-
--   Office Hours & Student Resource Center: the instructor and teaching
-    assistants hold regular office hours throughout the week as posted
-    on the course website. Attend office hours if you have questions or
-    want to review material. The Student Resource Center (SRC,
-    <http://cse.unl.edu/src>) Monday through Friday. Even if your TAs
-    are not scheduled during that time, there are plenty of other TAs
-    and students present that may be able to help. And, you may be able
-    to help others!
 
 -   Don’t procrastinate. The biggest reason students fail this course is
     because they do not give themselves enough opportunities to learn
