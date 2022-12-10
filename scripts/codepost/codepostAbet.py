@@ -71,7 +71,7 @@ def submissionToMarkdown(submission,title,assignmentPts):
     fileGraderCommentIds = [x.id for x in f.comments]
     result += f"  * Source File: `{fileName}`\n"
     details += f"## {title} Example - `{fileName}`\n"
-    details += f"```{fileExtension}\n{fileContents}\n```\n"
+    details += f"```{{.{fileExtension} .numberLines}}\n{fileContents}\n```\n"
     for commentId in fileGraderCommentIds:
       c = codepost.comment.retrieve(id=commentId)
       cleanText = c.text.replace("\n\n", "\n")
