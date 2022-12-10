@@ -75,7 +75,10 @@ def submissionToMarkdown(submission,title,assignmentPts):
     for commentId in fileGraderCommentIds:
       c = codepost.comment.retrieve(id=commentId)
       cleanText = c.text.replace("\n\n", "\n")
-      result += f"    * Lines {c.startLine:d} - {c.endLine:d} (-{c.pointDelta:.1f}): {cleanText:s}\n"
+      if c.pointDelta:
+        result += f"    * Lines {c.startLine:d} - {c.endLine:d} ({c.pointDelta:.1f}): {cleanText:s}\n"
+      else:
+        result += f"    * Lines {c.startLine:d} - {c.endLine:d}: {cleanText:s}\n"
   return result, details
 
 def getAssignmentReport(assignment):
