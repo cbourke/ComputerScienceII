@@ -11,10 +11,11 @@ are formatted in markdown.  In the codepost.io web client the comments would
 be embedded directly in the source files but for this report they are collected
 in the summary.
 
-A, B, and C examples are automatically chosen from all graded submissions.
+By default, A, B, and C examples are automatically chosen from all graded submissions.
 The top submission is chosen for the A example while the B/C are chosen
 to be the closest to a 85%/75% score based on the total number of points of
-the assignment.
+the assignment.  You can specify which A-B-C student samples to pull by
+providing a list of emails.
 
 The report is written to both a markdown-formatted output file as well as
 a PDF version (which is produced from the markdown using pandoc/latex via
@@ -40,6 +41,11 @@ parser.add_argument('--codePostApiKey',
                     type=str,
                     default=config.codePostApiKey,
                     help='Optionally provide a codepost API key to use. By default the API key in the config.py file is used.')
+parser.add_argument('--emails',
+                    nargs=3,
+                    metavar=('email (A)', 'email (B)', 'email (C)'),
+                    default=None,
+                    help='Optionally provide three student emails that should be used as A, B, C samples respectively.')
 
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('--codePostCourseId',
@@ -56,6 +62,8 @@ def submissionToMarkdown(submission,title,assignmentPts):
   Returns both a summary and source files of the provided submission as
   markdown-formatted strings.
   """
+  if not submission:
+      return "INVALID"
   details = ""
   result = f"""
 ## {title} Example
@@ -81,7 +89,7 @@ def submissionToMarkdown(submission,title,assignmentPts):
         result += f"    * Lines {c.startLine:d} - {c.endLine:d}: {cleanText:s}\n"
   return result, details
 
-def getAssignmentReport(assignment):
+def getAssignmentReport(assignment, abcEmails = None):
   """
   Produces an ABET assignment report (as a markdown-formatted string)
   for the given assignment (which is expected to be a codepost API
@@ -105,20 +113,29 @@ def getAssignmentReport(assignment):
   * Mean: {assignmentMean}
   * Median: {assignmentMedian}\n\n"""
 
-  # find ideal A, B, C samples
   submissions = assignment.list_submissions()
-  aSubmission = submissions[0]
-  bSubmission = submissions[0]
-  cSubmission = submissions[0]
-  # we only expect 1 submission per student since submissions are via our
-  # scripts, but in any case, find the 3 closest to A=max%, B = 85%, C = 75%
-  for submission in submissions:
-    if submission.grade > aSubmission.grade:
-      aSubmission = submission
-    if abs(submission.grade / assignmentPts - .85) < abs(bSubmission.grade / assignmentPts - .85):
-      bSubmission = submission
-    if abs(submission.grade / assignmentPts - .75) < abs(cSubmission.grade / assignmentPts - .75):
-      cSubmission = submission
+  aSubmission = None
+  bSubmission = None
+  cSubmission = None
+  if abcEmails:
+      # User provided specific student emails of samples they wanted, so use them
+      aSubmission = next( (s for s in submissions if abcEmails[0] in s.students), None)
+      bSubmission = next( (s for s in submissions if abcEmails[1] in s.students), None)
+      cSubmission = next( (s for s in submissions if abcEmails[2] in s.students), None)
+  else:
+      # find ideal A, B, C samples based on closest to A=max%, B = 85%, C = 75%
+      aSubmission = submissions[0]
+      bSubmission = submissions[0]
+      cSubmission = submissions[0]
+      # we only expect 1 submission per student since submissions are via our
+      # scripts, but in any case, find the 3 closest to A=max%, B = 85%, C = 75%
+      for submission in submissions:
+        if submission.grade > aSubmission.grade:
+          aSubmission = submission
+        if abs(submission.grade / assignmentPts - .85) < abs(bSubmission.grade / assignmentPts - .85):
+          bSubmission = submission
+        if abs(submission.grade / assignmentPts - .75) < abs(cSubmission.grade / assignmentPts - .75):
+          cSubmission = submission
   aSummary, aDetail = submissionToMarkdown(aSubmission,"A",assignmentPts)
   bSummary, bDetail = submissionToMarkdown(bSubmission,"B",assignmentPts)
   cSummary, cDetail = submissionToMarkdown(cSubmission,"C",assignmentPts)
@@ -135,7 +152,7 @@ def produceCourseReports(courseId):
     assignmentId = a.id
     produceAssignmentReport(assignmentId)
 
-def produceAssignmentReport(assignmentId):
+def produceAssignmentReport(assignmentId,abcEmails):
   """
   Produces a single report (as an md and pdf file) for the specified assignment
   """
@@ -143,7 +160,7 @@ def produceAssignmentReport(assignmentId):
   assignmentName = a.name
   baseFileName = assignmentName.replace(" ", "_")
   assignmentId = a.id
-  report = getAssignmentReport(a)
+  report = getAssignmentReport(a,abcEmails)
   fileNameMd = baseFileName + ".md"
   fileNamePdf = baseFileName + ".pdf"
   f = open(fileNameMd, "w")
@@ -156,9 +173,10 @@ def produceAssignmentReport(assignmentId):
 
 codePostApiKey = args.codePostApiKey
 codepost.configure_api_key(codePostApiKey)
+abcEmails = args.emails
 if args.codePostCourseId:
   produceCourseReports(args.codePostCourseId)
 elif args.codePostAssignmentId:
-  produceAssignmentReport(args.codePostAssignmentId)
+  produceAssignmentReport(args.codePostAssignmentId, abcEmails)
 else:
   print("ERROR: neither course ID nor assignment ID specified")
