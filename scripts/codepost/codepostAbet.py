@@ -43,7 +43,7 @@ parser.add_argument('--codePostApiKey',
                     help='Optionally provide a codepost API key to use. By default the API key in the config.py file is used.')
 parser.add_argument('--emails',
                     nargs=3,
-                    metavar=('email (A)', 'email (B)', 'email (C)'),
+                    metavar=('email (A) email (B) email (C)'),
                     default=None,
                     help='Optionally provide three student emails that should be used as A, B, C samples respectively.')
 
