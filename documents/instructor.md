@@ -42,3 +42,6 @@
 * Logistics
   * Unify rosters: MyRed, Canvas
   * Update QC google sheet
+
+* End of Semester:
+  * Archive assignments and remove: `git filter-branch --tree-filter 'rm -f assignments/1222-Spring2022/FILE' HEAD`
