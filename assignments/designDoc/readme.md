@@ -51,9 +51,9 @@ actual code base.**  Our evaluation will be based on how well your Design
 Document achieves this principle.  In addition, we will also evaluate your
 technical writing skills by evaluating the items listed in the rubric below.
 
-## Rubric
+## Rubric (125 points total)
 
-* Draft Submissions (completion): 5 pts each, 20 total
+* Draft Submissions (completion): 5 pts each, 25 total
 * Formatting & Structural Elements: 10pts
   * Document must follow the basic template provided (IEEE 1016-2009)
   * Must be well-written and well-structured
@@ -76,11 +76,11 @@ technical writing skills by evaluating the items listed in the rubric below.
   * Overall:
     * It should discuss the design, execution, and results of testing strategies for each component as well as any design or implementation changes that were made as a result of testing outcomes
     * It should be an advocate for the various design choices; describe key advantages (or avoided disadvantages)
-  * Introduction: 10pts
+  * Introduction: 20pts
     * This section should detail the overall project requirements, motivation.
       Who is the client, why are you designing/implementing this project, what
       is their business model, rules, etc.
-  * Overall Design Description: 10pts
+  * Overall Design Description: 20pts
     * This section should  The overview section should provide an overview of
     the scope of the project.  
     * You should make reference to the major components but leave the details
