@@ -10,8 +10,8 @@ This subdirectory hosts documents specific to the honors section
 
 ### Spring 2023
 
-- Course Link: TBD
-- Lectures: TBD
+- Course Link: https://canvas.unl.edu/courses/145588
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZV8a0z8Iyc63aczK1ZHCIpZ
 
 ### Spring 2022
 
