@@ -36,7 +36,7 @@ skills.
     on your own
 
 -   Be able to recognize, use, design and appreciate programs with an
-    Object Oriented flavor
+    object-oriented flavor
 
 -   Be able to design a database-backed application from scratch given a
     general problem statement
@@ -62,9 +62,9 @@ solving should be modified to ask and answer design questions first:
 
 ## Tentative Topics
 
--   Introduction to Java / PHP (Honors section)
+-   Introduction to Java
 
--   Object Oriented Programming, OOP in Java
+-   Object-Oriented Programming, OOP in Java
 
 -   Database Design, SQL, Database Connectivity, multi-tier
     design
@@ -169,26 +169,20 @@ or you may complete the lab on your own.
 
 ### Assignments
 
-There are 8 assignments. Assignments will be due 1 second before
-midnight Friday evening the week that they are due. Code and other
-relevant *artifacts* must be submitted using CSE’s webhandin. If there
+There are 8 assignments as well as a design document. Assignments will
+be due 1 second before midnight Friday evening the week that they are due.
+Code and other relevant *artifacts* must be submitted using webhandin
+unless otherwise stated. If there
 are written portions of the homework, they should be typed. You should
 typeset code snippets using a monotype font (courier for example) for
 readability. Figures may be hand drawn, but you are encouraged to use
 some sort of software to render them.
 
 In this course, most of the assignments build on prior assignments.
-Therefore, it is extremely important for you to stay on task and not
+Therefore, it is **extremely important** for you to stay on task and not
 fall behind with assignments. You should start on assignments early and
 resolve any and all issues (bugs, design flaws) as soon as possible so
 they do not carry over to the next assignment.
-
-### 15th Week Policy Notification
-
-A per UNL’s 15th Week Policy (available here:
-<https://registrar.unl.edu/academic-standards/policies/fifteenth-week-policy/>)
-we are required to serve written notice that the final assignment as
-well as the final lab will be due during the 15th week or "dead week."
 
 ### Grading Policy
 
@@ -211,7 +205,7 @@ emergency, but you must make every effort to get prior permission.
 Documentation may also be required.
 
 Homework assignments have a strict due date/time as defined by the CSE
-server’s system clock. All program files must be handed in using CSE’s
+server’s system clock. All program files must be handed in using
 webhandin as specified in individual assignment handouts. Programs that
 are even a few seconds past the due date/time will be considered late
 and you will be locked out of handing anything in after that time.
@@ -229,14 +223,12 @@ not compile and run through the webgrader.
 All homework assignments, programs, and exams must represent your own
 work unless otherwise stated. No collaboration with fellow students,
 past or current, is allowed unless otherwise permitted on specific
-assignments or problems. The Department of Computer Science &
-Engineering has an Academic Integrity Policy. All students enrolled in
-any computer science course are bound by this policy. You are expected
+assignments or problems. The School of Computing has an
+[Academic Integrity Policy](https://computing.unl.edu/academic-integrity-policy/).
+All students enrolled in any School of Computing course are bound by this policy. You are expected
 to read, understand, and follow this policy. Violations will be dealt
 with on a case by case basis and may result in a failing assignment or a
-failing grade for the course itself. The most recent version of the
-Academic Integrity Policy can be found at
-<http://cse.unl.edu/academic-integrity>
+failing grade for the course itself.
 
 ## Communication & Getting Help
 
@@ -252,10 +244,9 @@ choose to remain anonymous or identify yourself to the instructors or
 everyone). You may still email the instructor or TAs, but more than
 likely you will be redirected to Piazza for help.
 
-In addition, there are is an anonymous suggestion box that you may use
-to voice your concerns about any problems in the course if you do not
-wish to be identified. It is available at
-<https://cse.unl.edu/contact-form>.
+In addition, there are is an [anonymous suggestion box](https://computing.unl.edu/anonymous-department-feedback-form/)
+that you may use to voice your concerns about any problems in the course if you do not
+wish to be identified.
 
 ### Getting Help
 

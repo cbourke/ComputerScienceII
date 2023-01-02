@@ -48,7 +48,7 @@ skills.
     on your own
 
 -   Be able to recognize, use, design and appreciate programs with an
-    Object Oriented flavor
+    object-oriented flavor
 
 -   Be able to design a database-backed application from scratch given a
     general problem statement
@@ -74,9 +74,9 @@ solving should be modified to ask and answer design questions first:
 
 ## Tentative Topics
 
--   Introduction to Java / PHP (Honors section)
+-   Introduction to Java / Python (Honors section)
 
--   Object Oriented Programming, OOP in Java
+-   Object-Oriented Programming, OOP in Java
 
 -   Database Design, SQL, Database Connectivity, multi-tier
     design
@@ -99,24 +99,28 @@ two sections:
     section may "attend" *any* lab section virtually via zoom.  A substantial
     set of pre-prepared video tutorials and lectures is also available for
     students wishing to work asynchronously.
-  * There are two separate honors sections for CSCE 156H (sections
+  * Section 810 is an online section offered through the
+    [Nebraska Now](https://admissions.unl.edu/specialized-information/nebraska-now/)
+    program.
+  * There are two smaller separate honors sections for CSCE 156H (sections
     150 and 700) with the same format as the main sections.  Generally, the
     there are higher expectations (each assignment has 10-15% extra work
     required for the honors section) and we do go a bit faster in order to
-    cover some extra topics as time permits.  The section is also smaller.
+    cover some extra topics as time permits.
 
 ### Labs
 
 Students in in-person sections may choose to attend their lab section either
 in-person or remotely (via zoom).  Students in the online 700 section will
-complete their labs remotely but may attend virtual lab sessions via zoom.  
+complete their labs remotely but may attend any lab sessions virtually via
+zoom.  
 
 ### Office Hours
 
 All office hours by instructors and Learning Assistants will be offered
 both in-person in the School of Computing
 [Student Resource Center](https://computing.unl.edu/current-undergraduate#SRC)
-as well as online only via zoom.  
+as well as online via zoom.  
 
 ### Continuation of Instruction
 
@@ -141,6 +145,9 @@ A in this course; keep it up!
 | Labs        | 13     |  260   |
 | Assignments | 9      |  975   |
 | Total       |        | 1250   |
+
+The honor section point distribution is similar but there are more total points
+due to additional required points on the assignments.
 
 ### Scale
 
@@ -190,16 +197,17 @@ or you may complete the lab on your own.
 
 ### Assignments
 
-There are 8 assignments. Assignments will be due 1 second before
-midnight Friday evening the week that they are due. Code and other
-relevant *artifacts* must be submitted using CSE’s webhandin. If there
-are written portions of the homework, they should be typed. You should
+There are 8 assignments as well as a design document. Assignments will
+be due 1 second before midnight Friday evening the week that they are
+due. Code and other relevant *artifacts* must be submitted using
+webhandin unless otherwise stated. If there are written portions of the
+homework, they should be typed. You should
 typeset code snippets using a monotype font (Courier for example) for
 readability. Figures may be hand drawn, but you are encouraged to use
 some sort of software to render them.
 
 In this course, most of the assignments build on prior assignments.
-Therefore, it is extremely important for you to stay on task and not
+Therefore, it is **extremely important** for you to stay on task and not
 fall behind with assignments. You should start on assignments early and
 resolve any and all issues (bugs, design flaws) as soon as possible so
 they do not carry over to the next assignment.
@@ -232,7 +240,7 @@ emergency, but you must make every effort to get prior permission.
 Documentation may also be required.
 
 Homework assignments have a strict due date/time as defined by the CSE
-server’s system clock. All program files must be handed in using CSE’s
+server’s system clock. All program files must be handed in using
 webhandin as specified in individual assignment handouts. Programs that
 are even a few seconds past the due date/time will be considered late
 and you will be locked out of handing anything in after that time.
@@ -250,14 +258,12 @@ not compile and run through the webgrader.
 All homework assignments, programs, and exams must represent your own
 work unless otherwise stated. No collaboration with fellow students,
 past or current, is allowed unless otherwise permitted on specific
-assignments or problems. The Department of Computer Science &
-Engineering has an Academic Integrity Policy. All students enrolled in
-any computer science course are bound by this policy. You are expected
+assignments or problems. The School of Computing has an
+[Academic Integrity Policy](https://computing.unl.edu/academic-integrity-policy/).
+All students enrolled in any School of Computing course are bound by this policy. You are expected
 to read, understand, and follow this policy. Violations will be dealt
 with on a case by case basis and may result in a failing assignment or a
-failing grade for the course itself. The most recent version of the
-Academic Integrity Policy can be found at
-<http://cse.unl.edu/academic-integrity>
+failing grade for the course itself.
 
 ## Honors Section
 
@@ -287,10 +293,9 @@ choose to remain anonymous or identify yourself to the instructors or
 everyone). You may still email the instructor or TAs, but more than
 likely you will be redirected to Piazza for help.
 
-In addition, there are is an anonymous suggestion box that you may use
-to voice your concerns about any problems in the course if you do not
-wish to be identified. It is available at
-<https://cse.unl.edu/contact-form>.
+In addition, there are is an [anonymous suggestion box](https://computing.unl.edu/anonymous-department-feedback-form/)
+that you may use to voice your concerns about any problems in the course if you do not
+wish to be identified.
 
 ### Learning Assistant Program (LAP)
 
@@ -343,8 +348,8 @@ the material and getting help in this course:
 -   Office Hours & Student Resource Center: the instructor and teaching
     assistants hold regular office hours throughout the week as posted
     on the course website. Attend office hours if you have questions or
-    want to review material. The Student Resource Center (SRC,
-    <http://cse.unl.edu/src>) Monday through Friday. Even if your TAs
+    want to review material. The [Student Resource Center](http://cse.unl.edu/src)
+    is open Monday through Friday. Even if your TAs
     are not scheduled during that time, there are plenty of other TAs
     and students present that may be able to help. And, you may be able
     to help others!
