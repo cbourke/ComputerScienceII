@@ -313,6 +313,30 @@ I strongly encourage you to utilize the LAs and CLs when you are
 completing coursework. More information can be found in the Learning
 Assistant Program Module on Canvas.
 
+### UNL Writing Center
+
+The Writing Center can provide you with meaningful support as you write for
+this class as well as other courses. Trained undergraduate
+and graduate peer consultants are available to talk with you about all forms
+of communication. You are welcome to bring in everything from lab reports,
+presentations, and research papers to cover letters, application essays, and
+graduate theses and dissertations. Writing Center Consultants can work with
+you at any stage of the writing process, from brainstorming and organizing
+your ideas through polishing a final draft.
+
+There are three ways you can connect with a Consultant:
+
+* Online (a real-time, video conversation)
+* eTutoring (email feedback)
+* In person in Andrews 102
+To learn more about online options and view video tutorials, visit
+<https://www.unl.edu/writing/online-writing-center-services>.
+
+Sign up for an appointment any time by visiting <https://unl.mywconline.com>.
+For other information about the Writing Center, please visit
+<https://unl.edu/writing>.
+
+
 ### Getting Help
 
 Your success in this course is ultimately your responsibility. Your
