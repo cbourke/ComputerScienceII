@@ -1,38 +1,62 @@
 """
 This module provides a thin wrapper interface to the Canvas
-API utilizing CanvasAPIv1 (canvas-api-client).  It loads
-the roster (including students, TAs, instructors) from the
-Canvas course identified in the config.py module and creates
-a roster list (a list of Person objects, see the person.py
-module).
+API.  It loads the roster (including students, TAs, instructors)
+from the Canvas course identified in the config.py module and creates
+a roster list (a list of Person objects, see the person.py module).
 
 References:
  - UNL's Canvas API instance is at:
    https://canvas.unl.edu/api/v1/
  - UNL's Live instance:
    https://canvas.unl.edu/doc/api/live
- - CanvasAPIv1 (canvas-api-client) documentation:
-   https://wgwz.github.io/canvas-lms-tools/canvas_api_client.html#module-canvas_api_client.v1_client
 
-Note: the CanvasAPIv1 is somewhat limited.  There is no way way
-to get the role of a user directly (student, TA, etc.).  In any
-case, the course.py module is designed to manually define the
-role of graders and (non-grader) instructors so that we have finer
-grained control on who is assigned to grade.
 """
 
 from config import config
 from person import Person
 from group import Group
-from canvas_api_client.v1_client import CanvasAPIv1
 import sys
 import http.client
 import json
+import re
 
-# create an instance of the canvas API
-# using the configuration in config.py
 canvasHost = "canvas.unl.edu"
-api = CanvasAPIv1(config.canvasUrl, config.canvasApiKey)
+
+def parse_header_links(value):
+    """Return a dict of parsed link headers proxies.
+    This function is stolen from the requests package with
+    moderate modifications so that it returns an actual
+    dicionary mapping <code>rel</code> values to <code>url</code>s
+    """
+
+    links = []
+
+    replace_chars = " '\""
+
+    for val in re.split(", *<", value):
+        try:
+            url, params = val.split(";", 1)
+        except ValueError:
+            url, params = val, ''
+
+        link = {}
+
+        link["url"] = url.strip("<> '\"")
+
+        for param in params.split(";"):
+            try:
+                key, value = param.split("=")
+            except ValueError:
+                break
+
+            link[key.strip(replace_chars)] = value.strip(replace_chars)
+
+        links.append(link)
+    result = {}
+    for foo in links:
+        result[foo['rel']] = foo['url']
+
+    return result
 
 def getGroupCategoryId(groupSetName):
   """
@@ -49,7 +73,7 @@ def getGroupCategoryId(groupSetName):
   connection.request("GET", path)
   response = connection.getresponse()
   data = response.read().decode()
-  connection.close();
+  connection.close()
   categories = json.loads(data)
   for category in categories:
     if category['name'] == groupSetName:
@@ -68,7 +92,7 @@ def getMembers(groupId):
   connection.request("GET", path)
   response = connection.getresponse()
   data = response.read().decode()
-  connection.close();
+  connection.close()
   members = json.loads(data)
   result = []
   for member in members:
@@ -97,7 +121,7 @@ def getGroupTuples(groupSetName=None):
   connection.request("GET", path)
   response = connection.getresponse()
   data = response.read().decode()
-  connection.close();
+  connection.close()
 
   result = []
   groups = json.loads(data)
@@ -116,38 +140,55 @@ def getRoster():
 
   Returns a mapping of {NUID => Person objects}
   """
+  #dev notes: the canvas API limits pagination (per_page)
+  #  to at most 100, so we're forced to deal with it manually
   roster = {}
-  pages = api.get_course_users(config.canvasCourseId)
-  # the API lazy loads elements and uses pagination,
-  # so a double iteration is necessary.
-  for page in pages:
-    for u in page:
-      try:
+
+  moreData = True
+  users = []
+  path = ("/api/v1/courses/" +
+          config.canvasCourseId +
+          "/users/?page=1&per_page=100&access_token=" +
+          config.canvasApiKey)
+  connection = http.client.HTTPSConnection(canvasHost)
+  while moreData:
+    connection.request("GET", path)
+    response = connection.getresponse()
+    data = response.read().decode()
+    moreUsers = json.loads(data)
+    users += moreUsers
+
+    headers = response.info()
+    linkHeader = headers['Link']
+    links = parse_header_links(linkHeader)
+    if 'next' in links:
+      #python 3.9+: path = links['next'].removeprefix("https://canvas.unl.edu") + "&access_token=" + config.canvasApiKey
+      path = links['next'][22:] + "&access_token=" + config.canvasApiKey
+    else:
+      moreData = False
+
+  connection.close()
+
+  for user in users:
+    canvasId = user['id']
+    if 'login_id' in user:
+        canvasLogin = user['login_id']
+    else:
         canvasLogin = None
-        canvasEmail = None
-        if 'login_id' in u:
-          canvasLogin = u['login_id']
-        else:
-          print("ERROR: no login_id for user")
-          print(u)
-        if 'email' in u:
-          canvasEmail = u['email']
-        else:
-          print("ERROR: no email for user")
-          print(u)
-        p = Person(
-          nuid        = u['sis_user_id'],
-          canvasId    = u['id'],
-          name        = u['sortable_name'], #format: "last, first"
-          canvasLogin = canvasLogin,
-          canvasEmail = canvasEmail
-        )
-        roster[p.nuid] = p
-      except:
-        print("Problem with record:")
-        print(u)
-        e = sys.exc_info()[0]
-        write_to_page( "<p>Error: %s</p>" % e )
+    nuid = user['sis_user_id']
+    name = user['sortable_name'] #format: "last, first"
+    if 'email' in user:
+        email = user['email']
+    else:
+        email = None
+    p = Person(
+      nuid,
+      name,
+      canvasId,
+      canvasLogin,
+      email
+    )
+    roster[p.nuid] = p
   return roster
 
 def getGroups(roster):
@@ -171,7 +212,7 @@ def getGroups(roster):
         for nuid,p in roster.items():
           if p.canvasId == memberCanvasId:
             members.append(p)
-            p.group = g;
+            p.group = g
             break
       g.addMembers(members)
       groups.append(g)
@@ -190,3 +231,7 @@ def getGroups(roster):
 roster = getRoster()
 # [Group]
 groups = getGroups(roster)
+
+if __name__ == "__main__":
+    for nuid,p in roster.items():
+        print(p)
