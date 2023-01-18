@@ -7,6 +7,7 @@ __pycache__/
 *.pkl
 # local dev files
 scripts/codepost/dev/
+dev.py
 scripts/handin/
 
 
