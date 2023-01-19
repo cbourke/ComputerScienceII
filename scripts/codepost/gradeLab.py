@@ -2,9 +2,10 @@ import argparse
 import subprocess
 import os
 import glob
+import pprint
 
-""" 
-Mapping of non-standard lab packages.  In general the 
+"""
+Mapping of non-standard lab packages.  In general the
 default batch tester package/class will be unl.cse.BatchTest
 """
 labToPackage = {
@@ -17,52 +18,55 @@ labToPackage = {
 }
 
 parser = argparse.ArgumentParser()
-parser.add_argument("labNumber", help="The directory name of the lab to be graded (ex: L01 would be in ~/handin/L01)")
+parser.add_argument("labNumber", help="The lab number to be graded (ex: 1 would be Lab 1.0 in in ~/handin/L01)", type=int)
 parser.add_argument("--login", help="specify to grade a single login", default=None)
-parser.add_argument("--path", help="specify a fully qualified Java package/class to run (ex: unl.cse.BatchTest)")
 args = parser.parse_args()
 
 from config import config
 from course import course
+from assignment import Assignment
+from canvasUtils import getAssignments
+from canvasUtils import setGrade
 
-labNumber = args.labNumber
+labName = f"Lab {args.labNumber:.1f}"
+labNumber = f"L{args.labNumber:02d}"
 login = args.login
-batchTestClass = args.path
+batchTestClass = "unl.cse.BatchTest"
 
-if not args.path:
-    if labNumber in labToPackage:
-        batchTestClass = labToPackage[labNumber];
-    else:
-        batchTestClass = "unl.cse.BatchTest"
+if labNumber in labToPackage:
+    batchTestClass = labToPackage[labNumber];
 
+# If login is specified, we cut the roster to a single student
 if login:
-  #TODO: find student by cseLogin
   students = {k:v for (k,v) in course.students.items() if v.cseLogin == login}
 else:
   students = course.students
 
-#import pprint
-#pprint.pprint(students)
+canvasAssignment = getAssignments(labName)
+if len(canvasAssignment) != 1:
+    print(f"Unable to get (unique) canvas assignment:")
+    pprint.pprint(canvasAssignment)
+else:
+    canvasAssignment = canvasAssignment[0]
 
-# CSCE 156 configurations
-basePath = "/home/grad/Classes/cse156/handin/"
+basePath = config.handinDirectory
+points = 20
 stagingDir = "lab_staging"
 java = "/usr/bin/java"
 javac = "/usr/bin/javac"
-output = "DEBUG INFO:\n"
-debug = False
 
 csvResult = "cseLogin,canvasId,points,pass,fail,totes\n"
 
-#print("Grading " + str((labNumber,login,batchTestClass)) + "...")
-
-print("Grading...");
+print(f"Grading {labName} using {batchTestClass} in {labNumber}...")
+print(f"  Canvas Assignment: {canvasAssignment}")
 
 for nuid,p in students.items():
+  print(f"  {p.name} ({p.nuid})...")
   login = p.cseLogin
   canvasId = p.canvasId
-  fullPath = basePath + labNumber + "/" + login + "/"
+  fullPath = f"{basePath}{labNumber}/{login}/"
   if not os.path.exists(fullPath):
+    print(f"    FAILED: no directory ({fullPath})")
     csvResult += "%s,%s,%d,%d,%d,%d\n"%(login,canvasId,0,-1,-1,-1)
   else:
     os.chdir(basePath + labNumber + "/" + login)
@@ -76,21 +80,21 @@ for nuid,p in students.items():
     jars = ":".join(glob.glob("./lib/*.jar"))
     javacCmd = javac + " -cp ./:"+jars+" -d . *.java"
 
-    if debug:
-      print(javacCmd)
     os.system(javacCmd)
 
     javaCmd = java + " -cp ./:"+jars+" "+batchTestClass
-    if debug:
-      print(javaCmd)
-      
+
     result = subprocess.run([javaCmd, ""], shell=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
     if not result:
+      comment = f"One or more JUnit tests failed: 0/20"
+      score = 0
       result = "0,-2,-2,-2" #submitted but failed
+    else:
+      comment = f"All JUnit tests passed: 20/20"
+      score = 20
+    setGrade(canvasAssignment.id, p.canvasId, score, comment)
     csvResult += "%s,%s,%s\n"% (login,canvasId,result)
     os.chdir("..")
     os.system("rm -rf "+stagingDir)
 
-if debug:
-    print(output)
 print(csvResult)

@@ -16,23 +16,61 @@ from assignment import Assignment
 from person import Person
 from group import Group
 
+import copy
 import http.client
 import json
+import pprint
 import re
 import requests
+from urllib.parse import urlencode
 
-canvasUrl = "https://canvas.unl.edu"
-baseApiUrl = f"{canvasUrl}/api/v1/courses"
+canvasHost = "canvas.unl.edu"
+canvasBaseApiPath = "/api/v1"
 defaultParams = {
   "access_token": config.canvasApiKey,
   "per_page": 100
 }
 
+def get_canvas_data(path, userParameters = {}):
+    """A general canvas API interface that will retrieve data (using
+    HTTP GET) from the provided `path` (ex: `"courses/{course_id}/assignments").
+    This function uses pagination to ensure all data is retrieved.
+
+    The raw response data is automatically deserialized (assumed to
+    be JSON) and returned; generally this is a list of JSON objects.
+
+    Parameters can be provided in the optional `userParameters` field,
+    any user-provided parameters will supercede the defaults.
+    """
+
+    moreData = True
+    data = []
+    params = urlencode( {**defaultParams, **userParameters} )
+    path = f"{canvasBaseApiPath}/{path}?{params}"
+    connection = http.client.HTTPSConnection(canvasHost)
+    while moreData:
+        connection.request("GET", path)
+        response = connection.getresponse()
+        #pprint.pprint(response.getheaders())
+        raw_data = response.read().decode()
+        new_data = json.loads(raw_data)
+        data += new_data
+        headers = response.info()
+        linkHeader = headers['Link']
+        links = parse_header_links(linkHeader)
+        if 'next' in links:
+          #python 3.9+: path = links['next'].removeprefix("https://canvas.unl.edu") + "&access_token=" + config.canvasApiKey
+          path = links['next'][22:] + f"&{params}"
+        else:
+          moreData = False
+    connection.close()
+    return data
+
 def parse_header_links(value):
     """Return a dict of parsed link headers proxies.
     This function is stolen from the requests package with
     moderate modifications so that it returns an actual
-    dicionary mapping <code>rel</code> values to <code>url</code>s
+    dicionary mapping `rel` values to `url`s
     """
 
     links = []
@@ -71,10 +109,9 @@ def getGroupCategoryId(groupSetName):
   group such as "Assignment Pairs".  If no match is found,
   None is returned.
   """
-  url = f"{baseApiUrl}/{config.canvasCourseId}/group_categories"
-  response = requests.get(url, params=defaultParams)
-  categories = response.json()
-  for category in categories:
+  path = f"/courses/{config.canvasCourseId}/group_categories"
+  resultData = get_canvas_data(path)
+  for category in resultData:
     if category['name'] == groupSetName:
       return category['id']
   return None
@@ -84,11 +121,10 @@ def getMembers(groupId):
   Retrieves the canvas user IDs of the members of the given
   canvas group.
   """
-  url = f"{canvasUrl}/api/v1/groups/{groupId}"
-  response = requests.get(url, params=defaultParams)
-  members = response.json()
+  path = f"/groups/{groupId}"
+  resultData = get_canvas_data(path)
   result = []
-  for member in members:
+  for member in resultData:
     userId = member['user_id']
     result.append(userId)
   return result
@@ -107,13 +143,10 @@ def getGroupTuples(groupSetName=None):
   groupCategoryId = None
   if groupSetName is not None:
     groupCategoryId = getGroupCategoryId(groupSetName)
-
-  url = f"{baseApiUrl}/{config.canvasCourseId}/groups"
-  response = requests.get(url, params=defaultParams)
-  groups = response.json()
-
+  path = f"/courses/{config.canvasCourseId}/groups"
+  resultData = get_canvas_data(path)
   result = []
-  for group in groups:
+  for group in resultData:
     if group['members_count'] > 1 and (groupCategoryId is None or group['group_category_id'] == groupCategoryId):
       groupId = group['id']
       name = group['name']
@@ -134,34 +167,9 @@ def getRoster():
 
   Returns a mapping of {NUID => Person objects}
   """
-  #dev notes: the canvas API limits pagination (per_page)
-  #  to at most 100, so we're forced to deal with it manually
   roster = {}
-
-  moreData = True
-  users = []
-  path = ("/api/v1/courses/" +
-          config.canvasCourseId +
-          "/users/?page=1&per_page=100&access_token=" +
-          config.canvasApiKey)
-  connection = http.client.HTTPSConnection("canvas.unl.edu")
-  while moreData:
-    connection.request("GET", path)
-    response = connection.getresponse()
-    data = response.read().decode()
-    moreUsers = json.loads(data)
-    users += moreUsers
-
-    headers = response.info()
-    linkHeader = headers['Link']
-    links = parse_header_links(linkHeader)
-    if 'next' in links:
-      #python 3.9+: path = links['next'].removeprefix("https://canvas.unl.edu") + "&access_token=" + config.canvasApiKey
-      path = links['next'][22:] + "&access_token=" + config.canvasApiKey
-    else:
-      moreData = False
-
-  connection.close()
+  path = f"courses/{config.canvasCourseId}/users"
+  users = get_canvas_data(path)
 
   for user in users:
     canvasId = user['id']
@@ -231,10 +239,9 @@ def getSections():
   teachers, TAs, etc. but will have a `role` field to determine what
   it is.
   """
-  url = f"{baseApiUrl}/{config.canvasCourseId}/sections"
-  response = requests.get(url, params=defaultParams)
-  resultData = response.json()
-  return None
+  path = f"/courses/{config.canvasCourseId}/sections"
+  resultData = get_canvas_data(path)
+  return resultData
 
 def getGrade(assignmentId, userId):
   """
@@ -242,18 +249,17 @@ def getGrade(assignmentId, userId):
   for the given assignment and user.  If no grade has been assigned,
   the result will be None.
   """
-  url = f"{baseApiUrl}/{config.canvasCourseId}/assignments/{assignmentId}/submissions/{userId}"
-  response = requests.get(url, params=defaultParams)
-  resultData = response.json()
+  path = f"/courses/{config.canvasCourseId}/assignments/{assignmentId}/submissions/{userId}"
+  resultData = get_canvas_data(path)
   return resultData['score']
 
 
 def setGrade(assignmentId, userId, score = None, comment = None):
    """
    Sets/updates the grade in the canvas gradebook for the given assignment
-   for the given user.  If the score/commenet are None, they are not
-   updated.  If the comment is specified, canvas *adds* the comment and
-   does not modify or delete old ones.
+   (`assignmentId`) for the given user (`userId`).  If the score/commenet are
+   `None`, they are not updated.  If the comment is specified, canvas *adds*
+   the comment and does not modify or delete old ones.
    """
    url = f"{baseApiUrl}/{config.canvasCourseId}/assignments/{assignmentId}/submissions/{userId}"
 
@@ -283,11 +289,10 @@ def getAssignmentGroups():
      {id -> name}
 
    """
-   url = f"{baseApiUrl}/{config.canvasCourseId}/assignment_groups"
-   response = requests.get(url, params=defaultParams)
-   resultData = response.json()
+   path = f"/courses/{config.canvasCourseId}/assignment_groups"
+   data = get_canvas_data(path)
    aGroups = {}
-   for r in resultData:
+   for r in data:
        id, name = r['id'], r['name']
        aGroups[id] = name
    return aGroups
@@ -298,9 +303,28 @@ def getAssignmentsInGroup(groupId):
    from canvas.  Returns a list of assignments.
 
    """
-   url = f"{baseApiUrl}/{config.canvasCourseId}/assignment_groups/{groupId}/assignments"
-   response = requests.get(url, params=defaultParams)
-   resultData = response.json()
+   path = f"/courses/{config.canvasCourseId}/assignment_groups/{groupId}/assignments"
+   resultData = get_canvas_data(path)
+   assignments = []
+   for r in resultData:
+       id = r['id']
+       a = Assignment(r['id'], r['name'], r['points_possible'])
+       assignments.append(a)
+   return assignments
+
+def getAssignments(name = ''):
+   """
+   Retrieves assignments from the canvas course.  By default, retrieves
+   all assignments.  If the `name` parameter is provided, only assignments
+   matching the name (even partially) will be included.
+
+   Always returns a list regardless of the number of matched assignments.
+   """
+   path = f"/courses/{config.canvasCourseId}/assignments"
+   params = {
+     'search_term': name
+   }
+   resultData = get_canvas_data(path, params)
    assignments = []
    for r in resultData:
        id = r['id']
