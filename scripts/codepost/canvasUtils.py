@@ -121,7 +121,7 @@ def getMembers(groupId):
   Retrieves the canvas user IDs of the members of the given
   canvas group.
   """
-  path = f"/groups/{groupId}"
+  path = f"/groups/{groupId}/memberships"
   resultData = get_canvas_data(path)
   result = []
   for member in resultData:
