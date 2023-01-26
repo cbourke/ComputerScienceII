@@ -261,7 +261,7 @@ def setGrade(assignmentId, userId, score = None, comment = None):
    `None`, they are not updated.  If the comment is specified, canvas *adds*
    the comment and does not modify or delete old ones.
    """
-   url = f"{baseApiUrl}/{config.canvasCourseId}/assignments/{assignmentId}/submissions/{userId}"
+   url = f"https://canvas.unl.edu/api/v1/courses/{config.canvasCourseId}/assignments/{assignmentId}/submissions/{userId}"
 
    data = {}
    if score is not None:
