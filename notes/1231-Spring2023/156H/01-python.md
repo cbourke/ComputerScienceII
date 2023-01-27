@@ -256,16 +256,212 @@ i = 5.5
 while i < 10.5:
     print(i)
     i += 1.5
+```
 
-# however, you'll usually be incrementing over a *collection*
-# In python you have:
-#  Lists
-#  Sets
-#  Dictionaries
+# Collections
+
+* Python has:
+  * Lists - ordered collections of things, 0-indexed
+  * Sets - unordered collections of *unique* elements
+  * Dictionaries - maps mapping integers and/or strings to other elements
+
+
+```python
+
+# Lists:
 
 numbers = [5, 7, 3, 4, 0, 1, 2]
 for x in numbers:
     print(x)
+
+numbers.append(42)
+pprint.pprint(numbers)
+
+numbers.insert(0, 101)
+pprint.pprint(numbers)
+
+# negative indices wrap around the list...
+numbers.insert(-1, 120)
+pprint.pprint(numbers)
+
+# remove something: you POP it
+x = numbers.pop()
+print(x)
+print(numbers)
+
+# remove from an arbitrary index:
+x = numbers.pop(3)
+print(numbers)
+
+# retrieval is index-based:
+x = numbers[4]
+print(x)
+```
+
+Sets:
+
+```python
+
+# Sets:
+numbers = {2, 6, 9, 4, 3}
+pprint.pprint(numbers)
+
+# invalid because sets are unordered:
+# x = numbers[0]
+
+numbers.add(42)
+pprint.pprint(numbers)
+# duplicate adds have no effect
+numbers.add(42)
+pprint.pprint(numbers)
+
+numbers.remove(2)
+pprint.pprint(numbers)
+
+# convert a list to a set:
+foo = [6, 4, 8, 9, 3, 3]
+bar = set(foo)
+pprint.pprint(bar)
+
+# convert a set to a list:
+foo = {2, 3, 5, 7}
+bar = list(foo)
+pprint.pprint(bar)
+
+a = [1, 2, 3, 4]
+# shallow copy:
+b = a
+a.append(42)
+pprint.pprint(a)
+pprint.pprint(b)
+
+# deep copy:
+c = list(a)
+c.append(101)
+pprint.pprint(a)
+pprint.pprint(c)
+
+# or:
+d = copy.deepcopy(c)
+```
+
+
+* Dictionary demo:
+
+```python
+
+# dictionaries are *maps* that may map an integer or
+# a string as a KEY to anything that is a VALUE
+
+foo = {
+    0: "hello",
+    10: "world",
+    5: 42,
+    101: 3.5,
+    "Hello": "World"
+}
+
+pprint.pprint(foo)
+
+# iterating over key-value pairs in a dictionary:
+for k,v in foo.items():
+    print(f"{k} maps to {v}")
+
+# iterating over just the keys:
+for key in foo:
+    value = foo[key]
+    print(f"key = {key} and maps to {foo[key]}")
+
+# iterating over just the values:
+for val in foo.values():
+    print(f"value = {val}")
+```
+
+* Comprehensions and Tuples:
+
+```python
+
+import pprint
+import copy
+
+# Comprehensions:
+# a "comprehensio" is a way to build a new collection
+numbers = [4, 6, 3, 5, 0, 1, 3, 5, 9, -42]
+
+numbersPlusOne = [ x+1 for x in numbers ]
+pprint.pprint(numbersPlusOne)
+
+evens = [ x for x in numbers if x % 2 == 0 ]
+pprint.pprint(evens)
+
+positives = [ x for x in numbers if x > 0 ]
+pprint.pprint(positives)
+
+foo = {
+    "one": 1,
+    "two": 2,
+    "three": 3
+}
+
+bar = { v:k for k,v in foo.items() }
+pprint.pprint(bar)
+
+bar = { k:v for k,v in foo.items() if v % 2 == 0}
+pprint.pprint(bar)
+
+# this gives a function reference, not a list of 0 thru 9:
+indices = range(10)
+pprint.pprint(indices)
+
+indices = [ x for x in range(10) ]
+pprint.pprint(indices)
+
+# really cool: python supports *tuples*
+pair = (10, 20)
+triple = (5, "hello", 3.5)
+
+square = [ (x, y) for x in range(5) for y in range(5)]
+pprint.pprint(square)
+
+for (x, y) in square:
+    print(f"{x} and {y}")
+```
+
+# Strings
+
+```python
+
+import pprint
+import copy
+
+# more on strings:
+# strings are immutable, once created they cannot be changed
+
+a = "hello"
+b = a.replace('h', 'H')
+print(a)
+print(b)
+
+message = "Hello Nebraska!"
+foo = message[6:]
+print(foo)
+foo = message[6:9]
+print(foo)
+foo = message[:6]
+print(foo)
+
+foo = message.replace('e', '')
+print(foo)
+
+# split CSV data:
+csvData = "Hello,World,How,Are,You?"
+foo = csvData.split(",")
+pprint.pprint(foo)
+
+csvData = "Hello,World,How,Are,You?"
+foo = csvData.split("o")
+pprint.pprint(foo)
+
 ```
 
 ```text

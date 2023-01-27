@@ -63,7 +63,9 @@ Differences:
 * Portable: you write once, compile once, run anywhere
 * Backwards compatible (for the most part)  
 
-# Variables
+# Basics
+
+## Variables
 
 * Java is *statically typed*: all variables and their *types* MUST be declared before you use them
 
@@ -81,7 +83,171 @@ System.out.printf("x = %d, y = %.2f, message = %s\n", x, y, message);
 System.out.printf("x = %10d, y = %10.3f, message = %-100s\n", x, y, message);
 ```
 
+* Types:
+	* `int` an integer with 32 bit representations limited to integers in the range -2147483648 to 2147483647
+	* `double` is a floating point number with about 16-17 digits of accuracy
+	* `char` - a single *unicode* character; but generally ignore because...
+	* `String` is a built-in type:
+		* Automatic concatenation: `s + t`
+		* No memory management, no null-terminator, etc.
+		* Strings are *immutable*!!!
+
+## Operators
+
+* Basic math: `+ - * /`
+* In Java: you have to be careful with integer truncation; an integer divided
+  by an integer is an integer so `10 / 20` results in 0
+* You can use *explicit typecasting* to solve this: `a / (double) b`
+* Basic math functions in the `Math` class: `Math.sqrt()`, `Math.sin()`, etc.
+
+
+```java
+
+		int a = 10;
+		int b = 20;
+		double x = 3.14159;
+		double y = 10;
+		String message = "Goodbye World";
+
+		int c = a + b;
+		c = a - b;
+		c = a * b;
+		//careful integer truncation:
+		c = a / b;
+		System.out.println(c);
+
+		double z = a / (double) b;
+		System.out.println(z);
+
+		int large = 2147483647;
+		System.out.println(large);
+		//add one to large causing *overflow*
+		large = large + 1;
+		//or:
+		large += 1;
+		//or:
+		large++;
+		System.out.println(large);
+
+		double foo = 1/3.0;
+		System.out.printf("%.40f", foo);
+		double bar = foo + foo + foo;
+		System.out.println(bar);
+```		
+
+## Command Line Arguments
+
+```java
+
+		System.out.println("Hello WOrld");
+		int n = args.length;
+		if(n != 7) {
+			System.err.println("Expected 7 arguments!");
+			System.exit(1);
+		}
+
+		//convert the first argument to an integer:
+		int x = Integer.parseInt(args[0]);
+		double y = Double.parseDouble(args[1]);
+		System.out.println(x);
+		System.out.println(y);
+
+		for(int i=0; i<args.length; i++) {
+			System.out.println(args[i]);			
+		}
+```
+
+# Conditionals
+
+* You have traditional `if`, `else-if` and `if-else-if`
+
+```java
+
+		int hawksScore = 1;
+		int flamesScore = 1;
+
+		if(hawksScore > flamesScore) {
+			System.out.println("Blackhawks win!");
+		} else if(flamesScore > hawksScore) {
+			System.out.println("Blackhawks lose!");			
+		} else {
+			System.out.println("Tie, Overtime!");			
+		}
+
+		boolean isStudent = false;
+		if(isStudent) {
+			System.out.println("You get free tickets!");
+		} else {
+			System.out.println("You pay full price!");
+		}
+
+```
+
+* In Java you have full `boolean` variable types that you need to use (you cannot use numerical types as substitutes)
+* You have the keywords `true` and `false` (case sensitive)
+* You also have numerical comparison operators: `<, <=, >, >=, ==, !=`
+* Numerical types can ONLY be used for numbers, not strings, not objects, etc.
+
+```java
+
+		double a = 10, b = 2, c = 30;
+
+		double radical = Math.pow(b, 2) - 4 * a * c;
+		if(radical < 0) {
+			System.out.println("Complex Number!");
+		}
+
+		double result = Math.sqrt(radical);
+		System.out.println(result);
+
+		result = Math.log(0);
+		System.out.println(result);
+```
+
+* String comparisons: you cannot use `<, >`, etc.
+
+```java
+String a = "apple";
+String b = "banana";
+
+int result = a.compareTo(b);
+result = a.compareToIgnoreCase(b);
+
+if(result < 0) {
+	System.out.println(a + " comes before " + b);
+} else if(result > 0) {
+	System.out.println(b + " comes before " + a);			
+} else {
+	System.out.println(a + " equals " + b);			
+}
+```
+
+* You can create more complex logical expression using connectives
+  * Logical or: `||`
+	* Logical and: `&&`
+	* Both of them require TWO characters (single characters are bit-wise operators)
+	* Logical negation: `!`		
+
+```java
+
+		int a = 10, b = 20, c = 30;
+		if( (a > b && c == 30) || b == 20) {
+			//...
+		}
+
+		if(a < b || c != 30) {
+			//...
+		}
+```
+
+# Loops
+
+* Java has both `for` loops and `while` loops
+
 ```text
+
+
+
 
 
 
