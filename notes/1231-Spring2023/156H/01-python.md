@@ -464,6 +464,172 @@ pprint.pprint(foo)
 
 ```
 
+# Functions
+
+```python
+
+# None is basically a null or NULL value
+# NoneType is the none value
+def foo(a = None, b = 42, c = 30):
+   print("Hello")
+   if a is None:
+     x = b + c
+   else:
+     x = a + b + c
+   print(f"x = {x}")
+   a = 42
+
+
+a = 10
+b = 20
+c = 30
+
+foo()
+
+print(f"{a}, {b}, {c}")
+
+x = None
+y = "Hello"
+z = str(x) + y
+print(z)
+```
+
+* Modularization:
+
+demo.py:
+```python
+
+#import
+#from my_library import foo
+import my_library
+#from my_library import *
+import math
+#from math import sqrt
+
+a = 10
+b = 20
+c = 30
+z = my_library.foo(a, b, c)
+print(z)
+
+y = math.sqrt(2)
+print(y)
+```
+
+my_library.py:
+
+```python
+
+# None is basically a null or NULL value
+# NoneType is the none value
+def foo(a = None, b = 42, c = 30):
+    print("Hello")
+    if a is None:
+      x = b + c
+    else:
+      x = a + b + c
+    print(f"x = {x}")
+    a = 42
+    return x
+```
+
+# File I/O
+
+* File output: use `open()` to open a file
+
+```python
+
+f = open("foo.txt", "w")
+
+#write will not insert an endline by default
+f.write("Hello HOw are you?\n")
+f.write("I am fine\n")
+a = 10
+f.write( str(a) + "\n" )
+
+f.write(f"a = {a}, neato!\n")
+
+f.close()
+```
+
+* File Input:
+
+```python
+
+f = open("bar.txt", "r")
+lines = f.readlines()
+f.close()
+
+print(lines)
+
+# strip out whitespace using: trim?
+stripped = []
+for line in lines:
+    x = line.strip()
+    stripped.append(x)
+
+stripped = [ line.strip() for line in lines ]
+
+print(stripped)
+
+
+```
+
+# Error Handling
+
+* Python does have an exception system
+* You use the keywords `try` and `except`
+
+```python
+import traceback
+
+a = 10
+b = 20
+
+try:
+    c = a / b
+    f = open("/etc/shadow", "r")
+except ZeroDivisionError:
+    traceback.print_exc()
+    print("Division by zero, using default of 0...")
+    c = 0
+except:
+    print("Something, I don't know what, happened")
+finally:
+    printf("Do anything that needs to be done unconditionally")
+    #example: f.close()
+
+print(c)
+```
+
+# Classes
+
+* Python supports classes, though is not "really" an OOP language
+
+```
+class Student:
+
+    # constructor:
+    def __init__(self, nuid, firstName = "", lastName = None):
+        self.nuid = nuid
+        self.firstName = firstName
+        self.lastName = lastName
+
+    def __str__(self):
+        return f"{self.lastName}, {self.firstName} ({self.nuid:08d})"
+
+
+# call the constructor
+me = Student(230602, "Chris", "Bourke")
+print(me)
+
+print(me.nuid)
+
+me.nuid = 4
+print(me)
+```
+
+
 ```text
 
 

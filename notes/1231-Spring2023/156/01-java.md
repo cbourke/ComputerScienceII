@@ -244,6 +244,104 @@ if(result < 0) {
 
 * Java has both `for` loops and `while` loops
 
+```java
+
+		int n = 10;
+		for (int i = 0; i < n; i++) {
+			System.out.println(i);
+		}
+
+		int j = 0;
+		while(j < n) {
+			System.out.println(j);			
+			j++;
+		}
+
+		int primes[] = {2, 3, 5, 7, 11, 13, 17, 19};
+		for(int i=0; i<primes.length; i++) {
+			System.out.printf("primes[%d] = %d\n", i, primes[i]);
+		}
+
+		//read as: for each integer x in the collection primes...
+		for(int x : primes) {
+			System.out.println(x);
+		}		
+
+```
+
+# Arrays and Collections
+
+* Basic arrays are supported, but you should not use them (unless you have to):
+
+```java
+
+		int n = 100;
+		//create an array of 100 integers
+		int arr[] = new int[n];
+		//set the first value to 42:
+		arr[0] = 42;
+		//set the last element to 101:
+		arr[arr.length-1] = 101;
+		//IndexOutOfBounds Exceptions:
+		//arr[-1] = 3;
+		//arr[100] = 4;
+```
+
+```java
+
+		List<Integer> numbers = new ArrayList<>();
+		numbers.add(10);
+		numbers.add(5);
+		numbers.add(20);
+		System.out.println(numbers);
+		numbers.add(42);
+		System.out.println(numbers);
+		numbers.add(42);
+		System.out.println(numbers);
+
+		numbers.add(0, 101);
+		System.out.println(numbers);
+
+		numbers.add(3, -4);
+		System.out.println(numbers);
+
+		//remove stuff:
+		numbers.remove(1);
+		System.out.println(numbers);
+
+
+		for(int i=0; i<numbers.size(); i++) {
+			int x = numbers.get(i);
+			System.out.println(x);
+		}
+
+		for(int x : numbers) {
+			System.out.println(x);
+		}
+```
+
+# Sets
+
+```java
+
+		//sets are unordered collections *unique* elements
+		Set<Integer> numbers = new HashSet<>();
+		numbers.add(10);
+		numbers.add(20);
+		numbers.add(30);
+		System.out.println(numbers);
+		numbers.add(30);
+		numbers.add(40);
+		System.out.println(numbers);
+		numbers.remove(40);
+		System.out.println(numbers);
+
+		for(int x : numbers) {
+			System.out.println(x);
+			//error: numbers.add(42);
+		}
+```
+
 ```text
 
 
