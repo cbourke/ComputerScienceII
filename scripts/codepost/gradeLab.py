@@ -66,7 +66,9 @@ for nuid,p in students.items():
   canvasId = p.canvasId
   fullPath = f"{basePath}{labNumber}/{login}/"
   if not os.path.exists(fullPath):
-    print(f"    FAILED: no directory ({fullPath})")
+    print(f"    FAILED: no directory ({fullPath}), 0/20")
+    comment = f"No Submission 0/20"
+    setGrade(canvasAssignment.id, p.canvasId, 0, comment)
     csvResult += "%s,%s,%d,%d,%d,%d\n"%(login,canvasId,0,-1,-1,-1)
   else:
     os.chdir(basePath + labNumber + "/" + login)
