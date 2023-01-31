@@ -316,6 +316,229 @@ for(int x : numbers) {
 		System.out.println(name);
 ```		
 
+# Strings
+
+* Java has a `String` class:
+  * no memory management
+  * No null terminating character!
+  * concatenation: use the `+`
+* Strings in Java are *immutable*: once created they cannot be changed!
+* There is a *mutable* version of strings: `StringBuilder`
+
+```java
+
+		String a = "hello world";
+		String b = a.toUpperCase();
+		System.out.println(a);
+		System.out.println(b);
+
+		//substrings:
+		String s = a.substring(6);
+		System.out.println(s);
+		s = a.substring(0, 5);
+		System.out.println(s);
+
+		//processing CSV data
+		String csvData = "Chris,Bourke,Schorr 105,Lincoln,NE";
+		String tokens[] = csvData.split(",");
+		System.out.println(Arrays.toString(tokens));
+		for(String token : tokens) {
+			System.out.println(token);
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("hello");
+		sb.append(" World");
+		System.out.println(sb);
+		sb.replace(0, 1, "H");
+		System.out.println(sb);
+		String t = sb.toString();
+```
+
+* Aside: shallow vs deep copies
+
+```java
+
+		int primes[] = {2, 3, 5, 7, 11, 13};
+		//Shallow copy:
+		int primesTwo[] = primes;
+
+		primesTwo[0] = 4;
+		System.out.println(Arrays.toString(primes));
+		System.out.println(Arrays.toString(primesTwo));
+
+		primes[0] = 2;
+		//deep copy:
+		primesTwo = Arrays.copyOf(primes, 20);
+		primesTwo[0] = 4;
+		System.out.println(Arrays.toString(primes));
+		System.out.println(Arrays.toString(primesTwo));
+```
+
+## Methods
+
+* In Java, "functions" are referred to as "methods"
+* Methods are functions that are located inside a class
+* For now all our methods will be `static`: they "belong" to the class itself and can be called using the class name
+* Math library: `sqrt()`
+
+```java
+package uno.ece;
+
+import java.util.Arrays;
+
+public class Demo {
+
+	//write a method that takes an array of integers and adds one to each value
+	// {2, 3, 5, 7, 11} -> {3, 4, 6, 8, 12}
+
+	public static void addOne(double x) {
+		x++;
+	}
+
+	/**
+	 * Adds one to each element in the given array.
+	 *
+	 * @param arr
+	 */
+	public static void addOne(int arr[]) {
+
+		for(int i=0; i<arr.length; i++) {
+			arr[i]++;
+		}
+	}
+
+	/**
+	 * Creates a new copy of the given array with one added
+	 * to each element, returning the new copy.
+	 * @param arr
+	 */
+	public static int[] addOneCopy(int arr[]) {
+
+		int copy[] = Arrays.copyOf(arr, arr.length);
+		Demo.addOne(copy);
+		return copy;
+	}
+
+
+	public static void main(String[] args) {
+
+		//syntax: Class.functionName()
+		double y = Math.sqrt(2);
+		//other examples:
+		int x = Integer.parseInt("123");
+
+		//arrays are passed by reference
+		int primes[] = {2, 3, 5, 7, 11, 13};
+		System.out.println(Arrays.toString(primes));
+		Demo.addOne(primes);
+		System.out.println(Arrays.toString(primes));
+
+		//variables are passed by value
+		y = 10;
+		Demo.addOne(y);
+		System.out.println(y);
+
+		//note: Java has "function overloading"
+		Math.abs(y);
+
+
+	}
+
+}
+```
+
+## File I/O
+
+* File Output: many ways, the easiest is to use a `PrintWriter`
+
+```java
+File f = new File("data/foo.txt");
+PrintWriter pw;
+try {
+	pw = new PrintWriter(f);
+	pw.println("Hello World");
+	pw.print("This is a line without an endline");
+	pw.print("See?\n");
+	pw.printf("%d, %s, %f\n", 123, "Hello", Math.PI);
+	pw.close();
+} catch (FileNotFoundException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+```
+
+* File Input line by line:
+
+```java
+
+		//file input: easiest is to use a Scanner
+		File f = new File("data/bar.txt");
+		try {
+			Scanner s = new Scanner(f);
+			//read the file line by line
+			while(s.hasNextLine()) {
+				String line = s.nextLine();
+				System.out.println(line);
+			}
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+```
+
+# Error Handling
+
+* Java uses Exceptions for error handling
+* An exception is an interruption of the normal flow of control
+* You can surround a *potentially dangerous* piece of with a `try-catch` block
+
+```java
+
+		//normal math errors, no exceptions are thrown
+		double a = 10;
+		double b = 0;
+		double c = a / b;
+		c = Math.log(b);
+		c = Math.sqrt(-a);
+		System.out.println(c);
+
+		Double x = 10.0;
+		Double y = null;
+		Double z;
+
+		//unchecked exception:
+		//z = x / y;
+
+		try {
+			z = x / y;
+			System.out.println(z);
+		} catch(Exception e) {
+			System.err.println("Something happened, something went wrong...");
+			e.printStackTrace();
+			//TODO: decide what you want to do in this case
+			//we set a default value of 10
+			z = 10.0;
+		}
+
+		System.out.println("Hello");
+		//some exceptions are "unchecked" (like above): handling it with try-catch
+		//  is *optional*
+		//some exceptions are "checked": you are forced to surround the code
+		//  with a try-catch block, regardless of how you handle the exception
+		File f = new File("data/baz.txt");
+		try {
+			Scanner s = new Scanner(f);
+		} catch (FileNotFoundException e) {
+			//to deal with checked exceptions, you "catch and release"
+			throw new RuntimeException(e);
+		}
+```
+
+## TODO: Classes, Searching & Sorting
+
+
 ```text
 
 
