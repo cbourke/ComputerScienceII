@@ -12,7 +12,7 @@
 * Supports integers, floats (doubles), strings
 * Icky: whitespace matters!
 * Style: do things the "Pythonic" way: https://peps.python.org/pep-0008/
-  * `loewr_underscore_casing` for variables and function names
+  * `lower_underscore_casing` for variables and function names
   * four spaces for indentation
 
 # Variables
@@ -627,6 +627,95 @@ print(me.nuid)
 
 me.nuid = 4
 print(me)
+```
+
+Demo:
+
+```python
+
+from functools import total_ordering
+import pprint
+
+# Python supports classes, though is not "really" an OOP language
+@total_ordering
+class Student:
+
+    def __eq__(self, other):
+        return ((self.lastName, self.firstName, self.nuid) ==
+                (other.lastName, other.firstName, other.nuid))
+    def __lt__(self, other):
+        return ((self.lastName, self.firstName, self.nuid) <
+                (other.lastName, other.firstName, other.nuid))
+
+    # constructor:
+    def __init__(self, nuid, age, firstName = "", lastName = None):
+        self.nuid = nuid
+        self.age = age
+        self.firstName = firstName
+        self.lastName = lastName
+
+    def __str__(self):
+        return f"{self.lastName}, {self.firstName} ({self.nuid:08d})"
+
+
+# call the constructor
+a = Student(230602, 21, "Chris", "Bourke")
+b = Student(1231, 16, "Alice", "Xeno")
+c = Student(4213, 54, "Bob", "Bourke")
+
+# If you do not want a full class, a tuple may be a good solution:
+
+a = (230602, 21, "Chris", "Bourke")
+
+#detour 1: you can return tuples from functions to return multiple values
+def foo(x):
+    return (x+1, x-1)
+
+# assign values using tuples
+(a, b) = foo(10)
+print(a)
+print(b)
+
+x = 10
+y = 20
+#swapping in a one liner!
+x, y = y, x
+
+# How to sort normally...
+
+numbers = [5, 8, 4, 6, 2, 0, 1]
+print(numbers)
+numbers.sort()
+print(numbers)
+numbers.sort(reverse=True)
+print(numbers)
+
+# strings?
+names = ["Chris", "Bob", "alice", "Zoey"]
+names.sort()
+print(names)
+
+# sorted copies: instead of using .sort(), use .sorted()
+names = ["Chris", "Bob", "Alice", "Zoey"]
+sortedCopy = sorted(names)
+print(names)
+print(sortedCopy)
+
+a = Student(230602, 21, "Chris", "Bourke")
+b = Student(1231, 16, "Alice", "Xeno")
+c = Student(4213, 54, "Bob", "Bourke")
+d = Student(1, 54, "Bob", "Bourke")
+
+roster = [a, b, c, d]
+
+# rosterAsStrings = [ str(s) for s in roster ]
+# print(rosterAsStrings)
+
+# roster.sort(key = lambda x : x.lastName, reverse=False )
+roster.sort()
+rosterAsStrings = [ str(s) for s in roster ]
+print(rosterAsStrings)
+
 ```
 
 

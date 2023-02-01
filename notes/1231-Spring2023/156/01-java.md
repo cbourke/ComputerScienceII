@@ -342,6 +342,70 @@ if(result < 0) {
 		}
 ```
 
+* Maps
+
+```java
+Map<Integer, String> nuidToName = new HashMap<>();
+
+nuidToName.put(35140602, "Chris");
+nuidToName.put(123, "Alice");
+nuidToName.put(456, "Bob");
+System.out.println(nuidToName);
+
+Map<String, Integer> nameToNuid = new HashMap<>();
+
+Map<Double, Integer> foo = new HashMap<>();
+```
+
+# Strings
+
+* Java has a `String` class
+  * No memory management
+  * No null-terminating character
+  * Basic concatenation: `+`
+* Strings in Java are *immutable*: once created they cannot be changed, only new strings (modifications of other strings) can be created
+
+```java
+
+		String s = "hello world!";
+		String t = s.toUpperCase();
+		System.out.println(s);
+		System.out.println(t);
+
+		//mutable string version:
+		StringBuilder sb = new StringBuilder();
+		sb.append("hello world");
+		System.out.println(sb);
+		sb.append("!");
+		System.out.println(sb);
+		sb.replace(0, 1, "H");
+		System.out.println(sb);
+		sb.replace(6, 7, "W");
+		System.out.println(sb);
+		String str = sb.toString();
+
+		String s = "Hello World";
+		String firstWord = s.substring(0, 5);
+		System.out.println(firstWord);
+		String secondWord = s.substring(6);
+		System.out.println(secondWord);
+
+		String csvData = "Chris,Bourke,105 Schorr,School of Computing";
+		String tokens[]  = csvData.split(",");
+
+		System.out.println(Arrays.toString(tokens));
+		for(String str : tokens) {
+			System.out.println(str);
+		}
+```
+
+## Methods
+
+* In Java functions are called "methods"
+* Methods are just function inside a class
+* For now, all our methods will be `public static`: they will belong to the class
+* To invoke or "call" a `static` function, you use the class name + the function name
+
 ```text
 
 
