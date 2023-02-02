@@ -536,8 +536,63 @@ try {
 		}
 ```
 
-## TODO: Classes, Searching & Sorting
+## Searching & Sorting, Classes
 
+### Basic Searching & Sorting
+
+* YOu can use `Collections.sort()` method to sort a `List` of elements
+* By default, the sort method uses "natural ordering" (ascending)
+* To get a different ordering, you need to define a `Comparator`
+
+```java
+
+		List<Integer> list = Arrays.asList(8, 3, 9, 2, 7, 1, 0, 4, 7);
+		System.out.println(list);
+		Collections.sort(list);
+		System.out.println(list);
+
+		Comparator<Integer> cmpDesc = new Comparator<>() {
+			@Override
+			public int compare(Integer a, Integer b) {
+				if(a > b) {
+					return -1;
+				} else if(a < b) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+
+		};
+
+		Collections.sort(list, cmpDesc);
+		System.out.println(list);
+
+
+		List<String> names = Arrays.asList("Chris", "bob", "Joe", "Anita", "Anita", "Bob");
+		Collections.sort(names);
+		System.out.println(names);
+
+		Comparator<String> cmpStrIgnoreCase = new Comparator<>() {
+
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}
+
+		};
+		Collections.sort(names, cmpStrIgnoreCase);
+		System.out.println(names);
+
+```
+
+## Classes
+
+* In an object oriented programming language, the "object" or "class" is your basic building block
+* It provides strong encapuslation:
+  1. Grouping of data
+	2. Protection of data using keywords `private`
+	3. Grouping of functionality that acts on that data
 
 ```text
 
