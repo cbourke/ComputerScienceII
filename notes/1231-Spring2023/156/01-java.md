@@ -405,6 +405,173 @@ Map<Double, Integer> foo = new HashMap<>();
 * Methods are just function inside a class
 * For now, all our methods will be `public static`: they will belong to the class
 * To invoke or "call" a `static` function, you use the class name + the function name
+* It is either necessary or best practice to access/call those methods using the dot operator: ex: `Math.sqrt()`, `Demo.addOne()`
+* You also specify a return type: the type of variable the method returns
+* If non-`void` you MUST return a value, you use the keyword `return` (for `void` methods you should still use a `return;` statement)
+* All non-trivial methods need documentation!
+
+```java
+
+	//TODO: write a function that takes a List of integers and adds one to each
+	// [ 3, 7, 4, 5, 9] => [4, 8, 5, 6, 10]
+
+	/**
+	 * Adds one to each element in the given list of integers.
+	 *
+	 * What is an integer?  See <a href="https://en.wikipedia.org/wiki/Integer">wikipedia</a>
+	 *
+	 * @param numbers
+	 */
+	public static void addOne(List<Integer> numbers) {
+
+		for(int i=0; i<numbers.size(); i++) {
+			int x = numbers.get(i);
+			x++;
+			numbers.set(i, x);
+		}
+
+		return;
+
+	}
+
+	/**
+	 * Creates a new copy of the given list of numbers with one
+	 * added to each element.  Returns the new copy.
+	 *
+	 * @param numbers
+	 * @return
+	 */
+	public static List<Integer> addOneCopy(List<Integer> numbers) {
+
+		List<Integer> copy = new ArrayList<>(numbers);
+		Demo.addOne(copy);
+		return copy;
+	}
+
+
+	//main is a "trivial" function and does not require documentation
+	// (for this course)
+	public static void main(String[] args) {
+
+		double y = Math.sqrt(2.0);
+		System.out.println(y);
+
+		List<Integer> numbers = new ArrayList<>(Arrays.asList(3, 7, 4, 5, 9));
+		System.out.println(numbers);
+		Demo.addOne(numbers);
+		System.out.println(numbers);
+
+		List<Integer> copyOnes = addOneCopy(numbers);
+		System.out.println(copyOnes);
+		copyOnes.clear();
+		System.out.println(copyOnes);
+		System.out.println(numbers);
+
+
+		return;
+
+	}
+```
+
+* Misc Observations:
+  * In Java, single variables are passed by value
+  * However, objects/mutable lists, sets, etc. are passed by reference
+  * Java supports function *overloading*: You can define multiple functions with the same name as long as their parameters are different
+
+```java
+
+		List<Integer> a = new ArrayList<>(Arrays.asList(5, 7, 3, 4, 8, 4));
+		//a shallow copy:
+		List<Integer> b = a;
+		b.add(42);
+//		System.out.println(a);
+//		System.out.println(b);
+
+		//a deep copy is a completely different copy
+		List<Integer> c = new ArrayList<>(b);
+		c.add(101);
+		System.out.println(b);
+		System.out.println(c);
+
+```
+
+## File I/O
+
+```java
+
+		//file output:
+		File f = new File("data/foo.txt");
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter(f);
+			pw.println("Hello how are you?");
+			pw.print("This is a way to print without an endline character");
+			pw.print("See?\n");
+			pw.printf("%d, %s, %f", 10, "Hello", Math.PI);
+			pw.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//file input:
+		//read line by line:
+		File inFile = new File("data/bar.txt");
+		try {
+			Scanner s = new Scanner(inFile);
+			while(s.hasNextLine()) {
+				String line = s.nextLine();
+				System.out.println(line);
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//alternative: read the entire file into a List of strings
+		String contents;
+		try {
+			contents = Files.readString(Paths.get("data/bar.txt"));
+			System.out.println(contents);
+
+			List<String> lines = Files.readAllLines(Paths.get("data/bar.txt"),
+					  StandardCharsets.UTF_8);
+			System.out.println(lines);
+
+
+
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+```
+
+## Exception Handling
+
+```java
+		//file input:
+		//read line by line:
+		File inFile = new File("data/bar.txt");
+		int total = 0;
+		try {
+			Scanner s = new Scanner(inFile);
+			while(s.hasNextLine()) {
+				String line = s.nextLine();
+				int x = Integer.parseInt(line);
+				total += x;
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (NumberFormatException nfe) {
+			System.err.println("A non-integer was found in the file!");
+		}
+
+		System.out.println(total);
+```
 
 ```text
 
