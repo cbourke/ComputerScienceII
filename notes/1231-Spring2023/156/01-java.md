@@ -573,6 +573,80 @@ Map<Double, Integer> foo = new HashMap<>();
 		System.out.println(total);
 ```
 
+## Searching & Sorting
+
+* Basic searching (linear search, binary search) & sorting techniques
+
+```java
+
+		List<Integer> numbers = Arrays.asList(6, 7, 3, 9, 5, 2, 0, 4, 1, 3, 8);
+
+		System.out.println(numbers);
+
+		int index = numbers.indexOf(5);
+		System.out.println(index);
+
+		Collections.sort(numbers);
+		System.out.println(numbers);
+
+		index = Collections.binarySearch(numbers, 5);
+		System.out.println(index);
+
+		List<String> names = Arrays.asList("Bob", "Chris", "Anita", "Grace", "Xeno", "bob");
+		System.out.println(names);
+		Collections.sort(names);
+		System.out.println(names);
+
+		//everything above is the "natural order" sorting:
+		// in ascending order, uses lexicographic, etc.
+		// to get an "artificial" ordering, you need to create a Comparator
+		// pattern:
+		//  returns *something* negative if a < b
+		//  returns zero if a = b
+		//  returns *something* positive if a > b
+
+		//example: create a comparator that orders integers in *Descending* order
+		Comparator<Integer> cmpIntDesc = new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer a, Integer b) {
+				if(a < b) {
+					return 1;
+				} else if(a > b) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+
+		};
+
+		Collections.sort(numbers, cmpIntDesc);
+		System.out.println(numbers);
+
+		//example: create a comparator for strings that orders them in
+		//  increasing order but ignoring case
+		Comparator<String> cmpStrCaseInsensitive = new Comparator<>() {
+
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}
+
+		};
+
+		Collections.sort(names, cmpStrCaseInsensitive);
+		System.out.println(names);
+
+		//New, modern Java shortcut:
+		Comparator<Integer> cmpIntDescending = Comparator.reverseOrder();
+```
+
+# Classes
+
+* Exercise: create a class to represent books and create some basic reports:
+  * Best book?  Worst Book? all books by a certain author, etc.
+
 ```text
 
 
