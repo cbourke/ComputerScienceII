@@ -589,12 +589,294 @@ try {
 ## Classes
 
 * In an object oriented programming language, the "object" or "class" is your basic building block
-* It provides strong encapuslation:
+* It provides strong encapsulation:
   1. Grouping of data
 	2. Protection of data using keywords `private`
 	3. Grouping of functionality that acts on that data
 
+Demo Code:
+
+`Demo.java`:
+
+```java
+package uno.ece;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Demo {
+
+	public static List<Book> loadBookData(String fileName) {
+
+		List<Book> result = new ArrayList<>();
+		File f = new File(fileName);
+		Scanner s;
+		try {
+			s = new Scanner(f);
+			//read the first line to determine how many books there are:
+			String line = s.nextLine();
+			int n = Integer.parseInt(line);
+			for(int i=0; i<n; i++) {
+				//read the next line...
+				line = s.nextLine();
+				//process it:
+				String tokens[] = line.split(",");
+				String title = tokens[0];
+				String firstName = tokens[1];
+				String lastName = tokens[2];
+				Person author = new Person(lastName, firstName);
+				int year = Integer.parseInt(tokens[3]);
+				double rating = Double.parseDouble(tokens[4]);
+				Book b = new Book(title, author, year, rating);
+				result.add(b);
+			}
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+
+		s.close();
+		return result;
+
+	}
+
+	public static void main(String[] args) {
+
+		//load the book data
+		List<Book> library = Demo.loadBookData("data/books.csv");
+		// find the best book: sort it using the rating...
+		Comparator<Book> byRating = Comparator.comparing(Book::getRating).reversed();
+		Comparator<Book> byAuthorRating = Comparator.comparing(Book::getAuthor)
+				                              .thenComparing(Book::getReleaseYear);
+		Comparator<Book> byAuthor = Comparator.comparing(Book::getAuthor);
+
+//		Comparator<Book> byRating = new Comparator<>() {
+//
+//			@Override
+//			public int compare(Book a, Book b) {
+//				if(a.getRating() > b.getRating()) {
+//					return -1;
+//				} else if(a.getRating() < b.getRating() ) {
+//					return 1;
+//				} else {
+//					return 0;
+//				}
+//			}
+//			
+//		};
+		Collections.sort(library, byAuthor);
+		for(Book b : library) {
+			System.out.println(b);			
+		}
+
+		// find the worst book
+		Collections.sort(library, byRating);
+		Book worstBook = library.get(library.size()-1);
+		Book bestBook = library.get(0);
+		System.out.println("======\n\n");
+		System.out.println(worstBook);
+		System.out.println(bestBook);
+
+		// find a/all books by Herbert, Frank
+//		for(Book b : library) {
+//			if(b.getAuthorFirstName().equals("Frank") &&
+//			   b.getAuthorLastName().equals("Herbert")) {
+//				System.out.println(b);
+//			}
+//		}
+
+		Person frank = new Person("Herbert", "Frank");
+		Book aFrankBook = new Book(frank);
+		Collections.sort(library, byAuthor);
+		int x = Collections.binarySearch(library, aFrankBook, byAuthor);
+		System.out.println(x);
+		Book anActualFrankBook = library.get(x);
+		System.out.println(anActualFrankBook);
+
+		//person is a key that maps to a set of books (value)
+		Map<Person, Set<Book>> libraryByAuthor = new HashMap<>();
+
+		//for each book:
+		for(Book b : library) {
+			// find the "bin" (set of books) for that book's author
+			Set<Book> authorsBooks = libraryByAuthor.get(b.getAuthor());
+			//   if no such bin: create one
+			if(authorsBooks == null) {
+				//first time we've seen this author, so create their bin:
+				authorsBooks = new HashSet<>();				
+				//place the bin in the map:
+				libraryByAuthor.put(b.getAuthor(), authorsBooks);
+			}
+			//   add the book to the bin
+			authorsBooks.add(b);
+		}		
+
+		System.out.println(libraryByAuthor);
+
+		//how many books does each author have?
+		List<Person> authors = new ArrayList<>(libraryByAuthor.keySet());
+		Collections.sort(authors);
+		for(Person author : authors) {
+			Set<Book> books = libraryByAuthor.get(author);
+			System.out.printf("%s has %d books\n", author, books.size());
+		}
+
+
+	}
+
+}
+```
+
+`Person.java`:
+
+```java
+package uno.ece;
+
+import java.util.Objects;
+
+/**
+ * A class that represents a person.
+ *
+ * @author cbourke
+ *
+ */
+public class Person implements Comparable<Person> {
+
+	private final String lastName;
+	private final String firstName;
+
+	public Person(String lastName, String firstName) {
+		super();
+		this.lastName = lastName;
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s, %s", lastName, firstName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, lastName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName);
+	}
+
+	@Override
+	public int compareTo(Person that) {
+		int result = this.lastName.compareTo(that.lastName);
+		if(result == 0) {
+			result = this.firstName.compareTo(that.firstName);
+		}
+		return result;
+	}
+
+
+
+
+}
+```
+
+`Book.java`:
+
+```java
+package uno.ece;
+
+public class Book {
+
+	private String title;
+	private Person author;
+	private int releaseYear;
+	private double rating;
+
+	public Book() {
+
+	}
+
+	public double getRating() {
+		return this.rating;
+	}
+
+
+
+	public String getTitle() {
+		return title;
+	}
+
+	public Person getAuthor() {
+		return this.author;
+	}
+
+	public int getReleaseYear() {
+		return releaseYear;
+	}
+
+	public Book(String title, Person author, int releaseYear, double rating) {
+
+		if(title == null) {
+			throw new RuntimeException("You cannot create a book without a title");
+		}
+		this.author = author;
+		this.title = title;
+		this.releaseYear = releaseYear;
+		this.rating = rating;
+	}
+
+
+	public Book(Person author) {
+		super();
+		this.author = author;
+	}
+
+	public String toString() {
+		return String.format("%s by %s %d (%.2f)", title, this.author, releaseYear, rating);
+	}
+
+}
+```
+
+
+
+
+
 ```text
+
+
+
+
+
+
+
+
 
 
 
