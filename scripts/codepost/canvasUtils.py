@@ -51,9 +51,13 @@ def get_canvas_data(path, userParameters = {}):
     while moreData:
         connection.request("GET", path)
         response = connection.getresponse()
-        #pprint.pprint(response.getheaders())
         raw_data = response.read().decode()
         new_data = json.loads(raw_data)
+        if isinstance(new_data, dict):
+            # API has returned a single json object instead of a list of objects
+            # immediately close and return
+            connection.close()
+            return new_data
         data += new_data
         headers = response.info()
         linkHeader = headers['Link']
@@ -72,6 +76,9 @@ def parse_header_links(value):
     moderate modifications so that it returns an actual
     dicionary mapping `rel` values to `url`s
     """
+
+    if value is None:
+        return {}
 
     links = []
 
