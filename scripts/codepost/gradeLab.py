@@ -27,6 +27,7 @@ from course import course
 from assignment import Assignment
 from canvasUtils import getAssignments
 from canvasUtils import setGrade
+from canvasUtils import getGrade
 
 labName = f"Lab {args.labNumber:.1f}"
 labNumber = f"L{args.labNumber:02d}"
