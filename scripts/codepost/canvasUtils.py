@@ -251,7 +251,10 @@ def getGrade(assignmentId, userId):
   """
   path = f"/courses/{config.canvasCourseId}/assignments/{assignmentId}/submissions/{userId}"
   resultData = get_canvas_data(path)
-  return resultData['score']
+  if 'score' in resultData:
+      return resultData['score']
+  else:
+      return None
 
 
 def setGrade(assignmentId, userId, score = None, comment = None):

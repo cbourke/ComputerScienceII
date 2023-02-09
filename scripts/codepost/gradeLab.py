@@ -65,7 +65,10 @@ for nuid,p in students.items():
   login = p.cseLogin
   canvasId = p.canvasId
   fullPath = f"{basePath}{labNumber}/{login}/"
-  if not os.path.exists(fullPath):
+  score = getGrade(canvasAssignment.id, p.canvasId)
+  if score is not None:
+    print(f"    SKIPPED: Score already in gradebook: {score}/20")
+  elif not os.path.exists(fullPath):
     print(f"    FAILED: no directory ({fullPath}), 0/20")
     comment = f"No Submission 0/20"
     setGrade(canvasAssignment.id, p.canvasId, 0, comment)
