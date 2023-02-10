@@ -4,10 +4,10 @@ import java.time.Duration;
 
 /**
  * Models a radioactive isotope, see
- * 
+ *
  * More info can be found
  * <a href="https://en.wikipedia.org/wiki/Half-life">here</a>.
- * 
+ *
  * @author cbourke
  *
  */
@@ -35,7 +35,7 @@ public class Isotope {
 	/**
 	 * Decays this Isotope by the given number of years and returns how much mass
 	 * the Isotope decayed by.
-	 * 
+	 *
 	 * @param d
 	 * @return
 	 */
@@ -46,8 +46,8 @@ public class Isotope {
 		return decayedMass;
 	}
 
-	
-	private Isotope() {		
+
+	private Isotope() {
 		this(0, "Unknown", null, 0.0, null);
 	}
 
@@ -68,7 +68,7 @@ public class Isotope {
 	/**
 	 * A copy constructor that makes a copy of the given Isotope but with the sample
 	 * having the given mass
-	 * 
+	 *
 	 * @param isotope
 	 * @param mass
 	 */
