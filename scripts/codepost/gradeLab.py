@@ -20,7 +20,16 @@ labToPackage = {
 parser = argparse.ArgumentParser()
 parser.add_argument("labNumber", help="The lab number to be graded (ex: 1 would be Lab 1.0 in in ~/handin/L01)", type=int)
 parser.add_argument("--login", help="specify to grade a single login", default=None)
+parser.add_argument("--push", action='store_true', help=
+  """Push the lab scores to canvas. The default is to not
+  modify the canvas gradebook so a test run can be made.
+  """, default=False)
 args = parser.parse_args()
+pushToCanvas = args.push
+if pushToCanvas:
+    print(f"Pushing all results to canvas")
+else:
+    print(f"Cowardly not pushing results to canvas, run with --push to do so.")
 
 from config import config
 from course import course
@@ -72,7 +81,9 @@ for nuid,p in students.items():
   elif not os.path.exists(fullPath):
     print(f"    FAILED: no directory ({fullPath}), 0/20")
     comment = f"No Submission 0/20"
-    setGrade(canvasAssignment.id, p.canvasId, 0, comment)
+    if pushToCanvas:
+        setGrade(canvasAssignment.id, p.canvasId, 0, comment)
+    print(f"\tRESULT: {comment}")
     csvResult += "%s,%s,%d,%d,%d,%d\n"%(login,canvasId,0,-1,-1,-1)
   else:
     os.chdir(basePath + labNumber + "/" + login)
@@ -98,7 +109,9 @@ for nuid,p in students.items():
     else:
       comment = f"All JUnit tests passed: 20/20"
       score = 20
-    setGrade(canvasAssignment.id, p.canvasId, score, comment)
+    if pushToCanvas:
+        setGrade(canvasAssignment.id, p.canvasId, score, comment)
+    print(f"\tRESULT: {comment}")
     csvResult += "%s,%s,%s\n"% (login,canvasId,result)
     os.chdir("..")
     os.system("rm -rf "+stagingDir)
