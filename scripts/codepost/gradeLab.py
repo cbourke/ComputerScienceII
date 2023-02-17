@@ -70,6 +70,8 @@ csvResult = "cseLogin,canvasId,points,pass,fail,totes\n"
 print(f"Grading {labName} using {batchTestClass} in {labNumber}...")
 print(f"  Canvas Assignment: {canvasAssignment}")
 
+(good,bad,ugly) = (0,0,0)
+
 for nuid,p in students.items():
   print(f"  {p.name} ({p.nuid})...")
   login = p.cseLogin
@@ -85,6 +87,7 @@ for nuid,p in students.items():
         setGrade(canvasAssignment.id, p.canvasId, 0, comment)
     print(f"\tRESULT: {comment}")
     csvResult += "%s,%s,%d,%d,%d,%d\n"%(login,canvasId,0,-1,-1,-1)
+    ugly += 1
   else:
     os.chdir(basePath + labNumber + "/" + login)
     os.system("rm -rf "+stagingDir)
@@ -106,9 +109,19 @@ for nuid,p in students.items():
       comment = f"One or more JUnit tests failed: 0/20"
       score = 0
       result = "0,-2,-2,-2" #submitted but failed
+      bad += 1
     else:
-      comment = f"All JUnit tests passed: 20/20"
-      score = 20
+      # verify: points,pass,fail,totes: 0,5,1,6
+      tokens = result.split(",")
+      score = int(tokens[0])
+      passed = int(tokens[1])
+      failed = int(tokens[2])
+      if score > 0:
+          comment = f"All JUnit tests passed: {score}/20"
+          good += 1
+      else:
+          comment = f"JUnit results: {passed} passed, {failed} failed; score: {score}/20"
+          bad += 1
     if pushToCanvas:
         setGrade(canvasAssignment.id, p.canvasId, score, comment)
     print(f"\tRESULT: {comment}")
@@ -117,3 +130,7 @@ for nuid,p in students.items():
     os.system("rm -rf "+stagingDir)
 
 print(csvResult)
+
+print(f"Passed: {good}")
+print(f"Failed: {bad} ")
+print(f"Nosubm: {ugly}")
