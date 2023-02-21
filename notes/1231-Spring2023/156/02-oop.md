@@ -86,3 +86,23 @@ Usually is comprised of three things:
 Demonstration: draft a collection of financial asset classes
   * Savings Account: an account that pays *interest* on a *balance* monthly
   * Annuity: a product that pays a fixed monthly amount over a certain number of years
+
+Tools:
+  * UML Sketches: https://app.diagrams.net/
+  * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
+
+Observations:
+
+
+```text
+
+
+
+
+
+
+
+
+
+
+```

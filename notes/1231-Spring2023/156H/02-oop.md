@@ -93,6 +93,52 @@ Demonstration: draft a collection of financial asset classes
   * Savings Account: an account that pays *interest* on a *balance* monthly
   * Annuity: a product that pays a fixed monthly amount over a certain number of years
 
+Tools:
+  * UML Sketches: https://app.diagrams.net/
+  * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
+
+Observations:
+
+* If a class `A` `extends` a class `B`:
+  * `B` is the subclass/child class/derived
+  * `A` is the superclass/parent class/
+* Inheritance defines an "is-a" relationship
+  * A `Dog` *is-a* `Animal`
+* Three types of relations in inheritance:
+  * Covariant - always safe: you treat the subclass as a superclass
+  * Contravariant - sometimes safe, sometimes dangerous, you need to explicitly check; you treat a superclass as a subclass
+  * Invariant - never safe, you treat one class as a sibling
+* You can, but should not use the `instanceof` keyword to check type safety
+* Motivations for inheritance:
+  * Code reuse
+  * reduction of redundancy
+  * Much cleaner "hierarchy" of elements
+  * You can treat many types as one (polymorphism, later)
+* Misc:
+  * An `interface` is a pure `abstract` class: generally it only defines public interface (methods)
+  * You can define an `abstract` class to: 1) prevent instantiation of instances (you cannot create instances of an `abstract` class) 2) avoid being forced to define ill-defined methods
+  * You can use the keyword `final` on a class!
+    * A `final` variable means you cannot change it (constant)
+    * A `final` method means you cannot *override* it in the subclass: you prevent people from making changes to the behavior of your class
+    * A `final` class makes it so you *cannot* `extends` it
+    * Non-`final` methods are called "virtual" methods
+* A *pure* abstract class is one in which NO functions are defined, ie all functions are `abstract` is an `interface`
+  * You use the keyword `implements` instead of `extends`
+  * You can `implements` more than one interface
+
+### Pitfalls
+
+* Some languages support *multiple inheritance*: you can inherit or "extend" from multiple classes (not interfaces)
+  * Java is not one of them: it is a "single inheritance" hierarchy, you can only `extends` one class, not multiple
+  * C++ does allow it
+  * Diamond problem:
+  * The inheritance is ambiguous, not well-defined
+* Yo-yo problem
+  * Deep inheritance heirarchies are bad: it forces you to look up and down at various documentation to see when adn where behavior was introduced or overridden or etc.
+* Antipattern: Rectangle Problem
+  * Shape, Rectangle, Square
+
+
 ```text
 
 
