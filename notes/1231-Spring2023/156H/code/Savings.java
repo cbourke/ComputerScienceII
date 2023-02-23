@@ -2,7 +2,7 @@ package unl.soc;
 
 import java.util.Objects;
 
-public class Savings extends Account {
+public class Savings extends Account implements Ownable {
 	
 	private final double balance;
 	private final double apr;

@@ -1,6 +1,8 @@
 package soc.unl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,11 +16,13 @@ public class Person implements Comparable<Person> {
 	private String firstName;
 	private String lastName;
 	private LocalDate dateOfBirth;
+	private List<String> emails;
 
 	public Person(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.emails = new ArrayList<>();
 	}
 
 	public String getFirstName() {
@@ -31,6 +35,10 @@ public class Person implements Comparable<Person> {
 
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
+	}
+	
+	public void addEmail(String email) {
+		this.emails.add(email);
 	}
 
 	@Override

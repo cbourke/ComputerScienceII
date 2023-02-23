@@ -1,7 +1,14 @@
-package unl.soc;
+package soc.unl;
 
-public class Annuity extends Account implements Ownable {
-		
+/**
+ * Models an annuity asset which pays the owner a monthly 
+ * payment over a given term (years).
+ * 
+ * @author cbourke
+ *
+ */
+public class Annuity extends Account {
+	
 	private final double monthlyPayment;
 	private final int termYears;
 	
@@ -11,6 +18,7 @@ public class Annuity extends Account implements Ownable {
 		this.termYears = termYears;
 	}
 
+
 	public double getMonthlyPayment() {
 		return monthlyPayment;
 	}
@@ -18,12 +26,16 @@ public class Annuity extends Account implements Ownable {
 	public int getTermYears() {
 		return termYears;
 	}
-	
+
 	@Override
+	public String toString() {
+		return String.format("Annuity Account #%s, $%.2f/mo @ %d years", 
+				this.getAccountNumber(), this.monthlyPayment, this.termYears);
+	}
+	
 	public double getValue() {
 		return this.monthlyPayment * this.termYears * 12;
 	}
-	
 	
 	
 	
