@@ -139,6 +139,73 @@ Observations:
   * Shape, Rectangle, Square
 
 
+## Polymorphism
+
+* Polymorph = Many form(s)
+* Code: a variable, method, or class may be generically programmed so that it can apply or be used with/on many different types
+  * C: how did we sort?  We used `qsort()` which took *any* type of variable
+  * Comparators for `qsort`: `int cmp(const void *a, const void *b)`
+  * Python: we used `sort()` or `sorted()` which took *any* type of variable
+  * Java: has static typing and so type safety can be verified at compile time
+
+### Subtype polymorphism
+
+* When you use inheritance you can treat a subclass as a superclass
+  * Convariance is always safe!
+  * This allows you to treat specific types as general types to simplify code
+  * Ex: you only need ONE list of `Account`s to keep track of all accounts!
+  * examples
+  ```java
+  Bird b = new Robin();
+  List<Integer> numbers = new ArrayList<>();
+  Collection<Integer> otherNumbers = numbers;
+
+  ```
+
+### Function Overloading
+
+* This is not to be confused with *overriding* (overriding happens with inheritance in a subclass)
+* Overloading does not involve inheritance
+* A function/method is overloaded if you have multiple functions of the same name but different type or arity (number of) parameters
+* Example: C has no function overloading
+  * Consequence: `abs()`, `fabs()`, `labs()`, `llabs()`
+  * You are forced to create multiple functions with the same basic functionality
+  but with different names
+* Java solves this by allowing you to define multiple functions with the same name
+  * Ex: there are four absolute value functions that each take a different type
+  * BUT you have the same name
+  * This is because the function, `abs` has been overloaded
+* The compiler is responsible for determining *which* function gets called/invoked based on the type of variable you provide
+* This is known as *static dispatch* (static = at compile time, dispatch = )
+* as long as the number of type of parameters is different, the function is different and the compiler is able to determine which one you mean by looking at the input parameters
+
+### Operator Overloading
+
+In Java:
+  * `String + String`, plus means: concatenation
+  * `int + int`, plus means: addition
+  * `String + int`, plus means: change the int to a string representation and concatenate
+Python:
+  * `string + string`: concatenation
+  * `int + int`: addition
+  * `int + string`: error, you *must* do: `str(int) + string`
+* Operator overloading means: giving more than one meaning to an operator in a programming language
+* C++:
+  * You can do anything with anything: wild west
+  * `List + List`: [1, 2, 3] + [4, 5, 6] = [1,2,3,4,5,6]: append
+  * `List + List`: [1, 2, 3] + [4, 5, 6] = [5,7,9]: vector addition
+  * `List + List`: [1, 2, 3] + [4, 5, 6] = ?? Union, intersection, etc
+  * WAAAY too confusing
+  * `Time + Time` huh?
+  * `Graph + Graph` ? union of vertices?  of edges?  
+  * `Student + Student`
+  * extremely ill-defined for all but the most obvious types (strings, numbers, etc.)
+* Java does have *limited* built-in operator overloading (`+`) but does not allow you to define *user*-defined operator overloading
+
+## Parameterized Polymorphism
+
+* Java allows you to parameterize classes, methods or variables
+
 ```text
 
 
