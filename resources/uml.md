@@ -34,8 +34,6 @@ For both Windows and Mac, in Eclipse:
    PlantUML tab/view.
 4. Right click the view/diagram to export as a PNG file.
 
-**Note**: for Mac users, you may also need to install
-
-Mac: you need to install GraphViz/dot manually (the windows plugin comes packaged
-with it).  To do this, follow the installation instructions using `brew` here:
-https://plantuml.com/graphviz-dot
+**Note**: for Mac users, you need to install GraphViz/dot manually (the windows
+plugin comes packaged with it).  To do this, follow the installation instructions
+using `brew` here: https://plantuml.com/graphviz-dot
