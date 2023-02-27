@@ -106,7 +106,102 @@ Observations:
   * Covariant - always safe (treat a subclass as a superclass)
   * Contravariant - sometimes safe but not likely (treating a superclass as a subclass)
   * Invariant - Never safe (treat a sibling class as a different class)
-* You can, but should not use the `instanceof` keyword to check type safety
+* You can, but should almost *never* use the `instanceof` keyword to check type safety
+  * Acceptable use case: using copy constructors
+* Motivation:
+  * Provides a way to *reuse* code, avoid repeating code (by placing in the super class)
+  * Provides a way to *organize* code
+* If you have a class that is not well-defined, make it `abstract`
+  * `abstract` classes may have state and methods
+  * `abstract` classes may have `abstract` methods: methods that do not have a body but force subclases to specify behavior
+  * With `abstract` classes you can prevent someone from creating instances of them
+* Sometimes you want to *prevent* subclassing
+  * Example: should anyone be allowed to change the behavior/expectations of say `Integer`
+  * Example: some variables should be constant: `Math.PI`: to make it constant, yo uuse the `final` keyword
+  * You can use `final` on a class to prevent subclassing
+  * You can use `final` on an individual method to prevent *overriding* that method
+  * By default all methods in Java are "virtual" (they *can* be overridden); using `final` makes them non-virtual
+* A *pure* abstract class is one in which NO functions are defined, ie all functions are `abstract`
+   * in Java, you would use an `interface`
+   * This allows you in Java to `implements` an interface and more so...
+   * In Java you can only `extends` on class (single inheritance hierarchy) but
+   * you can `implements` multiple interfaces
+
+### Pitfalls
+
+* Some languages support *multiple inheritance*: you can inherit from more than one class
+  * Java is not one of them: instead use interfaces
+  * C++ does allow this
+  * This is the "diamond problem": there is an ambiguity in what is inherited
+  * C++ solves this by requiring you to *explicitly* state what you are inheriting
+  * Java avoids this by forcing a single-inheritance hierarchy: you can only `extends` one class!
+* Antipattern: yo-yo problem
+  * Deep inheritance hierarchies can be very confusing
+  * Generally keep your hierarchies shallow
+* Antipattern: Rectangle Problem
+
+## Polymorphism
+
+* Polymorph = Many Forms
+* Code: a variable, method, or class can be generically programmed so that it can apply to or be used with multiple different types
+  * C: how do you sort? `qsort()`: it is a "generic" function
+  * In Java: polymorophism appears in many forms
+
+### Subtype Polymorphism:
+
+* Treating a subtype as a superclass so that you can treat it more generally
+* Covariance which is always safe
+
+### Function Overloading
+
+* Recall from C: how do you compute the absolute value?
+  * `abs(), fabs(), labs(), llabs()`
+  * Without "function overloading" you can only ever have ONE function with the same name
+* Observe Java: `Math.abs()`: multiple functions with the same name but different type or arity (number of) parameters
+* At compile time the compiler is smart enough to deduce which function you actually meant to call
+* This is known as "static dispatch" (static = at compile time, dispatch = dispatch)
+* as long as the number of type of parameters is different, the function is different and the compiler is able to determine which one you mean by looking at the input parameters
+
+### Operator Overloading
+
+* In Java:
+  * `String + String` means concatenation
+  * `int + int` means addition
+  * `String + int` means convert the integer to a string and concatenate
+* Python:
+  * `String + String` means concatenation
+  * `int + int` means addition
+  * `String + int` ERROR, you are required to explicitly cast the int as a string: `str(int)`  
+* C:
+  * `int + int` is addition
+  * `char * + char *` is "memory addition"
+* In some languages some operators (`+`) have more than one meaning depending on the context or *types* they are used on
+* C++:
+  * Wild-west/anarchy language: you can overload ANY operator
+  * `List + List`: [1, 2, 3] + [5, 6, 7] = [1, 2, 3, 5, 6, 7] (append)
+  * `List + List`: [1, 2, 3] + [5, 6, 7] = [6, 8, 10] (vector addition)
+  * There are other reasonable interpretations, it is better to just make a well-defined/well-named function to take care of it
+  * `Duration + Duration`
+  * `Time + Time` ill-defined
+  * `Set + Set`: union, intersection, symmetric difference
+* Consequently, most languages have *some* built-in operator overloading, but don't allow user-defined operator overloading
+
+## Parameterized Polymorphism
+
+* Java allows you to use a parameterized class, method or variable
+
+```c
+
+int cmp(const void *a, const void *b) {
+  //force a, b to become integer pointers:
+  const int *x = (const int *)a;
+  const int *y = (const int *)b;
+}
+
+qsort()
+
+```
+
 
 ```text
 

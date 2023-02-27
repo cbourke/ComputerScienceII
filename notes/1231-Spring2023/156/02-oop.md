@@ -150,7 +150,48 @@ Observations:
   * Exmaple: Python: `a.sort()` or `sorted(a)`
   * Java: we use explicit parameterization: `List<Integer> numbers`
 * It allows you to write generic code, one function/method that can be applied to *any* type
-  * Ex: `getMaximumValue(List<T> foo)`
+
+### Subtype Polymorphism
+
+* You can treat a class as its superclass
+* Ex: you can treat a `Robin` as a `Bird`
+* If you don't need specific/specialized behavior you can treat a bunch of different types as one single type (superclass)
+
+### Method Overloading
+
+* Ex: how do you compute the absolute value in C?
+  * `abs()`, `fabs()`, `labs()`, `llabs()`
+  * C does not have function overloading: when you create a function, you can only use that ONE name for that ONE function
+  * Python does not have function overloading: parameters are optional and you can define "default" values
+* OOP languages (Java) support function overloading: you can define multiple versions of a function with the *same* name as long as either the number (arity) or type of parameters are different
+* At compile time a compiler is able to figure out *which* version to invoke by looking at what you passed to it: the number or type of variable
+* "Static Dispatch": (Static = compile time), dispatch
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String` means concatenation
+  * `int + int` means addition
+  * `String + int` means convert the int to a string and concatenate
+* Python:
+  * `string + string` means concatenation
+  * `int + int` means addition
+  * `string + int` means ERROR: instead you use `str(int) + string`
+* C:
+  * `char * + char *`: non-sense (are adding two memory addresses)
+* Operator overloading is when an operator: `+, -, *, /`, etc has more than one meaning in different contexts
+* Languages use this *very sparingly*
+  * `List + List`: appending
+  * `List + List`: vector addition (component-wise addition)
+  * Union, intersection, etc.
+  * `Duration + Duration`
+  * `Time + Time`
+* SOME programing languages allow you to override *ANY* and *ALL* operators: C++
+* At the end of the day, you have to write a function that defines what the overload means anyway: ex: `a.append(b)`
+
+### Parameterized Polymorphism
+
+* IN Java you can create a parameterized class, variable, or method
 
 ```text
 

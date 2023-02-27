@@ -206,6 +206,35 @@ Python:
 
 * Java allows you to parameterize classes, methods or variables
 
+* PECS: Producer Extends, Consumer Super
+  * A collection is a *producer* of elements if you take stuff out and do something with it.  You need a minimal amount of information: `<T extends Item>`
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: you don't care about what is in the collection already, you just want to put some new stuff in it
+* In general, if you care about the type, you need to use a named parameter `<T>`
+* If you don't care, you *might* be able to use the wildcard: `<?>`
+
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should represent one thing and represent it well
+* Violation: God-Class: the class is responsible for everything, knows everything, does everything
+* You can still violate it by having it do 2 things
+  * Ex: a class that both loads and saves data
+  * Person class should not be responsible for Address stuff
+  * Converting a Person into an XML "string" is kinda-sorta a Person thing, but not really: generally you should prefer *SMALL* classes
+* YAGNI = You Ain't Gonna Need It
+* Avoid "leaky abstractions":
+  * Avoid any and all exposure outside of a class to its internal representation or implementation
+
+
+## O = Open/Closed Principle
+
+## Liskov Substitution Principle
+
+## Interface Segregation Principle
+
+## Dependency Inversion Principle
+
 ```text
 
 
