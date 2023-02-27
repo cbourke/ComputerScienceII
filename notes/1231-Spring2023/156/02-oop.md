@@ -191,7 +191,96 @@ Observations:
 
 ### Parameterized Polymorphism
 
-* IN Java you can create a parameterized class, variable, or method
+* In Java you can create a parameterized class, variable, or method
+* Demonstration: we wish to add up the value of all our accounts
+* Observations:
+  * Using sub-type polymorphism allows us to only have to define *one* method
+    that applies to `List`s, `Sets`s, using `Collection`
+  * Cannot use sub-type polymorphism on parameters due to *type erasure*
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+  of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Simple restatement of good encapsulation
+* One class = one idea = one responsibility
+* A class (or method) should be responsible for one thing: do one thing and do it well
+* Don't have "god" classes
+* A `Person` class should not be responsible for an `Address`, it should *own* (by composition) an address class
+* DRY = Don't Repeat Yourself
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide *general* behavior that should not be modified (once the heirarchy has been designed)
+  * Subclasses provide *specific* behavior that *can* be modified
+* Suppose you had some well-defined functionality in a superclass and you had 5 subclasses that all depended on it.  
+  * Suppose you have a new subclass that requires different behavior
+  * Solution: modify the superclass
+* If there is no general or "default" behavior: don't define it!!  Keep it `abstract`
+* Alternative: break functionality down into smaller parts
+* Have a good, well-thought out inheritance because it is extremely difficult if not impossible to change later on
+* Should an `Integer` class be subclassed to redefine what an integer is?  Java made this *closed* for modification by making it `final`
+
+## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+* Subtype polymorphism!
+
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+LinkedList<Integer> numbers2 = new LinkedList<>();
+List<Integer> foo = numbers; //works due to subtype polymorphism
+foo = numbers2;
+```
+
+* Violation of Liskov: Rectangle problem
+
+## Interface Segregation Principle
+
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* Instead: all interfaces should be as small as possible
+* KISS = Keep It Simple, Student
+
+## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Both should depend on abstractions
+
+```java
+
+PersonCsvDataLoader foo = new PersonCsvDataLoader(fileName);
+List<Person> people = foo.getPersons();
+
+PersonXmlDataLoader foo = new PersonXmlDataLoader(fileName);
+List<Person> people = foo.loadPersonData();
+
+PersonDatabaseDataLoader foo = new PersonDatabaseDataLoader(fileName);
+List<Person> people = foo.connectAndQueryPersonTable();
+
+public interface PersonDataLoader {
+
+  public List<Person> loadData();
+
+}
+
+List<Person> people = foo.loadData();
+
+public interface DataLoader <T> {
+
+  public List<T> loadData();
+
+}
+
+```
 
 ```text
 

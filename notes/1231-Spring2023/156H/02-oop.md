@@ -225,15 +225,121 @@ Python:
 * YAGNI = You Ain't Gonna Need It
 * Avoid "leaky abstractions":
   * Avoid any and all exposure outside of a class to its internal representation or implementation
+  * Example: requiring a user to explicitly load a Person data file before loading a Store file
+  * I just want to load store data, the process of loading store data should fall to THAT class or function, *I* shouldn't have to do things I don't want to do
+
+```java
+//works:
+DataLoader.loadPersons();
+DataLoader.loadStores();
+List<Store> s = DataLoader.getStores();
+
+//breaks:
+DataLoader.loadStores();
+List<Store> s = DataLoader.getStores();
+
+DataLoader.loadPersons();
+
+//the getStores() function should check and make sure the persons are already loaded
+
+```
 
 
 ## O = Open/Closed Principle
 
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide *general* behavior that should not be modified (once the heirarchy has been designed)
+  * Subclasses provide *specific* behavior that *can* be modified
+* Violation: `instanceof` to determine business logic (the value of an account, the cost of items)
+* Violation: using a string to determine what happens
+* Have a good, well-thought out inheritance because it is extremely difficult if not impossible to change later on
+* Should an `Integer` class be subclassed to redefine what an integer is?  Java made this *closed* for modificadtion by making it `final`
+
 ## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+* Subtype polymorphism!
+
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+LinkedList<Integer> numbers2 = new LinkedList<>();
+List<Integer> someList = numbers;
+someList = numbers2;
+
+```
+
+* Violation: Rectangle/Square example
+
 
 ## Interface Segregation Principle
 
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* Instead: all interfaces should be as small as possible
+
+
 ## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Ex:
+  * YOu write code that connects to a (Free) MySQL database with very-speciic MySQL methods, etc.
+  * Now you've grown as a company and need to migrate to MSSQL
+  * Throw away all DB code and connect to the MSSQL server: rewrite EVERYTHING
+  * Instead: you should have written generic code for an *interface* that each one of the databases *implements*
+* Example
+* Library A:  
+`double GPSLocator.getLatitude()`  
+`double GPSLocator.getLongitude()`
+* Library B:  
+`AndroidLocation AndroidNative.getLocation()`  
+ `AndroidLocation.getLatitude()`   `AndroidLocation.getLongitude()`
+ * Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+ ```java
+
+ if(Library A) {
+   return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+ } else if(Library B) {
+   AndroidLocation l =  AndroidNative.getLocation();
+   return new Location(l.getLatitude(), l.getLongitude());  
+ else if(Library C) {
+    return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()),
+     Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+ }
+```
+
+* INversion:
+
+```java
+
+public interface Locator {
+
+  public Location getLocation();
+
+}
+
+public AndroidLocator implements Locator {
+
+
+  public Location getLocation() {
+    AndroidLocation l =  AndroidNative.getLocation();
+    return new Location(l.getLatitude(), l.getLongitude());  
+
+  }
+
+}
+
+//client code: doesn't care about the type of Locator
+Locator l = new AndroidLocator();
+Location = l.getLocation();
+```
+
+* "Inverting" a dependency means creating an interface between the "highlevel" object/class/thing and the low-level library that `implements` it
+* In general, you should prefer *loose coupling* so that software components can easily be interchanged
+
 
 ```text
 
