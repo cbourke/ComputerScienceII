@@ -202,6 +202,84 @@ qsort()
 
 ```
 
+* Parameterization allows you to define *variable* types attached to:
+
+```java
+//variables:
+T x;
+
+//methods:
+public static <T> T getMax(List<T> items) { ... }
+
+//classes:
+public class Foo <T> { ... }
+```
+
+* Demonstration: we wish to write a method to sum the value of all our accounts
+
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+    of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Simple restatement of good encapsulation
+* A class (or method) should be responsible for one thing: do one thing and do it well
+* Don't have god classes
+* A `Person` class should be responsible for person things, an `Address` class should be responsible for `Address` things
+* DRY = Don't Repeat Yourself
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* General behavior belongs in the super class
+* Specialization belongs in the subclasses
+* Do NOT mix them
+* If there is no general or "default" behavior: don't define it!!  Keep it `abstract`
+* Have a good, well-thought out inheritance because it is extremely difficult if not impossible to change later on
+* In general: "prefer composition over inheritance"
+* Should an `Integer` class be subclassed to redefine what an integer is?  Java made this *closed* for modificadtion by making it `final`
+
+## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+* example of a good L-
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+LinkedList<Integer> numbers2 = new LinkedList<>();
+List<Integer> someList = numbers;
+someList = numbers2;
+
+```
+
+* Violation: Rectangle/Square example
+  * Generally prefer immutable objects
+  * Generally don't have an inheritance hierarchy that is sometimes correct, sometimes wrong
+
+## Interface Segregation Principle
+
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* Keep interfaces as small as possible so as not to force the client code to implement stuff it doesn't care about or doesn't have a solution for
+
+## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* They should both depend on abstractions (interfaces)
+* Example:
+  * We write an app to connect to a MySQL Database with *very* specific methods and functions to connect ONLY to a MySQL database
+  * Requirements have changed: we now want to use a PostgreSQL database
+  * Rewrite everything to connect to a *different* type of database
+  * Better solution: have a common database *interface* so that you write ONE set of app code that connects to a "generic" database
+* "Inverting" a dependency means creating an interface between the "highlevel" object/class/thing and the low-level library that `implements` it
+* In general, you should prefer *loose coupling* so that software components can easily be interchanged
+
+
 
 ```text
 
