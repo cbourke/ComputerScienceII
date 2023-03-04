@@ -1,0 +1,216 @@
+# Databases & SQL
+## CSCE 156 - Spring 2023
+
+### Introduction/Overview
+
+* Flat data files are insufficient for storing data
+  * Repetition of data
+  * Formatting issues
+  * Consistency issues: data anomalies
+  * Integrity issues
+  * Organization problems: not sorted, it is in one big file (no multithreaded or multiuser capability)
+  * There is no security!
+
+### Solution: use a RDBMS (Relational Database Management System)
+
+* 1970 Edgar Codd
+* Key aspects: data is stored in separate tables
+* Tables have columns (pieces of data) and rows (records)
+* Columns have a *type* and a *name* aka fields
+* Each row in a table corresponds to a single record
+* Records in different tables are *related* to each other through *foreign keys*
+* Records within a table are uniquely identified by *primary keys*
+* Foreign keys define relations between tables:
+  * One-to-many relation: one records in table $A$ may be related to many records in table $B$
+  * Many-to-one: same, but from hte perspective of $B$
+  * Many-to-many relation: one record in table $A$ can be related to many records in table $B$ and vice versa
+
+## CRUD Demonstration
+
+* You can interact with a RDBMS through CRUD:
+    * Create (`insert`)
+    * Retrieve (`select`)
+    * Update (`update`)
+    * Destroy (`delete`)
+
+```sql
+
+select * from platform;
+select * from game;
+select * from publisher;
+
+-- insert a new record for the publisher "Naughty Dog"
+
+insert into publisher (name) values ("Naughty Dog");
+-- you can, but should not specify primary keys:
+insert into publisher (publisherId,name) values (20, "Naughty Dog");
+
+-- remove the duplicate entry for Naughty Dog
+
+-- bad, but safe mode prevents you from deleting everything in the table
+delete from publisher;
+
+
+-- delete an entire table:
+-- drop table publisher;
+
+-- safely delete ONE record using a WHERE clause:
+
+delete from publisher where publisherId = 20;
+
+-- hardcode a FK (foreign key):
+insert into game (name, publisherId) values ("The Last of Us", 14);
+
+
+-- OR you can use a "nested" loop:
+insert into game (name, publisherId) values ("The Last of Us",
+  (select publisherId from publisher where name = "Naughty Dog") );
+
+insert into game (gameId, name, publisherId) values (100, "Uncharted", 14);
+
+insert into game (name, publisherId) values
+  ("Uncharted 2", 14),
+  ("The Last of Us 2", 14);
+
+insert into game (name, publisherId) values ("Crash Bandikoot", 14);
+
+-- update my misspelling:
+
+update game set name = "Crash Bandicoot" where gameId = 103;
+
+```
+
+### Observations
+
+* Comments are usually denoted with a `--` (two hyphens)
+* Be consistent on table name and column name conventions; suggestion:
+  * `TableName`s are upper camel cased (NOT plural)
+  * `columnName`s are lower camel cased
+* In old-school SQL, keywords are `ALLCAPS`, you can use this convention, but why?
+  * SQL keywords are case *insensitive*
+  * THe old-school way assumed a monochrome monitor
+* Whitespace generally does not matter, you can go to the next line and break up long lines to make it more readable
+* If you do, align things using proper indentation
+* You can use either double quotes or single quotes to denote strings, but be consistent
+* Every query ends with a semicolon `;`
+
+## Retrieving Data
+
+* You can pull data out of a database using the `select` statement
+* To pull every single record and every single column value you can use a wildcard:
+
+```sql
+
+select * from game;
+
+-- you can be more specific on which columns by specifying them:
+select name,publisherId from game;
+select name from game;
+
+-- you can use aliasing of column names
+select name as gameTitle from game;
+```
+
+## More Fancy Select statements
+
+* You can use *aggregate* functions to compute results on the SQL server itself
+
+```sql
+
+-- how many game titles do we have in our database?
+select count(*) as numberOfTitles from game;
+
+-- you can specify more fine-grained data/queries using a where clause:
+select * from game where name = "GTA 2";
+select count(*) from game where name = "GTA 2";
+select * from game where publisherId = 1;
+select * from game where publisherId = 1 or name = "GTA 2";
+select * from game where publisherId = 1 and name = "GTA 2";
+select * from game where (publisherId > 3 and publisherId < 7)
+  or name = "GTA 2";
+
+-- other aggregate functions:
+-- what is the oldest game?
+select max(publishYear) from availability;
+select min(publishYear) from availability;
+select avg(publishYear) from availability;
+select 10 * min(publishYear) + 3 as someNumber from availability;
+
+
+-- you can do partial string matching:
+select * from game where name like "G%";
+select * from game where name like "G%";
+select * from game where name like "%G%";
+select * from game where name like "g%";
+select * from game where name like "%t%";
+
+-- You can match any single character using the underscore:
+select * from game where name like "_a%";
+select * from game where name like "___a%";
+
+```
+
+## `order by` clause
+
+* In general the results you get back from a database are unordered
+* you can sort the results by any column using `order by`
+* Default: ascending order
+
+```sql
+select * from availability order by publishYear;
+select * from availability order by publishYear asc;
+select * from availability order by publishYear desc;
+-- string order:
+select * from game order by name;
+-- order first by publisher then by name:
+select * from game order by publisherId, name;
+select * from game order by publisherId desc, name asc;
+```
+
+## Distinct
+
+* You can use `distinct` to only get unique values: `select distinct publisherId from game;`
+
+## `in` clause
+
+* Sometimes you can treat a result as a *set*
+
+```sql
+
+select * from game where gameId = 1 or gameId = 5 or gameId = 9;
+-- using the in clause:
+select * from game where gameId in (1, 5, 9);
+-- allows you to use a *subquery* to pull more data
+select publisherId from publisher where name = "LucasArts";
+select * from game where publisherId = 1;
+select * from game where publisherId in
+  (select publisherId from publisher where name ="LucasArts" or name = "Nintendo");
+
+select * from game where publisherId in
+  (select publisherId from publisher where
+   name in ("LucasArts", "Nintendo"));
+```
+
+## Data Projections
+
+$$A= \{a, b, c\}$$
+
+$$A \times A = \{(a, a), (a, b), (a, c), (b, a), (b, b), (b, c), (c, a), (c, b), (c, c)\}$$
+
+
+
+```text
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
