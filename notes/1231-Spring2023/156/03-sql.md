@@ -88,7 +88,7 @@ update game set name = "Crash Bandicoot" where gameId = 103;
   * `columnName`s are lower camel cased
 * In old-school SQL, keywords are `ALLCAPS`, you can use this convention, but why?
   * SQL keywords are case *insensitive*
-  * THe old-school way assumed a monochrome monitor
+  * The old-school way assumed a monochrome monitor
 * Whitespace generally does not matter, you can go to the next line and break up long lines to make it more readable
 * If you do, align things using proper indentation
 * You can use either double quotes or single quotes to denote strings, but be consistent
@@ -193,11 +193,117 @@ select * from game where publisherId in
 
 ## Data Projections
 
-$$A= \{a, b, c\}$$
+* You can "project" data with multiple "dimensions" (columns) down to lower dimensions (fewer columns) and *aggregate* the data to produce more information
+* Example: how many games has each publisher published?
 
-$$A \times A = \{(a, a), (a, b), (a, c), (b, a), (b, b), (b, c), (c, a), (c, b), (c, c)\}$$
+```sql
+
+select * from game;
+
+-- restrict to only games that begin with a "G":
+select * from game where name like "G%";
+
+select publisherId, count(*) as numberOfGames
+  from game
+  where name like "G%"
+  group by publisherId;
 
 
+select publisherId, count(*) as numberOfGames
+  from game
+  group by publisherId
+  having numberOfGames >= 2;
+
+select publisherId, count(*) as numberOfGames
+  from game
+  where name like "Z%"
+  group by publisherId
+  having numberOfGames >= 2;
+
+```
+
+Let $A, B$ be sets:
+  $$A = \{a, b, c\}, B = \{1, 2\}$$
+
+$$A \times B = \{(a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)\}$$
+
+$$\mathbb{R} \times \mathbb{R}$$
+
+* What is the cardinality (size) of $A$?  $|A| = 3$
+* What is the cardinality (size) of $B$?  $|B| = 2$
+* What is the cardinality (size) of $A\times B$?  $|A\times B| = 6$
+* In general, if you have $|A| = n$, $|B| = m$, what is the cardinality of $|A \times B| = n \cdot m$
+
+```sql
+
+select count(*) from game;
+select count(*) from publisher;
+select * from publisher;
+
+select 22 * 17;
+
+-- naive cross join/cartesian product:
+select * from game join publisher;
+
+-- you only join ON the publisherId:
+select * from game g join publisher p
+  on g.publisherId = p.publisherId;
+
+-- only select the columns you are interested in:  
+select g.name as gameTitle, p.name as publisherName
+  from game g join publisher p
+  on g.publisherId = p.publisherId;
+
+  -- gives a good report but does not include any
+  -- publishers with zero games...
+select p.name as publisherName, count(g.gameId)
+  from game g join publisher p
+  on g.publisherId = p.publisherId
+  group by g.publisherId;
+
+select p.name as publisherName, count(g.gameId)
+  from publisher p join game g
+  on g.publisherId = p.publisherId
+  group by g.publisherId;
+
+select p.name as publisherName, count(g.gameId)
+  from publisher p join game g
+  on g.publisherId = p.publisherId
+  group by g.publisherId;
+
+-- preserve records from the left table
+select *
+  from publisher p left join game g
+  on g.publisherId = p.publisherId;
+
+-- preserves records from the left table and
+-- treats NULL values as zero
+-- this one is wrong because you don't want to count the row, but the gameId:
+select p.name as publisherName, count(*)
+  from publisher p left join game g
+  on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+select p.name as publisherName, count(g.gameId)
+  from publisher p left join game g
+  on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+select p.name as publisherName, count(g.gameId)
+  from game g right join publisher p
+  on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+-- create a query to "flatten" the entire database:
+-- ie produce a CSV-like file
+select *
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on a.gameId = g.gameId
+  left join platform plat on plat.platformId = a.platformId;
+
+select * from platform;
+```
 
 ```text
 

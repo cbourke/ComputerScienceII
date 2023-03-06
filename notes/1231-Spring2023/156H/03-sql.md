@@ -215,12 +215,97 @@ $$|A \times B| = |A| \cdot |B|$$
 ## Joins
 
 * You can join two tables together using a `join` statement
+* Order matters: you can join table $A$ to $B$ or $B$ to $A$
 
-$$R = \{(a, b) | a \text{ divides } b \}$$
+```sql
 
-$$(2, 4) \in R$$
+-- pure cross join: joins every record in A to every record in B
+select * from game join publisher;
 
-$$(2, 5) \not\in R$$
+-- join only on hte publisher ID's matching:
+select * from game join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- you can also use *table aliases*
+select * from game g join publisher p
+  on g.publisherId = p.publisherId;
+
+-- combine a join and a group by to get the original report:
+-- a list of publisher along with the number of titles they've published
+select p.name, count(*) as numberOfTitles
+  from game g
+  join publisher p
+  on g.publisherId = p.publisherId
+  group by g.publisherId;
+
+-- incorrect order: you go from game to publisher
+-- but it is not possiblef or a game to exist without a publisher
+select p.name, count(*) as numberOfTitles
+  from game g
+  left join publisher p
+  on g.publisherId = p.publisherId
+  group by g.publisherId;
+
+-- reverse the order: publisher to the game:
+select *
+  from publisher p
+  left join game g
+  on g.publisherId = p.publisherId;
+
+-- perform the same projection and aggregation:
+select p.name, count(g.gameId) as numberOfTitles
+  from publisher p
+  left join game g
+  on g.publisherId = p.publisherId
+  group by p.publisherId;
+```
+
+$$A = \{a, b, c\}, B = \{c, d, e\}$$
+$$A \cup B = \{a, b, c, d, e\}$$
+
+```sql
+
+-- final exercise: flatten the entire data model into a "CSV-like" query
+
+-- join all four tables together:
+
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId;
+
+-- reversed query: preserve records *from the right*
+select * from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+-- want to combine two result SETS
+-- preserve records in both directions and
+-- union them together
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union
+select * from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+
+
+```
+
+# Creating/Designing Databases
+
+* Design a database to support our little financial asset application: support owner (person), their emails (any number), accounts: annuity, savings
+* Variation: we now want to support *joint* accounts: accounts with more than one owner
+* How should we handle inheritance?  
+   * **Should we have 1 table for all type of accounts?**
+   * Should we have 2 tables for each of the non-abstract account types?  
+   * Should we have 3 tables one for each class?
+
 
 ```text
 
