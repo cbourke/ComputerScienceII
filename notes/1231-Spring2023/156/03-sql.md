@@ -296,13 +296,51 @@ select p.name as publisherName, count(g.gameId)
 
 -- create a query to "flatten" the entire database:
 -- ie produce a CSV-like file
+
+use cbourke;
+
+-- a single query to dump all of the data to one "flat" representation
 select *
   from publisher p
   left join game g on p.publisherId = g.publisherId
   left join availability a on a.gameId = g.gameId
-  left join platform plat on plat.platformId = a.platformId;
+  left join platform plat on plat.platformId = a.platformId
+union
+select *
+  from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on a.gameId = g.gameId
+  right join platform plat on plat.platformId = a.platformId;
 
-select * from platform;
+```
+
+## Designing & Implementing a Database
+
+* Demonstration: create a database to model the account (annuity, savings account)
+  application.  Allow accounts to be owned by multiple people
+
+```sql
+
+drop table if exists Email;
+drop table if exists Person;
+
+create table if not exists Person (
+  personId int primary key not null auto_increment,
+  firstName varchar(255), -- allowed to be null ?
+  lastName varchar(255) not null,
+  dateOfBirth varchar(10) not null default "0000-00-00"
+);
+
+create table if not exists Email (
+  emailId int primary key not null auto_increment,
+  address varchar(255) not null,
+  personId int not null,
+  foreign key (personId) references Person(personId)
+);
+
+
+
+
 ```
 
 ```text

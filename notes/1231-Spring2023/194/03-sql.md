@@ -88,10 +88,162 @@ insert into publisher (name) values
   ("Westwood Studios"),
   ("Kingsile");
 
+```
+
+## Retrieving Data
+
+* You can pull data out of a database using the `select` statement
+* To pull every single record and every single column value you can use a wildcard: `*`
+
+```sql
+
+-- retrieves every game record
+-- * is the wild card and selects every column in the *result set*
+select * from game;
+select * from publisher;
+
+-- you can be more selective with your columns
+select gameId, name from game;
+
+-- you can use an "alias" to rename a column:
+select name as gameTitle from game;
+```
+
+### Using Aggregates to count or sum data
+
+```sql
+
+
+select count(*) as numberOfTitles from game;
+select count(*) from publisher;
+
+-- you can be even more selective on your actual results
+-- using a where clause
+select * from game where name = "GTA";
+
+-- select all of the GTA games using a *partial string* match:
+-- The string wildcard % matches any number of any character
+select * from game where name like "G%";
+
+-- you can use any number of wildcards
+select * from game where name like "% %";
+
+-- you can match single characters using the underscore: _
+select * from game where name like "_a%";
+
+-- more aggregates: min, max, avg, sum
+select min(publishYear) from availability;
+select max(publishYear) from availability;
+select avg(publishYear) from availability;
+select sum(publishYear) from availability;
+
+```
+
+## Other Clauses
+
+```sql
+
+-- in general, results from a database are unordered
+-- you can impose an ordering using the ORDER BY clause
+select * from game order by name;
+
+-- by default it is ascending
+select * from game order by name asc;
+
+-- descending
+select * from game order by name desc;
+
+-- you can do a combination of two or more columns:
+select * from game order by publisherId, name desc;
+
+-- the distinct clause allows you to select unique items:
+select distinct publisherId from game;
+
+-- you can use the in clause like set notation...
+--
+select * from game where publisherId in (1, 3, 5);
+
+-- or using basic logic:
+select * from game where publisherId = 1 and (publisherId = 3 or publisherId = 5);
+select 234 * 4 - 3;
+
+-- subqueries:
+select * from game where publisherId
+  in (select publisherId from publisher where name = "LucasArts");
+
+```
+
+## Data Projections
+
+```sql
+
+-- how many games has each publisher published in our database?
+select publisherId, count(*) as numberOfGamesPublished from game group by publisherId;
+
+select * from publisher;
+
+-- joining two tables together...
+-- naively using a cross join:
+select count(*) from game;
+select count(*) from publisher;
+select 22 * 17;
+
+-- properly using an on clause for the foreign keys:
+select * from game
+  join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- table aliasing, omitting the "as" keyword
+select * from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+-- limit the columns:
+select p.name as publisherName, g.name as gameTitle from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+--  
+select p.name as publisherName, count(*) as numberOfGamesPublished from game g
+  join publisher p
+  on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+
+select p.name as publisherName, count(*) as numberOfGamesPublished from publisher p
+  join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+-- you need a left join to preserve records:
+select * from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+select p.name as publisherName, count(g.gameId) as numberOfGamesPublished from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+-- where clauses are executed before projection
+-- having clauses are exectued after hte projection
+select p.name as publisherName, count(g.gameId) as numberOfGamesPublished from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  -- where p.name = 'LucasArts'
+  group by p.publisherId
+  having numberOfGamesPublished < 3;
+
+
 
 ```
 
 ```text
+
+
+
+
 
 
 

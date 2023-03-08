@@ -307,6 +307,38 @@ select * from publisher p
    * Should we have 3 tables one for each class?
 
 
+
+```sql
+
+drop table if exists Email;
+drop table if exists Person;
+drop table if exists Account;
+
+-- by default, all values are "nullable"
+-- "not null" specifies that they cannot be nullable
+create table if not exists Person (
+  personId int not null primary key auto_increment,
+  -- allowed to be null (TODO: reconsider this)
+  firstName varchar(255),
+  lastName varchar(255) not null,
+  birthDate varchar(10) not null default "0000-00-00"
+);
+
+create table if not exists Email (
+  emailId int not null primary key auto_increment,
+  address varchar(255) not null,
+  personId int not null,
+  foreign key (personId) references Person(personId)
+);
+
+create table if not exists Account (
+  accountId int not null primary key auto_increment,
+  accountNumber varchar(255) not null unique key
+);
+
+
+```
+
 ```text
 
 
