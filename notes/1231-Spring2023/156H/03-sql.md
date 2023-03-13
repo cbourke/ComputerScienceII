@@ -310,6 +310,7 @@ select * from publisher p
 
 ```sql
 
+drop table if exists Ownership;
 drop table if exists Email;
 drop table if exists Person;
 drop table if exists Account;
@@ -324,6 +325,12 @@ create table if not exists Person (
   birthDate varchar(10) not null default "0000-00-00"
 );
 
+insert into Person (personId,firstName,lastName) values
+  (10, "Chris", "Bourke"),
+  (20, "Anita", "Borg"),
+  (30, "Magaret", "Hamilton"),
+  (40, "Alan", "Turing");
+
 create table if not exists Email (
   emailId int not null primary key auto_increment,
   address varchar(255) not null,
@@ -333,11 +340,35 @@ create table if not exists Email (
 
 create table if not exists Account (
   accountId int not null primary key auto_increment,
-  accountNumber varchar(255) not null unique key
+  accountNumber varchar(255) not null unique key,
+  type varchar(1) not null,
+  -- Savings account data:
+  balance double,
+  apr double,
+  -- Annuity data:
+  monthlyPayment double,
+  termYears int,
+  constraint `validApr` check (apr >= 0 and apr <= 1)
+);
+
+create table if not exists Ownership (
+  ownershipId int not null primary key auto_increment,
+  personId int not null,
+  accountId int not null,
+  foreign key (personId) references Person(personId),
+  foreign key (accountId) references Account(accountId),
+  constraint `uniqueOwnershipPair` unique (personId,accountId)
 );
 
 
 ```
+
+# Observations
+
+* Naming convention: be consistent
+* Suggestion: `UpperCamelCasing` (singular form) for table names, `lowerCamelCasing` for columns
+* more after the break
+
 
 ```text
 

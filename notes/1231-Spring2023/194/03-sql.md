@@ -239,6 +239,79 @@ select p.name as publisherName, count(g.gameId) as numberOfGamesPublished from p
 
 ```
 
+# Creating/Designing Databases
+
+* Design a database to support our little financial asset application: support owner (person), their emails (any number), accounts: annuity, savings
+* Variation: we now want to support *joint* accounts: accounts with more than one owner
+* How should we handle inheritance?  
+
+```sql
+
+-- by default all column values are "nullable": they can
+-- have a null value (missing value)
+
+drop table if exists Email;
+drop table if exists Ownership;
+drop table if exists Person;
+drop table if exists Account;
+
+create table if not exists Person (
+  personId int not null primary key auto_increment,
+  firstName varchar(255),
+  lastName varchar(255) not null,
+  dateOfBirth varchar(10) not null default "0000-00-00"
+);
+
+insert into Person (personId,firstName,lastName,dateOfBirth)
+  values
+  (10, "Chris", "Bourke", "2020-01-01"),
+  (20, "Joe", "Schmoe", "1970-01-03"),
+  (30, "Jane", "Doe", "0000-00-00");
+
+create table if not exists Email (
+  emailId int not null primary key auto_increment,
+  address varchar(255) not null,
+  personId int not null,
+  foreign key (personId) references Person(personId)
+);
+
+insert into Email (address,personId) values
+  ("chris.bourke@unl.edu", 10),
+  ("cbourke@cse.unl.edu", 10),
+  ("jdoe@gmail.com", 30);
+
+select * from Person;
+select * from Person p
+  left join Email e on p.personId = e.personId;
+
+
+create table if not exists Account (
+  accountId int primary key not null auto_increment,
+  accountNumber varchar(255) not null unique key,
+  -- "Savings" or "Annuity"
+  type varchar(255) not null,
+  termYears int,
+  monthlyPayment double,
+  apr double,
+  balance double,
+  constraint `validApr` check (apr <= 1 and apr >=0)
+);
+
+
+
+create table if not exists Ownership (
+  ownershipId int primary key not null auto_increment,
+  personId int not null,
+  accountId int not null,
+  foreign key (personId) references Person(personId),
+  foreign key (accountId) references Account(accountId),
+  constraint `uniquePair` unique (personId,accountId)
+);
+
+
+
+```
+
 ```text
 
 

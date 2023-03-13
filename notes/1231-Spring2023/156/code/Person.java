@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  * Represents a person
- * 
+ *
  * @author cbourke
  *
  */
@@ -36,7 +36,7 @@ public class Person implements Comparable<Person> {
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
-	
+
 	public void addEmail(String email) {
 		this.emails.add(email);
 	}

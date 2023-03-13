@@ -322,11 +322,14 @@ select *
 ```sql
 
 drop table if exists Email;
+drop table if exists Ownership;
 drop table if exists Person;
+drop table if exists Account;
 
 create table if not exists Person (
   personId int primary key not null auto_increment,
-  firstName varchar(255), -- allowed to be null ?
+  -- TODO: allowed to be null?
+  firstName varchar(255),
   lastName varchar(255) not null,
   dateOfBirth varchar(10) not null default "0000-00-00"
 );
@@ -338,10 +341,36 @@ create table if not exists Email (
   foreign key (personId) references Person(personId)
 );
 
+create table if not exists Account (
+  accountId int primary key not null auto_increment,
+  accountNumber varchar(255) not null unique key,
+  -- S = Savings, A = Annuity
+  type varchar(1) not null,
+  monthlyPayment double,
+  termYears int,
+  balance double,
+  apr double, -- [0, 1]
+  constraint `aprIsValid` check (apr >= 0 and apr <= 1)
+);
+
+create table if not exists Ownership (
+  ownershipId int primary key not null auto_increment,
+  personId int not null,
+  accountId int not null,
+  foreign key (personId) references Person(personId),
+  foreign key (accountId) references Account(accountId),
+  constraint `uniquePair` unique (personId,accountId)
+);
+
 
 
 
 ```
+
+### Observations
+
+*
+
 
 ```text
 
