@@ -81,8 +81,7 @@ technical writing skills by evaluating the items listed in the rubric below.
       Who is the client, why are you designing/implementing this project, what
       is their business model, rules, etc.
   * Overall Design Description: 20pts
-    * This section should  The overview section should provide an overview of
-    the scope of the project.  
+    * This section should provide an overview of the scope of the project.  
     * You should make reference to the major components but leave the details
       to the other sections.
     * You should detail how each component fulfills the requirements detailed in
