@@ -363,13 +363,69 @@ create table if not exists Ownership (
 );
 
 
-
-
 ```
 
 ### Observations
 
-*
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Be consistent with naming
+  * Suggestion:
+    * Tables should have an `UpperCamelCasing` convention
+    * Columns should have a `lowerCamelCasing` convention
+    * Avoid pluralizations and abbreviations
+  * Make sure every table has a primary key
+    * `int not null auto_increment`
+    * Use `tableName + Id`, `personId, emailId`
+  * Foreign keys should have the *same name* as the primary keys that they reference
+  * Strings (`varchar`s) should not be used for PK or FK (casting issues, encoding issues, efficiency)
+  * Join tables should be used to model a many-to-many relationship
+  * Be sure to insert plenty of test data into your database
+  * Check and uniqueness constraints can be used to enforce *data integrity*
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* They build on each other: you cannot have a higher normal form without having ALL lower normal forms
+* First Normal Form: "each attribute in a table only has atomic values"
+  * Each column represents only ONE piece of data, ONE value
+  * Violation: stored a comma delimited list of emails in the `Person` table instead of a separate table
+  * Violation: having columns `email1, email2, email3`
+  * Be sure to separate data out into separate tables as necessary
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Using a PK auto-generated, not null gets you 2-NF automatically!
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * If the PK is a combination of `customerId/storeId` the `storeAddress` is only dependent on the second part
+  * It is often useful and necessary to define combination keys, but *keep them secondary*!
+  * You split everything out into its own table
+* Third Normal form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+  * Example: storing `termYears, monthlyPayment` for an annuity account but ALSO storing the `value` (`termYears * monthlyPayment * 12` )
+  * Storing data that is dependent on other data is *wrong*
+  * It gives a failure point: it introduces a possible data anomaly (if one value changes then the other value(s) may need to do so as well)
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is a LOT more
+  * Triggers, Views, Stored Procedures, Variables, etc
+  * Transactions: all or nothing series of queries
+  * Security issues: do not store sensitive info in a database unhashed/unencrypted:
+  * Soft vs Hard deletes: a hard delete is a result of a `delete` statement.  A soft delete involves defining a boolean column `isActive` that is true if the record is active, false if it is "deleted"
+  * OOP Model vs Relational Model
+    * OOP model allows *inheritance*
+    * RDBMs do not have inheritance
+    * You need a way to resolve the difference in these two models
+    * You can create a table per class/subclass
+    * Single table inheritance strategy: one table represents all subtypes and you use a *discriminator* column to tell difference
+    * you use a string to indicate the subtype of the class.  
+    * Some columns may be relevant to some subtypes, others may irrelevant; simply allow them to be null to model this
+
+## Programmatically Connecting to a Database & Processing Data
+
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download and "install" the Connector/J jar file for MySQL
 
 
 ```text

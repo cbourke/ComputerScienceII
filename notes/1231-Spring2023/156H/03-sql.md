@@ -367,7 +367,63 @@ create table if not exists Ownership (
 
 * Naming convention: be consistent
 * Suggestion: `UpperCamelCasing` (singular form) for table names, `lowerCamelCasing` for columns
-* more after the break
+* Make sure every table as a PK `int not null auto_increment` and name it after the table: `tableName + Id`
+* Make sure that foreign keys match the name of the table/column they refer to
+* avoid using strings for PK and FK: you have too many casing and encoding issues to deal with
+* Join tables can be defined with multiple foreign keys to model a many-to-many relation
+* Be sure to insert plenty of test data into each and every table!
+* Check and uniqueness constraints can be used to enforce *data integrity*
+* Have good normalization
+
+## Normalization
+* 1-NF, 2-NF, 3-NF
+* First Normal Form: "each attribute in a table has only atomic values"
+  * Each column in a table only holds ONE piece of data, ONE value, NOT multiple
+  * Violation: storing multiple emails for a person in an "email" column and separting them using commas (CSV data in a RDBMS)
+  * Violation: storing emails in enumeratd columns: `email1, email2, email3`
+  * Simply define another table to model any one-to-many relation
+* Second Normal Form: it has to be 1-NF and: "no non-prime attribute is dependent on a proper subset of prime attributes"
+  * Using a PK auto-generated, non-null key gets you 2-NF for free
+  * Violation: suppose we stored a `customerId, storeId, storeAddress` all in one table and defined a PK as `customerId/storeId`
+  * `storeAddress` only depends on *part* of the PK: violation of 2nd normal form
+  * You split everything out into its own table
+  * Often you *do* want to define a compound key, but it should almost NEVER be a PK
+* Third Normal form: 2-NF (by transitivity, 1-NF): no non-prime column is transitively dependent on the key
+* Suppose you stored `monthlyPayment` AND `termYears` AND `totalValue` into the `Account` table
+* Store only *DATA* NOT behavior (derived data)
+* It would be a violation of 3-NF to store `totalValue`
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is a lot more to learn about
+* There are other nice practical things:
+  * Triggers
+  * Views: read-only access to a table, series of tables or part of a table
+  * Stored Procedures
+  * Loops, variables (cursors) etc.
+  * Temp tables (temporary tables)
+* Security Issues:
+  * Don't store sensitive data in a database (unencrypted or unhashed)
+  * In general: don't roll your own!
+* Soft vs Hard deletes: a hard delete is when you use the `delete` query to remove data (no undo, no recycle bin, etc.); soft delete: add an `isActive` column to a table that you set to true/false
+* OOP vs Relational model
+  * OOP model allows *inheritance*
+  * RDBMs do not have inheritance
+  * You need a way to resolve the difference in these two models
+  * You can create a table per class/subclass
+  * You can create a table per stub class: only one table per subclass that has no subclasses
+  * You can use a "single table inheritance strategy"
+  * You can create one table for all subtypes and use a *discriminator column*
+  * you use a string to indicate the subtype of the class.  
+  * Some columns may be relevant to some subtypes, others may irrelevant; simply allow them to be null to model this
+
+## Programmatic Database Access
+
+* We want to be able to connect to a database and process data programmatically (using Java)
+* You typically use a database connectivity API (Appliation Programmer Interface)
+* The API is generally *generic* and does not connect to a particular database (MySQL vs MariaDB vs MSSQL vs Informix, PostgreSQL)
+* Dependency Inversion in practice!
 
 
 ```text
