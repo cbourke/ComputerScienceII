@@ -378,6 +378,72 @@ create table if not exists Ownership (
 * Getting Started:
   * Download and "install" the Connector/J jar file for MySQL
 
+### Overview
+
+* Goal: programmatically connect to a database and process or persist (save) data
+* Most languages have some support for *database connectivity*
+* Java: JDBC = Java DataBase Connectivity API
+* API = Application Programmer Interface
+* Perfect illustration of *Dependency Inversion*
+* Don't program toward a specific database, but a generic interface
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+#### Process:
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
+
+## Best Practices
+
+### Avoid the star operator
+
+* Example: don't do `select * from Person` in JDBC
+* This sends ALL data over the wire (network) whether or not you're going to use it!
+* Be more intentional: only select the columns you are actually going to use so that you are not sending redundant or useless data over the network
+* Future proofs you: if someone comes in and adds a new column with a lot of data `blob`s = binary large objects
+
+### Security Issues
+
+* For this course (only) are we storing the password in a Java source file
+* This is unfortunately common
+* For this course: use passwords you do not care about
+* In practice: you don't store the password you either:
+  * Define a "data source" or
+  * You set it up to enter it ONCE without storing it
+  * Network policies/firewall is also an option
+
+### Close Your Resources!
+
+* Failure to close your resources wastes them
+* You may *runout* of connections!
+* make sure to close them in the proper order
+
+### Dealing with `SQLExceptions`
+
+* Unfortunately most operations throw a checked `SQLException` that *has* to be caught and dealt with
+* Just catch and release: rethrow the exception as a `RuntimeExcpeion`
+* You *may* even want to log the error *then* rethrow it
+* If you do do logging, then use a proper library; `System.out` or `System.err` are not proper logging libraries!
+* Solution: use a logging library such as log4j
+
+### Always Use `PreparedStatements`
+
+* In general, strings can contain anything including SQL code!
+* Without sanitizing your code, you are susceptible to an *SQL Injection* attack: a user *may* be able to execute arbitrary SQL code on your database!
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+* Never use anything else!
+* Its just simpler to use on method to connect to a database
+
+
 ```text
 
 
