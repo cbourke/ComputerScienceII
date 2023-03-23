@@ -427,6 +427,29 @@ create table if not exists Ownership (
 * Getting Started:
   * Download and "install" the Connector/J jar file for MySQL
 
+### Overview
+
+* Goal: programmatically connect to a database and process or persist (save) data
+* Most languages have some support for *database connectivity*
+* Java: JDBC = Java DataBase Connectivity API
+* API = Application Programmer Interface
+* Perfect illustration/use of Dependency Inversion: you do not write code that connects to MySQL, you write code that interacts with an API
+* JDBC:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+### Process
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Close your resources
+
 
 ```text
 

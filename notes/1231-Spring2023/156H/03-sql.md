@@ -418,12 +418,27 @@ create table if not exists Ownership (
   * you use a string to indicate the subtype of the class.  
   * Some columns may be relevant to some subtypes, others may irrelevant; simply allow them to be null to model this
 
-## Programmatic Database Access
+## JDBC: Programmatic Database Access
 
 * We want to be able to connect to a database and process data programmatically (using Java)
 * You typically use a database connectivity API (Appliation Programmer Interface)
 * The API is generally *generic* and does not connect to a particular database (MySQL vs MariaDB vs MSSQL vs Informix, PostgreSQL)
 * Dependency Inversion in practice!
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+### Process
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process the results
+4. Close your resources
 
 
 ```text

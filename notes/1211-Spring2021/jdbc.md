@@ -7,7 +7,7 @@
 * Most languages have some support for *database connectivity*
 * Java: JDBC = Java DataBase Connectivity API
 * API = Application Programmer Interface
-* Perfect illustration of *Dependency Inversion* 
+* Perfect illustration of *Dependency Inversion*
 * Don't program toward a specific database, but a generic interface
 * Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
 * JDBC provides:
@@ -23,7 +23,7 @@
 #### Process:
 
 0. MAY need to load a JDBC driver
-1. Create a connection to your database: need user name, password, URL 
+1. Create a connection to your database: need user name, password, URL
 2. Create/prepare your query
   - prepare the query
   - execute the query
@@ -33,12 +33,12 @@
 
 ### Avoid the star operator
 
-* Using the SQL `*` operator selects ALL column values and sends them over the wire, taking network bandwith!
+* Using the SQL `*` operator selects ALL column values and sends them over the wire, taking network bandwidth!
 * Don't waste bandwidth!
 * If you are not going to use or need the data, don't query it
 * Only query that which you need
 * Cut down on redundancies: joins mean that redundant data is transmitted
-* not using the `*` operator protects you from weird database changes 
+* not using the `*` operator protects you from weird database changes
 
 ### Security Issues
 
@@ -48,7 +48,7 @@
 * In practice: you don't store the password you either:
   * Define a "data source" or
   * You set it up to enter it ONCE without storing it
-  
+
 ### Close Your Resources!
 
 * Failure to close your resources wastes them
@@ -69,7 +69,7 @@
 * Without sanitizing your code, you are susceptible to an *SQL Injection* attack: a user *may* be able to execute arbitrary SQL code on your database!
 * `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
 * Never use anything else!
-* Its just simpler to use on method to connect to a database 
+* Its just simpler to use on method to connect to a database
 
 LoadData.java:
 
@@ -93,30 +93,30 @@ import org.apache.logging.log4j.core.config.DefaultConfiguration;
 
 
 public class LoadData {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(LoadData.class);
 
 	static {
-		//configure the logger: 
+		//configure the logger:
 		Configurator.initialize(new DefaultConfiguration());
 	    Configurator.setRootLevel(Level.INFO);
 	}
-	
+
 	public static Director getDirectorByName(Director d) {
 		Director result = null;
-		
+
 		//1. Make your connection:
 		String url = "jdbc:mysql://cse.unl.edu/cbourke?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user = "cbourke";
 		String password = "Just4156";
-		
+
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		//2. formulate your query...
 		String query = "select directorId from Director where firstName = ? and lastName = ?;";
 		PreparedStatement ps = null;
@@ -134,7 +134,7 @@ public class LoadData {
 			} else {
 				result = null;
 				LOGGER.warn("Cannot find director with name = " + d.getLastName() + ", " + d.getFirstName());
-				
+
 				//throw new IllegalStateException("Cannot find director with id = " + directorId);
 			}
 			rs.close();
@@ -143,27 +143,27 @@ public class LoadData {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
-		
+
+
 		return result;
 	}
-	
+
 	public static Director getDirectorById(int directorId) {
 
 		Director d = null;
-		
+
 		//1. Make your connection:
 		String url = "jdbc:mysql://cse.unl.edu/cbourke?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user = "cbourke";
 		String password = "Just4156";
-		
+
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		//2. formulate your query...
 		String query = "select lastName, firstName from Director where directorId = ?;";
 		PreparedStatement ps = null;
@@ -189,15 +189,15 @@ public class LoadData {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
-		
+
+
 		return d;
 	}
-	
+
 	public static List<Film> getAllFilms() {
-		
+
 		List<Film> results = new ArrayList<>();
-		
+
 //		String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
 //		//0. Load the JDBC Driver
 //		try {
@@ -209,19 +209,19 @@ public class LoadData {
 //		} catch (ClassNotFoundException e) {
 //			throw new RuntimeException(e);
 //		}
-		
+
 		//1. Make your connection:
 		String url = "jdbc:mysql://cse.unl.edu/cbourke?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String user = "cbourke";
 		String password = "Just4156";
-		
+
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		//2. formulate your query...
 		String query = "select filmId, title, directorId from Film;";
 		PreparedStatement ps = null;
@@ -247,17 +247,17 @@ public class LoadData {
 			throw new RuntimeException(e);
 		}
 
-		
+
 		return results;
-		
+
 	}
-	
+
 	public static void main(String args[]) {
 
 	    LOGGER.info("Starting...");
 		Director d = getDirectorById(-42);
 		System.out.println(d);
-		
+
 		//pull all films...
 		List<Film> films = getAllFilms();
 		for(Film f : films) {
@@ -279,11 +279,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SaveData {
-	
+
 	public static Director getOrInsertDirector(Director d) {
-		
+
 		Director result = null;
-		
+
 		//1. if the director already exists, get it:
 		Director existingDirector = LoadData.getDirectorByName(d);
 		if(existingDirector == null) {
@@ -326,9 +326,9 @@ public class SaveData {
 		} else {
 			return existingDirector;
 		}
-		
+
 	}
-	
+
 
 	public static void insertFilm(Film f) {
 		// 1. Make your connection:
