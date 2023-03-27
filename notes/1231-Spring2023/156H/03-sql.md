@@ -440,6 +440,69 @@ create table if not exists Ownership (
 3. Process the results
 4. Close your resources
 
+## Best Practices
+
+### Avoid the star operator
+
+* Using the SQL `*` operator selects ALL column values and sends them over the wire, taking network bandwidth!
+* Don't waste bandwidth!
+* If you are not going to use or need the data, don't query it
+* Only query that which you need
+* Cut down on redundancies: joins mean that redundant data is transmitted
+* not using the `*` operator protects you from weird database changes
+
+### Security Issues
+
+* For this course (only) are we storing the password in a Java source file
+* This is actually (unfortunately) common
+* For this course: use a password you do not care about!
+* In practice: you don't store the password you either:
+  * Define a "data source" or
+  * You set it up to enter it ONCE without storing it
+
+### Close Your Resources!
+
+* Failure to close your resources wastes them
+* You may *runout* of connections!
+* make sure to close them in the proper order
+
+### Always Use `PreparedStatements`
+
+* In general, strings can contain anything including SQL code!
+* Without sanitizing your code, you are susceptible to an *SQL Injection* attack: a user *may* be able to execute arbitrary SQL code on your database!
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+* Never use anything else!
+* Its just simpler to use on method to connect to a database
+
+### Other items
+
+* Proper Logging Systems
+* Better connection management: a connection pool!
+* JPA (later)
+
+# Concurrency
+
+* Asynchronicity: a task does not *block* the remainder of the program
+```
+task1;
+task2;
+async task3;
+task4;
+```
+
+* Multithreading: multiple threads running independent (may be on one core,
+  allowing for scheduling, waiting processes; waiting on I/O)
+* Parallel Computing: multiple processes or threads running on different cores
+    (generally same machine) at the same time
+* Benefits:
+  * Efficiency: Time $\rightarrow$ Time / n
+* Java:
+  * `Thread` (full thread implementation)
+  * `Callable` (returns a result, blocks until done)
+  * `Runnable` (does not return a result)
+  * `Future` (provides a "future" value, runs at its convenience, blocks when
+  asked for a result that is not complete)
+
 
 ```text
 

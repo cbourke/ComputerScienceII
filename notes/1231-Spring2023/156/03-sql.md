@@ -450,6 +450,46 @@ create table if not exists Ownership (
 3. Process your results
 4. Close your resources
 
+## Best Practices
+
+### Avoid the star operator
+
+* Using the star operator: `select * ...` is okay when using MySQL Workbench (debugging/development/etc)
+* In a real system you should not pull all of the data unless you are going to use it!
+* Be intentional: specify the columns you want and ONLY those columns (even if it is all of them)
+* It also future proofs you: some DBA could change the data model and our code may then be pulling data it does not use
+
+### Security Issues
+
+* For this course ONLY we are storing passwords in plaintext in a Java source file
+* This is actually (unfortunately) common
+* In practice:
+  * You define a password-less "data source"
+  * Don't use passwords at and shut off or control access at the network level (firewalling)
+
+### Close Your Resources!
+
+* Failure to close your resources wastes them
+* You may *runout* of connections!
+* make sure to close them in the proper order
+
+### Dealing with `SQLExceptions`
+
+
+* Unfortunately most operations throw a checked `SQLException` that *has* to be caught and dealt with
+* Just catch and release: rethrow the exception as a `RuntimeExcpeion`
+* You *may* even want to log the error *then* rethrow it
+* If you do do logging, then use a proper library; `System.out` or `System.err` are not proper logging libraries!
+* Solution: use a logging library such as log4j
+
+### Always Use `PreparedStatements`
+
+* In general, strings can contain anything including SQL code!
+* Without sanitizing your code, you are susceptible to an *SQL Injection* attack: a user *may* be able to execute arbitrary SQL code on your database!
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+* Never use anything else!
+* Its just simpler to use on method to connect to a database
+
 
 ```text
 
