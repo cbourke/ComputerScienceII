@@ -1,0 +1,46 @@
+# Lists & List-based Data Structures
+## CSCE 156H - Spring 2023
+
+### Introduction/Overview
+
+* Motivation: dynamic data structures (lists, sets, maps) are *way* better than simple arrays
+* Leverages OOP principles (encapsulation, abstraction, polymorphism, inheritance)
+
+### Arrays are "Bad"
+
+* Once created, the size is essentially fixed
+* We have to do a lot of bookkeeping to keep track of which indices have been "used" and which are free
+* Deleting or removing elements may leave "gaps"
+
+### Solution: List data structure
+
+* Automatically grow and shrink without us having to worry about the details
+* We want the ability to:
+  * Add stuff
+  * Retrieve stuff
+  * Remove stuff
+  * Modify stuff
+* We want all the details to be *encapsulated* inside the data structure and not have to worry about them
+* We want an abstraction: an interface that specifies how to *use* the list, not necessarily how it works
+
+## Linked Lists
+  * No underlying array, instead elements are stored inside of individual "nodes"
+  * Each node references its *element* and the *next* node
+  * Each node is "chained" or "linked" together
+  * Each basic operation involves *traversing* the list
+
+```text
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
