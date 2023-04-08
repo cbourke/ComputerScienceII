@@ -36,7 +36,7 @@ to CSCE 310.
 Students are responsible for knowing the university policies and
 resources found on this page: https://go.unl.edu/coursepolicies
 
-## Skills Objectives
+## Learning & Skills Objectives
 
 Throughout the duration of this course, you will be presented with a lot
 of information, some of which will have immediate application and some
@@ -44,20 +44,20 @@ whose importance is not immediately apparent. As a different measure of
 your success in this course, by the end, you should have the following
 skills.
 
--   Be able to more easily pick up and learn a new programming language
+1.  Be able to more easily pick up and learn a new programming language
     on your own
 
--   Be able to recognize, use, design and appreciate programs with an
+2.  Be able to recognize, use, design and appreciate programs with an
     object-oriented flavor
 
--   Be able to design a database-backed application from scratch given a
+3.  Be able to design a database-backed application from scratch given a
     general problem statement
 
--   Be able to understand and implement basic data structures as well as
+4.  Be able to understand and implement basic data structures as well as
     recognize how and when to leverage appropriate simple data
     structures
 
--   Be able to identify and analyze basic algorithms
+5.  Be able to identify and analyze basic algorithms
 
 Overall, CS2 is a continuation of CS1. At the end of a typical CS1
 course, you should be able to approach a reasonably complex problem,
