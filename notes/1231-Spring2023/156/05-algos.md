@@ -162,10 +162,18 @@ $$\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)}$$
   * Linear: $O(n)$ (linear search)
   * Quasilinear: $O(n\log{(n)})$ (efficient sorting algos)
   * Quadratic: $O(n^2)$ (selection sort, insertion sort)
-  * Cubic: $O(n^2)$
+  * Cubic: $O(n^3)$
   * Polynomial: $O(n^k)$
   * Exponential $O(2^n)$
   * Superexponential: $O(n!)$
+
+### Analysis of Recursive Algorithms
+
+* Quick Sort
+
+1. You define a *recursive* function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of "recursive" work: how many calls to the function do you make and how big is the input size for each call?
+3. You "solve" the recursion
 
 ```text
 

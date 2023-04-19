@@ -118,6 +118,30 @@ Definition: let $f(n)$ and $g(n)$ be two functions (for our purposes, they repre
   $$f(n) \leq c g(n)$$
 for all $n \geq n_0$
 
+### Proofs
+
+* Given two functions: $f(n)$ and $g(n)$ how do you prove that $f(n) = O(g(n))$
+* Several techniques:
+  * Approach A: find a "cross over point": the largest value of $n$ for which the two functions intersect (have the same value).  Ie: Finding roots
+  * Approach B: Simply setup an inequality and make your function bigger and bigger until it matches $g(n)$
+  * Approach C: setup a limit
+  $$\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)}$$  
+    * If the limit converges to zero, then $f(n) = O(g(n))$
+    * If the limit diverges to $\infty$ then $g(n) = O(f(n))$
+    * If the limit converges to $c > 0$ then they have the same rate of growth, $f(n) = \Theta(g(n))$
+    * Theta means that $f(n) = O(g(n))$ AND $g(n) = O(f(n))$
+
+### Categories of functions
+
+* Constant: $O(1)$ (formula calculation)
+* Logarithmic: $O(\log{(n)})$ (binary search)
+* Linear: $O(n)$ (linear search)
+* Quasilinear: $O(n\log{(n)})$ (quick sort, merge sort)
+* Quadratic $O(n^2)$ (insertion sort, selection sort)
+* Cubic: $O(n^3)$ (transitive closure computations)
+* Polynomial $O(n^k)$
+* Exponential: $O(2^n)$ (subsets, combinations)
+* Superexponential: $O(n!)$ 
 
 
 
