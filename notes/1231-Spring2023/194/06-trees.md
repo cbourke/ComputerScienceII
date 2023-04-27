@@ -61,6 +61,40 @@
 * Observation: in a *full* binary tree, the depth is logarithmic: $d = O(\log{n})$
 * ***IF*** we can make all operations proportional to the depth of the tree AND we can guarantee that the tree is "full" (or nearly full or "balance") then we've achieved our goal!
 
+### Implementation
+
+* See Java Code
+
+## Operations
+
+### Tree Traversals
+
+* In general, you start at the root
+* Goal: be able to enumerate/view/traverse every single node without missing any
+* Preorder traversal
+  * Recursively visits nodes in a root-left-right manner
+* Inorder traversal
+  * Recursively visits nodes in a left-root-right manner
+* Postorder traversal
+  * Recursively visits nodes in a left-right-root manner
+* Breadth First Search: top-to-bottom, left-to-right (using a queue)
+
+## Binary Search Trees
+
+Observation:
+  * Preorder/inorder/postorder/BFS are all linear algorithms: $O(n)$ ($n$ nodes in the tree)
+  * Each node is "processed" exactly once and "visited" at most 3 times (still $O(n)$)
+  * We need more structure!
+
+Property/Definition:
+  * Each  node contains data and a key (for our purposes the key will be the data)
+  * The tree will have the following Binary Search Tree structure/property: for each node $u$, *every* key in $u$'s left tree will have a key value LESS than $u$, every node in $u$'s right tree will have a key value *greater* than $u$
+  * To find an element, you simply need to traverse one way or the other until you find it (similar to binary search)
+  * All searches will be $O(d)$ where $d$ is the depth of the tree
+  * Observe: if the depth is "efficient" $d = O(\log{(n)})$ then searching is efficient
+  * However this is not a guarantee
+
+
 
 ```text
 

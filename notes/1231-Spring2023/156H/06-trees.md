@@ -62,6 +62,12 @@
 * *IF* we can make all operations proportional to the depth, they *may* be efficient
 * If we can make all operations proportional to $d$ AND $d = O(\log{(n)})$ then we have efficient operations for all operations!
 
+### Implementation (Java)
+
+* Demonstration
+
+### Tree Traversals
+
 ```text
 
 

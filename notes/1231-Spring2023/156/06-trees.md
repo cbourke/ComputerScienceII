@@ -53,7 +53,13 @@
 
 * Generally we will store data in each node
 * Operations (search, insert, delete) will always begin at the root node
-* IF we can define operations with efficiency proportional to the depth, we *may* be able to make them very efficient 
+* IF we can define operations with efficiency proportional to the depth, we *may* be able to make them very efficient
+
+### Implementation (Java)
+
+* Demonstration
+
+
 
 ```text
 
