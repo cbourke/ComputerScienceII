@@ -58,7 +58,19 @@
 ### Implementation (Java)
 
 * Demonstration
+* Each of the traversal strategies is $O(n)$
+* We need more structure
 
+## Binary Search Trees
+
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* Binary Search Tree: all nodes have a *key* element, $k$
+* For every node, the key value of all nodes in its "left-sub-tree" have a key value strictly less than $k$
+* For every node, the key value of all nodes in its "right-sub-tree" have a key value strictly greater than $k$
+
+### Implementation & Operations
+
+* Demonstration
 
 
 ```text

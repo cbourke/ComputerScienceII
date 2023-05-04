@@ -68,6 +68,28 @@
 
 ### Tree Traversals
 
+* In general, you start at the root
+* Goal: be able to enumerate/view/traverse every single node without missing any
+* Preorder traversal
+  * Recursively visits nodes in a root-left-right manner
+* Inorder traversal
+  * Recursively visits nodes in a left-root-right manner
+* Postorder traversal
+  * Recursively visits nodes in a left-right-root manner
+* Breadth First Search: you use a queue (FIFO)
+* All of these traversal strategies are $O(n)$:
+  * Each node is processed exactly once
+  * Each edge is traversed exactly twice
+  * Each node is visited at most 3 times
+
+## Binary Search Trees
+
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* Binary Search Tree: all nodes have a *key* element, $k$
+* For every node, the key value of all nodes in its "left-sub-tree" have a key value strictly less than $k$
+* For every node, the key value of all nodes in its "right-sub-tree" have a key value strictly greater than $k$
+
+
 ```text
 
 

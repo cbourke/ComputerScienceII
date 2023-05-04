@@ -94,7 +94,36 @@ Property/Definition:
   * Observe: if the depth is "efficient" $d = O(\log{(n)})$ then searching is efficient
   * However this is not a guarantee
 
+Operations:
+  * Search: You start at the root and compare to the current node, traversing left, right or stopping depending on the result
+  * Insert: always as a new leaf inserting where the element "should" be if it were already there
 
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* BSTs in general may have $d = O(n)$ which kills efficiency on all of the operations
+* Solution: "balanced" BSTs, AVL, 2-3/B-trees, Red-Black trees; each guaranteeing that $d = O(\log(n))$
+* A *heap* is a binary tree that has the following properties:
+  * It is *full*: every child is present at every level except possibly the last which is "full to the left"
+  * Heap Property: every key in each node is less than BOTH of its children's keys (min-heap)
+* The fullness property guarantees that the depth of the heap is *always* $d = O(\log{(n)})$
+* Heap property guarantees that the minimum element is always at the root
+* No other general conclusions can be made
+* Heaps are *not* general purpose data structures: it is a *restricted access* data structure
+* Two basic operations:
+  * Get/remove minimum element
+  * add element
+* add element:
+  * Always insert at the "next available" spot in order to maintain the fullness property
+  * "Heapify": you swap with parent elements until either the heap property is satisfied or you reach the root node
+  * In any case the number of comparisons/swaps is $O(d) = O(\log{(n)})$
+* Get/remove the minimum element:
+  * Save it off into a temp variable
+  * You "promote" the "last" element to the root
+  * Heapify *downward*: you swap with the minimum child until the heap property is satisfied or you reach a leaf
+  * In any case, the maximum number of comparisons/swaps is $d$ (depth)
+* Both operations are efficient: $O(\log{(n)})$
+* Java provides an efficient heap implementation using a `PriorityQueue<T>`
 
 ```text
 
