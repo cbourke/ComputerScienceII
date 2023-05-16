@@ -39,6 +39,11 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ## Course Offerings
 
+### Spring 2024
+
+- Course Link: TBD
+- Lectures: TBD
+
 ### Spring 2023
 
 - Course Link: https://canvas.unl.edu/courses/145553
