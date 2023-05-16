@@ -4,11 +4,27 @@ import os
 import glob
 import pprint
 
+#TODO: needs
+#  1. Troubleshooting
+#  2. Refactoring of Labs 3 - 15
+
 """
-Mapping of non-standard lab packages.  In general the
-default batch tester package/class will be unl.cse.BatchTest
+Batch JUnit test file.  This standalone batch tester accepts
+JUnit test suites as command line arguments, disables stdout, and
+runs the tests, reporting the results as a CSV 4-tuple
+(points,pass,fail,total)
 """
-labToPackage = {
+batchTestClass = "unl.soc.BatchTest"
+
+"""
+Mapping of lab (numbers using the handin directory names) to
+the fully qualified path/class names of the JUnit tests for each.
+"""
+junitTests = {
+    "L01": "unl.soc.StatisticsTests",
+    "L02": "unl.soc.NaturalTests unl.soc.ChildCreditTests",
+    "L03": "unl.soc.BaseballTests unl.soc.DnaAnalysisTests",
+    #TODO: the rest of the labs...
     "L04": "unl.cse.library.BatchTest",
     "L05": "com.cinco.payroll.BatchTest",
     "L09": "unl.cse.albums.BatchTest",
@@ -41,10 +57,6 @@ from canvasUtils import getGrade
 labName = f"Lab {args.labNumber:.1f}"
 labNumber = f"L{args.labNumber:02d}"
 login = args.login
-batchTestClass = "unl.cse.BatchTest"
-
-if labNumber in labToPackage:
-    batchTestClass = labToPackage[labNumber];
 
 # If login is specified, we cut the roster to a single student
 if login:
@@ -67,7 +79,7 @@ javac = "/usr/bin/javac"
 
 csvResult = "cseLogin,canvasId,points,pass,fail,totes\n"
 
-print(f"Grading {labName} using {batchTestClass} in {labNumber}...")
+print(f"Grading {labName} using {junitTests[labNumber]} in {labNumber}...")
 print(f"  Canvas Assignment: {canvasAssignment}")
 
 (good,bad,ugly) = (0,0,0)
@@ -102,7 +114,7 @@ for nuid,p in students.items():
 
     os.system(javacCmd)
 
-    javaCmd = java + " -cp ./:"+jars+" "+batchTestClass
+    javaCmd = f"{java} -cp ./:{jars} {batchTestClass} {junitTests[labNumber]}"
 
     result = subprocess.run([javaCmd, ""], shell=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
     if not result:
