@@ -89,6 +89,31 @@
 * For every node, the key value of all nodes in its "left-sub-tree" have a key value strictly less than $k$
 * For every node, the key value of all nodes in its "right-sub-tree" have a key value strictly greater than $k$
 
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* BSTs in general may have $d = O(n)$ which kills efficiency on all of the operations
+* Solution: "balanced" BSTs, AVL, 2-3/B-trees, Red-Black trees; each guaranteeing that $d = O(\log(n))$
+* A *heap* is a binary tree that has the following properties:
+  * It is *full*: every child is present at every level except possibly the last one, which is "full to the left"
+  * It satisfies the heap property: every key node value is less than *BOTH* of its children (min-heap)
+* Observations:
+  * The minimum is always at the root
+  * The fullness property guarantees that $d = O(\log{(n)})$
+  * IF the basic operations are $O(d)$ then they are efficient
+  * Can you support arbitrary operations? No: a heap is NOT a general collection data structure
+  * It is a *restricted access data structure*
+* Two basic operations:
+  * Get and remove the minimum element
+    * Save off the minimum in order to return it
+    * Promote the "last" element to the root
+    * Heapify down: compare and exchange with its minimum child until the heap property is satisified or you reach a leaf node
+    * $O(d) = O(\log{(n)})$
+  * add element
+    * You add it as the "last" element (deepest level all the way to the left)
+    * You "heapify": you compare/swap with its parent until the heap property is satisfied OR you reach the root node
+    * $O(d) = O(\log{(n)})$
+  * Big If: we assumed you had access to the last element AND "free" access to the next available slot
 
 ```text
 

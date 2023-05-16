@@ -72,6 +72,31 @@
 
 * Demonstration
 
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* BSTs in general may have $d = O(n)$ which kills efficiency on all of the operations
+* Solution: "balanced" BSTs, AVL, 2-3/B-trees, Red-Black trees; each guaranteeing that $d = O(\log(n))$
+* Our solution: a *Heap* data structure: it is a binary tree that has the following properties:
+  * It is *full*: every child is present at every level except for possibly the last (deepest) level but at that level, all nodes are "full to the left"
+  * It satisfies the *heap property*: the key of every node is less than *both* its children (min heap)
+* OBservations:
+  * The fullness property guarantees that the depth of a heap is logarithmic: $O(\log{(n)})$
+  * The minimum element is always at the root
+  * if the operations can be made $O(d)$ then they are efficient
+  * NOT a general purpose data structure
+* Two basic operations:
+  * Get and remove the minimum element
+    * Save off the element to return it
+    * Replace the root (minimum) with the "last" element at the bottom of the heap all the way to the right
+    * Heapify downwards: make comparisons and swap with the MINIMUM child until you reach a leaf or the heap property is satisfied
+    * In any case, the operation is $O(d) = O(\log{(n)})$
+  * Add an element:
+    * Insert at the "next" available slot at the bottom of the heap (satisfies the fullness property)
+    * Heapify: compare it with its parent and swap until the heap property is satisfied or you reach the root node
+    * In any case, the operation is $O(d) = O(\log{(n)})$
+* A restricted access data structure!
+* A typical application of a heap is a *priority queue*
 
 ```text
 

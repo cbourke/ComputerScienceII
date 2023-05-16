@@ -81,9 +81,6 @@
 * For every node, the key value of all nodes in its "left-sub-tree" have a key value strictly less than $k$
 * For every node, the key value of all nodes in its "right-sub-tree" have a key value strictly greater than $k$
 
-### Implementation & Operations
-
-* Demonstration
 
 ## Heaps
 
