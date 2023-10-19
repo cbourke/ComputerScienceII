@@ -1,0 +1,1213 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template
+%  Beamer Presentation by Chris Bourke
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{beamer}
+
+\usepackage{tikz}
+
+\geometry{papersize={14cm,9cm}}
+
+% For handout version:
+\usetheme[hideothersubsections]{UNLTheme}
+
+\usepackage{amssymb}
+%\usepackage{wasysym}
+\input{StandardCommands}
+\definecolor{mintedBackground}{rgb}{0.95,0.95,0.95}
+\definecolor{mintedInlineBackground}{rgb}{.90,.90,1}
+
+%\usepackage{newfloat}
+\usepackage{minted}
+\setminted{mathescape,
+               linenos,
+               autogobble,
+               frame=none,
+               fontsize=\small,
+               framesep=2mm,
+               framerule=0.4pt,
+               %label=foo,
+               xleftmargin=2em,
+               xrightmargin=0em,
+               startinline=true,  %PHP only, allow it to omit the PHP Tags *** with this option, variables using dollar sign in comments are treated as latex math
+               numbersep=10pt, %gap between line numbers and start of line
+               style=default, %syntax highlighting style, default is "default"
+               			    %gallery: http://help.farbox.com/pygments.html
+			    	    %list available: pygmentize -L styles
+               bgcolor=mintedBackground} %prevents breaking across pages
+               
+\setmintedinline{bgcolor={mintedInlineBackground}}
+\setminted[text]{bgcolor={},linenos=false,autogobble,xleftmargin=1em}
+
+\usepackage{subfig}
+
+\title[~]{Introduction to Databases \& SQL}
+\subtitle{Computer Science II -- Introduction to Computer Science II}
+\author[Bourke]{Christopher M. Bourke\\ \email{cbourke@cse.unl.edu}} %
+\date{~}
+
+\begin{document}
+
+\begin{frame}
+        \titlepage
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}
+    \frametitle{Introduction to Databases \& SQL}
+    \framesubtitle{}
+
+\begin{itemize}
+  \item Lifetime of a program is short-lived
+  \item Applications perform small ephemeral operations
+  \item Can crash and die
+  \item Programs may be limited to sessions or even single requests
+  \item Need a way to \emph{persist} data or program state across program lives
+  \item Databases provide such a means
+\end{itemize}
+
+\end{frame}
+
+%\begin{frame}[fragile]
+%  \frametitle{Listings}
+%  \framesubtitle{~}
+%
+%  The following code:
+%\begin{minted}{sql}
+%CREATE TABLE Student (
+%    id primary key not null auto_increment,
+%    first_name varchar(50),
+%    last_name varchar(50),
+%    nuid varchar(8)
+%);
+%\end{minted}
+%\end{frame}
+
+\section{Relational Databases}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Motivating Example}
+    \framesubtitle{Flat Files}
+
+Consider the following data, stored in a \emph{flat file}:
+\begin{table}[h]
+{\tiny
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Course & Course Name & Student & NUID & Email\\
+\hline
+\hline
+          & & waits, tom & 11223344 & tomwaits@hotmail.com \\
+CSCE 156 & Intro to CSII & Lou Reed & 11112222 & reed@gmail.com \\
+CSCE 156 & Intro to CSII & Tom Waits & 11223344 & twaits@email.com \\
+CSCE 230 & Computer Hardware & Student, J.& 12345678 & jstudent@geocities.com \\
+CSCE 156 & Intro to CSII & Student, John & 12345678 & jstudent@geocities.com \\
+CSCE 230 & Computer Hardware & Student, J.& 12345678 & jstudent@geocities.com \\
+CSCE 235 & Discrete Math & Student, John & 12345678 & jstudent@geocities.com \\
+CSCE 235 & Discrete Math & Tom Waits & 11223344 & twaits@email.com \\
+NONE & Null & Tom Waits & 11223344 & twaits@email.com \\
+\hline
+\end{tabular}
+}
+\caption{Course enrollment data}
+\end{table}
+
+\framebreak
+
+Problems?
+\begin{itemize}
+  \item Repetition of data
+  \item Incomplete data
+  \item Integrity of data
+  \item Organizational problems: any aggregation requires processing all records
+  \item Updating information is difficult (must enumerate all possible changes, side effects so that information is not lost)
+  \item Formatting Issues
+  \item Concurrency Issues
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Relational Databases}
+    \framesubtitle{Key Aspects}
+
+Solution: Relational Database Systems (RDBS) or Relational Database Management System (RDMS)
+\begin{itemize}
+  \item Stores data in \emph{tables}
+  \item Tables have a unique name and type description of its \emph{fields} (integer, string)
+  \item Each column stores a single piece of data (field)
+  \item Each row represents a record (or object!)
+\framebreak
+  \item Each row may have a unique \emph{primary key} which may be
+  \begin{itemize}
+    \item Automatically incremented
+    \item An external unique identifier: SSN, ISBN, NUID
+    \item Based on a combination of fields (Geographical data)
+  \end{itemize}
+  \item Rows in different tables are related to each other through \emph{foreign keys}
+  \item Order of rows/columns is meaningless
+\framebreak
+  \item Supports \emph{Transactions}: an interaction or batch of interactions treated as one \emph{unit}
+  \item Constraints
+  \begin{itemize}
+    \item Allowing or disallowing NULL
+    \item Disallowing ``bad'' values (ranges)
+    \item Enforcing formatting (capitalization, precision)
+    \item Limiting combinations of data fields
+  \end{itemize}
+\framebreak
+  \item ACID principles
+  \begin{itemize}
+    \item \textbf{Atomicity} -- Data transactions must be an all-or-nothing process
+    \item Atomic operation: not divisible or decomposable
+    \item \textbf{Consistency} -- Transactions will retain a state of \emph{consistency}
+    \item All constraints, triggers, cascades preserve a valid state after the transaction has completed
+    \item \textbf{Isolation} -- No transaction interferes or is even aware of another; state transitions are equivalent to serial transactions
+    \item \textbf{Durability} -- Once committed, a transaction remains so
+    \item Data is to be protected from catastrophic error (power loss/crash)
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Commercial RDBMs}
+    \framesubtitle{~}
+
+\begin{itemize}
+  \item MS Access \onslide<2->{:)}
+  \item MySQL (owned by Oracle, released under GNU GPL)
+  \item PostgreSQL (true FOSS!)
+  \item Informix (IBM)
+  \item DB2 (IBM)
+  \item SQLServer (Microsoft)
+  \item Oracle Database
+  \item SQLite
+\end{itemize}
+
+Others:
+\begin{itemize}
+  \item Google's BigTable $\rightarrow$ Spanner
+  \item Apache Cassandra (Facebook)
+  \item Amazon's Dynamo
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Advantages}
+
+\begin{itemize}
+  \item Data is \emph{structured} instead of ``just there''
+  \item Better organization
+  \item Duplication is minimized (with proper \emph{normalization})
+  \item Updating information is easier
+  \item Organization of data allows easy access
+  \item Organization allows aggregation and more complex information
+\framebreak
+  \item Data integrity can be enforced (data types and user defined constraints)
+  \item Faster
+  \item Scalable
+  \item Security
+  \item Portability
+  \item Concurrency
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Structured Query Language}
+  \framesubtitle{~}
+
+We interact with RDBMs using \emph{Structured Query Language} (SQL)
+\begin{itemize}
+  \item Common language/interface to most databases
+  \item Developed by Chamberlin \& Boyce, IBM 1974
+  \item Implementations may violate standards: portability issues
+  \item Comments: \mintinline{sql}{--} or \mintinline{sql}{#} (MySQL on cse)
+  \item Create \& manage tables: \mintinline{sql}{CREATE, ALTER, DROP}
+  \item Transactions: \mintinline{sql}{START TRANSACTION, ROLLBACK, COMMIT}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Structured Query Language}
+  \framesubtitle{CRUD}
+
+Basic SQL functionality: \emph{CRUD}:
+\begin{itemize}
+  \item Create -- insert new records into existing tables
+  \item Retrieve -- get a (subset) of data from specific rows/columns
+  \item Update -- modify data in fields in specified rows
+  \item Destroy -- delete specific rows from table(s)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Misc RDMS Issues}
+  \framesubtitle{~}
+
+Important aspects that will be omitted (good advanced topics):
+
+\textbf{Views} -- RDBSs allow you to create view of data; predefined select statements that aggregate
+(or limit) data while appearing to be a separate table to the end user
+
+\textbf{Triggers} -- SQL routines that are executed upon predefined events (inserts/updates) in order to
+create side-effects on the database
+
+\framebreak
+
+\textbf{Stored Procedures} -- SQL routines (scripts) that are available to the end user
+
+\textbf{Temp Tables} -- Temporary tables can be created to store intermediate values from a complex query
+
+\textbf{Nested Queries}  -- SQL supports using subqueries to be used in other queries
+
+\end{frame}
+
+\section{Manipulating Tables}
+
+\begin{frame}[fragile]
+  \frametitle{MySQL}
+  \framesubtitle{Getting Started}
+
+You have access to a MySQL database on cse
+\begin{itemize}
+  \item Database name: your cse login
+  \item Password: see the system FAQ, \url{http://cse.unl.edu/faq}
+  \item Option 1: Command Line Interface (CLI):
+	\mintinline{text}{>mysql -u cselogin -p}
+  \item Option 2: MySQL Workbench (\url{http://cse.unl.edu/account})
+\end{itemize}
+
+Useful MySQL commands (not general SQL) to get you started:
+
+\begin{itemize}
+  \item \mintinline{sql}{USE dbdname;}
+  \item \mintinline{sql}{SHOW TABLES;}
+  \item \mintinline{sql}{DESCRIBE tablename;}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Creating Tables}
+  \framesubtitle{~}
+
+Syntax:
+\begin{minted}{sql}
+CREATE TABLE table_name (
+  field_name fieldType [options],
+  ...
+  PRIMARY KEY (keys)
+);
+\end{minted}
+
+Options:
+\begin{itemize}
+  \item \mintinline{sql}{AUTO_INCREMENT} (for primary keys)
+  \item \mintinline{sql}{NOT NULL}
+  \item \mintinline{sql}{DEFAULT (value)}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Column Types}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item \mintinline{sql}{VARCHAR(n)}  -- variable character field (or \mintinline{sql}{CHAR}, \mintinline{sql}{NCHAR}, \mintinline{sql}{NVCHAR} -- fixed size character fields)
+  \item \mintinline{sql}{INTEGER} or \mintinline{sql}{INT}
+  \item \mintinline{sql}{FLOAT} (or \mintinline{sql}{DOUBLE}, \mintinline{sql}{REAL}, \mintinline{sql}{DOUBLE PRECISION})
+  \item \mintinline{sql}{DECIMAL(n,m)}, \mintinline{sql}{NUMERIC(n,m)} (max total digits, max decimal digits)
+  \item Date/Time functions: rarely portable
+  \item MySQL: see \url{http://dev.mysql.com/doc/refman/5.0/en/date-and-time-functions.html}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Creating Tables}
+  \framesubtitle{Example -- Old School Style}
+
+\begin{minted}{sql}
+CREATE TABLE book (
+  id     INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  title  VARCHAR(255) NOT NULL,
+  author VARCHAR(255),
+  isbn   VARCHAR(255) NOT NULL DEFAULT '',
+  dewey  FLOAT,
+  num_copies INTEGER DEFAULT 0
+);
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Creating Tables}
+  \framesubtitle{Example -- Modern Style}
+
+\begin{minted}{sql}
+create table Book (
+  bookId integer primary key auto_increment not null,
+  title  varchar(255) not null,
+  author varchar(255),
+  isbn   varchar(255) not null default '',
+  dewey  float,
+  numCopies integer default 0
+);
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Primary Keys}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Records (rows) need to be distinguishable
+  \item A \emph{primary key} allows us to give each record a unique identity
+  \item At most one primary key per table
+  \item Must be able to uniquely identify all records (not just those that exist)
+  \item No two rows can have the same primary key value
+  \item PKs can be one or more columns (composite key)
+  \item Should not use/allow NULL values
+  \item Can/should\footnote{How to handle the foreign key problem?} be automatically generated
+  \item External identifiers should \emph{not} be used
+  \item Should use integers, not strings or floats
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Keys}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Tables can have multiple keys
+  \item May be a combination of columns (composite key)
+  \item \mintinline{sql}{null} values are allowed
+  \item Uniqueness is enforced (updates, inserts may fail)
+  \item May be declared non-unique in which case it serves as an \emph{index} (allows database lookup optimization)
+  \item MySQL syntax: \\
+	\mintinline{sql}{KEY(column1, column2,...)}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Indexes and Unique Constraints}
+  \framesubtitle{~}
+
+  \begin{itemize}
+    \item The keyword \mintinline{sql}{INDEX} is often synonymous with \mintinline{sql}{KEY}
+    \item Keys don't need to be unique
+    \item We can make them unique by using \mintinline{sql}{UNIQUE} (as a constraint or index)
+    \item Syntax: \mintinline{sql}{CONSTRAINT constraint_name UNIQUE INDEX(column_name)}
+    \item Multicolumn uniqueness: \mintinline{sql}{CONSTRAINT constraint_name UNIQUE INDEX(c1, c2)}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{Foreign Keys}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Relations between records in different tables can be made with \emph{foreign keys}
+  \item A FK is a column that references a key (PK or regular key) in another table
+  \item Inserts cannot occur if the referenced record does not exist
+  \item Foreign Keys establish \emph{relationships} between tables:
+   \begin{itemize}
+      \item One-to-one (avoid)
+      \item One-to-many relations
+      \item Many-to-one
+      \item Many-to-Many relations: requires a \emph{Join Table}
+  \end{itemize}
+\framebreak
+  \item Table with FK (referencing table) references table with PK (referenced table)
+  \item Deleting rows in the referenced table can be made to \emph{cascade} to the referencing records (which are deleted)
+  \item Cascades can be evil
+  \item MySQL Syntax:\\
+	\mintinline{sql}{FOREIGN KEY (column) REFERENCES table(column)}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{Quick Exercise}
+  \framesubtitle{~}
+  
+(Re)write SQL to define two tables: one for authors and one for books.
+Simplify the book table, but include an ISBN as well as a constraint to
+keep it unique.  Model the fact that an author may write more than one 
+book.
+
+\end{frame}
+
+\section{Manipulating Data}
+
+\begin{frame}[fragile]
+  \frametitle{Inserting Data}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Need a way to load data into a database
+  \item Numerical literals
+  \item String literals: use single quote characters
+  \item Ordering of columns irrelevant
+  \item MySQL Syntax: \\
+	\begin{minted}{sql}
+	INSERT INTO table_name (c1, c2, ...) 
+	  VALUES (value1, value2);
+	\end{minted}
+  \item Example: \\
+	\begin{minted}{sql}
+	INSERT INTO book (title, author, isbn) 
+	  VALUES ('The Naked and the Dead', 
+	          'Normal Mailer', '978-0312265052');
+	\end{minted}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Updating Data}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Existing data can be changed using the \mintinline{sql}{UPDATE} statement
+  \item Should be used in conjunction with \emph{clauses}
+  \item Syntax:\\
+\begin{minted}{sql}
+UPDATE table SET c1 = v1, c2 = v2, ... 
+  WHERE [condition];
+\end{minted}
+  \item Example:
+\begin{minted}{sql}
+UPDATE book SET author = 'Norman Mailer' 
+  WHERE isbn = '978-0312265052';
+\end{minted}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Deleting Data}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Data can be deleted using the \mintinline{sql}{DELETE} statement
+  \item Should be used in conjunction with \emph{clauses}
+  \item Unless you \emph{really} want to delete \emph{everything}
+  \item Syntax:\\
+	\mintinline{sql}{DELETE FROM table WHERE (condition)}
+  \item Example: \\
+	\mintinline{sql}{DELETE FROM book WHERE isbn = '978-0312265052';}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Querying Data}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Data can be retrieved using the \mintinline{sql}{SELECT} statement
+  \item Syntax:\\
+	\mintinline{sql}{SELECT column1, column2... FROM table WHERE (condition);}
+  \item Example:\\
+\begin{minted}{sql}
+SELECT author, title FROM book 
+  WHERE isbn = '978-0312265052';
+\end{minted}
+  \item Can select \emph{all} columns by using the \mintinline{sql}{*} wildcard:\\
+	\mintinline{sql}{SELECT * FROM book}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Querying Data}
+  \framesubtitle{Aliasing}
+
+\begin{itemize}
+  \item Names of the columns are part of the database
+  \item SQL allows us to ``rename'' them in result of our query using \emph{aliasing}
+  \item Syntax: \mintinline{sql}{column_name AS column_alias}
+  \item Sometimes necessary if column has no name (aggregates)
+\end{itemize}
+
+\begin{minted}{sql}
+SELECT title      AS bookTitle,
+       num_copies AS numberOfCopies
+FROM book;
+\end{minted}
+
+\end{frame}
+
+\subsection{Clauses}
+
+\begin{frame}[fragile]
+  \frametitle{WHERE Clause}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Queries can be quantified using the \mintinline{sql}{WHERE} clause
+  \item Only records matching the condition will be affected (updated, deleted, selected)
+  \item Compound conditions can be composed using parentheses and:
+  \begin{itemize}
+    \item \mintinline{sql}{AND}
+    \item \mintinline{sql}{OR}
+  \end{itemize}
+\end{itemize}
+
+\begin{minted}{sql}
+SELECT * FROM book 
+  WHERE num_copies > 10 AND 
+  (title != 'The Naked and the Dead' 
+    OR author = 'Dr. Seuss');
+\end{minted}
+
+To check nullity: \mintinline{sql}{WHERE dewey IS NULL}, \mintinline{sql}{WHERE dewey IS NOT NULL}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{LIKE Clause}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item VARCHAR values can be searched/partially matched using the \mintinline{sql}{LIKE} clause
+  \item Used in conjunction with the string wildcard, \mintinline{sql}{%}
+  \item Example: \\
+	\mintinline{sql}{SELECT * FROM book WHERE isbn LIKE '123%';}
+  \item Example: \\
+	\mintinline{sql}{SELECT * FROM book WHERE author LIKE '%Mailer%';}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{IN Clause}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item The \mintinline{sql}{IN} clause allows you to do conditionals on a \emph{set} of values
+  \item Example:\\
+\begin{minted}{sql}
+SELECT * FROM book WHERE isbn IN ('978-0312265052', 
+  '789-65486548', '681-0654895052');
+\end{minted}
+  \item May be used in conjunction with a nested query:
+\begin{minted}{sql}
+SELECT * FROM book WHERE isbn IN 
+  (SELECT isbn FROM book WHERE num_copies > 10);
+\end{minted}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{ORDER BY Clause}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item In general, the order of the results of a \mintinline{sql}{SELECT} clause is irrelevant
+  \item Nondeterministic, not necessarily in any order
+  \item To impose an order, you can use \mintinline{sql}{ORDER BY}
+  \item Can order along multiple columns
+  \item Can order descending or ascending (\mintinline{sql}{DESC}, \mintinline{sql}{ASC})
+  \item Example:\\
+	\mintinline{sql}{SELECT * FROM book ORDER BY title;}
+  \item Example:\\
+	\mintinline{sql}{SELECT * FROM book ORDER BY author DESC, title ASC}
+\end{itemize}
+
+\end{frame}
+
+\subsection{Aggregate Functions}
+
+\begin{frame}[fragile]
+  \frametitle{Aggregate Functions}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Aggregate functions allow us to compute data on the database without processing all the data in code
+  \item \mintinline{sql}{COUNT} provides a mechanism to count the number of records
+  \item Example:\\
+	\mintinline{sql}{SELECT COUNT(*) AS numberOfTitles FROM book;}
+  \item Aggregate functions: \mintinline{sql}{MAX}, \mintinline{sql}{MIN}, \mintinline{sql}{AVG}, \mintinline{sql}{SUM}
+  \item Example:\\
+	\mintinline{sql}{SELECT MAX(num_copies) FROM book;}
+  \item Using nested queries: \\
+  	\begin{minted}{sql}
+	SELECT * FROM book WHERE num_copies = 
+	  (SELECT MAX(num_copies) FROM book);
+	\end{minted}
+  \item NULL values are ignored/treated as zero
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{GROUP BY clause}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item The \mintinline{sql}{GROUP BY} clause allows you to project data with common values into a smaller set of rows
+  \item Used in conjunction with aggregate functions to do more complicated aggregates
+  \item Example: find total copies of all books by author:\\
+	\begin{minted}{sql}
+	SELECT author, SUM(num_copies) AS totalCopies 
+	  FROM book GROUP BY author;
+	\end{minted}
+  \item The projected data can be further filtered using the \mintinline{sql}{HAVING} clause:
+	\begin{minted}{sql}
+	SELECT author, SUM(num_copies) AS totalCopies 
+	  FROM book GROUP BY author HAVING totalCopies > 5;
+	\end{minted}
+  \item \mintinline{sql}{HAVING} clause evaluated \emph{after} \mintinline{sql}{GROUP BY} which is evaluated \emph{after} any \mintinline{sql}{WHERE} clause
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{GROUP BY clause}
+  \framesubtitle{Example}
+{\small
+Table content:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+title & author & num\_copies \\
+\hline
+\hline
+Naked and the Dead & Norman Mailer & 10 \\
+Dirk Gently's Holistic Detective Agency & Douglas Adams & 4 \\
+Barbary Shore & Norman Mailer & 3 \\
+The Hitchhiker's Guide to the Galaxy & Douglas Adams & 2 \\
+The Long Dark Tea-Time of the Soul & Douglas Adams & 1 \\
+Ender's Game & Orson Scott Card & 7 \\
+\hline
+\end{tabular}
+\end{center}
+\framebreak
+Grouping: 
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+title & author & num\_copies \\
+\hline
+\hline
+Naked and the Dead & Norman Mailer & 10 \\
+Barbary Shore & Norman Mailer & 3 \\
+Dirk Gently's Holistic Detective Agency & Douglas Adams & 4 \\
+The Hitchhiker's Guide to the Galaxy & Douglas Adams & 2 \\
+The Long Dark Tea-Time of the Soul & Douglas Adams & 1 \\
+Ender's Game & Orson Scott Card & 7 \\
+\hline
+\end{tabular}
+\end{center}
+
+Projection \& aggregation:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+author & num\_copies \\
+\hline
+\hline
+Norman Mailer & 13 \\
+Douglas Adams & 7 \\
+Orson Scott Card & 7 \\
+\hline
+\end{tabular}
+\end{center}
+}
+\end{frame}
+
+\subsection{Joins}
+
+\begin{frame}[fragile]
+  \frametitle{JOINs}
+  \framesubtitle{~}
+
+A \emph{join} is a clause that combines records from two or more tables.
+
+\begin{itemize}
+  \item Result is a set of columns/rows (a ``table'')
+  \item Tables are joined by shared values in specified columns
+  \item Common to join via Foreign Keys
+  \item Table names can be aliased for convenience
+  \item Types of joins we'll look at:
+  \begin{itemize}
+    \item (INNER) JOIN
+    \item LEFT (OUTER) JOIN
+  \end{itemize}
+  \item Other types of joins: Self-join, cross join (cartesian product), right outer joins, full outer joins
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{INNER JOIN}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Most common type of join
+  \item Combines rows of table A with rows of table B for all records that satisfy some predicate
+  \item Predicate provided by the \mintinline{sql}{ON} clause
+  \item May omit \mintinline{sql}{INNER}
+  \item May provide join predicate in a \mintinline{sql}{WHERE} clause
+\end{itemize}
+
+\framebreak
+
+\begin{minted}{sql}
+SELECT * FROM book b
+    INNER JOIN person p ON b.author = p.name
+
+SELECT * FROM book b
+    JOIN person p ON b.author = p.name
+
+SELECT *
+FROM book b, person p
+WHERE b.author = p.name
+
+SELECT s.student_id,s.last_name,e.address FROM student s
+    JOIN email e ON s.student_id = e.student_id;
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{INNER JOIN}
+  \framesubtitle{Example}
+
+\begin{table}
+\centering
+{\scriptsize
+\subfloat[~][Student Table]{
+\begin{tabular}{|l|l|l|}
+\hline
+student\_id & last\_name & first\_name \\
+\hline
+\hline
+1234 & Castro & Starlin \\
+5678 & Rizzo & Anthony \\
+1122 & Sveum & Dale \\
+9988 & Sandberg & Ryne \\
+\hline
+\end{tabular}
+}
+\subfloat[~][Email Table]{
+\begin{tabular}{|l|l|l|}
+\hline
+email\_id & student\_id & address \\
+\hline
+\hline
+1111 & 9988 & rsandberg@cubbies.net \\
+1112 & 9988 & rsberg@unl.edu \\
+1113 & 5678 & rizzo@cubs.com \\
+1114 & 1234 & number13@cubs.com\\
+\hline
+\end{tabular}
+}
+}
+\end{table}
+
+\begin{table}
+\centering
+{\scriptsize
+\begin{tabular}{|l|l|l|}
+\hline
+student\_id & last\_name & adddress \\
+\hline
+\hline
+1234 & Castro & number13@cubs.com \\
+5678 & Rizzo & rizzo@cubs.com\\
+9988 & Sandberg & rsandberg@cubbies.net \\
+9988 & Sandberg &  rsberg@unl.edu \\
+\hline 
+\end{tabular}
+}
+\caption{Joined tables}
+\end{table}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{LEFT OUTER JOIN}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Left Outer Join joins table A to table B, preserving all records in table A
+  \item For records in A with no matching records in B: \mintinline{sql}{NULL} values used for columns in B
+  \item \mintinline{sql}{OUTER} may be omitted
+\end{itemize}
+
+\framebreak
+
+\begin{minted}{sql}
+SELECT * FROM book b
+    LEFT OUTER JOIN person p ON b.author = p.name
+
+SELECT * FROM book b
+    LEFT JOIN person p ON b.author = p.name
+
+SELECT s.student_id,s.last_name,e.address FROM student s
+    LEFT JOIN email e ON s.student_id = e.student_id;
+\end{minted}
+
+\framebreak
+
+\begin{table}
+\centering
+{\scriptsize
+\begin{tabular}{|l|l|l|}
+\hline
+student\_id & last\_name & adddress \\
+\hline
+\hline
+1234 & Castro & number13@cubs.com \\
+5678 & Rizzo & rizzo@cubs.com\\
+9988 & Sandberg & rsandberg@cubbies.net \\
+9988 & Sandberg &  rsberg@unl.edu \\
+\color{blue}{1122} & \color{blue}{Sveum} & \color{blue}{NULL} \\
+\hline 
+\end{tabular}
+}
+\caption{Left-Joined Tables}
+\end{table}
+
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Other Joins}
+  \framesubtitle{~}
+  
+  {\tiny Nice tutorial: \url{http://www.codeproject.com/Articles/33052/Visual-Representation-of-SQL-Joins} } 
+  \begin{figure}[h]
+    \includegraphics[scale=.20]{sqlJoins}
+    \caption{Types of Joins}
+  \end{figure}
+
+\end{frame}
+
+\subsection{Misc}
+
+\begin{frame}[fragile]
+  \frametitle{DISTINCT Clause}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Many records may have the same column value
+  \item May want to query only the unique values
+  \item May only want to count up the number of unique values
+  \item SQL keyword: \mintinline{sql}{DISTINCT}
+\end{itemize}
+
+\begin{minted}{sql}
+SELECT DISTINCT author FROM book;
+SELECT COUNT(DISTINCT author) FROM book;
+\end{minted}
+
+\end{frame}
+
+\section{Database Design}
+
+\begin{frame}
+  \frametitle{Database Design}
+  \framesubtitle{Table Design}
+
+  Table Design
+  \begin{itemize}
+    \item Identify all ``entities'' in different tables
+    \item Ask ``what defines an entity'' to determine the columns and their types
+    \item Properly define whether or not a column should be allowed to be null and/or defaults
+    \item Each table should have a primary key
+    \item Relations between tables should be identified and defined with foreign keys
+    \item Security concerns: don't store sensitive information (passwords) in plaintext
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Normalization}
+  \framesubtitle{~}
+
+  Normalizing a database is the process of separating data into different tables to 
+  reduce or eliminate data redundancy and reduce anomolies (preserve integrity)
+  when data is changed.  It also reduces the amount of book keeping necessary
+  to make such changes.
+
+  \begin{itemize}
+    \item 1 Normal Form: the domain of each attribute in each table has only atomic values: each column value represents a \emph{single value}
+    \begin{itemize}
+      \item Example: Allowing multiple email records for one \emph{Person}
+      \item Storing these as (say) a CSV in one column is a violation of 1NF
+      \item Hardcoding a fixed number of columns (Email1, Email2, Email3) for multiple values is a violation of 1NF
+      \item Separating records out into another table and associating them via a FK conforms to 1NF
+    \end{itemize}
+\framebreak
+    \item 2 Normal Form: 1NF \emph{and} no non-prime attribute is dependent on any proper subset of prime attributes
+    \begin{itemize}
+      \item Mostly relevant for tables with composite PKs (multiple columns)
+      \item If another, non-prime column is dependent only on a subset of these, its \emph{not} 2NF
+      \item Must split it out groups of data into multiple tables and relate them through FKs so that non-prime column is dependent only on the subset of prime columns
+      \item Example: Employee-Title-Address (must split into Employee-Title and Employee-Address)
+    \end{itemize}
+\framebreak
+    \item 3 Normal Form: 2NF \emph{and} no non-prime column is transitively dependent on the key
+    \begin{itemize}
+      \item No non-prime column may depend on another non-prime column
+      \item Example: Storing a price-per-unit, quantity, and total (total can be \emph{derived} from the other two)
+      \item Example: CourseOfferingId-CourseId-InstructorId-Instructor Name (name should be derivable from the ID via another table)
+      \item Example: OrderId-CustomerId-CustomerName (OrderId is the PK, CustomerId is FK, CustomerName should be derivable from CustomerId)
+    \end{itemize}
+\framebreak
+    \item Bottom line: 3NF is common sense; design your database to be normalized to begin with
+    \item Other advanced forms (BCNF, 4NF, 5NF, 6NF)
+    \item Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF), and nothing but the key (3NF), so help me Codd\footnote{Edgar Codd, inventor of the relational model, 1970--1971}
+    \item Good tutorials: \url{http://support.microsoft.com/kb/283878} \\
+	\url{http://phlonx.com/resources/nf3/} (available on BB)
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Primary Keys}
+  \framesubtitle{~}
+
+  Primary Keys
+  \begin{itemize}
+    \item Should be integers (not varchars nor floats)
+    \item Best to allow the database to do key management (auto increment)
+    \item Should \emph{not} be based on external identifiers that are not controlled by the database (NUIDs, SSNs, etc.)
+    \item Be consistent in naming conventions (\mintinline{sql}{tableNameId} or \mintinline{sql}{table_name_id})
+  \end{itemize}
+
+\end{frame}
+
+\subsection{Best Practice}
+
+\begin{frame}[fragile]
+  \frametitle{Good Practice Tip 1}
+  \framesubtitle{Use consistent naming conventions}
+
+\begin{itemize}
+  \item Short, simple, descriptive names
+  \item Avoid abbreviations, acronyms
+  \item Use \emph{consistent} styling
+  \begin{itemize}
+    \item Table/field names: Lower case, underscores, singular or
+    \item Camel case, pluralized
+  \end{itemize}
+  \item Primary key field: \mintinline{sql}{tableNameId} or \mintinline{sql}{table_name_id}
+  \item Use all upper-case for SQL commands
+  \item Foreign key fields should match the fields they refer to
+  %\item Explicitly name foreign/primary keys (fk, pk)
+  \item End goal: unambiguous, consistent, self-documenting
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Good Practice Tip 2}
+  \framesubtitle{Ensure Good Data Integrity}
+
+\begin{quote}
+  Data can break code, code should not break data.
+\end{quote}
+
+\begin{itemize}
+  \item Data/databases are a \emph{service} to code
+  \item Different code, different modules can access the same data
+  \item The database does \emph{not} use the code!
+  \item Should do everything you can to prevent bad code from harming data (constraints, foreign \& primary keys, etc).
+  \item Database is your last line of defense against bad code
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Good Practice Tip 3}
+  \framesubtitle{Keep Business Logic Out!}
+
+\begin{itemize}
+  \item Databases offer ``programming functionality''
+  \item Triggers, cascades, stored procedures, etc.
+  \item \emph{Use them sparingly!!!}
+  \item RDMSs are for the management and storage of data, not processing
+  \item Demarcation of responsibility
+  \item DBAs should not have to be Application Programmers, and vice versa
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Good Practice Tip 4}
+  \framesubtitle{Dealing with Inheritance}
+
+  \begin{itemize}
+    \item Relational data model $\neq$ Object model
+    \item Relational Databases do not have an inheritance mechanism
+    \item Several strategies exist for dealing with class hierarchy with different \emph{state}
+    \item Single table mapping: all state is on one table (recommended) with a \emph{discriminator column} (irrelevant columns made nullable)
+    \item Joined tables: each subclass has a "sub" table joined via a foreign key from the "super" table
+    \item Table-per-class: each table represents a distinct class (repeated data)
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Other considerations}
+
+  \begin{itemize}
+    \item Hard vs. Soft deletes: many times it is preferable not to permanently delete data; instead an active/inactive flag is defined (care must be taken up ``new'' inserts)
+  \end{itemize}
+
+\end{frame}
+
+\section{Current Trends}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Current Trends}
+
+\begin{itemize}
+  \item Additional Data-layer abstraction tools (JPA, ADO for .NET)
+  \item XML-based databases (using XQuery)
+  \item RDBMs are usually tuned to either small, frequent read/writes or large batch read-transactions
+  \item Nature and scale of newer applications does not fit well with traditional RDBMs
+  \item Newer applications are data intensive:
+  \begin{itemize}
+    \item Indexing a large number of documents
+    \item High-traffic websites
+    \item Large-scale delivery of multimedia (streaming video, etc.)
+    \item Search applications, data mining
+    \item New tools generating HUGE amounts of data (biological, chemical, sensor networks, etc)
+  \end{itemize}
+\framebreak
+  \item Newer (revived) trend: NoSQL
+  \begin{itemize}
+    \item Non-relational data
+    \item Sacrifices rigid ACID principles for performance
+    \item Eventual consistency
+    \item Limited transactions
+    \item Emphasis on read-performance
+    \item Simplified Key-Value data model
+    \item Simple interfaces (associative arrays)
+  \end{itemize}
+  \item Example: Google's BigTable (key: two arbitrary string (keys) to row/column with a datetime, value: byte array)
+\framebreak
+  \item Even newer trend: NewSQL
+  \begin{itemize}
+    \item NoSQL too extreme: need scalability, but not at the cost of \emph{no} consistency or other ACID principles
+    \item Large amount of data, large number of transactions, but 
+    \item Short-lived, small subset of data access, repeated
+    \item Sacrifice durability and concurrency
+    \item Examples: Google's Spanner, new MySQL engines (MemSQL)
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\section{Designing A Database}
+
+\begin{frame}
+  \frametitle{Designing A Database}
+  \framesubtitle{Exercise}
+
+\textbf{Exercise}
+  Design a database to support a course roster system.  The database design should
+  be able to model Students, Courses, and their relation (ability of students to \emph{enroll}
+  in courses).  The system will also need to email students about updates in enrollment,
+  so be sure your model is able to incorporate this functionality.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Designing A Database}
+  \framesubtitle{~}
+
+  \begin{figure}[h]
+  \centering
+  \includegraphics[scale=.35]{enrollment.png}
+  \caption{A normalized database design, ER diagram generated in MySQL Workbench}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{End Result}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Pieces of data are now organized and have a specific \emph{type}
+  \item No duplication of data
+  \item Entities are represented by IDs, ensuring identity (Tom Waits is now the same as t. Waits)
+  \item Data integrity is enforced (only one NUID per Student)
+  \item Relations are well-defined
+   \begin{itemize}
+     \item A student \emph{has} email(s)
+     \item A course has student(s) and a student has course(s)
+  \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Data from flat file}
+  \framesubtitle{~}
+
+\input{dbFigure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{SQL Demo and Exercises}
+  \framesubtitle{~}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.35]{tutorialDemos/videoGames/videoGameDatabase}
+\caption{Video Game Database}
+\end{figure}
+
+Make queries as specified for the video game database described in the
+figure.
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{CSE Gotchas}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Default character set/collation may be case \emph{insensitive}
+  \item \mintinline{sql}{SELECT @@character_set_database, @@collation_database;}
+  \item Case sensitive: use \mintinline{sql}{latin1_general_cs} or \mintinline{sql}{utf8_bin}
+  \item Default engine?  \mintinline{sql}{show engines;}
+  \item Be sure to use InnoDB
+\end{itemize}
+
+Easiest workarounds:
+
+\begin{minted}{sql}
+create table Foo ( 
+  ...
+)Engine=InnoDB,COLLATE=latin1_general_cs;
+\end{minted}
+
+\end{frame}
+
+
+
+\end{document}

@@ -1,0 +1,344 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template
+%  Beamer Presentation by Chris Bourke
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{beamer}
+
+\geometry{papersize={14cm,9cm}}
+
+% For handout version:
+\usetheme[hideothersubsections]{UNLTheme}
+
+\usepackage{amssymb}
+\input{StandardCommands}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small\color{black},
+        showspaces=false,
+        showtabs=false,
+        tab=\rightarrowfill,
+        showstringspaces=false,
+        stringstyle=\ttfamily\bfseries\color{blue},
+        %keywordstyle=\color{green},
+        commentstyle=\color{blue},
+        % NUMBERING STYLES
+        numbers=left,
+        numberstyle=\tiny,
+        stepnumber=1,
+        numbersep=5pt,
+        %Handle framing
+        frame=tlBR,      %frame = single, tbrl/TBRL
+        %rulesepcolor=\color{green},
+        frameround=tttt, %t = rounded, f = square, starts at top right, runs clockwise
+        %Handle Margins
+        breaklines=true,
+        boxpos=r,
+        breakatwhitespace=false,
+        xleftmargin=0cm,
+        xrightmargin=0cm,
+        linewidth=4.5in} %
+\lstset{language=Java}
+
+\title[JPA]{A Brief Introduction to Java Persistence API \& Hibernate}
+\subtitle{Department of Computer Science \& Engineering}
+\author[Bourke]{Christopher M. Bourke\\ \email{cbourke@cse.unl.edu}} %
+\date{~}
+
+\begin{document}
+
+\begin{frame}
+        \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Abstract}
+
+\begin{abstract}
+Complex applications make frequent use of an underlying data model. In development, much effort is put toward the mundane tasks of coding CRUD (Create-Retrieve-Update-Destroy). Recent developments of Data Access Object frameworks have freed developers from needing to worry about loading, persisting, and managing data, keeping them closer to the application layer. In this seminar, we will introduce the basic concepts and use of one such framework: Java Persistence API (JPA) using Hibernate.
+\end{abstract}
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}
+    \frametitle{Java Persistence API}
+    \framesubtitle{}
+
+Java Persistence API (JPA) is a framework for managing relational data
+\begin{itemize}
+  \item Provides an abstract data layer between a database and Plain Old Java Objects
+  \item API (\lstinline|javax.persistence|) provides methods for querying and managing data
+  \item JPQL (Java Persistence Query Language) -- an SQL-like query language
+  \item Built on top of JDBC
+  \item JPA 1.0 (May 2006)
+  \item JPA 2.0 (Dec 2009)
+  \item Intended to replace heavy-weight EJB entity beans
+\end{itemize}
+
+\end{frame}
+
+\section{Motivation}
+
+\begin{frame}
+  \frametitle{A Simple Database}
+  \framesubtitle{~}
+
+  \begin{figure}[h]
+  \centering
+  \includegraphics[scale=.30]{enrollment.png}
+  \caption{Database to support course enrollments}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{JDBC CRUD}
+  \framesubtitle{~}
+
+Using JDBC:
+\begin{itemize}
+  \item Need to manage our own connections
+  \item Need to pull and handle each record column by column
+  \item Need to join or make additional queries to pull related objects
+  \item Lots of boiler-plate CRUD
+  \item Let's take a look at an example...
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JPA CRUD: Automated For Us!}
+  \framesubtitle{~}
+
+Using JPA:
+\begin{itemize}
+  \item We can annotate our java classes to map them to tables, columns
+  \item (Alternatively: all relations can be enumerated in an XML configuration file)
+  \item Basic CRUD is taken care of for us
+  \item An \lstinline|EntityManager| handles loading and persisting to the database
+  \item JPQL is standardized and makes queries platform independent
+  \item Now we can just use objects instead of worrying about loading and saving them!
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JPA Advantages \& Disadvantages}
+  \framesubtitle{~}
+
+Additional advantages
+\begin{itemize}
+  \item Closer to OOP
+  \item Portable across application servers, persistence products
+  \item Can be configured to provide connection pooling, caching, etc.
+\end{itemize}
+
+Disadvantages
+\begin{itemize}
+  \item Slight performance hit (due to reflection, auto-generated queries)
+  \item Resource hog
+  \item Good design needs a clean object-database mapping
+\end{itemize}
+
+\end{frame}
+
+\section{JPA Basics}
+
+\begin{frame}[fragile]
+  \frametitle{Persistence Until Configuration}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item A \emph{persistence unit} is a data source configuration
+  \item Defined in \lstinline|persistence.xml| configuration file
+  \item Defines configuration such as database URL, login, JDBC driver, etc.
+  \item Object Relational Mapping (ORM) can be configured here or via annotations
+  \item Let's take a look at an example$\ldots$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Class annotations}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item JPA annotations defined in \lstinline|javax.persistence|
+  \item \lstinline|@Entity| - makes a POJO into a JPA entity
+  \item Note: JPA Entities are expected to be serializable
+  \item \lstinline|@Table| - maps the object to a schema/table in the database
+  \item \lstinline|@Id| - identifies which field is the primary key (optional)
+  \item \lstinline|@GeneratedValue(strategy=GenerationType.AUTO)|
+  \item \lstinline|@Column(name="...", nullable=false)|
+  \item Some type coercion support is available
+  \item Some libraries provide add-ons for reflective type coercion (Joda time)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Join Annotations}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item \lstinline|@OneToOne|
+  \item \lstinline|@ManyToOne|
+  \item \lstinline|@OneToMany|
+  \item \lstinline|@ManyToMany|
+  \item JPA relations are uni-directional; need to explicitly define any bi-directional relationships
+  \item ``Many'' is implemented via \lstinline|java.util.Set| interface
+  \item \lstinline|@JoinColumn| - allows you to specify which column should be used to join
+  \item Many-to-many requires a \lstinline|@JoinTable| specification
+  \item If not a \emph{pure} join table, an intermediate Entity needs to be defined (example: \url{http://en.wikibooks.org/wiki/Java_Persistence/ManyToMany})
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Loading}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item JPA supports two loading strategies: \lstinline|LAZY| (hibernate default) and \lstinline|EAGER|
+  \item Eager fetching will completely load an entity and its related entities even if you don't need them
+  \item Lazy fetching only loads an entity when its needed (when you get a field)
+  \item Example: \lstinline|@ManyToOne(fetch=FetchType.LAZY)|
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Other Annotations \& Issues}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item \lstinline|@Transient| -- identifies a non-persistent field (JPA will ignore)
+  \item JPA works through reflection
+  \item Requires an available default (no-arg) constructor
+  \item Hibernate is a particular implementation of JPA (with Hibernate-specific features added on)
+  \item Hibernate only throws runtime exceptions, but still good practice to \lstinline|try-catch-finally|
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example Entities}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item \lstinline|StudentEntity|
+  \item \lstinline|EmailEntity|
+  \item \lstinline|CourseEntity|
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using JPA in Java}
+  \framesubtitle{~}
+
+Basic JPA usage pattern:
+\begin{itemize}
+  \item Create an \lstinline|EntityManagerFactory| (automatically loads a persistence unit from the \lstinline|persistence.xml| config file)
+  \item Create an \lstinline|EntityManager| from the EMF
+  \item Start a transaction
+  \item Use the entity manager to load, update, persist JPA Entities
+  \item Rollback or commit the transaction
+  \item Close entity manager(s), factories
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using an Entity Manager}
+  \framesubtitle{~}
+
+\lstinline|EntityManager em = ...|
+\begin{itemize}
+  \item \lstinline|em.find(Class c, Object o)| -- loads an entity from the database
+%  \begin{itemize}
+%    \item \lstinline|Class| - the class of the JPA Entity
+%    \item \lstinline|Object| - an object representing the \lstinline|@Id| of the entity
+%    \item Returns \lstinline|null| if no such entity
+%  \end{itemize}
+  \item \lstinline|em.persist(Object o)| -- Persists the object to the database (update or insert)
+  \item \lstinline|em.detach()| -- Removes the entity from the entity manager
+  \item \lstinline|em.merge()| -- reloads the entity with values from the database (overwriting any in-memory changes)
+  \item \lstinline|em.flush()| -- synchs up the database with all managed entities (saves all)
+  \item \lstinline|em.remove(Object o)| -- deletes the entity from the database
+  \item \lstinline|em.refresh(Object o)| -- syncs up the object with the database
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Java Persistence Query Language}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item JPA provides an SQL-like query language: JPQL
+  \item Still provides a \lstinline|NativeQuery| interface for regular SQL
+  \item Allows you to refer to Objects rather than tables
+\end{itemize}
+
+\begin{lstlisting}
+String query = "FROM StudentEntity se WHERE se.nuid = :nuid";
+...
+StudentEntity se = (StudentEntity) em.createQuery(query)
+.setParameter("nuid", myNUID)
+.getSingleResult();
+\end{lstlisting}
+
+\end{frame}
+
+\section{Inheritance}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{Handling Inheritance}
+  \framesubtitle{~}
+
+JPA supports several strategies for modeling inheritance
+  \begin{itemize}
+    \item Single Table Mapping (\lstinline|InheritanceType.SINGLE_TABLE|) -- One table corresponds to all subclasses.  Every record has \emph{every} possible state (even if it is not used in a subclass)
+    \item Joined (\lstinline|InheritanceType.JOINED|) -- Additional state provided in subclasses is provided in a separate table; a subclass instance is generated by joining all the way up the inheritance hierarchy (multiple inserts/deletes/updates are also needed)
+    \item Table Per Class (\lstinline|InheritanceType.TABLE_PER_CLASS|) - One table is defined for each class in the hierarchy; common state is repeated in each table
+  \end{itemize}
+
+\framebreak
+Illustrative example for Single Table Mapping stategy: \lstinline|unl.cse.employee|
+
+To discriminate which class a record corresponds to, we need a \lstinline|DiscriminatorColumn|
+\begin{itemize}
+  \item Column defined in the superclass
+  \item \lstinline|DiscriminatorType| can be \lstinline|STRING|, \lstinline|CHAR|, or \lstinline|INTEGER| (or you can allow the provider to choose)
+  \item Subclasses can define \lstinline|DiscriminatorValue|
+  \item Subclasses can have additional annotations for subclass state
+\end{itemize}
+
+\framebreak
+Good resources:
+  \begin{itemize}
+    \item \url{http://openjpa.apache.org/builds/1.0.4/apache-openjpa-1.0.4/docs/manual/jpa_overview_mapping_inher.html}
+    \item \url{http://openjpa.apache.org/builds/1.0.2/apache-openjpa-1.0.2/docs/manual/jpa_overview_mapping_discrim.html}
+  \end{itemize}
+
+\end{frame}
+
+\section{References \& Resources}
+\begin{frame}
+  \frametitle{References \& Resources}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item Hibernate Download: \url{http://www.hibernate.org/downloads.html}
+  \item Sun JPA Tutorial: \url{http://java.sun.com/javaee/5/docs/tutorial/doc/bnbpz.html}
+  \item Another JPA Tutorial: \url{http://schuchert.wikispaces.com/JPA+Tutorial+1+-+Getting+Started}
+  \item Using JPA in Eclipse: \url{http://wiki.eclipse.org/EclipseLink/Examples/JPA}
+\end{itemize}
+\end{frame}
+
+
+\end{document} 

@@ -1,0 +1,449 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template
+%  Beamer Presentation by Chris Bourke
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{beamer}
+
+\geometry{papersize={14cm,9cm}}
+
+% For handout version:
+\usetheme[hideothersubsections]{UNLTheme}
+
+\usepackage{amssymb}
+\input{StandardCommands}
+\definecolor{mintedBackground}{rgb}{0.95,0.95,0.95}
+\definecolor{mintedInlineBackground}{rgb}{.90,.90,1}
+
+%\usepackage{newfloat}
+\usepackage{minted}
+\setminted{mathescape,
+               linenos,
+               autogobble,
+               frame=none,
+               fontsize=\small,
+               framesep=2mm,
+               framerule=0.4pt,
+               %label=foo,
+               xleftmargin=2em,
+               xrightmargin=0em,
+               startinline=true,  %PHP only, allow it to omit the PHP Tags *** with this option, variables using dollar sign in comments are treated as latex math
+               numbersep=10pt, %gap between line numbers and start of line
+               style=default, %syntax highlighting style, default is "default"
+               			    %gallery: http://help.farbox.com/pygments.html
+			    	    %list available: pygmentize -L styles
+               bgcolor=mintedBackground} %prevents breaking across pages
+               
+\setmintedinline{bgcolor={mintedInlineBackground}}
+\setminted[text]{bgcolor={},linenos=false,autogobble,xleftmargin=1em}
+
+
+
+\title[CSCE 156]{Introduction to Java Database Connectivity API}
+\subtitle{CSCE 156 - Introduction to Computer Science II}
+\author[Bourke]{Christopher M. Bourke\\ \email{cbourke@cse.unl.edu}} %
+\date{~}
+
+\begin{document}
+
+\begin{frame}
+        \titlepage
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile]
+  \frametitle{Java Database Connectivity API}
+  \framesubtitle{~}
+
+Java Database Connectivity (JDBC)
+
+\begin{itemize}
+  \item General API (using interfaces) for Java client code to connect/interact with a database
+  \item Database providers (IBM, Oracle, etc.) provide \emph{drivers}
+  \item Driver: specific implementation of the API for interacting with a particular database 
+  \item Support for 
+  \begin{itemize}
+    \item \mintinline{java}{Connection}
+    \item \mintinline{java}{PreparedStatement}
+    \item \mintinline{java}{ResultSet}
+    \item Common Java data types (\mintinline{java}{Integer, Double, String})
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\section{Step-by-step}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC: basic step-by-step}
+  \framesubtitle{~}
+
+\begin{enumerate}
+  \item Load the database JDBC driver\\
+	Note: your particular driver (.jar file) must be in the class or build path of your project
+  \item Make a connection to the database
+  \item Formulate your query(ies) \& prepare your statement (set parameters)
+  \item Execute your query
+  \item If its a \mintinline{java}{SELECT} query: 
+    \begin{enumerate}
+      \item Get your \emph{result set}
+      \item Process your results
+    \end{enumerate}
+  \item Clean up your resources (close resources, close connection)
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC}
+  \framesubtitle{Reflectively loading a driver}
+
+\begin{itemize}
+  \item For portability, applications written toward JDBC API, not a particular driver
+  \item Driver is loaded at run time through reflection
+  \item Could be made configurable or delegated by some controller
+\end{itemize}
+
+\begin{minted}{java}
+try {
+    Class.forName("com.mysql.jdbc.Driver").newInstance();
+} catch (InstantiationException e) {
+    ...
+} catch (IllegalAccessException e) {
+    ...
+} catch (ClassNotFoundException e) {
+    ...
+}
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC}
+  \framesubtitle{Connection}
+
+Java provides connectivity through \mintinline{java}{java.sql.Connection}:
+
+\begin{minted}{java}
+String url = "jdbc:mysql://cse.unl.edu/cselogin";
+String u = "cselogin";
+String p = "mysqlpasswd";
+Connection conn = null;
+try {
+  conn = DriverManager.getConnection(url, u, p);
+} catch (SQLException sqle) {
+  ...
+}
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC}
+  \framesubtitle{Transactions}
+
+\begin{itemize}
+  \item By default, all queries are auto-commit
+  \item To change this, use \mintinline{java}{conn.setAutoCommit(false)}
+  \item No changes committed until \mintinline{java}{conn.commit()} is called
+  \item Implicitly: new transaction after each commit
+  \item Able to explicitly rollback using \mintinline{java}{conn.rollback()}
+  \item Some drivers may also support \mintinline{java}{conn.setReadOnly(true)}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{JDBC}
+  \framesubtitle{Querying -- Prepared Statement}
+
+\begin{itemize}
+  \item Always good to use \mintinline{java}{PreparedStatement}
+  \item Can define \emph{parameters} using \mintinline{java}{?}
+  \item Parameters indexed by \mintinline{java}{1..n}
+  \item Can be reused (parameters reset and required)
+  \item Parameters are \emph{safe}!
+  \item Special characters are \emph{escaped} 
+  \item Potentially unsafe SQL code is \emph{sanitized}	
+\end{itemize}
+
+\framebreak
+
+\begin{minted}{java}
+String query = "SELECT last_name AS lastName " + 
+               "FROM user WHERE nuid = ?";
+PreparedStatement ps = null;
+try {
+  ps = conn.prepareStatement(query);
+  ps.setString(1, "35140602");
+} catch (SQLException sqle) {
+  ...
+}
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{JDBC}
+  \framesubtitle{Querying -- Result Sets}
+
+\begin{itemize}
+  \item \mintinline{java}{executeQuery()} is for read-only (select statements)
+  \item Select statements return \emph{results}: columns and rows
+  \item Results are encapsulated in a Java \mintinline{java}{ResultSet} object
+  \item Initially a result set ``points'' just before the first \emph{row}
+  \item Iterating through a \mintinline{java}{ResultSet}: \mintinline{java}{rs.next()} 
+  \item Returns a boolean: true if the iteration was successful, false otherwise
+  \item If successful, the ``current'' result row is now pointed to
+  \item Columns can be referenced by name (or alias) using a \mintinline{java}{String} or
+  \item Columns can be accessed via index ($1, \ldots, $)
+  \item Standard getters provide functionality to get-and-cast columns
+\end{itemize}
+
+\begin{minted}{java}
+ResultSet rs = null;
+try {
+  rs = ps.executeQuery();
+  while(rs.next()) {
+    Integer nuid = rs.getInt("nuid")
+    String firstName = rs.getString("firstName");
+  }
+} catch (SQLException sqle) {
+  ...
+}
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC}
+  \framesubtitle{Querying -- Updates}
+
+\begin{itemize}
+  \item \emph{Always} use a prepared statement!
+  \item Same syntax holds for INSERT statements
+\end{itemize}
+
+\begin{minted}{java}
+String query = "UPDATE user SET email = ?, " +
+               "last_updated = ? WHERE nuid = ?";
+PreparedStatement ps = null;
+try {
+  ps = conn.prepareStatement(query);
+  ps.setString(1, "cmbourke@gmail.com");
+  ps.setString(2, "2011-01-01 00:00:01");
+  ps.setString(3, "35140602");
+  ps.executeUpdate();
+} catch (SQLException sqle) {
+  ...
+}
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC}
+  \framesubtitle{Good Practices -- Rethrow Exceptions}
+
+\begin{itemize}
+  \item Most methods explicitly throw \mintinline{java}{SQLException} 
+  \item This is a \emph{checked exception} that \emph{must} be caught and handled
+  \item Occurs with DB errors or program bugs
+  \item Little can be done either way
+  \item Good to catch, log and rethrow 
+  \item Even better: use a logging utility like log4j 
+\end{itemize}
+
+\begin{minted}{java}
+...
+} catch (SQLException sqle) {
+    System.out.println("SQLException: ");
+    sqle.printStackTrace();
+    throw new RuntimeException(sqle);
+}
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC}
+  \framesubtitle{Cleaning Up}
+
+\begin{itemize}
+  \item Objects hold onto valuable external resources
+  \item Network traffic (keep alive), limited connection pool, etc.
+  \item Best practice to release resources as soon as they are no longer needed: \mintinline{java}{close()} method
+\end{itemize}
+
+\begin{minted}{java}
+try {
+  if(rs != null && !rs.isClosed())
+    rs.close();
+  if(ps != null && !ps.isClosed())
+    ps.close();
+  if(conn != null && !conn.isClosed())
+    conn.close();
+} catch (SQLException e) {
+  ...
+}
+\end{minted}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{JDBC}
+  \framesubtitle{Full Example Demonstration}
+
+A full demonstration is available in the \mintinline{java}{unl.cse.jdbc} package in the SVN.
+
+Demonstration based on the student/course enrollment database.
+
+\end{frame}
+
+\section{Good Practices}
+
+\begin{frame}[fragile]
+  \frametitle{Good Practice Tip 1}
+  \framesubtitle{ALWAYS use Prepared Statements}
+
+When available, in any framework or language, always use prepared statements
+
+\begin{itemize}
+  \item Safer
+  \item Better for batch queries
+  \item Myth: no performance hit
+  \item Protects against \emph{injection attacks}
+  \item Using just one method: more uniform, less of a chance of a mistake
+  \item Unfortunately: some frameworks support \emph{named parameters}, not JDBC
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Injection Attack}
+  \framesubtitle{Example}
+
+\begin{itemize}
+  \item Say we pull a string value from a web form (\mintinline{java}{lastName})
+  \item Not using a prepared statement:\\
+\begin{minted}{java}
+String query = "SELECT primary_email FROM user " + 
+               "WHERE last_name = '"+lastName+"'";
+\end{minted}               
+  \item Without scrubbing the input, say a user enters:\\
+	\mintinline{text}{a';DROP TABLE user;}
+  \item Actual query run:\\
+	\mintinline[fontsize=\footnotesize]{text}{SELECT primary_email FROM user WHERE last = 'a';DROP TABLE users;}
+  \item Another example: input: \mintinline{text}{"' OR '1'='1"}
+  \item Actual query:\\
+	\mintinline[fontsize=\footnotesize]{text}{SELECT primary_email FROM user WHERE last_name = '' OR '1'='1'}
+  \item In detail: \url{https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/}	
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Injection Attack}
+  \framesubtitle{Example}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.5]{exploits_of_a_mom}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Good Practice Tip 2}
+  \framesubtitle{Enumerate fields in SELECT statements}
+
+\begin{itemize}
+  \item Using \mintinline{java}{SELECT * ...} grabs all fields even if you don't use them
+  \item Be intentional about what you want/need, only the minimal set
+  \item Allows the database to optimize, reduces network traffic
+  \item Protects against table changes
+  \item Use aliasing (\mintinline{java}{first_name AS firstName}) on all fields to reduce affects of changes to field names
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Additional Issues}
+  \framesubtitle{~}
+
+Additional Issues
+\begin{itemize}
+  \item Security Issues
+  \begin{itemize}
+    \item Where/how should database passwords be stored?
+    \item Good security policy: \emph{assume} an attacker has your password \& 
+	  take the necessary precautions (secure the server and network)
+    \item Do not store sensitive data unencrypted
+  \end{itemize}
+  \item Efficiency Issues
+  \begin{itemize}
+    \item \alert{Repeat}: \textbf{close your resources}
+    \item Connection Pools
+    \item Good normalization, design, \& practice
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\section{Resources}
+
+\begin{frame}
+  \frametitle{Resources}
+  \framesubtitle{~}
+
+\begin{itemize}
+  \item MySQL 5.1 Reference Manual (\url{http://dev.mysql.com/doc/refman/5.1/en/index.html})
+  \item MySQL Community Server (\url{http://www.mysql.com/downloads/})
+  \item MySQL Workbench -- a MySQL GUI (\url{http://wb.mysql.com/})
+  \item Connector/J -- MySQL JDBC connector (\url{http://www.mysql.com/downloads/connector/j/})
+  \item Stanford's \emph{Introduction to Databases} free online course: \url{http://db-class.com/}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+  \frametitle{Log4j}
+  \framesubtitle{~}
+
+  \begin{itemize}
+    \item Home: \url{http://logging.apache.org/}
+    \item Standard output is not appropriate for deployed applications (may not exist, certainly no one is ``listening'' to it)
+    \item Logging provides valuable debugging, metrics, and auditing information
+    \item Provides runtime configuration, formatting, rolling files, etc.
+    \framebreak
+    \item Supports granularity in different levels of logging (\mintinline{java}{ERROR} to \mintinline{java}{DEBUG})
+    \item Usage: give each loggable class  a static logger:\\
+\begin{minted}{java}
+private static org.apache.log4j.Logger log = 
+  Logger.getLogger(MyClass.class);
+\end{minted}  
+    \item Then use it: \mintinline{java}{log.error("SQLException: ", e);}
+    \item Configure using a \mintinline{java}{log4j.properties} file (must be in the class path)
+    \item Or: call \mintinline{java}{BasicConfigurator.configure();} in your \mintinline{java}{main} to have a default setup
+  \end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Exercise}
+  \framesubtitle{~}
+
+  \begin{quote}
+    Write basic CRUD methods for the \mintinline{java}{Employee}/\mintinline{java}{Person} tables by writing
+    static methods to insert, delete, retrieve and update records in both tables.
+  \end{quote}
+
+\end{frame}
+
+\end{document}
