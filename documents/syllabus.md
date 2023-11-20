@@ -1,6 +1,6 @@
 # Computer Science II
 
-### CSCE 156 - Syllabus - Spring 2023
+### CSCE 156 - Syllabus - Spring 2024
  [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska-Lincoln](https://unl.edu/)  
@@ -16,7 +16,8 @@
 ## Course Info
 
 **Prerequisites**: [MATH 106](https://catalog.unl.edu/search/?P=MATH%20106)
-or equivalent and a grade of C or better in [CSCE 155](https://catalog.unl.edu/search/?P=CSCE%20155E)
+or equivalent and a grade of C or better in
+[CSCE 155](https://catalog.unl.edu/search/?P=CSCE%20155E)
 
 **Description**: Data structures, including linked lists, stacks,
 queues, and trees; algorithms, including searching, sorting, and
@@ -87,47 +88,12 @@ solving should be modified to ask and answer design questions first:
 
 -   Trees; Binary Search Trees
 
-## Course Format & Delivery
-
-This course is offered in multiple sections. The main offering has
-two sections:
-  * Section 150 is the in-person lecture with lectures livestreamed via
-    YouTube.  Recordings of the lecture are available immediately after.
-  * Section 700 is the online section.  Students enrolled in this section may
-    attend virtually by watching the livestream and utilizing either YouTube
-    chat or our online forum Piazza to ask questions.  Students in the online
-    section may "attend" *any* lab section virtually via zoom.  A substantial
-    set of pre-prepared video tutorials and lectures is also available for
-    students wishing to work asynchronously.
-  * Section 810 is an online section offered through the
-    [Nebraska Now](https://admissions.unl.edu/specialized-information/nebraska-now/)
-    program.
-  * There are two smaller separate honors sections for CSCE 156H (sections
-    150 and 700) with the same format as the main sections.  Generally, the
-    there are higher expectations (each assignment has 10-15% extra work
-    required for the honors section) and we do go a bit faster in order to
-    cover some extra topics as time permits.
-
-### Labs
-
-Students in in-person sections may choose to attend their lab section either
-in-person or remotely (via zoom).  Students in the online 700 section will
-complete their labs remotely but may attend any lab sessions virtually via
-zoom.  
-
-### Office Hours
-
-All office hours by instructors and Learning Assistants will be offered
-both in-person in the School of Computing
-[Student Resource Center](https://computing.unl.edu/current-undergraduate#SRC)
-as well as online via zoom.  
-
-### Continuation of Instruction
+## Continuation of Instruction
 
 If in-person classes are canceled by the University during a lecture
-day, lecture will still be livestreamed.  If in-person classes are canceled
+day, lecture may still be livestreamed.  If in-person classes are canceled
 by the University during a lab/hack day, in-person attendance will not be
-required, help will be made available via zoom and you will still be
+required, help may be made available via zoom and you will still be
 expected to complete the work remotely.
 
 ## Assessment

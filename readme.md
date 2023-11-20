@@ -1,12 +1,12 @@
 # Computer Science II
-  **[School of Computing](https://computing.unl.edu/)**  
-  **[College of Engineering](https://engineering.unl.edu/)**  
-  **[University of Nebraska-Lincoln](https://unl.edu)**  
-  **[University of Nebraska-Omaha](https://unomaha.edu)**  
+**[School of Computing](https://computing.unl.edu/)**  
+**[College of Engineering](https://engineering.unl.edu/)**  
+**[University of Nebraska-Lincoln](https://unl.edu)**  
+**[University of Nebraska-Omaha](https://unomaha.edu)**  
 
 This repository hosts documents, files, and other artifacts
 related to Computer Science II (offered as CSCE 156 and CSCE 156H) at
-the University of Nebraska-Lincoln
+the University of Nebraska-Lincoln.
 
 ## Textbook
 
@@ -44,6 +44,17 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 - Course Link: TBD
 - Lectures: TBD
 
+#### University of Nebraska-Omaha
+
+During the spring 2023 semester, this course is offered at UNO as ECEN 194:
+
+- Course Link: TBD
+- Lectures: TBD
+
+<details>
+
+<summary>Archived Offerings</summary>
+
 ### Spring 2023
 
 - Course Link: https://canvas.unl.edu/courses/145553
@@ -75,3 +86,11 @@ During the spring 2023 semester, this course is offered at UNO as ECEN 194:
 
 - Course Link: https://canvas.unl.edu/courses/53628
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUzX-W8wQkWPYu5gbkcZYMC
+
+</details>
+
+## License
+
+All material in this repository as well as the linked labs and videos is
+released under a Creative Commons Attribution-ShareAlike 4.0 International
+license.

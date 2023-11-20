@@ -1,12 +1,21 @@
-# Computer Science II - Honors
-  **[School of Computing](https://computing.unl.edu/)**  
-  **[College of Engineering](https://engineering.unl.edu/)**  
-  **[University of Nebraska-Lincoln](https://unl.edu)**  
+# Computer Science II - Honors  
+**[School of Computing](https://computing.unl.edu/)**  
+**[College of Engineering](https://engineering.unl.edu/)**  
+**[University of Nebraska-Lincoln](https://unl.edu)**  
 
 This subdirectory hosts documents specific to the honors section
 (CSCE 156H).
 
 ## Course Offerings
+
+### Spring 2024
+
+- Course Link:
+- Lectures:
+
+<details>
+
+<summary>Archived Offerings</summary>
 
 ### Spring 2023
 
@@ -27,3 +36,11 @@ This subdirectory hosts documents specific to the honors section
 
 - Course Link: https://canvas.unl.edu/courses/81909
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZXyqMhz_gcbDLGO1e_LbBX3
+
+</details>
+
+## License
+
+All material in this repository as well as the linked labs and videos is
+released under a Creative Commons Attribution-ShareAlike 4.0 International
+license.
