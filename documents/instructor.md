@@ -4,7 +4,7 @@
 ## Course Setup Checklist
 
 * LAP/Logistics
-  * Retrieve roster data (name, NUID, cse login, gmail account, photo, bio, lab availability, office hours)
+  * Retrieve roster data (name, NUID, gmail account, photo, bio, lab availability, office hours)
   * Assign Labs
   * Office Hour grid
 
@@ -38,10 +38,6 @@
   * TA welcome message
   * Import students
   * Student welcome message
-
-* Zoom
-  * Update link
-  * Update alternative hosts
 
 * Logistics
   * Unify rosters: MyRed, Canvas
