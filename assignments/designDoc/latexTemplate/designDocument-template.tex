@@ -23,16 +23,16 @@
 
 %If you want to typeset code, use minted (requires
 %some additional setup)
-%\usepackage{minted}
+\usepackage{minted}
 
 %If you want to typeset algorithms, use algorithm2e:
 %\usepackage[boxed,slide,linesnumbered]{algorithm2e}
 
-\title{Some Project}
-\subtitle{Computer Science II Project}
-\author{Joe Schmoe\\
+\title{[Project Title]}
+\subtitle{[Project Subtitle]}
+\author{Joe Student\\
         \href{mailto:foo@email.com}{foo@email.com} \\
-        Jane Schmoe\\
+        Jane Student\\
         \href{mailto:foo@email.com}{foo@email.com} \\        
         University of Nebraska---Lincoln\\
 }
@@ -49,7 +49,10 @@
 \vfill
 
 \begin{abstract}
-[Provide a short abstract of this document here]
+[Provide a short abstract of this document here.  Throughout this template 
+we give directions and \emph{placeholders} within square brackets on what 
+the content should be.  As you update this document, the placeholders should
+be removed.]
 \end{abstract}
 
 \newpage
@@ -61,9 +64,9 @@
 \hline
 Version & Description of Change(s) & Author(s) & Date \\
 \hline
-1.0 & Initial draft of this design document & Joe Schmoe & 2525/01/01 \\
+1.0 & Initial draft of this design document & Joe Student & 2525/01/01 \\
 \hline
-1.1 & Typo and grammar fixes & Jane Schmoe & 2525/01/02 \\
+1.1 & Typo and grammar fixes & Jane Student & 2525/01/02 \\
 \hline
 \end{tabular}
 
@@ -73,8 +76,26 @@ Version & Description of Change(s) & Author(s) & Date \\
 \newpage
 \section{Introduction}
 
-[Provide a short introduction to this document, the project and the context in which it is being developed.  This document needs to conform to the 
-IEEE 1016 standard \cite{IEEE1016} (this is how you use citations).]
+[Provide a short introduction to this document, the project and the context 
+in which it is being developed.  This document needs to conform to the 
+IEEE 1016 standard \cite{IEEE1016} (this is how you use citations in \LaTeX\ and BibTex).  
+Do not include citations just to include them.  Only include them if they are relevant
+\emph{and} you have cited them somewhere in the document.  
+
+Keep your writing professional and write in a \emph{technical style}.  Keep things short but provide
+sufficient details so that another development team would be able to reproduce
+your system.  Do not use personal pronouns.  Write in a present tense \emph{as if}
+the project is already done.  This document is about the \emph{design} of the system
+not about the process.  Do not refer to ``we did A then we did B, etc.''  Do not
+write as if this is a class project; write \emph{as if} it were a real project.
+
+The introduction should include details on who the client is, what is their business
+model, what are the major \emph{features} (not components) that the system needs to
+have and support?  When you describe the components in Sections 
+\ref{section:overallDesignDescription} and \ref{section:detailedDesignDescription}, 
+you should justify your design decisions 
+by calling back to these requirements as necessary.  If you don't include these
+details, there is no way for you to justify your design decisions.]
 
 \subsection{Purpose of this Document}
 
@@ -82,17 +103,26 @@ IEEE 1016 standard \cite{IEEE1016} (this is how you use citations).]
 
 \subsection{Scope of the Project}
 
-[Describe the scope of the project, what features and functionality it covers (at a high-level).  Describe the problem statement and context in which this project is being developed.  Who is it for, what is it for, etc.?  You may also explicitly indicate what is not within the scope--other potential pieces of the overall project that are not covered by this document]
+[Describe the scope of the project, what features and functionality it covers 
+(at a high-level).  What does this project cover and what does the project 
+\emph{not} cover (ie what is the responsibility of another team?).]
 
 \subsection{Definitions, Acronyms, Abbreviations}
 
 \subsubsection{Definitions}
 
-[Define any terms that require a definition--domain specific terms, non-standard terms, or terms that are used in non-standard ways]
+[Define any terms that require a definition--domain specific terms, 
+non-standard terms, or terms that are used in non-standard ways.  Write for
+a \emph{technical audience}: do not include things that are part of the course
+or that a technical audience would know already.]
 
 \subsubsection{Abbreviations \& Acronyms}
 
-[Define all abbreviations and acronyms used in this document here.  This relieves you of the need to define such things within the context of the document itself and provides an easy reference for the reader.]
+[Define all abbreviations and acronyms used in this document here.  Only include
+them if you actually use them in the document.  When used in the document for the
+first time, it should include the full text.  For example, the Associate for Computing
+Machinery (ACM) is a global organization of computing professionals and researchers 
+that promotes the science and profession of computing.]
 
 \begin{description}
   \item[ACM] Association for Computing Machinery
@@ -101,46 +131,103 @@ IEEE 1016 standard \cite{IEEE1016} (this is how you use citations).]
 \end{description}
   
 \section{Overall Design Description}
+% this is a comment in latex
+% a label can be used to make a reference to a section
+\label{section:overallDesignDescription}
   
-[Provide an overall summary/description of the project.  Identify the major design components, technologies, etc.]
-  
+[Provide an overall \emph{high-level} and abstract description of the design.
+Identify the major components, major features, etc.  Identify the technologies used
+Identify and talk about the \emph{major} features of the project; this section
+should be updated throughout the drafts]
+
 \subsection{Alternative Design Options}
 
-[If applicable, describe and discuss alternative design options that you considered and discuss why they were not chosen.  What advantages and disadvantages do the alternatives provide and what advantage/disadvantages do the chosen design elements provide.  Provide some justification for why the chosen elements? advantages/disadvantages outweighed the alternatives]
+[If applicable, describe and discuss alternative design options that 
+you considered and discuss why they were not chosen.  What advantages 
+and disadvantages do the alternatives provide and what advantage/disadvantages 
+do the chosen design elements provide.  Provide some justification for why the 
+chosen elements? advantages/disadvantages outweighed the alternatives]
 
 \section{Detailed Component Description}
+\label{section:detailedDesignDescription}
 
-[Provide an introduction to this section here]
+[Provide an introduction to this section here.  Identify the next subsections
+and what each one will cover.]
+
 
 \subsection{Database Design}
 
-[This section will be used to detail your database schema design (Phase III).  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document.]
+[This section will be used to detail your database schema design (Phase III).
+For your draft, you should provide a sketch of your ER diagram (which may
+be replaced with a more formal one after your implementation.  Identify all tables
+and their purpose; the columns in each table, etc.  Do not include a lot of 
+text; your ER diagram should provide enough technical details.  Your text should
+not be redundant to your diagram.  Instead, your text should \emph{justify}
+the design; make reference to the introduction and to the client's business model.]
 
 \subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.]
+[This section will describe your approach to testing this particular 
+component.  Describe any test cases, unit tests, or other testing 
+components or artifacts that you developed for this component.  How
+was test data generated (if a tool was used, this is a good opportunity
+for a citation).  How many test cases did you have; how many of each type?  
+\emph{Justify} why that is sufficient.  What were the outcomes of the tests?
+Did the outcomes affect development or force a redesign?
+
+You may refer to the course grader system as an external testing 
+environment ``provided by the client'' or ``another QA/testing team''.]
+
 
 \subsection{Class/Entity Model}
 
-[This section should detail your Java classes--their state, interface and how they relate to each other.  It is highly recommended that you document these elements using tables, UML diagrams, and other visually-informative methods.  Figures and tables should have proper captions and be referenced in the main text just like in Figure \ref{figure:uav}.  You should provide subsections to organize your presentation as applicable.]
+[This section should detail your classes--their state, interface and how 
+they relate to each other.  Your draft should include a sketch (hand or
+tool generated) of your classes using a UML diagram.  Figures and tables 
+should have proper captions and be referenced in the main text just 
+like in Figure \ref{figure:uav}.  Don't have one giant UML diagram; 
+break it up into subfigures, collecting related classes as appropriate.
+Your draft needs to provide enough detail that we can give feedback on 
+your design before you submit the code for each phase.  Your sketches
+should be replaced with formal diagrams in later drafts.
 
-\begin{figure}
+Identify which classes are responsible for each feature.  Classes should
+follow the \emph{Single Responsibility Principle}.  This section should
+be updated throughout each phase as you add more classes.]
+
+\begin{figure}[h]%h indicates a preference to place the table here
 \centering
 \includegraphics[scale=1.0]{uavsUNL}
-\caption{A UAV (Unmanned Aerial Vehicle) soars above Memorial Stadium.  Figures should be numbered and properly captioned.}
+\caption{A UAV (Unmanned Aerial Vehicle) soars above Memorial Stadium.  Figures should be numbered and properly captioned.  This is just an example of how to properly include a figure.}
 \label{figure:uav}
 \end{figure}
 
 \subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
+[This section will describe your approach to testing this particular 
+component.  Describe any test cases, unit tests, or other testing 
+components or artifacts that you developed for this component.  How
+was test data generated (if a tool was used, this is a good opportunity
+for a citation).  How many test cases did you have; how many of each type?  
+\emph{Justify} why that is sufficient.  What were the outcomes of the tests?
+Did the outcomes affect development or force a redesign?
+
+You may refer to the course grader system as an external testing 
+environment ``provided by the client'' or ``another QA/testing team''.]
 
 \subsection{Database Interface}
 
-[This section will be used to detail phase IV where you modify your application to read from a database rather than from flat files.  This section will detail the API that you designed--how it conformed to the requirements, how it worked, other tools or methods that you designed to assist, how it handles corner cases and the expectations or restrictions that you?ve placed on the user of the API.  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document.  An example table is presented
-as Table \ref{table:assignmentPerformance}.]
+[This section will be used to detail phase IV where you modify your 
+application to read from a database rather than from flat files.  
+This section will detail the API that you designed--how it conformed 
+to the requirements, how it worked, other tools or methods that you 
+designed to assist, how it handles corner cases and the expectations 
+or restrictions that you've placed on the user of the API.  What is
+``good'' data and what is considered ``bad'' data and how does your
+API handle it?  An example table is presented as Table 
+\ref{table:assignmentPerformance}.]
 
-\begin{table}
+\begin{table}[h] %h indicates a preference to place the table here
 \centering
 \caption{Average Performance on Assignments; on-time vs. late and individual vs partners.  In general, captions for Tables should appear above the table.}
 \label{table:assignmentPerformance}
@@ -165,19 +252,78 @@ Diff & NA & \color{red}{4.88\%} & \color{green}{3.90\%} & \color{green}{3.78\%} 
 
 \subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
+[This section will describe your approach to testing this particular 
+component.  Describe any test cases, unit tests, or other testing 
+components or artifacts that you developed for this component.  How
+was test data generated (if a tool was used, this is a good opportunity
+for a citation).  How many test cases did you have; how many of each type?  
+\emph{Justify} why that is sufficient.  What were the outcomes of the tests?
+Did the outcomes affect development or force a redesign?
 
-\subsection{Design \& Integration of Data Structures}
+You may refer to the course grader system as an external testing 
+environment ``provided by the client'' or ``another QA/testing team''.]
 
-[This section will be used to detail phase V where you design an original data structure and integrate it into your application.  In earlier phases this section may be omitted or a short note indicating that details will be provided in a subsequent revision of this document?]
+\subsection{Design \& Integration of a Sorted List Data Structure}
+
+[This section will be used to detail phase V where you design and 
+implement a custom data structure and integrate it into your application.  
+Is your list node based or array based?  What is its \emph{interface}
+and how does it define a sorted list?  Is it generic?  Why?  
+You can/should provide another UML diagram for this list.
+
+You should not include large chunks of code in your document, but if you do
+need to typeset code in \LaTeX\ the recommendation is the 
+\texttt{minted} package.  You can typeset code inline like this: 
+\mintinline{java}{List<Integer> myList} or you can define
+entire blocks (usually placed within a figure environment) like in
+Figure \ref{figure:helloWorldJava}.
+
+\begin{figure}[h]%h indicates a preference to place the table here
+\begin{minted}{java}
+/**
+ * A basic Hello World class
+ */
+public class HelloWorld {
+
+  public static void main(String args[]) {
+    System.out.println("Hello World");
+  }
+}
+\end{minted}
+\caption{A basic Hello World program in Java.}
+\label{figure:helloWorldJava}
+\end{figure}
+
+If you do use the minted package, you may need a substantial amount of 
+additional setup.  First, you need to install the \LaTeX\ \texttt{minted}
+package installed \emph{and} you need to install the python pygments package
+(see \url{https://pygments.org/download/}; you can use \texttt{pip install pygments}).
+Once everything is installed, you must compile using the 
+\mintinline{text}{--shell-escape} flag.]
 
 \subsubsection{Component Testing Strategy}
 
-[This section will describe your approach to testing this particular component.  Describe any test cases, unit tests, or other testing components or artifacts that you developed for this component.  What were the outcomes of the tests?  Did the outcomes affect development or force a redesign?]
+[This section will describe your approach to testing this particular 
+component.  Describe any test cases, unit tests, or other testing 
+components or artifacts that you developed for this component.  How
+was test data generated (if a tool was used, this is a good opportunity
+for a citation).  How many test cases did you have; how many of each type?  
+\emph{Justify} why that is sufficient.  What were the outcomes of the tests?
+Did the outcomes affect development or force a redesign?
 
-\subsection{Changes \& Refactoring}
+You may refer to the course grader system as an external testing 
+environment ``provided by the client'' or ``another QA/testing team''.]
 
-[During the development lifecycle, designs and implementations may need to change to respond to new   requirements, fix bugs or other issues, or to improve earlier poor or ill-fitted designs.  Over the course of this project such changes and refactoring of implementations (to make them more efficient, more convenient, etc.) should be documented in this section.  If not applicable, this section may be omitted or kept as a placeholder with a short note indicating that no major changes or refactoring have been made.]
+\section{Changes \& Refactoring}
+
+[During the development lifecycle, designs and implementations may need 
+to change to respond to new   requirements, fix bugs or other issues, or 
+to improve earlier poor or ill-fitted designs.  Over the course of this 
+project such changes and refactoring of implementations (to make them 
+more efficient, more convenient, etc.) should be documented in this 
+section.  If not applicable, this section may be omitted or kept as a 
+placeholder with a short note indicating that no major changes or 
+refactoring have been made.]
 
 \section{Additional Material}
 
