@@ -41,15 +41,15 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ### Spring 2024
 
-- Course Link: TBD
-- Lectures: TBD
+- Course Link: https://canvas.unl.edu/courses/167152
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZXF38jpQKxApkTp0N0h36gN
 
 #### University of Nebraska-Omaha
 
 During the spring 2023 semester, this course is offered at UNO as ECEN 194:
 
-- Course Link: TBD
-- Lectures: TBD
+- Course Link: https://canvas.unl.edu/courses/172648
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZVbJUDDw8JAtYHR-0cKLmLA
 
 <details>
 

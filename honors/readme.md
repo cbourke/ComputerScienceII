@@ -10,8 +10,8 @@ This subdirectory hosts documents specific to the honors section
 
 ### Spring 2024
 
-- Course Link:
-- Lectures:
+- Course Link: https://canvas.unl.edu/courses/167103
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZW-gT6AtbUWpVFxOUZgSCMj
 
 <details>
 
