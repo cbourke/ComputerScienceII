@@ -9,7 +9,7 @@ def getFiles(path):
 
     { (fullPath,fileName,extension) => fileContents }
 
-  of all files in the given path according to config.fileExtensions
+  of all files in the given path according to config.file_extensions
   If the configuration includes jar or zip files, it extracts
   files within the archive files but only one level deep (it does
   not recursively extract archives within archives).
@@ -27,8 +27,8 @@ def getFiles(path):
     return files
   else:
     (_, _, filenames) = next(os.walk(path))
-  if config.fileExtensions:
-    filenames = [ f for f in filenames if f.endswith(tuple(config.fileExtensions)) ]
+  if config.file_extensions:
+    filenames = [ f for f in filenames if f.endswith(tuple(config.file_extensions)) ]
   if filenames:
     for fileName in filenames:
       (_,extension) = os.path.splitext(fileName)
@@ -37,10 +37,6 @@ def getFiles(path):
       if extension == 'jar' or extension == 'zip':
         extracted = extractArchiveFiles(path + fileName)
         files = {**files, **extracted}
-      elif extension == 'pdf':
-        encoded = base64.b64encode(open(path+fileName, "rb").read())
-        contents = "data:application/pdf;base64," + encoded.decode('utf-8')
-        files[(path+fileName,fileName,extension)] = contents
       elif extension == 'png':
         encoded = base64.b64encode(open(path+fileName, "rb").read())
         contents = "data:data/image;base64," + encoded.decode('utf-8')
@@ -65,7 +61,7 @@ def extractArchiveFiles(fileName):
 
     { (fullPath,fileName,extension) => fileContents }
 
-  of all of them according to the config.fileExtensions similar to
+  of all of them according to the config.file_extensions similar to
   getFiles(path)
 
   fileName -- the path/file of the archive file to extract from
@@ -73,7 +69,7 @@ def extractArchiveFiles(fileName):
   files = {}
   with ZipFile(fileName, 'r') as zip:
     for z in zip.infolist():
-      if not config.fileExtensions or (z.filename.endswith(tuple(config.fileExtensions)) and not z.filename.endswith(tuple(['.jar', '.zip'])) ):
+      if not config.file_extensions or (z.filename.endswith(tuple(config.file_extensions)) and not z.filename.endswith(tuple(['.jar', '.zip'])) ):
           (path,basename) = os.path.split(z.filename)
           (_,extension) = os.path.splitext(basename)
           contents = zip.read(z).decode(errors='ignore')

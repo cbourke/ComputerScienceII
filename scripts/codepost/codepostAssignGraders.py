@@ -72,24 +72,19 @@ if not os.path.exists(assignment_dir):
     exit(1)
 
 grading_assignment = course.getGradingAssignment()
-s = course.assignmentToString(gradingAssignment)
+s = course.assignmentToString(grading_assignment)
 print(s)
 
-csv = course.assignmentToCSV(gradingAssignment)
+csv = course.assignmentToCSV(grading_assignment)
 f = open(handin_assignment_number+".csv", "w")
 f.write(csv)
 f.close()
-
-if not commit:
-  print("Cowardly refusing to push source files to codepost.io; rerun with --commit if you wanna.")
-
-pushAssignments(grading_assignment)
 
 def pushAssignments(grading_assignment):
   for grader,groups in grading_assignment.items():
     for g in groups:
       s = g.members[0]
-      path = f"{assignment_dir}{s.canvasId}/"
+      path = f"{assignment_dir}{s.canvasLogin}/"
       print(f"Pushing files in {path}...")
       try:
         files = getFiles(path)
@@ -112,3 +107,8 @@ def pushAssignments(grading_assignment):
               extension=ext,
               submission=submission.id
             )
+
+if not commit:
+  print("Cowardly refusing to push source files to codepost.io; rerun with --commit if you wanna.")
+
+pushAssignments(grading_assignment)
