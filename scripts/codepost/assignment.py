@@ -1,7 +1,7 @@
 
 class Assignment:
     """
-    A class that models an assignment in canvas with a
+    A class that models an assignment in Canvas with a
     minimum of data
     """
 
