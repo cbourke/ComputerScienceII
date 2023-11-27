@@ -1,12 +1,14 @@
 """
-This script interfaces with canvas, CSE's User Database (udb) and 
+TODO: update this entire script
+
+This script interfaces with canvas, CSE's User Database (udb) and
 codepost.io to assign graders to student submissions for a particular
 assignment and pushes all submission files to codepost.io.
 
 Usage: python3 codepostAssignGraders.py cse_handin_assignment_name codepost_assignment_id
 
-where 
-  - cse_handin_assignment_name is the "name" of the handin assignment 
+where
+  - cse_handin_assignment_name is the "name" of the handin assignment
     (corresponds to the handin directory created)
   - codepost_assignment_id is the codepost assignment (database) ID.
     You can retrieve this by first running codepostListCourseInfo.py
@@ -21,71 +23,74 @@ In detail:
     them among graders) and outputs an assignment report to
     the standard output
  4. It scans the handin directory for files whose extensions
-    match those in the config.py file and pushes them to 
+    match those in the config.py file and pushes them to
     codepost.io associated them with the assigned grader.
-    
-This script assumes that the course and assignments have 
-already been setup and that no files have been submitted 
-to codepost already.  Preexisting submissions will result 
-in a fatal error (so it is best to do this cleanly and/or 
+
+This script assumes that the course and assignments have
+already been setup and that no files have been submitted
+to codepost already.  Preexisting submissions will result
+in a fatal error (so it is best to do this cleanly and/or
 wipe the assignment on codepost.io and restart)
 """
 import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument("cseHandinAssignmentNumber", help=
-  """The CSE Handin Assignment number which is also the
-  name of the directory in which files are stored.  
-  Example: A1 would be expected to be in ~/handin/A1)
-  """
-  )
-parser.add_argument("codepostAssignmentId", help=
-  """The codepost.io assignment ID number (a run of
-  codepostListCourseInfo.py or codepostValidateCourse.py
-  may be necessary to find this)
-  """, type=int)
-parser.add_argument("--push", action='store_true', help=
-  """Push the assignment source files to codepost.io. The
-  default is to not push files so a test run of assignments 
-  can be made.  
-  """)
-args = parser.parse_args()
-
-cseHandinAssignmentNumber = args.cseHandinAssignmentNumber
-codepostAssignmentId = args.codepostAssignmentId
-pushToCodePost = args.push
-
 import sys
 import os
 import codepost
+import pprint
 from config import config
 from course import course
-from fileUtils import getFiles 
+from fileUtils import getFiles
+from codepostUtils import get_assignment_id
 
-assignmentDir = config.handinDirectory + cseHandinAssignmentNumber + "/"
-if not os.path.exists(assignmentDir):
-    print("assignment directory: " + assignmentDir + " does not seem to exist")
+parser = argparse.ArgumentParser()
+parser.add_argument("handin_assignment_number", help=
+  """The handin directory in which files are stored;
+  ex: A1 would be expected to be in {handin_directory}/A1)
+  """
+  )
+parser.add_argument("codepost_assignment_name", help=
+  """The codepost.io assignment name; ex: "Assignment 1.0"
+  """)
+parser.add_argument("--commit", action='store_true', help=
+  """Commmits the changes to the gradebook.  If this is not
+  provided, the script will run in coward mode and not make
+  any modifications, only reporting what would have been done.
+  """)
+args = parser.parse_args()
+
+codepost.configure_api_key(config.codepost_api_key)
+
+handin_assignment_number = args.handin_assignment_number
+codepost_assignment_name = args.codepost_assignment_name
+codepost_assignment_id = get_assignment_id(codepost_assignment_name)
+commit = args.commit
+
+assignment_dir = f"{config.handin_directory}{handin_assignment_number}/"
+if not os.path.exists(assignment_dir):
+    print(f"assignment directory: {assignment_dir} does not seem to exist")
     print("perhaps you need more practice operating your computer machine")
     exit(1)
 
-
-codepost.configure_api_key(config.codePostApiKey)
-
-gradingAssignment = course.getGradingAssignment()
+grading_assignment = course.getGradingAssignment()
 s = course.assignmentToString(gradingAssignment)
 print(s)
 
 csv = course.assignmentToCSV(gradingAssignment)
-f = open(cseHandinAssignmentNumber+".csv", "w")
+f = open(handin_assignment_number+".csv", "w")
 f.write(csv)
 f.close()
 
-def pushAssignments(gradingAssignment):
-  for grader,groups in gradingAssignment.items():
+if not commit:
+  print("Cowardly refusing to push source files to codepost.io; rerun with --commit if you wanna.")
+
+pushAssignments(grading_assignment)
+
+def pushAssignments(grading_assignment):
+  for grader,groups in grading_assignment.items():
     for g in groups:
       s = g.members[0]
-      path = assignmentDir+s.cseLogin+"/"
-      print("Pushing files in " + path + "...")
+      path = f"{assignment_dir}{s.canvasId}/"
+      print(f"Pushing files in {path}...")
       try:
         files = getFiles(path)
       except:
@@ -93,21 +98,17 @@ def pushAssignments(gradingAssignment):
         print("Error: %s" % e )
         files = {}
       if files:
-        submission = codepost.submission.create(
-          assignment=codepostAssignmentId,
-          students=[m.canvasEmail for m in g.members],
-          grader=grader.canvasEmail)
+        if commit:
+          submission = codepost.submission.create(
+            assignment=codepost_assignment_id,
+            students=[m.canvasEmail for m in g.members],
+            grader=grader.canvasEmail)
         for (fullPath,name,ext),contents in files.items():
-          print("pushing " + name)
-          codepost.file.create(
-            name=name,
-            code=contents,
-            extension=ext,
-            submission=submission.id
-          )
-
-if pushToCodePost:
-  pushAssignments(gradingAssignment)
-else:
-  print("Cowardly refusing to push source files to codepost.io; rerun with --push if you wanna.")
-
+          print(f"  pushing {name}...")
+          if commit:
+            codepost.file.create(
+              name=name,
+              code=contents,
+              extension=ext,
+              submission=submission.id
+            )
