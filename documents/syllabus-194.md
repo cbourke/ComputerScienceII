@@ -24,7 +24,7 @@ recursion; programming language topics, including object-oriented
 programming; pointers, references, and memory management; design and
 implementation of a multilayer application with SQL database.
 
-## Skills Objectives
+## Learning & Skills Objectives
 
 Throughout the duration of this course, you will be presented with a lot
 of information, some of which will have immediate application and some
@@ -116,7 +116,7 @@ A in this course; keep it up!
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Starter Pts | 1      |   15   |
+| Starter Pts |        |   15   |
 | Labs        | 13     |  260   |
 | Assignments | 9      |  975   |
 | Total       |        | 1250   |
@@ -152,7 +152,7 @@ further working experience with lecture topics, but also to provide you
 with additional information and details not necessarily covered in
 lecture. Each lab will come with some starter code and exercises that
 you have to complete.  You will submit your code as specified through
-the webhandin and we will grade your lab using the webgrader.
+the handin and we will grade your lab using the webgrader.
 
 Labs are setup as a *peer programming* experience. If you are attending
 lab *in person*, you may be randomly paired with a partner. One of you
@@ -171,7 +171,7 @@ or you may complete the lab on your own.
 
 There are 8 assignments as well as a design document. Assignments will
 be due 1 second before midnight Friday evening the week that they are due.
-Code and other relevant *artifacts* must be submitted using webhandin
+Code and other relevant *artifacts* must be submitted using handin
 unless otherwise stated. If there
 are written portions of the homework, they should be typed. You should
 typeset code snippets using a monotype font (courier for example) for
@@ -204,9 +204,9 @@ Exceptions may be made in certain circumstances such as health or
 emergency, but you must make every effort to get prior permission.
 Documentation may also be required.
 
-Homework assignments have a strict due date/time as defined by the CSE
+Homework assignments have a strict due date/time as defined by the
 server’s system clock. All program files must be handed in using
-webhandin as specified in individual assignment handouts. Programs that
+handin as specified in individual assignment handouts. Programs that
 are even a few seconds past the due date/time will be considered late
 and you will be locked out of handing anything in after that time.
 
@@ -229,6 +229,11 @@ All students enrolled in any School of Computing course are bound by this policy
 to read, understand, and follow this policy. Violations will be dealt
 with on a case by case basis and may result in a failing assignment or a
 failing grade for the course itself.
+
+#### Use of AI
+
+The use of any AI tools for the design or implementation of programs is
+strictly prohibited for this course.  
 
 ## Communication & Getting Help
 

@@ -19,7 +19,8 @@
 or equivalent and a grade of C or better in
 [CSCE 155](https://catalog.unl.edu/search/?P=CSCE%20155E)
 
-**Description**: Data structures, including linked lists, stacks,
+**[Description](https://catalog.unl.edu/search/?P=CSCE%20156)**:
+Data structures, including linked lists, stacks,
 queues, and trees; algorithms, including searching, sorting, and
 recursion; programming language topics, including object-oriented
 programming; pointers, references, and memory management; design and
@@ -45,20 +46,20 @@ whose importance is not immediately apparent. As a different measure of
 your success in this course, by the end, you should have the following
 skills.
 
-1.  Be able to more easily pick up and learn a new programming language
+-   Be able to more easily pick up and learn a new programming language
     on your own
 
-2.  Be able to recognize, use, design and appreciate programs with an
+-   Be able to recognize, use, design and appreciate programs with an
     object-oriented flavor
 
-3.  Be able to design a database-backed application from scratch given a
+-   Be able to design a database-backed application from scratch given a
     general problem statement
 
-4.  Be able to understand and implement basic data structures as well as
+-   Be able to understand and implement basic data structures as well as
     recognize how and when to leverage appropriate simple data
     structures
 
-5.  Be able to identify and analyze basic algorithms
+-   Be able to identify and analyze basic algorithms
 
 Overall, CS2 is a continuation of CS1. At the end of a typical CS1
 course, you should be able to approach a reasonably complex problem,
@@ -91,10 +92,7 @@ solving should be modified to ask and answer design questions first:
 ## Continuation of Instruction
 
 If in-person classes are canceled by the University during a lecture
-day, lecture may still be livestreamed.  If in-person classes are canceled
-by the University during a lab/hack day, in-person attendance will not be
-required, help may be made available via zoom and you will still be
-expected to complete the work remotely.
+day, lecture may still be livestreamed.  
 
 ## Assessment
 
@@ -107,7 +105,7 @@ A in this course; keep it up!
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Starter Pts | 1      |   15   |
+| Starter Pts |        |   15   |
 | Labs        | 13     |  260   |
 | Assignments | 9      |  975   |
 | Total       |        | 1250   |
@@ -146,7 +144,7 @@ further working experience with lecture topics, but also to provide you
 with additional information and details not necessarily covered in
 lecture. Each lab will come with some starter code and exercises that
 you have to complete.  You will submit your code as specified through
-the webhandin and we will grade your lab using the webgrader.
+the handin and we will grade your lab using the webgrader.
 
 Labs are setup as a *peer programming* experience. If you are attending
 lab *in person*, you may be randomly paired with a partner. One of you
@@ -166,17 +164,15 @@ or you may complete the lab on your own.
 There are 8 assignments as well as a design document. Assignments will
 be due 1 second before midnight Friday evening the week that they are
 due. Code and other relevant *artifacts* must be submitted using
-webhandin unless otherwise stated. If there are written portions of the
-homework, they should be typed. You should
-typeset code snippets using a monotype font (Courier for example) for
-readability. Figures may be hand drawn, but you are encouraged to use
-some sort of software to render them.
+handin unless otherwise stated.
 
 In this course, most of the assignments build on prior assignments.
 Therefore, it is **extremely important** for you to stay on task and not
 fall behind with assignments. You should start on assignments early and
 resolve any and all issues (bugs, design flaws) as soon as possible so
-they do not carry over to the next assignment.
+they do not carry over to the next assignment.  To facilitate good
+time management, we have provided a **Gantt Chart** with a recommended
+schedule of work.
 
 ### 15th Week Policy Notification
 
@@ -205,9 +201,9 @@ Exceptions may be made in certain circumstances such as health or
 emergency, but you must make every effort to get prior permission.
 Documentation may also be required.
 
-Homework assignments have a strict due date/time as defined by the CSE
+Homework assignments have a strict due date/time as defined by the
 server’s system clock. All program files must be handed in using
-webhandin as specified in individual assignment handouts. Programs that
+handin as specified in individual assignment handouts. Programs that
 are even a few seconds past the due date/time will be considered late
 and you will be locked out of handing anything in after that time.
 
@@ -230,6 +226,11 @@ All students enrolled in any School of Computing course are bound by this policy
 to read, understand, and follow this policy. Violations will be dealt
 with on a case by case basis and may result in a failing assignment or a
 failing grade for the course itself.
+
+#### Use of AI
+
+The use of any AI tools for the design or implementation of programs is
+strictly prohibited for this course.  
 
 ## Honors Section
 
