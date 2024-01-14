@@ -1,6 +1,6 @@
 # Computer Science II
 
-### ECEN 194 - Syllabus - Spring 2023
+### ECEN 194 - Syllabus - Spring 2024
  [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska-Lincoln](https://unl.edu/)  
@@ -92,12 +92,7 @@ https://www.unomaha.edu/student-life/accessibility/faculty-and-staff.php
 ## Course Format & Delivery
 
 Lectures are livestreamed via YouTube.  Recordings of the lecture
-are available immediately after.  
-
-### Labs
-
-Lab/help sessions are held twice per week.  Attendance is not required,
-but highly encouraged.  
+are available immediately after.  Lab/help sessions are held twice per week.  
 
 ### Continuation of Instruction
 

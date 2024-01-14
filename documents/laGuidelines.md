@@ -130,7 +130,8 @@ Program (LAP).
         submitted code.
 
     -   The webgrader, <https://cse-linux-01.unl.edu/~c-cbourke3/CSCE156/grade/>
-        (use your Canvas credentials to login)
+        (use your Canvas credentials to login; URL may differ depending
+        on course/section)
 
 -   LAs should provide extensive line-by-line comments (including
     positive comments when appropriate) through codepost. Grade
