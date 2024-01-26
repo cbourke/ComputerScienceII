@@ -194,6 +194,163 @@ else:
   * You also have keywords `True` and `False` (*case sensitive*)
   * You can assign truth values to variables (boolean variables)
 
+# Loops
+
+* Python has `for` loops and `while` loops
+* `for` loops are actually always "for each" loops...
+* NOte:
+  * Python does not support `i++`, but does support `i += 1`
+
+
+```python
+
+n = 10
+# i = 0
+# while i < n:
+#     print(i)
+#     i += 1
+
+for i in range(n):
+    print(i)
+print("==========")
+for i in range(2, n):
+    print(i)
+
+print("==========")
+for i in range(2, n, 2):
+    print(i)
+
+print("==========")
+for i in range(10, -1, -1):
+    print(i)
+print("Blast off")
+```
+
+# Collections
+
+* Python has:
+  * Lists - ordered collections of things, 0-indexed
+  * Sets - unordered collections of *unique* elements
+  * Dictionaries - maps mapping integers and/or strings to other elements
+
+```python
+import pprint
+
+# a basic list
+# use the square brackets and a comma delimited list to initialize
+primes = [2, 3, 5, 7, 11, 13, 17]
+
+# and empty list
+my_stuff = []
+
+# append adds stuff to the end
+my_stuff.append(10)
+my_stuff.append(15)
+my_stuff.append(5)
+
+pprint.pprint(my_stuff)
+
+my_stuff.append(42)
+pprint.pprint(my_stuff)
+
+# removes and returns the last element
+x = my_stuff.pop()
+pprint.pprint(my_stuff)
+print(x)
+
+# arbirarily insert using an index
+# you can use negative index values
+my_stuff.insert(-3, 42)
+pprint.pprint(my_stuff)
+
+first = my_stuff[0]
+print(first)
+last = my_stuff[3]
+print(last)
+
+# you can use negative indexes:
+huh = my_stuff[-1]
+print(huh)
+
+# Other tricks
+# you can get a sublist:
+# [x:y] will give values from index x to index y-1
+sub_primes = primes[3:5]
+pprint.pprint(sub_primes)
+
+#both parameters are optional
+# gives 3 thru the end of the list
+sub_primes = primes[3:]
+pprint.pprint(sub_primes)
+
+# gives 0 thrue 3-1
+sub_primes = primes[:3]
+pprint.pprint(sub_primes)
+
+# Sets are unordred:
+# empty list:
+stuff = set()
+pprint.pprint(stuff)
+stuff.add(10)
+stuff.add(20)
+stuff.add(30)
+pprint.pprint(stuff)
+stuff.add(30)
+pprint.pprint(stuff)
+
+foo = [2, 3, 3, 2, 2, 3, 4, 3, 2, 3]
+
+
+bar = set(foo)
+pprint.pprint(bar)
+baz = list(bar)
+pprint.pprint(baz)
+
+# pitfalls
+# python allows you to mix types, but you shouldn't:
+
+foo = [2, 3, 4, "hello", "foo", 3.14159]
+pprint.pprint(foo)
+
+# dictionaries are mappings from integers or strings to any element
+# you can map keys (integers or strings) to values (which can be ANYTHING)
+
+foo = {
+    #key: value,
+    0: "hello",
+    10: "goodbye",
+    15: 3.14159,
+    5: 3,
+    "foo": "bar"
+}
+
+pprint.pprint(foo)
+for key in foo.keys():
+    print(f"{key} maps to {foo[key]}")
+
+for value in foo.values():
+    print(f"{value}")
+
+for key,value in foo.items():
+    print(f"{key} maps to {value}")
+
+#add elements to a dictionary
+foo["Chris"] = "Awesome!"
+foo[42] = "Answer"
+pprint.pprint(foo)
+
+#change elements to a dictionary
+foo["Chris"] = "Boring!"
+pprint.pprint(foo)
+
+foo.pop("Chris")
+pprint.pprint(foo)
+
+```
+
+$$\{x | x \in \mathbb{N}\}$$
+
+
 ```text
 
 
