@@ -201,8 +201,224 @@ System.out.println(y);
 # Loops
 
 * Java has `for` loops and `while` loops
+* Java also has "enhanced" for loops to iterate over collections without an index variable
+* Demo
 
+```java
 
+		int n = 10;
+
+		for (int i = 0; i < n; i++) {
+			System.out.println(i);
+		}
+		System.out.println("Done");
+
+		int i = 0;
+		while (i < n) {
+			System.out.println(i);			
+			i++;
+		}
+
+		int x = 0;
+		if(x == 0) {
+			System.out.println("There is 1 digit in 0");
+		} else {
+			//determine how many digits are in x...
+			int numDigits = 0;
+			while(x != 0) {
+				x = x / 10;
+				numDigits++;
+			}
+			System.out.println("There are " + numDigits + " digits");
+		}
+
+		int primes[] = {2, 3, 5, 7, 11, 13, 17};
+		for(int j=0; j<primes.length; j++) {
+			System.out.println(primes[j]);
+		}
+
+		for(int z : primes) {
+			System.out.println(z);
+		}
+```
+
+# Arrays and Collections
+
+* Java has basic arrays
+* They are 0-indexed
+* They are created with a *fixed size*, they cannot grow, shrink, etc.
+* Only ever use arrays if you *have to*
+
+```java
+
+		int primes[] = {2, 3, 5, 7, 11, 13};
+
+		//you can get the size of an array using the .length property:
+		System.out.println("THere are " + primes.length + " elements in primes");
+
+		int numbers[] = new int[10];
+		numbers[0] = 42;
+		numbers[numbers.length-1] = 101;
+		//default value for uninitialized array values is zero!
+		System.out.println( Arrays.toString(numbers) );
+
+		//ArrayIndexOutOfBoundsException:
+		//numbers[10] = 42;
+		//numbers[-1] = 101;
+```
+
+## Lists
+
+```java
+
+		List<Integer> numbers = new ArrayList<>();
+		//add stuff:
+		numbers.add(10);
+		numbers.add(30);
+		numbers.add(20);
+		System.out.println(numbers);
+
+		//CRUD = Create Retrieve Update Destroy
+		//delete stuff:
+		//remove the element at index 1:
+		numbers.remove(1);
+		System.out.println(numbers);
+
+		//remove the element at index 0:
+		numbers.remove(0);
+		System.out.println(numbers);
+
+		//remove the element at index 0:
+		numbers.remove(0);
+		System.out.println(numbers);
+
+		numbers.add(10);
+		numbers.add(30);
+		numbers.add(20);
+		System.out.println(numbers);
+		//retrieve:
+		// get the element at index 0:
+		int x = numbers.get(0);
+		System.out.println(x);
+		System.out.println(numbers);
+
+		//iterate:
+		for(int i=numbers.size()-1; i>=0; i--) {
+			System.out.println(numbers.get(i));
+		}
+
+		//enhanced for loop:
+		for(Integer y : numbers) {
+			System.out.println(y);
+		}
+
+		numbers.add(42);
+		//adds 101 to index 3; ie *inserts* it
+		numbers.add(3, 101);
+		numbers.add(18);
+		numbers.add(24);
+		numbers.add(84);
+		System.out.println(numbers);
+
+		List<Integer> someNumbers = numbers.subList(3, 5+1);
+		System.out.println(someNumbers);
+
+```
+
+* Sets are unordered collections of *unique* elements
+  * THere is no first element, second, etc.
+	* THere are no duplicates!
+
+```java
+
+		//A set is an *unordered* collection of *unique* elements
+		Set<String> names = new HashSet<>();
+		names.add("Chris");
+		names.add("John");
+		names.add("Jane");
+		names.add("Cody");
+
+		System.out.println(names);
+		//will not work: there is no "first" element nor "last", etc.
+		//names.get(0);
+
+		names.add("Chris");
+		System.out.println(names);
+
+		//you cannot add dissimilar elements:
+		//ie you cannot add an integer to a set of strings
+		//  nor can you add a string to a set of integers
+		//names.add(2024);
+
+		names.remove("Chris");
+		System.out.println(names);
+
+		for(String name : names) {
+			System.out.println(name);
+		}
+
+		//you can transform a list into a set and vice versa:
+		List<String> foo = new ArrayList<>(names);
+		System.out.println(foo);
+		System.out.println(foo.get(0));
+
+		foo.add("Chris");
+		foo.add("Chris");
+		foo.add("Chris");
+		foo.add("Chris");
+		foo.add("Chris");
+		System.out.println(foo);
+
+		Set<String> bar = new HashSet<>(foo);
+		System.out.println(bar);```
+
+```
+
+* Maps are much more powerful than sets, lists or even python dictionaries!
+
+```java
+
+		//maps map a KEY to a VALUE
+		//maps are *unordered*
+		//keys are *unqiue*
+		//values are NOT unique
+		Map<Integer, String> foo = new HashMap<>();
+		Map<Double, String> bar = new HashMap<>();
+
+		foo.put(10, "ten");
+		foo.put(20, "hello");
+		foo.put(30, "goodbye");
+		foo.put(35140602, "Chris");
+		System.out.println(foo);
+		foo.put(30, "how are you?");
+		System.out.println(foo);
+		foo.put(35140603, "Chris");
+		System.out.println(foo);
+
+		foo.remove(30);
+		System.out.println(foo);
+
+		foo.replace(20, "goodbye");
+		System.out.println(foo);
+
+		//retrieve using the key:
+		String s = foo.get(35140602);
+		System.out.println(s);
+
+		//iterate over the values:
+		for(String str : foo.values()) {
+			System.out.println(str);
+		}
+
+		//iterate over the keys:
+		for(Integer key : foo.keySet()) {
+			System.out.println(key);			
+		}
+
+		//iterate over the keys and get the value:
+		for(Integer key : foo.keySet()) {
+			System.out.println(key + " maps to " + foo.get(key));			
+		}
 
 ```
 

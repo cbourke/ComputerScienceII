@@ -350,6 +350,176 @@ pprint.pprint(foo)
 
 $$\{x | x \in \mathbb{N}\}$$
 
+### Comprehensions
+
+```python
+import pprint
+
+primes = [2, 3, 5, 7, 11, 13, 17]
+
+# create a list with the values from primes but with 1 added to each...
+primes_plus_one = []
+for p in primes:
+    primes_plus_one.append(p+1)
+
+pprint.pprint(primes_plus_one)
+
+# list comprehension
+primes_plus_one = [ x + 1 for x in primes ]
+pprint.pprint(primes_plus_one)
+
+foo = [ x * 2 for x in primes_plus_one]
+pprint.pprint(foo)
+
+# set comprehensions
+bar = { x + 10 for x in primes_plus_one }
+pprint.pprint(bar)
+
+# dictionary comprehensions
+foo = {
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+}
+pprint.pprint(foo)
+bar = { v:k for k,v in foo.items() }
+pprint.pprint(bar)
+bar = { v:k+10 for k,v in foo.items() }
+pprint.pprint(bar)
+
+bar = [ (k+0.5,v) for k,v in foo.items() ]
+pprint.pprint(bar)
+
+# python also supports "tuples": pairs, triples, quadruples, quintuples, etc.
+# foo = (10, 20, 30)
+# pprint.pprint(foo)
+# # tuples can be treated like lists but they are not lists, they are pairs, etc.
+# x = foo[0]
+# pprint.pprint(x)
+
+baz = [ (b,a,2) for (a,b) in bar if a < 3.0]
+pprint.pprint(baz)
+
+```
+
+```python
+
+numbers = [2, 8, 5, 3, 5, 42, 101, 13, 17]
+
+# create a deep copy of an array
+copy = [ x for x in numbers ]
+
+evens = [ x for x in numbers if x % 2 == 0 ]
+print(evens)
+
+# get all evens that are also greater than 20:
+foo = [ x for x in numbers if x % 2 == 0 and x > 20]
+
+foo = [ str(x) for x in numbers  ]
+
+foo = [ int(x) for x in foo ]
+
+
+```
+
+```python
+import pprint
+
+zips = [
+  "05026",
+  "56605",
+  "56605",
+  "56605",
+  "56605",
+  "56605",
+  "63260",
+  "24873",
+  "33992",
+  "41588",
+  "99493",
+  "94624",
+  "68508",
+  "68508",
+  "68508",
+  "68508",
+  "68508",
+  "41743",
+]
+
+# zip codes that begin with 6:
+foo = [ x for x in zips if x.startswith("68") ]
+
+# get all zips that are "even"
+foo = [ x for x in zips if int(x) % 2 == 0 ]
+
+foo = [ f"{x:05}" for x in [ int(y) for y in zips ] if x % 2 == 0 ]
+
+# count up the number of times each zip code occurs in the data
+
+foo = set(zips)
+
+counts = { f"{k:05}":zips.count(f"{k:05}") for k in range(100000) }
+
+# most common zip code:
+maxVal = max(counts.values())
+
+commonZips = [k for k,v in counts.items() if v == maxVal ]
+print(commonZips)
+```
+
+```python
+import pprint
+
+data = [
+  ("Lego Star Wars","LucasArts","2005","Xbox"),
+  ("Lego Star Wars","LucasArts","2005","PlayStation 2"),
+  ("Lego Star Wars","LucasArts","2005","PC"),
+  ("Lego Star Wars","LucasArts","2005","Mac"),
+  ("Tie Fighter","LucasArts","1994","PC"),
+  ("X-Wing vs Tie Fighter","LucasArts","1997","PC"),
+  (None,"Sony Computer Entertainment",None,None),
+  (None,"Square Enix",None,None),
+  (None,"Sega",None,None),
+  ("Legend of Zelda","Nintendo","1987","NES"),
+  ("Super Mario Brothers","Nintendo","1985","NES"),
+  ("Zelda II: The Adventure of Link","Nintendo","1988","NES"),
+  ("Tetris","Nintendo","1989","Game Boy"),
+  ("Super Mario Land","Nintendo","1989","Game Boy"),
+  ("GTA IV","Rockstar Games","2008","Xbox 360"),
+  ("GTA IV","Rockstar Games","2008","PC"),
+  ("GTA 3","Rockstar Games",None,None),
+  ("GTA 2","Rockstar Games",None,None),
+  ("GTA","Rockstar Games",None,None),
+  (None,"Blizzard Entertainment",None,None),
+  ("Mega Man 3","Capcom","1990","NES"),
+  ("Mega Man 4","Capcom",None,None),
+  ("Contra","Capcom",None,None),
+  (None,"Atari",None,None),
+  ("Portal","Valve","2007","PlayStation 3"),
+  ("Portal","Valve","2007","PC"),
+  ("Portal","Valve","2007","Xbox 360"),
+  ("Portal 2","Valve","2011","Xbox 360"),
+  ("Portal 2","Valve","2011","PlayStation 3"),
+  ("Portal 2","Valve","2011","PC"),
+  ("Portal 2","Valve","2011","Mac"),
+  ("Katamari Damacy","Namco","2004","PlayStation 2"),
+  ("Out of this World","Delphine Software","1992","PC"),
+  ("Out of this World","Delphine Software","1992","Super NES"),
+  ("Assassin's Creed","Ubisoft","2007","Xbox 360"),
+  (None,"Ubisoft",None,None),
+]
+
+publishers = set([ publisher for (title,publisher,year,platform) in data ])
+
+# we want a mapping:
+# publishers to a set of the games they have published
+# publishers to a int of the number of games they have published
+publisherToGames = { publisher:set([title for (title,p,year,platform) in data if p == publisher and title is not None ]) for (title,publisher,year,platform) in data }
+publisherCounts = { publisher:len(games) for publisher,games in publisherToGames.items() }
+
+pprint.pprint(publisherCounts)
+```
 
 ```text
 
