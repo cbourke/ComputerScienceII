@@ -214,6 +214,224 @@ for(int x : primes) {
 System.out.println("Sum of the first " + primes.length + " primes is " + total);
 ```
 
+# Arrays and Collections
+
+* Java does support basic arrays
+* There is no malloc/free: but you do use the keyword `new` to create a new array of a given size
+* Arrays are 0-indexed: `arr[0]`, `arr[1]`, `arr[i]`,
+* IF there are $n$ elements in `arr` the last one is at `arr[n-1]`
+* There is no bookkeeping: the size of an array can be retrieved using `arr.length`
+* In Java, there is a default of *zero* for all array elements
+
+
+```java
+double numbers[] = new double[10];
+numbers[0] = 3.5;
+numbers[8] = 1.25;
+numbers[numbers.length-1] = 10.5;
+
+System.out.println( Arrays.toString(numbers) );
+
+//error: results in a ArrayIndexOutOfBoundsException:
+//numbers[-1] = 1.5;
+
+//2-D arrays in Java:
+double matrix[][] = new double[2][3];
+
+```
+
+* Arrays are terrible, if you can use something else, you should...
+* Java has `List` data structures that grow, expand, and have a dozen methods/functions that you can use with them built-in
+
+```java
+
+		//A List is an ordered collection of elements...
+		List<Integer> myNumbers = new ArrayList<>();
+
+		//add adds the element to the end of the list
+		myNumbers.add(10);
+		myNumbers.add(30);
+		myNumbers.add(20);
+
+		System.out.println(myNumbers);
+
+		//get the element at index 0
+		int x = myNumbers.get(0);
+		System.out.println(x);
+
+		//CRUD = Create Retrieve Update Destroy
+		//destroy: remove the second element...
+		myNumbers.remove(1);
+		System.out.println(myNumbers);
+
+		myNumbers.add(5);
+		myNumbers.add(15);
+		myNumbers.add(25);
+		System.out.println(myNumbers);
+
+		//adds 42 at index 4, shoving things over to make room
+		myNumbers.add(4, 42);
+		System.out.println(myNumbers);
+
+		//you can determine the size of a list using .size():
+		int n = myNumbers.size();
+
+		//whole bunch of other useful methods:
+		//sublists are inclusive/exclusive on the indices
+		List<Integer> onlyPart = myNumbers.subList(3, 5);
+		System.out.println(onlyPart);
+```
+
+* Java also allows you to use `Set`s
+* A set is an *unordered* collection of *unique* elements
+
+```java
+
+		Set<Integer> myNumbers = new HashSet<>();
+
+		//myNumbers.add("Hello");
+		Set<String> names = new HashSet<>();
+		names.add("Chris");
+		names.add("Joe");
+		names.add("Jane");
+
+		//add adds the element to the end of the list
+		myNumbers.add(10);
+		myNumbers.add(30);
+		myNumbers.add(20);
+		myNumbers.add(40);
+		myNumbers.add(5);
+
+		System.out.println(myNumbers);
+
+		//because sets are unordered, you cannot do anything
+		// that is index based...
+		for(Integer x : myNumbers) {
+			System.out.println(x);
+		}
+
+		//destroy: remove the second element...
+		//1 is not an index, it is the element you want to remove...
+		myNumbers.remove(1);
+		System.out.println(myNumbers);
+
+		myNumbers.remove(5);
+		System.out.println(myNumbers);
+
+		//sets are also *unique* elements...
+		//adding something that already exists has no effect
+		myNumbers.add(40);
+		myNumbers.add(40);
+		myNumbers.add(40);
+		myNumbers.add(40);
+		System.out.println(myNumbers);
+
+		//you can determine the size of a list using .size():
+		int n = myNumbers.size();
+		System.out.println(n);
+
+		//you can convert lists to sets, sets to lists
+		// you can also create deep copies of lists/sets
+
+		//ex: shallow copy:
+		Set<Integer> foo = myNumbers;
+		System.out.println("=======");
+		System.out.println(myNumbers);
+		System.out.println(foo);
+		foo.add(42);
+		System.out.println("=======");
+		System.out.println(myNumbers);
+		System.out.println(foo);
+
+		//deep copy of a set:
+		foo = new HashSet<>(myNumbers);
+		System.out.println("=======");
+		System.out.println(myNumbers);
+		System.out.println(foo);
+		foo.add(101);
+		System.out.println("=======");
+		System.out.println(myNumbers);
+		System.out.println(foo);
+
+		//convert a set to list:
+		List<Integer> bar = new ArrayList<>(foo);
+		System.out.println(bar);
+
+		//convert a list to a set:
+		Set<Integer> baz = new HashSet<>(bar);
+		System.out.println(baz);
+```
+
+```java
+
+		//maps hold keys and values
+		// maps map keys to values
+		// keys are unique
+		// values do not need to be unique
+
+		//ex: map NUIDs to Names...
+		Map<Integer, String> nuidToName = new HashMap<>();
+		nuidToName.put(35140602, "Chris");
+		nuidToName.put(1234, "Jane");
+		nuidToName.put(5678, "Joe");
+
+		System.out.println(nuidToName);
+
+		//keys are unique, so this replaces the value
+		nuidToName.put(1234, "Cody");
+		System.out.println(nuidToName);
+
+		//keys are unique, but values are not...
+		nuidToName.put(1122, "Cody");
+		System.out.println(nuidToName);
+
+		//nuid to set of email addresses
+		Map<Integer, Set<String>> nuidToEmails = new HashMap<>();
+		Set<String> myEmails = new HashSet<>();
+		myEmails.add("cbourke3@unl.edu");
+		myEmails.add("chris.bourke@unl.edu");
+		myEmails.add("c-cbourke3@huskers.unl.edu");
+		nuidToEmails.put(35140602, myEmails);
+		System.out.println(nuidToEmails);
+
+		//retrieve
+		String name = nuidToName.get(1234);
+		System.out.println(name);
+
+		//retrieve non-existant data...
+		name = nuidToName.get(12345678);
+		System.out.println(name);
+
+		nuidToName.remove(1234);
+		System.out.println(nuidToName);
+
+		//iterating over a map...
+for(Integer key : nuidToName.keySet()) {
+	System.out.println(key + " maps to " + nuidToName.get(key));
+}
+
+```
+
+# Strings
+
+* Java has a `String` class
+  * No memory management
+	* No Null terminating characters in Java!
+	* Automatic concatenation using `+` operator
+	* You can also mix types
+* Strings in Java are *immutable*: once created you cannot change the contents of the string
+
+
+
+
+
+
+
+
+
+
+
+
 ```text
 
 
