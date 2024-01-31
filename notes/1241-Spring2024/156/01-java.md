@@ -326,8 +326,8 @@ System.out.println(y);
 ```
 
 * Sets are unordered collections of *unique* elements
-  * THere is no first element, second, etc.
-	* THere are no duplicates!
+  * There is no first element, second, etc.
+  * There are no duplicates!
 
 ```java
 
@@ -419,6 +419,72 @@ System.out.println(y);
 		for(Integer key : foo.keySet()) {
 			System.out.println(key + " maps to " + foo.get(key));			
 		}
+
+```
+
+# Strings
+
+* Java has a `String` class/type
+  * No memory management
+  * No null-terminating character
+  * Basic concatenation: `+`
+* In Java, strings are *immutable*: once created, the contents of the string *cannot* be changed
+
+```java
+
+		int x = 10;
+		String message = "Hello, the value of x = " + x;
+		System.out.println(message);
+
+		String a = "school of computing";
+		String b = a.replace("s", "S");
+		String c = b.replace("c", "C");
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(c);
+
+		String d = a.substring(10);
+		System.out.println(d);
+
+		String e = a.substring(0, 6);
+		System.out.println(e);
+
+		System.out.println("The string e is of length " + e.length());
+
+		//Java does have a *mutable* version of a string:
+		StringBuilder sb = new StringBuilder();
+		sb.append("school");
+		sb.append(" of ");
+		sb.append("computing;");
+		sb.deleteCharAt(sb.length()-1);
+		sb.replace(0, 1, "S");
+		sb.replace(10, 11, "C");
+		System.out.println(sb);
+		String s = sb.toString();
+		System.out.println(s);
+
+		String csvData = "Chris,Bourke,105 Schorr,chris.bourke@unl.edu,School of Computing";
+		//String tokens[] = csvData.split("\\s+");
+		String tokens[] = csvData.split(",");
+		for(int i=0; i<tokens.length; i++) {
+			System.out.printf("tokens[%d] = %s\n", i, tokens[i]);
+		}
+```
+
+## Methods/Functions
+
+* In Java functions are called "methods"
+* Methods are just function inside a class
+* For now, all our methods will be `public static`: they will belong to the class
+  * `public` means that any part of your code can call/invoke the function; everyone can "see" the function/method
+	* `static` means it belongs to the class
+	* When invoking a `static` method use `ClassName.functionName()`
+* To invoke or "call" a `static` function, you use the class name + the function name
+* It is either necessary or best practice to access/call those methods using the dot operator: ex: `Math.sqrt()`, `Demo.addOne()`
+* You also specify a return type: the type of variable the method returns
+* If non-`void` you MUST return a value, you use the keyword `return` (for `void` methods you should still use a `return;` statement)
+* All non-trivial methods need documentation!
+
 
 ```
 

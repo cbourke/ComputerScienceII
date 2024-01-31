@@ -521,6 +521,130 @@ publisherCounts = { publisher:len(games) for publisher,games in publisherToGames
 pprint.pprint(publisherCounts)
 ```
 
+# Strings
+
+* Strings are a built-in type in Python
+* Strings are immutable, once created you cannot change them
+
+```python
+
+
+import pprint
+import re
+
+s = "I love the school of computing"
+
+t = s.replace('s', 'S')
+#replaces all instances of 'c'
+#t = t.replace('c', 'C')
+
+message = t[:21] + "C" + t[22:]
+
+print(message)
+
+school_name = message[11:]
+
+print(school_name)
+
+csv_data = "Chri  s,Bo\turke,105 Schorr,402-472-5008,Schoo\nl of Computing"
+tokens = csv_data.split(",")
+pprint.pprint(tokens)
+
+#regular expressions:
+#tokens = re.split("\\s+", csv_data)
+#tokens = re.split("[a-zA-Z]+", csv_data)
+tokens = re.split("", csv_data)
+pprint.pprint(tokens)
+
+for c in csv_data:
+    print(c)
+```
+
+# Functions, Modules
+
+* Demo
+
+```python
+
+# import specific function in a specific libraray with an alias:
+#from my_library import foo as bar
+
+# import all functions from my_library
+#import my_library
+
+# import specific function in a specific function, no alias
+from my_library import foo
+
+# functions are pass by value, but if a mutable object (list, set, etc.)
+# is passed, it can make changes to it:
+def bar(aList):
+    for i in range(len(aList)):
+        aList[i] += 1
+
+a = 10
+b = 20
+c = 30
+result = foo(y=2000, x=1000, c=30)
+
+# everything in python is pass by value...
+print(f"c in the original script is STILL {c}")
+print(result)
+
+# until it aint...
+arr = [1, 2, 3, 4]
+pprint.pprint(arr)
+bar(arr)
+pprint.pprint(arr)
+```
+
+* Another file (`my_library.py`):
+
+```python
+#a, c are optional; default values of 0 and 42
+def foo(x, y, a = 0, c = 42):
+    """
+    This function does something somehow
+    Include documentation for ALL non-trivial functions
+    """
+    print("Hello, I'm in foo...")
+    total = x + y + a + c
+    # only changes the local parameter variable:
+    c = -1000
+    print(f"total is {total}")
+    print(f"c is now {c}")
+    # return types can be mixed;
+    # omitting return statements returns None
+    return total
+```
+
+
+# Basic File I/O
+
+```python
+# opens a file in the current directory named
+# data.txt for *w*riting
+f = open("data.txt", "w")
+
+# you need to explicitly add the endline character...
+f.write("Hello World!\n")
+f.write(f"{a}, {b}, {c}\n")
+
+f.close()
+
+# reading from a file...
+f = open("bar.txt", "r")
+# returns a list of strings, one per line
+# preserves endline character
+lines = f.readlines()
+f.close()
+
+numberPairs = [ (int(x.split(',')[0]), int(x.split(',')[1])) for x in lines ]
+
+pprint.pprint(lines)
+pprint.pprint(numberPairs)
+```
+
+
 ```text
 
 

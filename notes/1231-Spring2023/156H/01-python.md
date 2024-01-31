@@ -469,7 +469,7 @@ pprint.pprint(foo)
 ```python
 
 # None is basically a null or NULL value
-# NoneType is the none value
+# NoneType is the none type
 def foo(a = None, b = 42, c = 30):
    print("Hello")
    if a is None:
