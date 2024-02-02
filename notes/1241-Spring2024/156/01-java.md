@@ -485,6 +485,101 @@ System.out.println(y);
 * If non-`void` you MUST return a value, you use the keyword `return` (for `void` methods you should still use a `return;` statement)
 * All non-trivial methods need documentation!
 
+```java
+/**
+ * This is a non-sense demonstration function only written
+ * to demonstrate syntax for creating a function.
+ *
+ * @param x
+ * @param y
+ * @param z
+ * @return
+ */
+public static double foo(int x, double y, String z) {
+	double sum = x + y;
+	x = 5;
+	System.out.println("x is now " + x);
+	System.out.println("I was given the string " + z);
+
+	return sum;
+}
+
+public static void messWithStringBuilder(StringBuilder sb) {
+	sb.append("Consider it messed with");
+}
+
+
+/**
+ * Prints a report of all the sales to a hardcoded file, see .....
+ *
+ * Be careful calling this function as it expects all the
+ * data to be loaded prior to calling it.
+ */
+public static void produceReport() {
+	//TODO: implement this at some point
+}
+
+public static void messWithString(String s) {
+	//you cannot mess with s because it is immutable
+}
+
+
+//no docsnecesssary on mains
+public static void main(String args[]) {
+
+	double xx = 2.0;
+	double y = Math.sqrt(xx);
+	System.out.printf("x, y = %f, %f\n", xx, y);
+
+	double result = Demo.foo( (int) xx, y, "Hello World!");
+	System.out.println(result);
+
+	System.out.printf("x, y = %f, %f\n", xx, y);
+
+	StringBuilder sb = new StringBuilder();
+	sb.append("Hello\n");
+	Demo.messWithStringBuilder(sb);
+	System.out.println(sb);
+```
+
+Misc Observations:
+ * In Java, single variables are passed by value
+ * However, objects/mutable lists, sets, etc. are passed by reference
+ * Java supports function *overloading*: You can define multiple functions with the same name as long as their parameters are different
+
+## Style Notes
+
+* ALL variable names should be `lowerCamelCase` and nouns (pluralize collections only)
+* ALL method names should be `lowerCamelCase` and should be verbs
+* ALL class names should be `UpperCamelCase`, never pluralized, nouns
+* Use proper Java-style whitespace
+
+# File I/O
+
+## File Output
+
+* Open the file, write to the file, **close the file**
+
+```java
+
+		int a = 10;
+		double b = 3.5;
+		//file output:
+		File f = new File("data/myOutput.txt");
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter(f);
+			pw.println("Hello, this is one line");
+			pw.print("This is a line without an endline");
+			pw.print("now I'll put the endline in: \n");
+			pw.printf("Now the Variables: %d, %f\n", a, b);
+			pw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+```
+
+
 
 ```
 

@@ -644,6 +644,108 @@ pprint.pprint(lines)
 pprint.pprint(numberPairs)
 ```
 
+# Classes & Data Processing
+
+* Python supports classes (as an after thought); not really an OOP language
+* Demo: want to process a bunch of book data...
+* `book_data.csv`:
+```csv
+id,title,last,first,ISBN13,rating,year
+338325,The High Crusade,Anderson,Poul,9780743475280,3.89,1960
+1094553,Soma Blues,Sheckley,Robert,9780312862732,3.76,1959
+75593520,The Wild Robot Protects,Brown,Peter,,4.24,2023
+8694,Life the Universe and Everything,Adams,Douglas,9780345418906,4.18,1982
+```
+
+* `book.py`:
+
+```python
+from functools import total_ordering
+
+@total_ordering
+class Book:
+    """
+    Represents a book
+    """
+
+    def __init__(self, id, title, last, first, isbn, rating, year):
+        self.id = id
+        self.title = title
+        self.last = last
+        self.first = first
+        self.isbn = isbn
+        self.rating = float(rating)
+        self.year = int(year)
+
+    def __str__(self):
+        return f"{self.title} by {self.last}, {self.first} ({self.year}, {self.rating})"
+
+    def __repr__(self):
+        return f"{self.title} by {self.last}, {self.first} ({self.year}, {self.rating})"
+
+    def __eq__(self, other):
+        return self.isbn == other.isbn
+        # by author instead:
+        # return (self.last,self.first,other.isbn) == (other.last,other.first,other.isbn)
+
+    def __lt__(self, other):
+        return self.isbn < other.isbn
+```
+
+* Demo:
+
+```python
+
+import pprint
+from book import Book
+
+# highest rated book
+# lowest rated book
+# oldest book
+# all books by Terry Pratchett: or organize books by author
+
+#b = Book(id=75593520,title="The Wild Robot Protects",last="Brown",first="Peter",isbn=None,rating=4.24,year=2023)
+
+f = open("book_data.csv", "r")
+lines = f.readlines()
+f.close()
+
+# remove the header line:
+lines = lines[1:]
+# remove blank lines...
+lines = [ line.strip() for line in lines if line.strip() ]
+
+books = []
+for line in lines:
+    tokens = line.split(",")
+    b = Book(*tokens)
+    books.append(b)
+
+numbers = [4, 6, 3, 2, 7, 8, 3, 2, 1]
+# sorts the given list
+numbers.sort()
+#returns a sorted copy:
+foo = sorted(numbers)
+
+numbers.sort(reverse=True)
+
+# sorts using the order defined in the class
+books.sort()
+#pprint.pprint(books)
+
+
+books.sort(key = lambda x : x.rating, reverse=True)
+
+pprint.pprint(f"best  book: {books[0]}")
+pprint.pprint(f"worst book: {books[len(books)-1]}")
+#pprint.pprint(worstBook)
+
+books.sort(key = lambda x : (x.year,-x.rating))
+
+pprint.pprint(f"oldest book: {books[0]}")
+pprint.pprint(f"newest book: {books[len(books)-1]}")
+
+```
 
 ```text
 

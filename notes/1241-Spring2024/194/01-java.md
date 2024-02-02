@@ -421,6 +421,203 @@ for(Integer key : nuidToName.keySet()) {
 	* You can also mix types
 * Strings in Java are *immutable*: once created you cannot change the contents of the string
 
+```java
+String a = "hello!";
+String b = a;
+//yes, this changes the string, but not its contents
+// it creates an entirely NEW string with DIFFERENT
+// contents
+a = "Hello!";
+System.out.println(a);
+System.out.println(b);
+
+String c = a.toUpperCase();
+System.out.println(a);
+System.out.println(c);
+
+String message = "Go Mavericks!!!";
+String subStr = message.substring(3);
+System.out.println(subStr);
+subStr = message.substring(3, 11+1);
+System.out.println(subStr);
+
+String foo = message.replace("!", "?");
+System.out.println(foo);
+
+//CSV data
+String data = "Chris,\nBourke,3514\t0602,cbourke3@unl.edu,103   Schorr";
+String tokens[] = data.split(",");
+System.out.println( Arrays.toString(tokens) );
+
+tokens = data.split("\\s+");
+System.out.println( Arrays.toString(tokens) );
+
+tokens = data.split("[a-z]*");
+System.out.println( Arrays.toString(tokens) );
+```
+
+* Learn more about regular expressions: https://regexr.com/
+
+# Methods/Functions
+
+* In Java, "functions" are referred to as "methods"
+* Methods are functions that are located inside a class
+* For now all our methods will be `public static`: they "belong" to the class itself and can be called using the class name
+  * `public` means that any piece of code can "see" the method and therefore call it/invoke it
+	* `static` means they belong to the class, and should be invoked using the `ClassName` + `.` + function name
+	* Ex: `Math.sqrt()`
+* You declare functions inside a relevant class and provide the definition
+* The documentation, signature, and definition are all together
+* All functions are pass by value; unless they are objects that can be changed; then changes to the objects in the method are reflected in the calling function
+* Generally:
+  * name your functions/methods using `lowerCamelCasing`
+	* You can have multiple functions with the same name (function overloading) as long as their parameters are different
+	* ALL non-trivial methods require java-doc style documentation
+
+```java
+/**
+ * This method adds the three given numbers and returns
+ * their sum.
+ *
+ * @param a
+ * @param b
+ * @param c
+ * @return
+ */
+public static int addNumbers(int a, int b, int c) {
+	int total = a + b + c;
+	a = 5;
+	System.out.println("Inside the function a is now ... " + a);
+	return total;
+}
+
+/**
+ * Adds all the numbers in the given list and returns
+ * the total.
+ *
+ * @param numbers
+ * @return
+ */
+public static int addNumbers(List<Integer> numbers) {
+	int total = 0;
+	for(Integer x : numbers) {
+		total += x;
+	}
+	numbers.set(0, 42);
+	return total;
+}
+
+public static void main(String args[]) {
+
+	int a = 10;
+	int b = 20;
+	int c = 30;
+
+	System.out.println("BEFORE the function a is ... " + a);
+	int y = Demo.addNumbers(a, b, c);
+	System.out.println("AFTER the function a is ... " + a);
+	System.out.println(y);
+
+	List<Integer> nums = new ArrayList<>();
+	nums.add(10);
+	nums.add(20);
+	nums.add(30);
+	System.out.println(nums);
+	y = Demo.addNumbers(nums);
+	System.out.println(nums);
+
+}
+```
+
+# File I/O
+
+* File I/O involves opening a file, processing it, and then closing
+* Always close your resources, failure to do so may result in corrupted data
+
+```java
+
+		int a = 10;
+		double b = 3.5;
+
+		//file output
+		File f = new File("data/output.txt");
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter(f);
+			pw.println("Hello");
+			pw.print("Hello with no endline!");
+			pw.print("now an endline: \n");
+			pw.printf("a = %d, b = %f\n", a, b);
+			pw.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+
+		//file input
+//		File h = new File("data/book_data.csv");
+//		try {
+//			Scanner s = new Scanner(h);
+//			while(s.hasNextLine()) {
+//				String line = s.nextLine();
+//				System.out.println(line);
+//			}
+//			s.close();
+//		} catch (FileNotFoundException e) {
+//			throw new RuntimeException(e);
+//		}
+
+		//try with resources:
+		File h = new File("data/book_data.csv");
+		try(Scanner s = new Scanner(h)) {
+			while(s.hasNextLine()) {
+				String line = s.nextLine();
+				System.out.println(line);
+			}
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+```
+
+# Error Handling
+
+* C: defensive programming: look before you leap
+* Java: go ahead and be reckless, surround "dangerous" code in a `try-catch` block and it will `catch` you if you fall
+* Java defines different types of `Exception`s for different types of errors and  you can catch/release or treat each one differently.
+
+```java
+
+		int a = 10;
+		String bAsStr = "0";
+		int b = Integer.parseInt(bAsStr);			
+		double c = a / b;
+		File f = new File("data/foo.txt");
+		//checked exceptions MUST be surrounded by a try-catch
+		try {
+			Scanner s = new Scanner(f);
+		} catch (FileNotFoundException e) {
+			//okay, fine, then we simply rethrow threm...
+			throw new RuntimeException(e);
+		}
+
+
+		try {
+			int b = Integer.parseInt(bAsStr);			
+			double c = a / b;
+		} catch(NumberFormatException nfe) {
+			System.out.println("You entered a bad number!");
+		} catch(ArithmeticException ae) {
+			System.out.println("Bad math!");			
+		} catch(Exception e) {
+			//Exception is the generic/general exception: it matches ALL OTHER exceptions
+			//catch and release:
+			throw new RuntimeException(e);
+		}
+
+```
+
+## Searching & Sorting, Classes
+
+### Basic Searching & Sorting
 
 
 
