@@ -106,3 +106,27 @@ Learning Assistants have 48 business hours to grade assignments and
 then Course Leaders take another 48 hours to check the grading process
 to ensure consistency.  Grades are posted to Canvas as soon as this
 process is complete.  A retrospective is then posted to Piazza.
+
+# Collaboration
+
+## What are the collaboration policies for this course?
+
+* The use of any and all AI tools is **strictly prohibited** for this course and
+  you may not use them for any purpose.  These tools have their use cases and
+  are appropriate in some contexts.  However, the time to utilize them is not
+  when you are learning new concepts for the first time.
+
+* **Labs** - All students are highly encouraged to work in pairs for all labs.
+  In lab, we will facilitate team ups by pairing you with another student if
+  you wish.  You may always work alone if you prefer.  Groups of 3 or more are
+  not prohibited but are **discouraged** because it is too easy to diffuse
+  the responsibility for learning.  
+
+* **Assignment 1** - No collaboration with other students is allowed.  
+  The ability to do Assignment 1 is a good indicator whether or not you are
+  properly prepared for this course (good working knowledge of at least one
+  programming language).  
+
+* For all other assignments (2-8) and the design document, you may work in pairs
+  but may not work in groups of 3 or more.  See the full details and *requirements*
+  for doing so provided in the project overview document.
