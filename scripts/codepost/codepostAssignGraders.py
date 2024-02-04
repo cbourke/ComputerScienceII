@@ -1,9 +1,10 @@
 """
-TODO: update this entire script
+TODO: update this entire script - out of synch with CS1
 
-This script interfaces with canvas, CSE's User Database (udb) and
-codepost.io to assign graders to student submissions for a particular
-assignment and pushes all submission files to codepost.io.
+This script interfaces with canvas, the SoC's handin file server
+(cse-linux-01.unl.edu) and codepost.io to assign graders to student
+submissions for a particular assignment and pushes all submission
+files to codepost.io.
 
 Usage: python3 codepostAssignGraders.py cse_handin_assignment_name codepost_assignment_id
 
