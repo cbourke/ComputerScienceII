@@ -579,6 +579,70 @@ Misc Observations:
 		}
 ```
 
+## File Input: CSV Demo
+
+* Demo of file input:
+
+```java
+int x;
+```
+
+# Searching and Sorting
+
+```java
+
+		List<Double> numbers = Arrays.asList(5.3, 3.2, 8.1, 2.3, 4.5, 9.1, 10.0);
+		Collections.sort(numbers);
+		System.out.println(numbers);
+
+		Comparator<Double> cmpDoubleDesc = new Comparator<>() {
+
+			@Override
+			public int compare(Double a, Double b) {
+				if(a < b) {
+					return 1;
+				} else if(a > b) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+
+		};
+		Collections.sort(numbers, cmpDoubleDesc);
+		System.out.println(numbers);
+
+		//a, b:
+		//general pattern:
+		//  return *SOMETHING* negative if a comes before b
+		//  return 0 if a is equal to b
+		//  return *SOMETHING* positive if a comes after b
+
+		List<String> names = Arrays.asList("Chris", "Jane", "Joe", "John", "john", "Abby", "Zoey");
+		Collections.sort(names);
+		System.out.println(names);
+
+		Comparator<String> cmpStringCaseInsensitive = new Comparator<>() {
+
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}
+
+		};
+
+		Collections.sort(names, cmpStringCaseInsensitive);
+		System.out.println(names);
+
+
+		List<Double> numbers = Arrays.asList(5.3, 3.2, 8.1, 2.3, 4.5, 9.1, 10.0);
+Collections.sort(numbers);
+System.out.println(numbers);
+double key = 42.5;
+int index = Collections.binarySearch(numbers, key);
+System.out.printf("Found %f at index %d\n", key, index);
+
+```
 
 
 ```

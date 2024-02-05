@@ -747,6 +747,214 @@ pprint.pprint(f"newest book: {books[len(books)-1]}")
 
 ```
 
+## Final Demo
+
+* `book.py`:
+
+```python
+from functools import total_ordering
+
+@total_ordering
+class Person:
+    """
+    Represents a person (author for the Book class)
+    """
+    def __init__(self, last, first):
+        self.first = first
+        self.last = last
+
+    def __str__(self):
+        return f"{self.last}, {self.first}"
+
+    def __repr__(self):
+        return f"{self.last}, {self.first}"
+
+    def __eq__(self, other):
+        return (self.last,self.first) == (other.last,other.first)
+
+    def __lt__(self, other):
+        return (self.last,self.first) < (other.last,other.first)
+
+    def __hash__(self):
+        return hash((self.last,self.first))
+
+
+@total_ordering
+class Book:
+    """
+    Represents a book
+    """
+
+    def __init__(self, id, title, last, first, isbn, rating, year):
+        self.id = id
+        self.title = title
+        self.author = Person(last, first)
+        self.isbn = isbn
+        self.rating = float(rating)
+        self.year = int(year)
+
+    def __str__(self):
+        return f"{self.title} by {self.author} ({self.year}, {self.rating})"
+
+    def __repr__(self):
+        return f"{self.title} by {self.author} ({self.year}, {self.rating})"
+
+    def __eq__(self, other):
+        return self.isbn == other.isbn
+        # by author instead:
+        # return (self.last,self.first,other.isbn) == (other.last,other.first,other.isbn)
+
+    def __lt__(self, other):
+        return self.isbn < other.isbn
+
+    def __hash__(self):
+        return hash(self.id)
+
+def loadBooks(filePath):
+    """
+    TODO: write documentation
+    """
+    f = open(filePath, "r")
+    lines = f.readlines()
+    f.close()
+
+    # remove the header line, remove blank lines...
+    lines = [ line.strip() for line in lines[1:] if line.strip() ]
+    books = [ Book(*line.split(",")) for line in lines ]
+
+    return books
+
+
+```
+
+* `book_demo.py`:
+
+```python
+
+import pprint
+from book import Book
+from book import Person
+from book import loadBooks
+
+# highest rated book
+# lowest rated book
+# oldest book
+# all books by Terry Pratchett: or organize books by author
+
+books = loadBooks("book_data.csv")
+
+# sorts using the order defined in the class
+books.sort()
+#pprint.pprint(books)
+
+books.sort(key = lambda x : x.rating, reverse=True)
+
+pprint.pprint(f"best  book: {books[0]}")
+pprint.pprint(f"worst book: {books[len(books)-1]}")
+
+books.sort(key = lambda x : (x.year,-x.rating))
+
+pprint.pprint(f"oldest book: {books[0]}")
+pprint.pprint(f"newest book: {books[len(books)-1]}")
+
+key = Book("64385","Johnny and the Bomb","Pratchett","Terry","9780060541910",3.85,1996)
+
+# index is basically a linear search method...
+index = books.index(key)
+print(f"found {key} at index {index}")
+
+# binary search: dictionaries are even better (so sayeth Python)
+
+# reformat our data: collect all books by authors
+# Author -> list of their books
+# go through the books and create a *SET* of author
+authors = set([ b.author for b in books ])
+
+pprint.pprint(authors)
+
+# iterate through and create a Author -> bookS map...
+authorBooks = {}
+for a in authors:
+    for b in books:
+        if a == b.author:
+            # if we ahve seen the author before, it has a set, just
+            # add the book to it....
+            if a in authorBooks:
+                authorBooks[a].add(b)
+            else:
+                authorBooks[a] = set()
+                authorBooks[a].add(b)
+
+authorBooks = { author:set([b for b in books if b.author == author ]) for author in authors  }
+
+pprint.pprint(authorBooks)
+
+pratchett = Person("Pratchett", "Terry")
+pratchettBooks = authorBooks[pratchett]
+pprint.pprint(pratchettBooks)
+
+# alternative: less OOP, more pythonic
+# you can use tuples as keys...
+authors = set([ (b.author.last,b.author.first) for b in books ])
+pprint.pprint(authors)
+
+authorBooks = { author:set([b for b in books if author[0] == b.author.last and author[1] == b.author.first ]) for author in authors  }
+pprint.pprint(authorBooks)
+
+n = 10
+pairs = []
+for i in range(n):
+    for j in range(n):
+        x = (i,j)
+        pairs.append(x)
+
+pprint.pprint(pairs)
+myMap = {}
+for (x, y) in pairs:
+    myMap[(x,y)] = x * y
+pprint.pprint(myMap)
+
+pairMapping = { (x,y):x*y for x in range(n) for y in range(n) }
+pprint.pprint(pairMapping)
+
+
+```
+
+* Advent of Code Exercise
+
+```python
+
+import pprint
+import re
+
+input = """1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet"""
+
+input = input.split("\n")
+input = [ re.sub("[a-zA-Z]+", "", s) for s in input]
+input = [ int(s[0] + s[-1]) for s in input ]
+total = sum(input)
+pprint.pprint(input)
+
+# total = 0
+# for s in input:
+#     for c in s:
+#         if c.isdigit():
+#             first = c
+#             break
+#     for c in reversed(s):
+#         if c.isdigit():
+#             last = c
+#             break
+#     num = int(first + last)
+#     print(f"{num}")
+#     total += num
+
+print(f"{total}")
+```
+
 ```text
 
 
