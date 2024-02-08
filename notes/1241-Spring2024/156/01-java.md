@@ -644,6 +644,11 @@ System.out.printf("Found %f at index %d\n", key, index);
 
 ```
 
+## Custom Searching & Sorting
+
+* For user defined types, you *must* use `Comparator`s to specify ordering
+* See demo code in `code` directory
+
 
 ```
 

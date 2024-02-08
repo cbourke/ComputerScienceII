@@ -619,7 +619,71 @@ public static void main(String args[]) {
 
 ### Basic Searching & Sorting
 
+* Java provides built-in sorting and searching algorithms
+* Custom orderings and sorting with user-defined types is achieved through `Comparator`s
 
+```java
+List<Integer> numbers = Arrays.asList(5, 7, 4, 3, 9, 2, 1, 5, 6);
+List<String> names = Arrays.asList("Chris", "Joe", "Zoey", "Aaron", "Erin", "aaron");
+
+System.out.println(numbers);
+Collections.sort(numbers);
+System.out.println(numbers);
+
+System.out.println(names);
+Collections.sort(names);
+System.out.println(names);
+
+// Comparator that orders integers in *descending order
+Comparator<Integer> cmpIntDescending = new Comparator<>() {
+	@Override
+	public int compare(Integer a, Integer b) {
+		// return something negative if a comes before b
+		// return *something* positive if a comes AFTER b
+		// return 0 if a == b
+		if (a < b) {
+			return 1;
+		} else if (a > b) {
+			return -1;
+		} else {
+			return 0;
+		}
+	}
+
+};
+
+System.out.println(numbers);
+Collections.sort(numbers, cmpIntDescending);
+System.out.println(numbers);
+
+// Comparator that orders integers in *descending order
+Comparator<String> cmpStringDescending = new Comparator<>() {
+	@Override
+	public int compare(String a, String b) {
+		// return something negative if a comes before b
+		// return *something* positive if a comes AFTER b
+		// return 0 if a == b
+		return -a.compareToIgnoreCase(b);
+	}
+
+};
+
+System.out.println(names);
+Collections.sort(names, cmpStringDescending);
+System.out.println(names);
+
+//binary search: look int he middle
+//  if the thing in the middle == thing you look for, DONE
+//  if the thing you search for is less, then go left
+//  if the thing you search for is greater, go right
+//repeat until the list is empty
+//[1, 2, 3, 4, 5, 5, 6, 7, 9]
+int key = 9;
+Collections.sort(numbers, cmpIntDescending);
+System.out.println(numbers);
+int index = Collections.binarySearch(numbers, key, cmpIntDescending);
+System.out.printf("found %d at index %d\n", key, index);
+```
 
 
 

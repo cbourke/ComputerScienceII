@@ -955,6 +955,11 @@ pprint.pprint(input)
 print(f"{total}")
 ```
 
+# On to Java...
+
+* Demo: repeat the Book data processing exercises in Java...
+* BUT: Think *objects first*
+
 ```text
 
 
