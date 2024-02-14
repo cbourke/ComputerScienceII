@@ -1,29 +1,24 @@
 """
-TODO: update this entire script - out of synch with CS1
-
 This script interfaces with canvas, the SoC's handin file server
 (cse-linux-01.unl.edu) and codepost.io to assign graders to student
 submissions for a particular assignment and pushes all submission
 files to codepost.io.
 
-Usage: python3 codepostAssignGraders.py cse_handin_assignment_name codepost_assignment_id
+Usage: python codepost_assign_graders.py soc_handin_assignment_name codepost_assignment_name
 
 where
-  - cse_handin_assignment_name is the "name" of the handin assignment
+  - soc_handin_assignment_name is the "name" of the handin assignment
     (corresponds to the handin directory created)
-  - codepost_assignment_id is the codepost assignment (database) ID.
-    You can retrieve this by first running codepostListCourseInfo.py
+  - codepost_assignment_name is the codepost assignment name.
 
 In detail:
 
  1. It loads the current roster from Canvas (and separates
     instructors/graders/students using the config.py params)
- 2. It attempts to map NUIDs to CSE logins to grab submissions
-    (failures will be excluded or "orphaned")
- 3. It randomizes grading assignments (evenly distributing
+ 2. It randomizes grading assignments (evenly distributing
     them among graders) and outputs an assignment report to
-    the standard output
- 4. It scans the handin directory for files whose extensions
+    the standard output and data to a CSV file.
+ 3. It scans the handin directory for files whose extensions
     match those in the config.py file and pushes them to
     codepost.io associated them with the assigned grader.
 
@@ -41,7 +36,7 @@ import pprint
 from config import config
 from course import course
 from fileUtils import getFiles
-from codepostUtils import get_assignment_id
+from codepost_utils import get_assignment_id
 
 parser = argparse.ArgumentParser()
 parser.add_argument("handin_assignment_number", help=
@@ -66,6 +61,10 @@ codepost_assignment_name = args.codepost_assignment_name
 codepost_assignment_id = get_assignment_id(codepost_assignment_name)
 commit = args.commit
 
+if codepost_assignment_id is None:
+    print(f"Unable to find codepost assignment: {codepost_assignment_name}")
+    exit(1)
+
 assignment_dir = f"{config.handin_directory}{handin_assignment_number}/"
 if not os.path.exists(assignment_dir):
     print(f"assignment directory: {assignment_dir} does not seem to exist")
@@ -80,6 +79,8 @@ csv = course.assignmentToCSV(grading_assignment)
 f = open(handin_assignment_number+".csv", "w")
 f.write(csv)
 f.close()
+
+print(f"Grading Assignment {handin_assignment_number} (server), pushing to assignment {codepost_assignment_id} (codepost.io)")
 
 def pushAssignments(grading_assignment):
   for grader,groups in grading_assignment.items():

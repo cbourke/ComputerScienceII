@@ -1,11 +1,11 @@
 """
 This script interfaces with canvas and codepost.io
-to transfer grades of any assignment from codepost.io
+to transfer grades of assignments from codepost.io
 into the canvas gradebook.
 
 This is intended to be run once after the conclusion of
 the grading of an assignment.  It will only ever update
-grades in Canvas if the canvas grade is missing (*and*
+grades in canvas if the canvas grade is missing (*and*
 the --commit option has been provided; otherwise a
 report of potential actions will be produced).  If
 grades need to be changed after this run, it should be
@@ -16,7 +16,7 @@ TODO: this script is complete, but needs troubleshooting
 """
 from config import config
 from course import course
-from codepostUtils import get_assignment_id
+from codepost_utils import get_assignment_id
 from canvasUtils import getAssignments
 from canvasUtils import getGrade
 from canvasUtils import setGrade
@@ -107,6 +107,5 @@ for nuid,p in course.students.items():
         if commit_to_canvas:
             setGrade(canvas_assignment_id, p.canvasId, score, comment)
 
-#pprint.pprint(codepost_grades)
 if not commit_to_canvas:
-  print("Cowardly refusing to commit grades to canvas; rerun with --commit if you wanna.")
+    print("Cowardly refusing to commit grades to canvas; rerun with --commit if you wanna.")
