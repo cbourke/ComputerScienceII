@@ -34,7 +34,36 @@ Formally an object is a general entity characterized by:
 * Communication is facilitated by the object's *interface*: the `public` methods that are available
 * Otherwise, all other aspects of an object are *hidden* (information hiding/abstraction)
 
+### Composition & Design
+
+* Object design:
+  * "Semantics dictate design"
+  * Don't over-design: YAGNI = You Aint Gonna Need It
+  * You break real-world objects or ideas into smaller and smaller parts until...
+    * It is directly representable: integer, string, etc.
+    * OR: it already exists
+* Generally your objects are *composed* of other objects or data
+  * When an object "owns" an instance of another class, it is called *composition*
+  * When an object "owns" a collection of other classes, it is called *aggregation*
+* Design Principles:
+  * Generally: avoid the "god-antipattern" (antipattern = bad habit in code), the "god antipattern": your class is everything, knows everything, does everything
+  * Single Responsibility Principle: a class should only be responsible for one thing
+* With objects, you create them using *constructors*
+  * In Java, by default a no-argument constructor is provided
+  * If you define your OWN constructor, it goes away
+  * You can always restore it by explicitly defining it
+  * You can define as many constructors as you wish to make your objects more usable
+  * Nice pattern: copy constructor: takes an instance of the same class and copies over the values in part or in whole
+
 ```text
+
+
+
+
+
+
+
+
 
 
 
