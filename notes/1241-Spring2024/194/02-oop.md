@@ -55,6 +55,65 @@ Formally an object is a general entity characterized by:
   * You can define as many constructors as you wish to make your objects more usable
   * Nice pattern: copy constructor: takes an instance of the same class and copies over the values in part or in whole
 
+## Four Pillars:
+
+* Abstraction
+* Encapsulation
+* Inheritance
+* Polymorphism
+
+## Abstraction
+
+* Implementation or "information hiding"
+* Procedural abstraction: how does the `sqrt()` work?  Who cares?
+* How does `LocalDate` represent a date?
+  * 3 integers: year/month/day
+  * A single String ISO8601
+  * A single integer (unix epoch time)
+* Relieves you of the need to know about any details of an object
+
+## Encapsulation
+
+Usually is comprised of three things:
+1. The grouping of data into one logical unit
+2. The protection of data from the outside world
+3. The grouping of methods (behavior) that act on that data
+
+* Don't break encapsulation by locating data or methods that act on that data outside the class
+* bank "stuff" belongs in the `Bank` class, person "stuff" belongs in the `Person` class, etc.
+* Good abstraction and encapsulation work together to make code:
+  * More isolated
+  * You can more easily reuse code
+  * MOre easily testable because *side effects* are isolated
+
+## Inheritance
+
+* Inheritance allows you to reuse a class by `extends`ing it and creating a *subclass*
+  * A superclass/subclass relationship is an **is a** relationship: the subclass *is an* instance of the superclass
+  * Alternative: parent/child relation
+* PAttern:
+  * Common functionality is shared in the super class while
+  * Specific functionality is *overridden* in the subclass
+  * Ex: Animal, Cat, Dog
+* Demonstration:
+  * Redesign our `Person` class to also have an `Author` and `Director` subclasses
+  * Collect common functionality in the super class
+  * Place specific functionality in the subclasses
+
+Tools:
+  * UML Sketches: https://app.diagrams.net/
+  * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
+
+Observations:
+
+* If a class `A` `extends` a class `B`:
+  * `A` is the subclass/child class/derived
+  * `B` is the superclass/parent class/
+* Inheritance defines an "is-a" relationship
+  * A `Dog` *is-a* `Animal`
+  * An `Author` *is-a* `Person`
+
+
 ```text
 
 
