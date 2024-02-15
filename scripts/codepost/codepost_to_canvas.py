@@ -11,8 +11,6 @@ report of potential actions will be produced).  If
 grades need to be changed after this run, it should be
 done manually.
 
-TODO: this script is complete, but needs troubleshooting
-
 """
 from config import config
 from course import course
@@ -24,6 +22,8 @@ import argparse
 import codepost
 import pprint
 import sys
+
+print(codepost.__version__)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("assignment_name", help=
@@ -93,6 +93,8 @@ for nuid,p in course.students.items():
     message = None
     if canvas_grade is not None:
         print(f"    Skipping, Canvas grade exists...")
+        if canvas_grade != codepost_grade:
+            print(f"    ERROR: codepost grade = {codepost_grade} != canvas grade = {canvas_grade}")
     else:
         # change canvas grade...
         if codepost_grade is None:

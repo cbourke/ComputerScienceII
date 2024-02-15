@@ -1,6 +1,11 @@
 
-from config import config
+from packaging import version
 import codepost
+
+from config import config
+
+if version.parse(codepost.__version__) < version.parse("0.3.2"):
+    print(f"WARNING using a legacy version of codepost: {codepost.__version__}")
 
 codepost.configure_api_key(config.codepost_api_key)
 

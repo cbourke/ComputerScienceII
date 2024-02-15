@@ -18,13 +18,10 @@ junit_tests = {
     1: "unl.soc.StatisticsTests",
     2: "unl.soc.NaturalTests unl.soc.ChildCreditTests",
     3: "unl.soc.BaseballTests unl.soc.DnaAnalysisTests",
-    #TODO: the rest of the labs...
-    #"L04": "unl.cse.library.BatchTest",
-    #"L05": "com.cinco.payroll.BatchTest",
-    #"L09": "unl.cse.albums.BatchTest",
-    #"L10": "unl.cse.albums.BatchTest",
-    #"L11": "unl.cse.trucks.BatchTest",
-    #"L13": "unl.cse.sorting.BatchTest"
+    4: "unl.soc.AuthorTests unl.soc.BookTests",
+    5: "com.cinco.payroll.PayrollTests",
+    6: "unl.soc.ModeDemoTests unl.soc.MomentUtilsTests unl.soc.CourseTests"
+    #TODO: rest of them
 }
 
 parser = argparse.ArgumentParser()
