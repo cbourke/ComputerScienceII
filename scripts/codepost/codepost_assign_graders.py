@@ -86,7 +86,7 @@ def pushAssignments(grading_assignment):
   for grader,groups in grading_assignment.items():
     for g in groups:
       s = g.members[0]
-      path = f"{assignment_dir}{s.canvasLogin}/"
+      path = f"{assignment_dir}{s.canvas_login}/"
       print(f"Pushing files in {path}...")
       try:
         files = getFiles(path)
@@ -98,8 +98,8 @@ def pushAssignments(grading_assignment):
         if commit:
           submission = codepost.submission.create(
             assignment=codepost_assignment_id,
-            students=[m.canvasEmail for m in g.members],
-            grader=grader.canvasEmail)
+            students=[m.canvas_email for m in g.members],
+            grader=grader.canvas_email)
         for (fullPath,name,ext),contents in files.items():
           print(f"  pushing {name}...")
           if commit:

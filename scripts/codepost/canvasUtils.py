@@ -178,11 +178,11 @@ def getRoster():
   users = get_canvas_data(path)
 
   for user in users:
-    canvasId = user['id']
+    canvas_id = user['id']
     if 'login_id' in user:
-        canvasLogin = user['login_id']
+        canvas_login = user['login_id']
     else:
-        canvasLogin = None
+        canvas_login = None
     nuid = user['sis_user_id']
     name = user['sortable_name'] #format: "last, first"
     if 'email' in user:
@@ -192,8 +192,8 @@ def getRoster():
     p = Person(
       nuid,
       name,
-      canvasId,
-      canvasLogin,
+      canvas_id,
+      canvas_login,
       email
     )
     roster[p.nuid] = p
@@ -218,7 +218,7 @@ def getGroups(roster):
       members = []
       for memberCanvasId in gd[2]:
         for nuid,p in roster.items():
-          if p.canvasId == memberCanvasId:
+          if p.canvas_id == memberCanvasId:
             members.append(p)
             p.group = g
             break

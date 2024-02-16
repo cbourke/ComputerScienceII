@@ -58,7 +58,7 @@ login = args.login
 
 # If login is specified, we cut the roster to a single student
 if login:
-    students = {k:v for (k,v) in course.students.items() if v.canvasLogin == login}
+    students = {k:v for (k,v) in course.students.items() if v.canvas_login == login}
 else:
     students = course.students
 
@@ -83,7 +83,7 @@ print(f"  Canvas Assignment: {canvas_assignment}")
 
 for nuid,p in students.items():
   print(f"  {p.name} ({p.nuid})...")
-  login = p.canvasLogin
+  login = p.canvas_login
   canvas_id = p.canvas_id
   full_path = f"{base_path}{lab_number}/{login}/"
   score = getGrade(canvas_assignment.id, p.canvas_id)

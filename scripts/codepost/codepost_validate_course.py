@@ -41,10 +41,10 @@ for s in roster.students:
 # check that codepost graders are in canvas class
 print("Checking Instructors...")
 for nuid,instructor in course.instructors.items():
-  if instructor.canvasEmail not in graders:
+  if instructor.canvas_email not in graders:
     print("Instructor %s not in codepost"%instructor)
   else:
-    graders.remove(instructor.canvasEmail)
+    graders.remove(instructor.canvas_email)
 if graders:
   print("Instructors in codepost missing in canvas:")
   for g in graders:
@@ -53,10 +53,10 @@ if graders:
 # check that codepost students are in canvas class
 print("Checking Students...")
 for nuid,student in course.students.items():
-  if student.canvasEmail not in students:
+  if student.canvas_email not in students:
     print("Student %s not in codepost"%student)
   else:
-    students.remove(student.canvasEmail)
+    students.remove(student.canvas_email)
 if student:
   print("Students in codepost missing in canvas:")
   for s in students:

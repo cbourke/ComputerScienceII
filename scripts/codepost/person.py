@@ -18,24 +18,24 @@ class Person:
 
     nuid = None
     name = None
-    canvasId = None
-    canvasLogin = None
-    canvasEmail = None
+    canvas_id = None
+    canvas_login = None
+    canvas_email = None
     group = None
 
     def __init__(self, nuid,
                        name = None,
-                       canvasId = None,
-                       canvasLogin = None,
-                       canvasEmail = None):
+                       canvas_id = None,
+                       canvas_login = None,
+                       canvas_email = None):
         self.nuid        = nuid
         self.name        = name
-        self.canvasId    = canvasId
-        self.canvasLogin = canvasLogin
-        self.canvasEmail = canvasEmail
+        self.canvas_id    = canvas_id
+        self.canvas_login = canvas_login
+        self.canvas_email = canvas_email
 
     def __str__(self):
-        return "%-30s (%s) %s"%(self.name,self.nuid,self.canvasEmail)
+        return "%-30s (%s) %s"%(self.name,self.nuid,self.canvas_email)
 
     def __hash__(self):
         return hash(self.nuid)
@@ -53,4 +53,4 @@ class Person:
         return (self.nuid < other.nuid)
 
     def toCsv(self):
-        return "%s,%s,%s,%s,%s\n"%(self.nuid,self.name.replace(", ", ","),self.canvasId,self.canvasEmail,self.canvasLogin)
+        return "%s,%s,%s,%s,%s\n"%(self.nuid,self.name.replace(", ", ","),self.canvas_id,self.canvas_email,self.canvas_login)

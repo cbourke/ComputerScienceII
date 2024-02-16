@@ -85,8 +85,8 @@ for submission in assignment_submissions:
 #   retrieve canvas grade
 #   report
 for nuid,p in course.students.items():
-    codepost_grade = None if p.canvasEmail not in codepost_grades else codepost_grades[p.canvasEmail]
-    canvas_grade = getGrade(canvas_assignment_id, p.canvasId)
+    codepost_grade = None if p.canvas_email not in codepost_grades else codepost_grades[p.canvas_email]
+    canvas_grade = getGrade(canvas_assignment_id, p.canvas_id)
     print(f"{p}:")
     print(f"    codepost: {codepost_grade}")
     print(f"    canvas:   {canvas_grade}")
@@ -107,7 +107,7 @@ for nuid,p in course.students.items():
             comment = None
         print(log)
         if commit_to_canvas:
-            setGrade(canvas_assignment_id, p.canvasId, score, comment)
+            setGrade(canvas_assignment_id, p.canvas_id, score, comment)
 
 if not commit_to_canvas:
     print("Cowardly refusing to commit grades to canvas; rerun with --commit if you wanna.")

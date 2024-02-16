@@ -84,12 +84,12 @@ class Course:
         for g in self.groups:
             r += str(g)
         r += "CSV Data:\n"
-        r += "nuid,name,canvasId,canvasEmail,canvasLogin\n"
+        r += "nuid,name,canvas_id,canvas_email,canvas_login\n"
         for nuid,p in self.students.items():
             r += p.toCsv()
         r += "Emails:\n"
         for nuid,p in self.students.items():
-            r += str(p.canvasEmail) + "\n"
+            r += str(p.canvas_email) + "\n"
         return r
 
     def getGradingAssignment(self):
@@ -157,7 +157,7 @@ class Course:
                 nameTokens = g.members[0].name.split(",")
                 studentLast = nameTokens[0].strip()
                 studentFirst = nameTokens[1].strip()
-                r += "%s,%s,%s,%s,%s,%s,%s\n"%(grader.nuid,graderLast,graderFirst,g.members[0].nuid,studentLast,studentFirst,g.members[0].canvasEmail)
+                r += "%s,%s,%s,%s,%s,%s,%s\n"%(grader.nuid,graderLast,graderFirst,g.members[0].nuid,studentLast,studentFirst,g.members[0].canvas_email)
         return r
 
 course = Course(instructorNuids=config.instructor_nuids,
