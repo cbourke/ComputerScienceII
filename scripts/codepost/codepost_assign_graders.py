@@ -85,8 +85,13 @@ print(f"Grading Assignment {handin_assignment_number} (server), pushing to assig
 def pushAssignments(grading_assignment):
   for grader,groups in grading_assignment.items():
     for g in groups:
+      # Try the first student...
       s = g.members[0]
       path = f"{assignment_dir}{s.canvas_login}/"
+      if not os.path.isdir(path) and len(g.members) > 1:
+          s = g.members[1]
+          path = f"{assignment_dir}{s.canvas_login}/"
+          print(f"WARNING: {path} does not exist, attempting secondary student: path = {path}")
       print(f"Pushing files in {path}...")
       try:
         files = getFiles(path)
