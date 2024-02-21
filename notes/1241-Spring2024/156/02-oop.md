@@ -89,14 +89,89 @@ Other observations
 ## Inheritance
 
 * Inheritance allows you to reuse a class by `extends`ing it and creating a *subclass*
+* In Java we use the `extends` keyword to make one class a *subclass* of another
+  * Superclass/subclass
+  * Parent class/child class
+* Generally:
+  * You place common or *general* behavior (methods) and state (variables) in the superclass
+  * Variables/methods in the superclass are *inherited* by the subclass
+  * YOu can also add *more specific* behavior/state in the subclass
 
-* Is a person an author? Not always
-* Is an author a person? Yes
-* Is a director an author? Sometimes
-* Is an author a director? Sometimes
-* Is a director a person? Yes
+Tools:
+  * UML Sketches: https://app.diagrams.net/
+  * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
+
+Observations:
+* If a class $A$ `extends` a class $B$:
+  * $A$ is the subclass, $B$ is the superclass
+  * $A$ is the child class, $B$ is the parent class
+* Inheritance forms an *is-a* relationship
+  * Animal, Dog, Cat: a Cat is a Animal, Animal a dog (not necessarily); A dog is an animal, but not necessarily vice versa
+  * Is a dog a cat?  Is a cat a dog?
+* Three types of relations:
+  * Covariant relationship: you can treat a subclass as a super class (Dog **is an** Animal); ALWAYS safe
+  * Contravariant relationship: you can *sometimes* treat a subclass as a superclass (an Animal is sometimes a Dog); sometimes safe
+  * Invariant relationship: a cat is never a dog, a dog is never a cat, NEVER safe
+* Sometimes it is okay to check before you perform a contravariance...
+  * You use the `instanceof` keyword to do this (inside of an `if` statement.
+  * HOWEVER: you generally don't want to do this unless you *have* to
+  * If you find yourself doing this *often* then it is likely a *bad design*
+  * Generally the only time you *have* to use `instanceof` and do a contravariance is when  you are making copies (calling a copy constructor)
+* Motivations for inheritance:
+  * It provides a way to utilize *code resuse*
+  * It provides a way to reduce redundancy
+  * It provides a way to reason about and organize your classes into a *hierarchy*
+  * It is well-designed if the introduction of a new class does not break any of the other code
+
+### More Inheritance - Pitfalls
+
+An inheritance hierarchy needs to be **very well defined**.
+  * The *is-a* relationship *must* be invariant
+  * Once a hierarchy has been established and code is now *dependent* on it, it *cannot be changed* without substantially breaking other code
+
+Pitfalls
+
+* Rectangle Problem: Shape, Rectangle, Square
+  * Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+  * Another Example: Author, Director, Person hierarchy no longer makes sense if you have a person who is BOTH an author and director
+  * This is a violation of the Liskov Substitution Principle (SOLID)
+* Antipattern (a bad behavior or bad but common mistake in code): yo-yo antipattern
+  * Suppose you have a *deep* inheritance hierarchy: 10 or 20 classes deep
+  * It is best to keep a hierarchy *shallow*: limit the number of classes/subclasses
+  * Or: "prefer composition over inheritance"
+* Diamond Problem Antipattern
+  * Animal, Dog, Cat
+  * Suppose you could inherit from *multiple classes*
+  * For this reason, MOST OOP languages do not allow multiple inheritance
+  * C++ is the only one (that I know of) that does allow this
+  * Java do not allow multiple inheritance
+  * HOwever: most languages allow you to create more "general" ideas of inheritance: `abstract` classes and `interface`s (pure abstract classes)
+  * Java is a *single inheritance hierarch*: all things `extends` from `Object`
+
+### More Inheritance Tricks
+
+* What happens if you have well-defined subclasses, but not-so-well-defined superclasses
+* In Java, you can create an `abstract` class:
+  * It is a class that you can inherit from
+  * YOu can define methods and state in your class, but also
+  * You can define `abstract` methods: methods that have no "default behavior"
+  * You provide the behavior in NON-abstract subclasses
+  * You cannot instantiate (create) an abstract class even if it has a constructor!
+* An `interface` takes this to another level
+  * An interface is a *pure* abstract class: it has no state and no non-abstract methods (generally)
+  * It means that you can define a collection of abstract methods and then a class can `implements` that interface
 
 ```text
+
+
+
+
+
+
+
+
+
+
 
 
 

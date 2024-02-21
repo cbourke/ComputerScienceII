@@ -112,7 +112,54 @@ Observations:
 * Inheritance defines an "is-a" relationship
   * A `Dog` *is-a* `Animal`
   * An `Author` *is-a* `Person`
+* Three types of relations in inheritance:
+  * Covariance: you can always treat a subclass as a super class (always safe)
+  * Contravariance: sometimes you can treat a superclass as a sublcass (sometimes safe, often not)
+  * Invariance: you can never treat a "sibling" class as another sibling class
+* You can **sometimes** use the `instanceof` keyword to determine the type or subtype of a variable
+  * However, you should almost *NEVER* use this in a program
+  * It is completely WRONG to use this to determine the control flow of your program: you would end breaking encapsulation
+  * The only time you should use this is when creating copies or instances of an object: there is no such thing as a "polymorphic constructor"
+* Motivations for inheritance:
+  * It provides a way for *code reuse*
+  * It provides a way to *organize* code
+  * Reduces redundancy
+  * If well-designed, the introduction of a new class or behavior does NOT break any code and does not require any changes
 
+### More Inheritance - Pitfalls
+
+An inheritance hierarchy needs to be **very well defined**.
+  * The *is-a* relationship *must* be invariant
+  * Once a hierarchy has been established and code is now *dependent* on it, it *cannot be changed* without substantially breaking other code
+
+Pitfalls
+* Rectangle Problem
+  * Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+  * Another Example: Author, Director, Person hierarchy no longer makes sense if you have a person who is BOTH an author and director
+  * This is a violation of the Liskov Substitution Principle (SOLID)
+* Antipattern (a bad behavior or bad but common mistake in code): yo-yo antipattern
+  * You don't want your inheritance hierarchies to be too deep
+  * YOU should prefer shallow hierarchies
+  * Or: "prefer composition over inheritance"
+* Diamond Problem Antipattern
+  * Animal, Dog, Cat
+  * Some languages would allow you to inherit from multiple classes
+  * It is ambiguous as to which behavior you are inheriting!
+  * For languages (C++) that allow this, you have to write code to explicitly state what you are inheriting: defeats the purpose of code reuse anyway
+  * Java (and most sane) programming languages do not allow this
+
+### More Inheritance Tricks
+
+* What happens if you have well-defined subclasses but not-so-well-defined superclasses
+* In Java, you can create an `abstract` class:
+  * You can still inherit from an `abstract` class
+  * You can define methods and state, but also...
+  * You can deinfe `abstract` methods: methods that do not have any body and do not specify how they work
+  * You provide the behavior in NON-abstract *subclasses*
+  * An `abstract` class has constructors, but other code is NOT able to call them!
+* An `interface` takes this to another level
+  * An `interface` is a *pure* abstract class: there is no state, ONLY abstract methods
+  * This has the advantage that you can `implements` multiple interfaces!
 
 ```text
 

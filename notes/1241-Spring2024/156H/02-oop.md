@@ -86,6 +86,61 @@ Strong encapsulation is comprised of three things:
 
 ## Inheritance
 
+* Inheritance allows you to reuse a class by `extends`ing it and creating a *subclass*
+  * Common functionality and state/behavior is located in the `super` class
+  * Place specialized or specific behavior/state in the *subclass*
+  * The subclass/superclass relationship forms an *is a* relationship (always safe)
+    * A dog is an animal
+    * A director is a person
+    * A robin is a bird
+* Three types of relations in inheritance:
+  * Covariant - always safe: you treat the subclass as a superclass
+  * Contravariant - sometimes safe, sometimes dangerous, you need to explicitly check; you treat a superclass as a subclass
+  * Invariant - never safe, you treat one class as a sibling
+* You can, but should not *generally* use the `instanceof` keyword to check type safety
+  * The only time you may *need* to use `instanceof` is when calling a constructor (especially a copy constructor)
+  * Any time you find yourself using `instanceof` to determine logical flow: **you are doing something wrong**
+* Motivations for inheritance:
+  * Code reuse: You write code and place it in a superclass and all subclasses automatically inherit that code
+  * Reduces redundancy, reduces potential failure points
+  * Much cleaner way to organize code into *hierarchies*
+ * Tools:
+    * UML Sketches: https://app.diagrams.net/
+    * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
+
+### More Inheritance - Pitfalls
+
+An inheritance hierarchy needs to be **very well defined**.
+  * The *is-a* relationship *must* be invariant
+  * Once a hierarchy has been established and code is now *dependent* on it, it *cannot be changed* without substantially breaking other code
+
+Rectangle Problem: Shape, Rectangle, Square
+  * Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+  * Our example: Author, Director, Person: not a great design because it doesn't allow a person that is both
+  * This is an example of a violation of the Liskov Substitution Principle (SOLID)  
+
+Yo-yo Antipattern
+  * Deep inheritance hierarchies (20 classes/levels) deep are bad
+  * Keep your hierarchy shallow, OR
+  * "Prefer Composition over Inheritance": it gets you the same or similar benefits of code reuse but without locking you into the hierarchy!
+
+Diamond Problem/Antipattern
+  * Some (one?) language allows you to inherit from multiple classes (C++)
+  * The problem: what gets inherited from what superclass?
+  * Java does not allow multiple inheritance!  Yay!
+  * Even if you allowed it, you still have to write code to disambiguate your code, defeats the purpose of code reuse with inheritance
+
+### More Inheritance - Solutions
+
+* What happens if you have well-defined subclases but not-so-well-defined superclasses
+* In Java you can create an `abstract` class
+  * You use the keyword `abstract`
+  * Then you can have `abstract` methods: methods with no *default* behavior, no method body, etc.
+  * Then subclasses that inherit this `abstract` method, MUST provide an implementation
+  * Even if you have a constructor, you *cannot* instantiate an abstract class!
+* In Java you can also create a *pure* abstract class: `interface`
+  * An inteface allows you to define any number of methods with NO default behavior
+  * This allows classes to `implements` multiple interfaces
 
 ```text
 
