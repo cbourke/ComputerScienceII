@@ -161,6 +161,64 @@ Pitfalls
   * An interface is a *pure* abstract class: it has no state and no non-abstract methods (generally)
   * It means that you can define a collection of abstract methods and then a class can `implements` that interface
 
+# Polymorphism
+
+* Polymorph = multiple form(s)
+* Code: one piece of code (variable, method, class) can be written *generically* so that it can be applied to many types
+* Other languages:
+  * Python: `list.sort()`
+  * C: `qsort()`
+  * Java: `Collections.sort()`
+* It allows you to write generic code, one function/method that can be applied to *any* type
+
+### Subtype Polymorphism
+
+* this is the "classic" OOP polymorphism
+* You can treat a subtype as a supertype
+* Ex: treat a `Robin` as a `Bird`
+* You can treat an `ArrayList` as a `List`
+* It simplifies code and means you only have to write on list or one method to process that list (or other types)
+
+### Method Overloading
+
+* Ex: from C, how many "absolute value" functions are there?
+  * `abs()` (integers), `fabs()` (floating point numbers), `labs()`, `llabs()`
+  * C does not have function overloading: if you write a function ONLY that function can have that name
+  * Python doesn't have it either
+  * Java does: how many absolute value functions does the math library have?
+* You can have more than one function with the same name but with different types of arguments (inputs/parameters)
+* The compiler is "smart enough" to figure out which one you want to call based on the value you give it: `int` it calls the version that takes an integer, `double`: it calls the version that takes a `double`
+* This mechanism is known as "static dispatch" (the compiler *dispatches* the function call at *compile time* that's what static means)
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String` here the `+` means *concatenation*
+  * `int + int` here the `+` operator means addition
+  * `int + String` here, the `+` operator means concatenation (after converting the int into a string)
+* C: is it possible for operators, `+, =, *`, etc to have more than one meaning?  No
+* Python:
+  * `string + string` means concatenation
+  * `int + int` means addition
+  * `int + string`: run time error, you cannot mix types in python!
+* C++: you can overload anything you want to have any meaning you want: you could *overload* the `-` operator to mean addition
+* This is generally a bad idea
+* Ex:
+  * `List + List` what does this mean?
+  * Appending the second list to the end of the first
+  * Vector addition: add each component, producing a new list
+  * Union, intersection?
+  * It is completely ambiguous
+* Ex:
+  * `Time + Time`
+  * meaningless, are these points in time?  are these durations of time?  Periods of time?
+* Operator overloading is a thing, but **should be extremely limited**
+
+### Parameterized Polymorphism
+
+* In Java you can create a parameterized variable, class or method
+* That one variable can be any type, method can act on any type, class can be associated with any type!
+
 ```text
 
 

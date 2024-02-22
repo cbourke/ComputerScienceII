@@ -139,8 +139,53 @@ Diamond Problem/Antipattern
   * Then subclasses that inherit this `abstract` method, MUST provide an implementation
   * Even if you have a constructor, you *cannot* instantiate an abstract class!
 * In Java you can also create a *pure* abstract class: `interface`
-  * An inteface allows you to define any number of methods with NO default behavior
+  * An interface allows you to define any number of methods with NO default behavior
   * This allows classes to `implements` multiple interfaces
+
+# Polymorphism
+
+* Poly = Many, Morph = Form
+* Code: one piece of code (variable, method or class) can be written generically and applied to many types
+* C: `qsort()`, Python: `.sort()`
+* Java: `Collections.sort()`
+
+### Subtype Polymorphism
+
+* This is the "classic" OOP polymorphism
+* You can treat any subtype as a supertype
+* You can treat a `Robin` as a `Bird`
+* You can treat an `ArrayList` as a `List`
+* It simplifies code and means you only have to write on list or one method to process that list (or other types)
+
+### Method Overloading
+
+* C: how many absolute value functions does C have?  `abs()`, `fabs()`, `labs()`, `llabs()`, etc.
+* This is because C does not have method overloading: once you have defined a function with a name `foo` there can be NO other function with that name!
+* OOP allows method overloading: you can define multiple functions with the same name but with different paratemers/input types
+* The compiler is "smart enough" to know which function you want based on the paratmer type you call it with: if you call it with an `int` as input, it calls one version, if you call it with a `double` it calls another version, etc.
+* This mechanism is known as "static dispatch"
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String` what does `+` mean in this context?  Concatenation
+  * `int + int`: `+` now means addition
+  * `String + int`: `+` now means: convert the int to a string and concatenate
+* Python:
+  * `string + string`: concatenation
+  * `int + int`: addition
+  * `string + int`: ERROR
+* C:
+  * `char * + char *` memory addition: weird things happen
+  * C does not have ANY operator overloading
+* C++: full operator overloading: you can write code to redefine ANY operator.  ex: you redefine `+` to mean subtraction
+* This is bad in general:
+  * `List + List`: $A \cup B$ union, append: append the second list to the first, vector addition: $[a, b, c] + [x, y, z] = [a+x, b+y, c+z]$
+  * `Time + Time`: meaningless!
+* In a langauge like C++: you have to write a function that defines what an operator means anyway, why not just use the function
+
+### Parameterized Polymorphism
+
 
 ```text
 

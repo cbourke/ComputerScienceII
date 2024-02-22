@@ -161,6 +161,63 @@ Pitfalls
   * An `interface` is a *pure* abstract class: there is no state, ONLY abstract methods
   * This has the advantage that you can `implements` multiple interfaces!
 
+# Polymorphism
+
+* Polymorph = multiple form(s)
+* In code: a variable, method, or class can be generically written so that it can apply to more than one type
+  * Example: `qsort()` (C language)
+  * Java: `Collections.sort()`
+* This allows code reuse at an even higher level!
+
+## Subtype Polymorphism
+
+* Is the "classic" polymorphism: you can treat a subtype as a supertype
+* You can treat a `Robin` as a `Bird`
+* Covariance: it always safe (as long as it is designed correctly)!
+* If you don't need the specialized behavior of a subclass, you can write more generic code to apply to ALL subclasses
+
+### Method Overloading
+
+* Example: in C how many absolute value functions did you have? `abs(), fabs(), labs(), llabs()`
+* In a language without method overloading, once you create a function with a given name, `foo`, that is the ONLY function that can have that name
+* You end up "polluting the namespace": libraries will typically prepend ALL functions with some acronym: `gmp_function_name`
+* In an OOP language: you have method overloading: you can have more than one method with the same name but with different parameter types!
+* The compiler is able to determine which method you intended to call based on the input(s) you give it: this is known as "static dispatch"
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String`: here `+` means "concatenation"
+  * `int + int`: here `+` means addition
+  * `String + int`: here `+` means: convert the `int` to a string and then concatenate
+* Consider in C:
+  * `char * + char *`: here `+` means add the memory addresses
+  * Plus always means addition, just not a very useful addition in many cases
+  * No operator overloading in C
+* In java: only this particular instance is an operator overloaded
+* C++: you can customize and change ANY operator to ANY operation
+* Ex: You could change `+` to mean subtraction
+* Be careful: this is not very useful in general
+* `List + List`: what does this mean?
+  * Append one list to the end of the other
+  * Vector addition (math)
+  * Union
+  * Confusion!
+* `Time + Time`: !?!?!
+* Most languages do not allow customization of operator overloading and even if they did: you'd have to write a function
+
+### Parameterized Polymorphism
+
+* In Java you can create a parameterized class, variable, or method
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+  of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+## SOLID Principles
+
+## STUPID Principles
+
 ```text
 
 
