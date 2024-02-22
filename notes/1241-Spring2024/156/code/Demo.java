@@ -3,6 +3,8 @@ package unl.soc;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,116 +24,63 @@ import java.util.Set;
  * 
  */
 public class Demo {
+	
+	public static <T extends Number> double sum(List<T> values) {
+		double total = 0;
+		for(T x : values) {
+			total += x.doubleValue();
+		}
+		return total;
+	}
+
 
 	public static void main(String args[]) {
-
-		//we want to know the highest rated book
-		//what is the lowest rated book?
-		//what is the oldest book
-		//what are all the books by Terry Pratchett? 
-
-		List<Book> books = BookUtils.loadBooks("data/book_data.csv");
-
-		System.out.println("Books, original order:");
-		for(Book b : books) {
-			System.out.println(b);
-		}
-		System.out.print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n");
 		
-		//Sort the books with respect to rating (descending)
-		//Collections.sort(books);
-		//Best book is the first
-		//worst book is last
+		BigInteger x = new BigInteger("23432984723984729387492387492387492387492387492387492387492387498237492837492837498237492837489723");
+
+		Person p = new Person("Bourke", "Chris", null);
+
+		List stuff = new ArrayList();
+		stuff.add(42);
+		stuff.add("hello");
+		stuff.add(10.5);
+		stuff.add(p);
+
+		List<Integer> integersOnly = new ArrayList<>();
+		integersOnly.add(42);
+		integersOnly.add(101);
+//		integersOnly.add("hello");
+//		integersOnly.add(p);
+		double total = 0;
+		total = sum(integersOnly);
+		System.out.println(total);
 		
-		Comparator<Book> cmpBookByRating = new Comparator<Book>() {
+		List<Double> doublesOnly = new ArrayList<>();
+		doublesOnly.add(10.5);
+		doublesOnly.add(Math.PI);
+		doublesOnly.add(10.0);
+		total = sum(doublesOnly);
+		System.out.println(total);
 
-			@Override
-			public int compare(Book a, Book b) {
-				if(a.rating < b.rating) {
-					return 1;
-				} else if(a.rating > b.rating) {
-					return -1;
-				} else {
-					return 0;
-				}
-			}
-			
-		};
+
+		List<Number> anyNumber = new ArrayList<>();
+		anyNumber.add(10);
+		anyNumber.add(10.5);
+		anyNumber.add(Math.PI);
+		double foo = sum(anyNumber);
+		System.out.println(foo);
 		
-		Collections.sort(books, cmpBookByRating);
-		System.out.println("Books, by rating:");
-		for(Book b : books) {
-			System.out.println(b);
-		}
-		System.out.print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n");
+		//type of variable: int
+		//name of the variable: x
+		//value of the variable: 10
+		//int x = 10;
 		
+
+		//type of variable: T (generic: it can be ANY type!)
+		//name of the variable: y
+		//value of the variable: null
+		//T y;
 		
-		Comparator<Book> cmpBookByYear = Comparator
-				.comparing(Book::getYear)
-				.reversed()
-				.thenComparing(Book::getRating);
-		
-		Collections.sort(books, cmpBookByYear);
-		System.out.println("Books, by year:");
-		for(Book b : books) {
-			System.out.println(b);
-		}
-		System.out.print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n");
-
-		//first attempt: search for books by Terry Pratchett
-		
-		Comparator<Book> byAuthor = Comparator
-				.comparing(Book::getAuthor);
-
-		//search using *binary search*...
-		Person author = new Person("Pratchett", "Terry");
-		Book bookKey = new Book();
-		bookKey.author = author;
-		Collections.sort(books, byAuthor);
-		int index = Collections.binarySearch(books, bookKey, byAuthor);
-		System.out.printf("Found a book, %s at index %d\n", books.get(index), index);
-
-		//Even better way: USE MAPS!
-		//Author -> [LIST of the books they've written]
-		Map<Person, List<Book>> authorMap = new HashMap<>();
-		//1. get a set of all authors
-		Set<Person> authors = new HashSet<>();
-		for(Book b : books) {
-			authors.add(b.author);
-		}
-
-		// For each book B:
-		//    get the set in the map of B's author...
-		//    add the book B to the author's set....
-		for(Book b : books) {
-			List<Book> authorsBooks = authorMap.get(b.author);
-			//if thisi s the first time we've seen this author...
-			// authorsBooks will be null...
-			if(authorsBooks == null)  {
-				authorsBooks = new ArrayList<>();
-			}
-			//add the book to the author's list
-			authorsBooks.add(b);
-			//3.   add the book list to the map:
-			//     Author -> List[Books]
-			authorMap.put(b.author, authorsBooks);
-		}
-
-		//for each author in the map...
-		//   print out the books one to a line...
-		//   BUT print out authors in order...
-		//first: dump all of the authors to a list to sort it...
-		List<Person> myAuthors = new ArrayList<>(authorMap.keySet());
-		//second: sort it in order of lastname/firstname
-		Collections.sort(myAuthors);
-		for(Person a : myAuthors) {
-			System.out.println(a);
-			for(Book b : authorMap.get(a)) {
-				System.out.println("\t" + b);
-			}
-		}
-
-
 	}
 
 }

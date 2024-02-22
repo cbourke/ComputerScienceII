@@ -32,14 +32,10 @@ public class BookUtils {
 				String line = s.nextLine();
 				String tokens[] = line.split(",");
 				if (tokens.length == 7) {
-					Book b = new Book();
-					b.id = tokens[0];
-					b.title = tokens[1];
 					Person a = new Person(tokens[2], tokens[3]);
-					b.author = a;
-					b.isbn = tokens[4];
-					b.rating = Double.parseDouble(tokens[5]);
-					b.year = Integer.parseInt(tokens[6]);
+					double rating = Double.parseDouble(tokens[5]);
+					int year = Integer.parseInt(tokens[6]);
+					Book b = new Book(tokens[0], tokens[1], a, tokens[4], rating, year);
 					books.add(b);
 				}
 			}
@@ -53,5 +49,11 @@ public class BookUtils {
 		}
 		return books;
 	}
+	
+	//breaking encapsulation: 
+	public static int getAgeInYears(Book b) {
+		return 2024 - b.getYear();
+	}
+
 
 }
