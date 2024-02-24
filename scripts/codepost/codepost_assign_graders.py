@@ -90,8 +90,9 @@ def pushAssignments(grading_assignment):
       path = f"{assignment_dir}{s.canvas_login}/"
       if not os.path.isdir(path) and len(g.members) > 1:
           s = g.members[1]
+          og_path = path
           path = f"{assignment_dir}{s.canvas_login}/"
-          print(f"WARNING: {path} does not exist, attempting secondary student: path = {path}")
+          print(f"WARNING: {og_path} does not exist, attempting secondary student: path = {path}")
       print(f"Pushing files in {path}...")
       try:
         files = getFiles(path)
@@ -107,7 +108,9 @@ def pushAssignments(grading_assignment):
             grader=grader.canvas_email)
         for (fullPath,name,ext),contents in files.items():
           print(f"  pushing {name}...")
-          if commit:
+          if not name or name.isspace() or not ext or ext.isspace():
+              print(f"  WARNING: invalid name or extension, skipping")
+          elif commit:
             codepost.file.create(
               name=name,
               code=contents,
