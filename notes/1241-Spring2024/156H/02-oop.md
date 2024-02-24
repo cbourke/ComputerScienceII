@@ -186,6 +186,158 @@ Diamond Problem/Antipattern
 
 ### Parameterized Polymorphism
 
+* Java allows you to parameterize classes, methods or variables
+
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should represent one thing and represent it well
+* Violation: God-Class: the class is responsible for everything, knows everything, does everything
+* You can still violate it by having it do 2 things
+  * A class that loads data **and** saves data
+  * Person class should not be responsible for Address stuff
+* Careful: you can go overboard: would a `Name` class be appropriate?
+* YAGNI = You Aint Gonna Need It
+* Avoid "leaky abstractions":
+   * Code should not require users to use it in a specific way or order
+   * `sqrt()`: before you called this, you had to call the `initialize_math_library()` function and then call the `initializ_math_internals()`
+
+```java
+//works.. but
+loadAuthors()
+loadBooks()
+
+
+//does not work:
+loadBooks()
+loadAuthors()
+```
+
+* YOu want to determine a `Person`'s age: if you have a `getAge()` method: great! But if you instead have `getBirthDayAndComputeItYourself()`
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide a *general* behavior that should *NOT* be changed otherwise:
+    * It was a bad design
+    * Changes break all the code that depends on it
+* Violation: `instanceof` to determine business logic (the value of an account, the cost of items)
+
+```java
+if(object.getType().equals("Stock")) {
+  //do stock thiings here
+} else if(object.getType().equals("Annuity")) {
+  //do annuity things here
+}
+
+//also wronger:
+if(object instanceof Stock) {
+  //do stock thiings here
+} else if(object instanceof Annuity) {
+  //do annuity things here
+}
+
+```
+
+* In Java: you can enforce this principle using the `final` keyword:
+  * `final` variables mean they are constants!
+  * A `final` class cannot be extended
+  * A method can be made `final` and any subclasses cannot override it! cannot change it!
+
+## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+* Subtype polymorphism!
+
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+LinkedList<Integer> numbers2 = new LinkedList<>();
+
+List<Integer> foo = null;
+
+//NO Problem:
+foo = numbers;
+
+//NO problem:
+foo = numbers2;
+```
+
+* Violation: Rectangle/Square example
+* Author, Director, Person
+* Prefer composition over inheritance
+
+## Interface Segregation Principle
+
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* A bad design would *force* you to implement both of these things even if you didn't want to...
+* Instead: all interfaces should be as small as possible
+
+## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Ex:
+  * You can write code to connect to a database and load data
+  * Suppose you write the code toward a very specific database: MySQL
+  * Now you want to switch over to MSSQL or Oracle
+  * You now have to throw all your code away and start over
+
+* Example
+* Library A:  
+`double GPSLocator.getLatitude()`  
+`double GPSLocator.getLongitude()`
+* Library B:  
+`AndroidLocation AndroidNative.getLocation()`  
+ `AndroidLocation.getLatitude()`   `AndroidLocation.getLongitude()`
+ * Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+ ```java
+
+ if(Library A) {
+   return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+ } else if(Library B) {
+   AndroidLocation l =  AndroidNative.getLocation();
+   return new Location(l.getLatitude(), l.getLongitude());  
+ else if(Library C) {
+    return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()),
+     Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+ }
+```
+
+* INversion:
+
+```java
+
+public interface Locator {
+
+  public Location getLocation();
+
+}
+
+
+public AndroidLocator implements Locator {
+
+
+  public Location getLocation() {
+    AndroidLocation l =  AndroidNative.getLocation();
+    return new Location(l.getLatitude(), l.getLongitude());  
+
+  }
+
+}
+
+//client code: doesn't care about the type of Locator
+Locator l = new AndroidLocator();
+Location = l.getLocation();
+
+
+```
+
+* OOP, SOLID, STUPID, XML, YAGNI, JSON, etc.
 
 ```text
 
