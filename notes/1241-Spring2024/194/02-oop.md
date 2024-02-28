@@ -216,7 +216,168 @@ Pitfalls
 
 ## SOLID Principles
 
-## STUPID Principles
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should represent one thing and represent it well
+* Violation: God-Class: the class is responsible for everything, knows everything, does everything
+* You can still violate it by having it do 2 things
+  * loading and saving of data in the same class
+  * `Person`, `Address`
+* YAGNI Principle: You Aint Gonna Need It
+* You can overengineer: you do not need a "name" class; an email MAY be as simple as a `String` or you can have a full class `Email`
+* Avoid "leaky abstractions":
+  * Code should not require users to use it in a specific way
+  * You had to call the `initialize_math()` function, then `initialize_values()` AND ONLY THEN can you call the `sqrt()`
+* Ex: exposing how emails are stored: a particular list, a set, an array, etc.  
+  * `public ArrayList<String> getEmails()`
+  * Better: `public List<String> getEmails()`
+  * Even worse: `public String[] getEmails()`
+
+```java
+public List<String> getEmails() {
+  return new ArrayList<String>(this.emails);
+}
+```
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide a *general* behavior that should *NOT* be changed otherwise:
+    * It must have been a bad design OR
+    * changing it breaks ALL other code
+* Violation: `instanceof` to determine business logic (the value of an account, the cost of items)
+
+```java
+if(object.getType().equals("Stock")) {
+  //do stock thiings here
+} else if(object.getType().equals("Annuity")) {
+  //do annuity things here
+}
+
+//also wronger:
+if(object instanceof Stock) {
+  //do stock thiings here
+} else if(object instanceof Annuity) {
+  //do annuity things here
+}
+```
+
+* The only time you *should* (in fact have to) use the `instanceof` keyword or type checks: when you call a constructor
+
+* In Java: you can enforce this principle using the `final` keyword:
+  * `final` variables mean you are making them constant
+  * A `final` class cannot be extended: ex: `Integer`
+  * A method can be made `final` and subclasses cannot override it!
+
+## Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+  * Covariant relationships: they are always safe, or SHOULD be!
+  * Subtype polymorphism
+
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+LinkedList<Integer> numbers2 = new LinkedList<>();
+
+List<Integer> foo = null;
+
+//SHOULD have no problems:
+foo = numbers;
+
+//ALSO should be okay:
+foo = numbers2;
+```
+
+* Violation: Rectangle/Square example
+* Author, Director, Person
+* Prefer composition over inheritance
+
+
+```java
+
+public class Director {
+
+  private Person person;
+  private List<Film> directedFilms;
+
+
+}
+
+
+
+```
+
+## Interface Segregation Principle
+
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* A bad interface design would *force* you to implement both of these things even if you didn't want to...
+* Instead: all interfaces should be as small as possible
+
+## Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Ex:
+  * You can write code to connect to a database and load data
+  * Suppose you write the code toward a very specific database: PostgreSQL
+  * Now you want to switch over to MSSQL or Oracle
+  * You now have to throw all your code away and start over
+
+* Example
+* Library A:  
+`double GPSLocator.getLatitude()`  
+`double GPSLocator.getLongitude()`
+* Library B:  
+`AndroidLocation AndroidNative.getLocation()`  
+ `AndroidLocation.getLatitude()`   `AndroidLocation.getLongitude()`
+ * Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+ ```java
+
+ if(Library A) {
+   return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+ } else if(Library B) {
+   AndroidLocation l =  AndroidNative.getLocation();
+   return new Location(l.getLatitude(), l.getLongitude());  
+ } else if(Library C) {
+    return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()),
+     Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+ }
+```
+
+
+* INversion:
+
+```java
+
+public interface Locator {
+
+  public Location getLocation();
+
+}
+
+public AndroidLocator implements Locator {
+
+
+  public Location getLocation() {
+    AndroidLocation l =  AndroidNative.getLocation();
+    return new Location(l.getLatitude(), l.getLongitude());  
+
+  }
+
+}
+
+//client code: doesn't care about the type of Locator
+Locator l = new AndroidLocator();
+Location = l.getLocation();
+
+
+```
+
+* OOP, SOLID, STUPID, XML, YAGNI, JSON, etc.
 
 ```text
 
