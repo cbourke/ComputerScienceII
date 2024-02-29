@@ -28,7 +28,15 @@
   * Many-to-many relationship: one record in $A$ can reference many in $B$ AND vice versa
   * One-to-one relationship: one record in $A$ relates to one record in $B$ (maybe ignore this one)
 
-## CRUD Demonstration
+## Getting Started
+
+* We suggest using mysql workbench: https://www.mysql.com/products/workbench/
+* You all have access to a database named after your canvas login (`cbourke3`) on a server named `cse-linux-01.unl.edu`
+* Your password should have been sent to you via your huskers email this morning
+* DO NOT use this password for anything else, do NOT change your mysql password to something you care about or use for other things
+* If you lose it and/or need to change it: you'll need to contact `manager@cse.unl.edu`
+
+# CRUD Demonstration
 
 * CRUD = Create Retrieve Update Destroy
 * Four basic operations to any data collection
@@ -38,14 +46,171 @@
     * Update (`update`) - modifying currently existing records
     * Destroy (`delete`) - removing/deleting records in a table: THERE IS NO, ABSOLUTELY NO UNDO
 
-## Getting Started
+## C = Create
 
-* We suggest using mysql workbench: https://www.mysql.com/products/workbench/
-* You all have access to a database named after your canvas login (`cbourke3`) on a server named `cse-linux-01.unl.edu`
-* Your password should have been sent to you via your huskers email this morning
-* DO NOT use this password for anything else, do NOT change your mysql password to something you care about or use for other things
-* If you lose it and/or need to change it: you'll need to contact `manager@cse.unl.edu`
+* Use the `insert` keyword
+* Specify the `table`, `(column,names)` and `values`
+* You can insert one record at a time...
+* You can insert multiple records in one query
+* You can hardcode primary key values for *test* data (so you know the values when used as foreign keys)
 
+```sql
+
+-- hard code PK/FK values for test data ONLY!
+insert into publisher(name,publisherId) values ("Mojang", 500);
+insert into game (name,publisherId) values ("Minecraft", 500);
+
+-- alternatively, but much more work, a nested query:
+insert into availability
+  (gameId,platformId,publishYear)
+  values
+  ( (select gameId from game where name = "Minecraft"),
+  7, 2009);
+```
+
+* Child records cannot exist without a parent record (in a well designed database that is)
+* These are foreign key *constraints*: a child cannot exist without a parent
+  * A parent record must be created BEFORE the child record
+  * Deletion must follow the reverse order
+
+## U = Update
+
+* You use the `update` keyword
+
+```sql
+
+insert into publisher (name) values ("Geerbox");
+
+-- fix the spelling...
+-- as it is, this would change EVERY publisher to "Gearbox"
+update publisher set name = "Gearbox";
+-- unsafe operations like this are prevented in "safe mode"
+update publisher set name = "Gearbox" where publisherId = 501;
+
+
+```
+
+## D = Destroy
+
+* You use the keyword `delete`
+
+```sql
+
+-- deletes EVERY record in the game table
+-- DOES NOT delete the table itself
+-- not allowed in safe mode :)
+delete from game;
+
+delete from availability where gameId = 24;
+delete from game where gameId = 24;
+delete from publisher where publisherId = 500;
+```
+
+## R = Retrieve
+
+* You can pull data out of a database using the `select` statement
+* To pull every single record and every single column value you can use a wildcard:
+
+```sql
+use cbourke3;
+
+select * from platform;
+select * from game;
+select * from publisher;
+select * from availability;
+
+-- select all game records and all columns of the game table:
+-- THe * is a wildcard: it matches EVERYTHING and ANYTHING
+select * from game;
+
+-- you can select a subset of columns:
+select name from game;
+select name,publisherId from game;
+-- order does not matter:
+select publisherId,name from game;
+-- you can also rename (alias) columns temporarily
+select publisherId,
+       name as title
+       from game;
+
+-- aggregate functions can be used:
+-- how many game records do we have?
+select count(*) from game;
+select count(*) as numberOfGames from game;
+select count(*) as `number Of Games` from game;
+
+-- others: min, max, sum, avg
+select min(publishYear) from availability;
+select max(publishYear) from availability;
+select avg(publishYear) from availability;
+-- glorified calculator:
+select now() - (min(publishYear) -1970)*60*60*24*365.25 as age from availability;
+select 40 * 4 / 3;
+
+-- where clauses can limit your results
+select * from game where gameId = 5;
+select * from game where gameId != 5;
+select * from game where gameId > 5;
+select * from game where gameId >= 5;
+
+-- you can also use strings:
+select * from game where name = "Legend of Zelda";
+select * from game where name <= "Legend of Zelda";
+
+-- you can use partial string matching using more
+-- wildcards
+-- % will match any number of characters
+
+-- select games that start with a G
+select * from game where name like "G%";
+
+-- select games that end with a s
+select * from game where name like "%s";
+
+-- combination of wildcards:
+select * from game where name like "%The%";
+select * from game where name like "S%a%";
+
+-- another wildcard: _ matches ANY SINGLE character
+select * from game where name like "_____";
+
+select * from game where name like "S____%";
+
+-- ordering
+
+-- order doesn't matter (records or columns)
+-- asc = ascending order (default)
+-- desc = descending order
+select * from game order by name;
+select * from game order by name asc;
+select * from game order by name desc;
+
+-- order by a combination of fields
+select * from game order by publisherId, name desc;
+
+-- distinct keyword provides only unique records
+
+select distinct publisherId from game;
+
+-- in clause
+
+select * from game where gameId in (5, 7, 10, 3);
+
+-- or and and keywords:
+select * from game where gameId = 5 or gameId = 7 or gameId = 10 or gameId = 3;
+select * from game where gameId = 5 or (gameId > 10 and name like "S%");
+
+
+-- you can order by multiple columns...
+select * from game order by publisherId asc, name desc;
+
+select * from publisher;
+
+
+```
+
+
+$$A \times B$$
 
 ```text
 
