@@ -209,8 +209,110 @@ select * from publisher;
 
 ```
 
+## Data Projections
 
-$$A \times B$$
+* Set Theory: a set is an unordered collection of unique elements of *similar type*
+* Math:
+$$A = \{a, b, c\}$$
+$$B = \{1, 2\}$$
+$$x \in A$$
+$$x \not\in A$$
+$$ \overline{A}$$
+  $$A \cup B$$
+  $$A \cap B$$
+$$A \times B = \{(a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)\}$$
+  $$|A| = 3, |B| = 2, |A \times B| = 6$$
+$$R \subseteq A \times B$$
+* $R$ is a *relation* on the cartesian product of $A \times B$
+* A subset; elements are in the relation only if they match some criteria
+* $R \subseteq \mathbb{R} \times \mathbb{R}$ such that $(x, y) \in R \iff x < y$
+* Consider the "projection" of objects: 3D->2D
+
+
+```sql
+
+select count(*) from game;
+select count(*) from publisher;
+select 22 * 31;
+select count(*) from game join publisher;
+
+-- a basic "inner" join will join records from
+-- table A to table B such that only combinations
+-- that match the "on" predicate (clause) are true
+select * from game
+  inner join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- syntactic sugar:
+-- you can omit the 'inner'
+-- you can use aliases to shorthand a lot
+-- you can even omit the "as"
+select * from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+-- changing the order changes the order of the columns:
+select * from publisher p
+  join game g
+  on g.publisherId = p.publisherId;
+
+-- the order does not matter on the predicate
+select * from publisher p
+  join game g
+  on p.publisherId = g.publisherId ;
+
+-- observe: are all the publishers represented?
+-- generally: an inner join does not preserve records that
+-- have no matches (from A to B)
+-- a left (outer) join does preserve recrods:
+select * from publisher p
+  left join game g
+  on p.publisherId = g.publisherId ;
+
+-- yes, there is a right join: it preserves records from B
+-- to A: it is best to use left joins and reorder the
+-- tables so you read left to right
+select * from game g
+  right join publisher p
+  on p.publisherId = g.publisherId;
+
+-- goal: determine how many games each publisher published...
+select p.name as publisher,
+  g.name as gameTitle
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId ;
+
+
+-- first attempt: group by publisherId in the game table...
+select * from game;
+select publisherId,
+  count(*) as numberOfGames
+  from game group by publisherId;
+
+select p.name as publisher,
+  count(g.gameId) as numberOfGames
+  from publisher p
+  left join game g
+  on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+-- get a list of all games and their platforms...
+select *
+  from game g
+  left join availability a on g.gameId = a.gameId
+  left join platform p on a.platformId = p.platformId;
+
+-- get a list of platforms and all of their games even those
+-- that have no games...
+select *
+  from platform p
+  left join availability a on p.platformId = a.platformId
+  left join game g on g.gameId = a.gameId;
+
+
+insert into platform (name) values ("Valve Index"), ("Playdate");
+```
 
 ```text
 

@@ -161,7 +161,114 @@ select * from game order by publisherId asc, name desc;
 select * from publisher;
 ```
 
+## Misc
 
+* You can use `distinct` to only get unique values: `select distinct publisherId from game;`
+* You can use the `in` clause to define a set
+
+```sql
+select * from game where gameId = 3 or gameId = 5 or gameId = 7;
+select * from game where gameId in (3, 5, 7);
+```
+
+* Set theory: an unordered set is a collection of unique elements of a similar type
+* Math:
+  $$A = \{a, b, c\}$$
+  $$B = \{1, 2\}$$
+  $$x \in A$$
+  $$x \not\in A$$
+  $$ \overline{A}$$
+  $$A \cup B$$
+  $$A \cap B$$
+  $$A \times B = \{(a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)\}$$
+  $$R \subseteq A \times B$$
+* R forms a *relation*
+* $(x,y) \in \mathbb{R} \times \mathbb{R}$
+
+## Data Projections
+
+* YOu can "project" data down from higher dimensions to lower dimenstions
+* $(x, y, z) \rightarrow (x, y)$
+
+```sql
+
+-- get a total number of games published by each publisher...
+select publisherId,
+	   count(gameId) as numberOfTitles
+       from game group by publisherId;
+
+-- does that include publishers with no games?
+-- no, nor does it even have their names!
+
+use cbourke3;
+
+select * from game;
+select * from publisher;
+
+select count(*) from game; -- 22 games
+select count(*) from publisher; -- 31 publishers
+
+-- blind/naive cross join: join every record in table
+-- A to every record in table B!
+select count(*) from game join publisher; -- 682 records
+
+-- 10M game records, 10M publisher records
+-- leads to 100 Trillion
+
+-- an "inner" join from the game table to the publisher table
+-- ON the publisherId: only records where the publisherId matches
+-- will be in the result
+select * from game
+  inner join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- clean up:
+-- "inner" is not necessary
+-- use aliases to not have to type the table name again...
+-- aliases are so common, you can omit the "as" keyword
+select * from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+-- you can limit the columns you get back:
+select g.name as gameTitle,
+  p.name as publisher
+  from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+-- inner joins will OMIT any record from the first table
+-- that does not match any record in the second table
+-- alternative: you can use an OUTER LEFT JOIN to preserve
+-- records from table A to table B
+
+-- joining FROM the game table TO the publisher table
+-- reuslts in the same result: you do not have orphan child records
+select * from game
+  left join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- do a left join starting from the publisher table TO the game table
+select * from publisher
+  left join game
+  on game.publisherId = publisher.publisherId;
+
+-- yes you can do a right join to preserve records from B
+-- to A: just use left joins and keep it simple, no need
+-- to read right-to-left
+select * from game
+  right join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- use everything we've covered to get a proper report...
+-- how many games has each publisher published?
+select p.name as publisherName,
+  count(g.gameId) as numberOfGames
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId;
+```
 
 ```text
 
