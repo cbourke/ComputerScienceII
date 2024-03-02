@@ -130,3 +130,20 @@ process is complete.  A retrospective is then posted to Piazza.
 * For all other assignments (2-8) and the design document, you may work in pairs
   but may not work in groups of 3 or more.  See the full details and *requirements*
   for doing so provided in the project overview document.
+
+## I need to end a partnership, is that okay?
+
+Certainly.  If a partnership is not working out for whatever reason, you can
+and *should* make a change.
+
+* Make sure that your partner is aware that the partnership is ending, don't
+  just ghost them.
+
+* Whatever code and artifacts you have worked on together up to that point, make
+  sure you each have a copy to work off of going forward.  Code shared from an
+  only partnership will not be considered plagiarism.  You should clarify in
+  your readme past partnerships.
+
+* Make sure to leave the partner group on Canvas immediately.
+
+* Yes, you may form a new partnership if you wish or you may work alone.
