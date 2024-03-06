@@ -305,25 +305,81 @@ select p.name as publisher, g.name as title, a.publishYear, plat.name as platfor
 
 ## Designing & Implementing a Database
 
-* Crate a database to model the account java classes/problem (Account, Annuity, Stock, Person (owner), Email(s) of a person, etc.)
+* Create a database to model the asset java classes/problem (Asset, Annuity, Stock, Person (owner), Email(s) of a person, etc.)
 
 
 ```sql
+use cbourke3;
 
-create table Email (
-  emailId int primary key not null auto_increment,
-  address varchar(255) not null
-  -- how to connect an email to a person??
-);
+drop table if exists Ownership;
+drop table if exists Email;
+drop table if exists Person;
+drop table if exists Asset;
 
-create table Person (
+create table if not exists Person (
   personId int primary key not null auto_increment,
   firstName varchar(255), -- allow this to be null
   lastName varchar(255) not null,
-  dateOfBirth varchar(??)
-  "2024-03-04" -- ISO 8601
-  "0000-00-00"
+  dateOfBirth varchar(10) not null default "0000-00-00"
 );  
+
+create table if not exists Email (
+  emailId int primary key not null auto_increment,
+  address varchar(255) not null,
+  personId int not null,
+  foreign key (personId) references Person(personId)
+);
+
+
+
+create table if not exists Asset (
+  assetId int primary key not null auto_increment,
+  type varchar(1) not null, -- A = Annuity, S = Stock; TODO: prevent bad data by only allowing A and S...
+  -- Annuity columns:
+  terms int,
+  monthlyPayment double,
+  -- Stock columns:
+  numberOfShares double,
+  sharePrice double
+);
+
+create table if not exists Ownership (
+  ownershipId int primary key not null auto_increment,
+  personId int not null,
+  assetId int not null,
+  foreign key (personId) references Person(personId),
+  foreign key (assetId) references Asset(assetId)
+);
+
+insert into Person (personId, firstName,lastName) values
+  (123, "Chris", "Bourke"),
+  (456, "Cory", "Bellinger"),
+  (789, "Craig", "Counsel");
+
+
+insert into Email (address,personId) values
+  ("chris.bourke@unl.edu", 123),
+  -- ("cbellinger@cubs.com", 456),
+  ("craig@brewers.com", 789),
+  ("ccounsel@cubs.com", 789);
+
+insert into Asset (assetId,type,terms,monthlyPayment) values
+  (1, "A", 5, 500),
+  (2, "A", 10, 150.25);
+
+insert into Asset (assetId,type,numberOfShares,sharePrice) values
+  (3, "S", 10, 450.00),
+  (4, "S", 20.5, 0.01);
+
+insert into Ownership (personId,assetId) values
+  (123, 1),
+  (123, 2),
+  (123, 3),
+  (123, 4);
+-- select * from Person p join Email e on e.personId = p.personId;
+
+
+
 ```
 
 ```text

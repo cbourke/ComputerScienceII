@@ -346,6 +346,98 @@ select
 
 * Demonstration: create a database to model the account (Asset, Annuity, Stock; Person (owners) and their emails)
 
+```sql
+use cbourke3;
+
+-- nuke everything:
+-- drop database cbourke3;
+-- recreate YOUR database: but with no tables
+-- create database cbourke3;
+
+drop table if exists Ownership;
+drop table if exists Asset;
+drop table if exists Email;
+drop table if exists Person;
+
+-- models a person
+create table if not exists Person (
+  personId int primary key not null auto_increment,
+  firstName varchar(255),
+  lastName varchar(255) not null,
+  dateOfBirth varchar(10) default "0000-00-00"
+);
+
+create table if not exists Email (
+  emailId int primary key not null auto_increment,
+  address varchar(255) not null,
+  personId int not null,
+  foreign key (personId) references Person(personId)
+);
+
+insert into Person (personId, firstName, lastName) values
+  (1, "Chris", "Bourke"),
+  (2, "Babe", "Ruth"),
+  (3, "LeBron", "James");
+
+insert into Email (address,personId) values
+  ("chris.bourke@unl.edu", 1),
+  ("ljames@lakers.com", 3),
+  ("LeBron@cavs.com", 3);
+
+create table if not exists Asset (
+  assetId int primary key not null auto_increment,
+  -- A = Annuity, S = Stock
+  type varchar(1) not null, -- TODO: you could still have "Z" assets
+  -- Annuity columns:
+  terms int,
+  monthlyPayment double,
+  -- Stock columns:
+  numShares double,
+  sharePrice double
+);
+
+create table if not exists Ownership (
+  ownershipId int primary key not null auto_increment,
+  personId int not null,
+  assetId int not null,
+  foreign key (personId) references Person(personId),
+  foreign key (assetId) references Asset(assetId)  
+);
+
+-- annuity test data
+insert into Asset (assetId,type,terms,monthlyPayment) values
+  (1,"A",5,500.00),
+  (2,"A",10,125.25);
+
+-- stock test data
+insert into Asset (assetId,type,numShares,sharePrice) values
+  (3,"S",10.5,132.615),
+  (4,"S",100,0.067);
+
+insert into Asset (assetId,type,numShares,sharePrice) values
+  (5,"S",100.5,13.615);
+
+insert into Ownership (personId,assetId) values
+  (1,1),
+  (1,2),
+  (1,3),
+  (1,4);
+
+insert into Ownership (personId,assetId) values
+  (3,5);
+
+
+-- test queries here
+
+select * from Person p
+  left join Email e
+  on p.personId = e.personId;
+
+select * from Person p
+  left join Ownership o on p.personid = o.personId
+  left join Asset a on o.assetId = a.assetId;
+```
+
 ```text
 
 
