@@ -270,6 +270,62 @@ select p.name as publisherName,
   group by p.publisherId;
 ```
 
+$$A \cap B$$
+$$A \cup B$$
+
+```sql
+
+select * from publisher;
+select * from game;
+
+select publisherId, count(*) from
+  game group by publisherId;
+
+select p.name as publisherName,
+  count(g.gameId) as numberOfTitles
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+-- flatten the entire data model...
+select p.name as publisher, g.name as title, a.publishYear, plat.name as platform
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union
+select p.name as publisher, g.name as title, a.publishYear, plat.name as platform
+  from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+```
+
+## Designing & Implementing a Database
+
+* Crate a database to model the account java classes/problem (Account, Annuity, Stock, Person (owner), Email(s) of a person, etc.)
+
+
+```sql
+
+create table Email (
+  emailId int primary key not null auto_increment,
+  address varchar(255) not null
+  -- how to connect an email to a person??
+);
+
+create table Person (
+  personId int primary key not null auto_increment,
+  firstName varchar(255), -- allow this to be null
+  lastName varchar(255) not null,
+  dateOfBirth varchar(??)
+  "2024-03-04" -- ISO 8601
+  "0000-00-00"
+);  
+```
+
 ```text
 
 

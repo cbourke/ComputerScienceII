@@ -314,6 +314,38 @@ select *
 insert into platform (name) values ("Valve Index"), ("Playdate");
 ```
 
+$$A \cup B$$
+$$A \cap B$$
+
+```sql
+
+
+-- flatten the entire data model:
+select
+    p.name as publisher,
+    g.name as title,
+    a.publishYear as `Year Published`,
+    platform.name as platform
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform on a.platformId = platform.platformId
+union
+select
+    p.name as publisher,
+    g.name as title,
+    a.publishYear as `Year Published`,
+    platform.name as platform
+  from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform on a.platformId = platform.platformId;  
+```
+
+## Designing & Implementing a Database
+
+* Demonstration: create a database to model the account (Asset, Annuity, Stock; Person (owners) and their emails)
+
 ```text
 
 

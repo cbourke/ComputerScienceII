@@ -214,9 +214,96 @@ select * from game where gameId
 insert into publisher (name) values ("DC Games");
 insert into game (name, publisherId) values
   ("Suicide Squad",
-  (select publisherId from publisher where name = "DC Games"));alter
+  (select publisherId from publisher where name = "DC Games"));
 ```
 
+## Data Projections
+
+* You can "project" data with multiple "dimensions" (columns) down to lower dimensions (fewer columns) and *aggregate* the data to produce more information
+* Basic Set Theory
+* A set is an unordered collection of unique similar objects
+
+$$A = \{a, b, c\}$$
+$$B = \{1, 2\}$$
+* The cardinality of a set is its size, $|A| = 3, |B| = 2$
+* THe cartesian product or "cross join" is a set of pairs such that $a \in A$ (the element $a$ is in the set $A$), $b \in B$
+
+$$A \times B = \{(a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)\}$$
+$$\mathbb{R} \times \mathbb{R}$$
+$$(x, y)$$
+$$|A \times B| = |A| \cdot |B|$$
+
+$$A \cap B$$
+$$A \cup B$$
+
+```sql
+use cbourke3;
+
+select publisherId, count(*) as numberOfTitles from game group by publisherId;
+
+select * from publisher;
+
+select * from publisher join game;
+
+select count(*) from publisher; -- 13
+select count(*) from game; -- 20
+
+select count(*) from publisher join game;
+
+select p.name as publisher, g.name as title
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId;
+
+-- yes there are right joins:
+-- just swap your tables and do left joins
+-- unless you HAVE to use a right join
+select p.name as publisher, g.name as title
+  from game g
+  right join publisher p
+  on p.publisherId = g.publisherId;
+
+-- publisher name + number of games they've published
+select p.name as publisher, count(g.gameId) as numberOfTitles
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+-- filter the results after the join/projection(group by)
+select p.name as publisher, count(g.gameId) as numberOfTitles
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId
+  having numberOfTitles > 3;
+
+-- come full circle: flatten the entire data model
+select
+    p.name as publisher,
+    g.name as title,
+    a.publishYear,
+    plat.name as platform
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union  
+select
+    p.name as publisher,
+    g.name as title,
+    a.publishYear,
+    plat.name as platform
+  from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+```
+
+## Designing & Implementing a Database
+
+* Demonstration: create a database to model the asset classes (`Annuity`, `Stock`, `Person` and their emails)
 
 
 ```text
