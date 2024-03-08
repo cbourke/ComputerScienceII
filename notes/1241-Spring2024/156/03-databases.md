@@ -309,8 +309,6 @@ select p.name as publisher, g.name as title, a.publishYear, plat.name as platfor
 
 
 ```sql
-use cbourke3;
-
 drop table if exists Ownership;
 drop table if exists Email;
 drop table if exists Person;
@@ -334,12 +332,17 @@ create table if not exists Email (
 
 create table if not exists Asset (
   assetId int primary key not null auto_increment,
+  -- accountNumber will be a unique secondary or "natural" key
+  -- unique keyword enures that all records have unique values
+  -- key makes it into an index: internally the database will maintain an ordering
+  -- order that makes it efficiently searchable
+  -- accountNumber varchar(255) not null unique key,
   type varchar(1) not null, -- A = Annuity, S = Stock; TODO: prevent bad data by only allowing A and S...
   -- Annuity columns:
   terms int,
   monthlyPayment double,
   -- Stock columns:
-  numberOfShares double,
+  symbol varchar(10) unique,
   sharePrice double
 );
 
@@ -347,6 +350,9 @@ create table if not exists Ownership (
   ownershipId int primary key not null auto_increment,
   personId int not null,
   assetId int not null,
+  numberOfShares double,
+  constraint `uniqueAssetPair` unique (personId,assetId),
+  constraint `numberOfSharesNonNegative` check (numberOfShares >= 0),
   foreign key (personId) references Person(personId),
   foreign key (assetId) references Asset(assetId)
 );
@@ -367,20 +373,55 @@ insert into Asset (assetId,type,terms,monthlyPayment) values
   (1, "A", 5, 500),
   (2, "A", 10, 150.25);
 
-insert into Asset (assetId,type,numberOfShares,sharePrice) values
-  (3, "S", 10, 450.00),
-  (4, "S", 20.5, 0.01);
+insert into Asset (assetId,type,symbol,sharePrice) values
+  (3, "S", "GOOG", 138.50),
+  (4, "S", "APPH", 0.067);
 
-insert into Ownership (personId,assetId) values
-  (123, 1),
-  (123, 2),
-  (123, 3),
-  (123, 4);
--- select * from Person p join Email e on e.personId = p.personId;
+-- bourke's assets
+insert into Ownership (personId,assetId,numberOfShares) values
+  (123, 1, null),
+  (123, 2, null),
+  (123, 3, 10.5),
+  (123, 4, 20.5);
+
+-- craig's assets
+
+insert into Ownership (personId,assetId,numberOfShares) values
+  (789, 3, 1000),
+  (789, 4, 20000);
 
 
+select p.lastName as `Last Name` from Person p
+  join Ownership o on p.personId = o.personId
+  join Asset a on o.assetId = a.assetId;
 
 ```
+
+### Observations
+
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Be consistent in your naming conventions
+  * Suggestion:
+    * Tables should be `UpperCamelCased`
+    * Columns should be `lowerCamelCased`
+    * Avoid pluralizations, abbreviations
+  * Make sure every table has a primary key
+    * Name it after the table + `Id`
+    * Always use an `int`: varchars (casing issues)and doubles are imprecise
+  * Foreign keys should have the *same name* as the primary key they reference
+  * Strings (`varchar`s) should not be used as PKs or FKs
+  * Join tables should be used to model a many-to-many relationship; they can have additional columns if appropriate
+  * Be sure to insert plenty of test data into your database to model all different types of relations
+  * YOu can add uniqueness constraints and check constraints to enforce good data
+  * You can add `key` or `index`es to columns to direct the database to maintain an ordering on that column for *efficient* search of records
+  * Inheritance: we *highly recommend* you use a single table inheritance strategy!
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+
+
 
 ```text
 

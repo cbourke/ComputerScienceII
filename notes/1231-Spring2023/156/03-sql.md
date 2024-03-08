@@ -297,8 +297,6 @@ select p.name as publisherName, count(g.gameId)
 -- create a query to "flatten" the entire database:
 -- ie produce a CSV-like file
 
-use cbourke;
-
 -- a single query to dump all of the data to one "flat" representation
 select *
   from publisher p

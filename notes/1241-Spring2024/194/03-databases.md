@@ -305,6 +305,94 @@ select
 
 * Demonstration: create a database to model the asset classes (`Annuity`, `Stock`, `Person` and their emails)
 
+```sql
+use cbourke3;
+
+-- nuke everything:
+-- drop database cbourke3;
+-- recreate YOUR database: but with no tables
+-- create database cbourke3;
+
+drop table if exists Ownership;
+drop table if exists Asset;
+drop table if exists Email;
+drop table if exists Person;
+
+create table if not exists Person (
+  personId int not null primary key auto_increment,
+  firstName varchar(255), -- allowed to be nullable
+  lastName varchar(255) not null,
+  dateOfBirth varchar(10) default "0000-00-00"
+);
+
+create table if not exists Email (
+  emailId int not null primary key auto_increment,
+  address varchar(255) not null,
+  personId int not null, -- TODO: make this into a foreign key somehow
+  foreign key (personId) references Person(personId)
+);
+
+-- insert some test data...
+
+insert into Person (personId,firstName,lastName) values
+  (10, "Chris", "Bourke"),
+  (20, "LeBron", "James"),
+  (30, "Larry", "Bird");
+
+insert into Email (address,personId) values
+  ("chris.bourke@unl.edu", 10),
+  ("ljames@lakers.com", 20),
+  ("lebron@cavs.com", 20);
+
+select * from Person p
+  left join Email e
+  on p.personId = e.personId;
+
+-- TODO: move account number and possibly
+-- terms/monthlyPayment to the join table
+create table if not exists Asset (
+  assetId int not null primary key auto_increment,
+  accountNumber varchar(255) not null unique key, -- ensures that it is unique and that it is an *index*: searches are efficient
+  -- A = Annuity, S = Stock
+  type varchar(1) not null,
+  -- Annuity columns:
+  terms int,
+  monthlyPayment double,
+  -- Stock columns:
+  symbol varchar(255),
+  sharePrice double
+);  
+
+-- annuities
+
+insert into Asset (assetId,accountNumber,type,terms,monthlyPayment) values
+  (101,"ABC123","A",5,500),
+  (102,"XYZ456","A",10,150.01);
+
+insert into Asset (assetId,accountNumber,type,symbol,sharePrice) values
+  (201,"AAA","S","GOOG",135.28),
+  (202,"BBB","S","APPH",0.067);
+
+
+create table if not exists Ownership (
+  ownershipId int not null primary key auto_increment,
+  personId int not null,
+  assetId int not null,
+  numShares double, -- only for stock records
+  foreign key (personId) references Person(personId),
+  foreign key (assetId) references Asset(assetId)
+);
+
+-- annuities
+insert into Ownership (personId,assetId) values
+  (10,101),
+  (10,102);
+insert into Ownership (personId,assetId,numShares) values
+  (10,201, 10.5),
+  (10,202, 20),
+  (20,201, 1000);
+
+```
 
 ```text
 

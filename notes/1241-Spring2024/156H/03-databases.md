@@ -347,6 +347,8 @@ select
 * Demonstration: create a database to model the account (Asset, Annuity, Stock; Person (owners) and their emails)
 
 ```sql
+
+
 use cbourke3;
 
 -- nuke everything:
@@ -386,45 +388,55 @@ insert into Email (address,personId) values
 
 create table if not exists Asset (
   assetId int primary key not null auto_increment,
+  -- unique ensures that the column value is unique
+  -- key (index) ensures that the database maintains a (separate) ordering of
+  -- the column values (sorted)
+  accountNumber varchar(255) not null unique key,
   -- A = Annuity, S = Stock
   type varchar(1) not null, -- TODO: you could still have "Z" assets
+  constraint `supportedAssetTypes` check (type = "A" or type = "S"),
   -- Annuity columns:
   terms int,
   monthlyPayment double,
   -- Stock columns:
-  numShares double,
-  sharePrice double
+  symbol varchar(10) unique,
+  sharePrice double,
+  constraint `validData` check (
+    (type = "A" and terms is not null and monthlyPayment is not null and monthlyPayment > 0) or
+    (type = "S" and symbol is not null and sharePrice is not null and sharePrice >= 0)
+    )
 );
 
 create table if not exists Ownership (
   ownershipId int primary key not null auto_increment,
   personId int not null,
   assetId int not null,
+  numShares double,
+  constraint `uniquePair` unique (personId,assetId),
+  constraint `positiveShares` check (numShares > 0),
   foreign key (personId) references Person(personId),
   foreign key (assetId) references Asset(assetId)  
 );
 
 -- annuity test data
-insert into Asset (assetId,type,terms,monthlyPayment) values
-  (1,"A",5,500.00),
-  (2,"A",10,125.25);
+insert into Asset (assetId,accountNumber,type,terms,monthlyPayment) values
+  (1,"ABC1","A",5,500.00),
+  (2,"ABC2","A",10,125.25);
 
 -- stock test data
-insert into Asset (assetId,type,numShares,sharePrice) values
-  (3,"S",10.5,132.615),
-  (4,"S",100,0.067);
+insert into Asset (assetId,accountNumber,type,symbol,sharePrice) values
+  (3,"ABC3","S","GOOG",132.615),
+  (4,"ABC4","S","APPH",0.067);
+-- error now:  (5,"ABCZZ","Z","APPH",0.067);
 
-insert into Asset (assetId,type,numShares,sharePrice) values
-  (5,"S",100.5,13.615);
+insert into Ownership (personId,assetId,numShares) values
+  (1,1,null),
+  (1,2,null),
+  (1,3,31.0),
+  (1,4,20.0);
 
-insert into Ownership (personId,assetId) values
-  (1,1),
-  (1,2),
-  (1,3),
-  (1,4);
-
-insert into Ownership (personId,assetId) values
-  (3,5);
+insert into Ownership (personId,assetId,numShares) values
+  (3,3,10000);
 
 
 -- test queries here
@@ -437,6 +449,31 @@ select * from Person p
   left join Ownership o on p.personid = o.personId
   left join Asset a on o.assetId = a.assetId;
 ```
+
+### Observations
+
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Be consistent in your naming conventions
+  * Suggestion: be modern
+    * Tables have `UpperCamelCasing`
+    * Columns have `lowerCamelCasing`
+    * Avoid pluralizations, abbreviations
+* Make sure every table has a primary key
+  * Name it after the table + `Id`
+  * Make it an `int` and never `varchar` (casing issues) nor `double` (precision issues)
+* Foreign keys should have the same name as the primary keys they reference
+* Join tables should be used to model many-to-many relations
+* Insert plenty of test data to ensure your design is correct
+* YOu can add uniqueness constraints and check constraints to enforce good data
+* You can add `key` to make `index`es to columns to direct the database to maintain an ordering on that column for efficient search of records
+* When you need to model inheritance: we recommend using a *single table* inheritance strategy
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* All columns in a table should depend on the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help me Codd
+
 
 ```text
 
