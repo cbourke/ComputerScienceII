@@ -48,6 +48,19 @@ You may use any SQL client/IDE you wish, but for this course we recommend using
 MySQL Workbench (see <https://dev.mysql.com/downloads/workbench/>); it is
 free and has all the functionality you'll need.
 
+### Installation - Windows
+
+For windows users, you may have better luck with the following installation:  
+  1. Use the installer for Windows: <https://dev.mysql.com/downloads/windows/installer/8.0.html>
+     (mysql-installer-web-community); select "No thanks, just start my download..."
+  2. Run the installer download (an MSI); give permissions, etc.
+  3. Select **client only**, next
+  4. Click execute (those are not check boxes/radio boxes, its just a stupid graphics decision)
+  5. Agree to licenses, install; **you are not yet done**
+  6. Next (to Download) and Execute AGAIN; if it fails, go back and try again;
+     you need workbench, shell and router next/next/finish/etc
+  7. You can close the command window that opens up, but otherwise mysql workbench will launch
+
 ## Connecting to the MySQL Server
 
 You have access to a MySQL server hosted on `cse-linux-01.unl.edu` using your
@@ -57,6 +70,7 @@ server with:
   * Host: `cse-linux-01.unl.edu`
   * Port: `3306`
   * Username: your Canvas login ID (ex: `cbourke3`)
+  * Ignore any warnings about an incompatible server
 
 ## Changing Your Password
 
@@ -69,6 +83,16 @@ Do *not* use a password that you use on *any* other system; this password should
 not be considered secure and you may be submitting code and other artifacts with
 this password stored in plaintext.  Do no lose this password as there is no
 (convenient) way to reset it (yet).
+
+## Alternatives
+
+If you cannot get MySQL Workbench to work, you can use the installation in the
+labs or you can connect to our lab computers remotely.  
+  1. Download a VMWare Horizon Client: <https://myhorizon.vmware.com>
+  2. Use it to connect to `cse-vmcs-01.unl.edu`  
+  3. Log in with your `@unl.edu` using `username1@unl.edu`
+  4. Once you have logged in, select "Terminal Server" and you will have a
+     remotely accessible Windows Desktop that will allow you to use MySQL Workbench.
 
 # codePost.io
 
