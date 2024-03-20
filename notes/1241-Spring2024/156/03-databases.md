@@ -420,8 +420,70 @@ select p.lastName as `Last Name` from Person p
 ## Normalization
 
 * 1-NF, 2-NF, 3-NF
+* They build on each other: you cannot have a higher normal form without having ALL lower normal forms
+* First Normal Form: "each attribute in a table only has atomic values"
+  * Each column only represents ONE piece of data, ONE value
+  * Violation: storing multiple pieces of data as a single CSV string: `email1,email2,email3`
+  * Violation: multiple columns to support multiple values: 3 columns for 3 emails
+  * Be sure to separate data out into separate tables as necessary
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Using a PK auto-generated, not null gets you 2-NF automatically!
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * If the PK is a combination of `customerId/storeId` the `storeAddress` is only dependent on the second part
+  * It is often useful and necessary to define combination keys, but *keep them secondary*!
+  * You split everything out into its own table
+* Third Normal form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+  * Example: store `termsYears, monthlyPayment` for an annuity, but *also* I store the `value = termsYears * monthlyPayment * 12`
+  * Storing data that is dependent on other data is *wrong*: because it quickly may become out of sync with the other data
+  * Instead: transitively dependent data should be *recomputed* (in a query or in a program)
+  * It gives a failure point: it introduces a possible data anomaly (if one value changes then the other value(s) may need to do so as well)
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
 
+## Misc
 
+* There is a LOT more
+  * Triggers, Views, Stored Procedures, Variables, etc
+  * Transactions: all or nothing series of queries
+  * ACID:
+    * Atomicity: the entire transaction happens or NONE of it does
+    * Consistency: Before and after the transaction, all database rules will hold
+    * Isolation: each transaction occurs in isolation of all others
+    * Durability: after a catastrophic failure, all database rules will still apply
+* Security issues: do not store sensitive info in a database unhashed/unencrypted: it is even better to offload/outsource authentication to a third party (google, github, etc.)
+* Soft vs Hard deletes: a hard delete is a result of a `delete` statement.  A soft delete involves defining a boolean column `isActive` that is true if the record is active, false if it is "deleted": it can always be "restored" or undeleted by setting `isActive` to `true` again!
+
+# Programmatically Connecting to a Database & Processing Data
+
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download the Connector/J jar file and include it in your project: <https://dev.mysql.com/downloads/connector/j/>
+  * Add it to your project as usual
+  * Start writing your JDBC code!
+
+## Overview
+
+* Goal: programmatically connect to a database and process or persist (save) data
+* Most languages have some support for *database connectivity*
+* Java: JDBC = Java DataBase Connectivity API
+* API = Application Programmer Interface
+* Perfect illustration of *Dependency Inversion*
+* Don't program toward a specific database, but a generic interface
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+## Process
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
 
 ```text
 

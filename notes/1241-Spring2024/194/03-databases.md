@@ -394,7 +394,89 @@ insert into Ownership (personId,assetId,numShares) values
 
 ```
 
+## Summary
+
+### Database Design Observations
+
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Be consistent with your naming conventions
+  * Tables should be `UpperCamelCase`
+  * Columns should be `lowerCamelCase`
+  * Avoid pluralizations, abbreviations, etc.
+* Make sure that every table has a primary key PK using:
+  * an integer
+  * a name that is the `tableName` + `Id`
+* Foreign keys should have the *same name* as the primary keys that they reference
+  * Strings (`varchar`s) should not be used for PK or FK (casing issues, encoding issues, efficiency)
+  * BUT: you *can* (should in some cases) make a *secondary key* out of strings
+  * Example: ISBN, SSN, NUID: you can place a uniqueness constraint and/or `key` or `index` on columns
+* Join tables should be used to model a many-to-many relationship
+* Be sure to put plenty of test data in your database
+* Check and uniqueness constraints can be used to enforce *data integrity*
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* They build on each other: you cannot have a higher normal form without having ALL lower normal forms
+* First Normal Form: "each attribute (column) in a table only has atomic values"
+  * Each column in a table represents ONE piece of data or ONE value
+  * Violation: store a series of emails as one CSV column: `email1@foo.com,email1@bar.com,email3@baz.com`
+  * Violation: store multiple columns instead of a proper one-to-many relation: `primaryEmail`, `secondaryEmail`, `tertiaryEmail`
+  * Best practice: separate out into another table and define a one-to-many relationship
+  * FKs go in the "child" table
+* Second Normal Form: it has to be 1-NF: no non-prime attribute (column) is dependent on a proper subset of prime attributes
+  * Having a PK auto-incremented gives you 2NF automatically
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * Suppose the PK is `customerId/storeId` (ie a combination of the two)
+  * IF you defined a PK as a combination of `customerId/storeId` then you violate 2NF: `storeAddress` only depends on the second half of the key
+  * It is often useful or necessary to have "compound keys", but they should always be *secondary*
+  * You split everything out into its own table
+* Third Normal Form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+  * Violation: store the `termYears, monthlyPayment` AND `totalValue` (`= termYears * monthlyPayment * 12`)
+  * Violation: that the `totalValue` is stored when it should be *recomputed* based on the other values
+  * Gives rise to possible data anomalies: if you change one value, it means the transitively dependent value is now *wrong*
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is a LOT more
+  * Triggers: event-based actions in a database
+  * Views: read-only "tables" in a database
+  * Temp tables: temporary tables that can be created within a transaction to make data processing easier
+  * Stored Procedures: functions you can define with reusable SQL code that you can treat like a function
+  * Loops, variables (cursors), etc.
+  * Transactions: an all-or-nothing atomic "action" that can include more than 1 query, provides the ACID principles
+    * Atomicity
+    * Consistency
+    * Isolation
+    * Durability
+  * Soft vs Hard deletes: a hard delete is a result of a `delete` statement.  A soft delete involves defining a boolean column `isActive` that is true if the record is active, false if it is "deleted"
+  * Generally you want to use a *single table inheritance* strategy with databases vs OOP models
+
+## Programmatically Connecting to a Database & Processing Data
+
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download and "install" the Connector/J jar file for MySQL
+    <https://dev.mysql.com/downloads/connector/j/>
+
+#### Process:
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
+
 ```text
+
+
+
+
+
 
 
 

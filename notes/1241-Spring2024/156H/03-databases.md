@@ -473,6 +473,67 @@ select * from Person p
 
 * 1-NF, 2-NF, 3-NF
 * All columns in a table should depend on the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help me Codd
+* First Normal Form: "each attribute (column) in a table only has atomic values"
+  * Each column represents only ONE piece of data, ONE value
+  * Violation: storing multiple emails as a CSV string: `email@a.com,email@b.com,email3@c.com`
+  * Violation: storing multiple emails in multiple columns: `emailA, emailB, emailC`, etc.
+  * Be sure to separate data out into separate tables as necessary
+  * FK goes in the child table: the table that has "many" records
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Using a PK auto-generated, not null gets you 2-NF automatically!
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * If the PK is a combination of `customerId/storeId` the `storeAddress` is only dependent on the second part
+  * It is often useful and necessary to define "combination keys" (keys defined by more than one column), but the should be *SECONDARY* keys, not primary keys
+  * You split everything out into its own table
+* Third Normal Form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+  * Example: storing `termYears, monthlyPayment` for an annuity account but ALSO storing the `value` (`termYears * monthlyPayment * 12` ): storing `value` violates 3NF
+  * Because the `value` can be *derived* from the other two
+  * It introduces a failure point: it introduces a possible data anomaly (if one value changes then the other value(s) may need to do so as well)
+
+## Misc
+
+* There is a LOT more
+  * Triggers
+  * Views: read only access to a table(s) and/or columns
+  * Stored Procedures, loops, variables, etc
+  * Security issues: do not store sensitive info in a database unhashed/unencrypted: offload this to a third party: Google, GitHub, etc.
+* Soft vs Hard deletes: a hard delete is a result of a `delete` statement.  A soft delete involves defining a boolean column `isActive` that is true if the record is active, false if it is "deleted
+* DBA = DataBase Admin
+* Data Science
+
+
+## Programmatically Connecting to a Database & Processing Data
+
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download and "install" the Connector/J jar file for MySQL
+  <https://dev.mysql.com/downloads/connector/j/>
+
+
+### Overview
+
+* Goal: programmatically connect to a database and process or persist (save) data
+* Most languages have some support for *database connectivity*
+* Java: JDBC = Java DataBase Connectivity API
+* API = Application Programmer Interface
+* Perfect illustration of *Dependency Inversion*
+* Don't program toward a specific database, but a generic interface
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+#### Process:
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
 
 
 ```text
