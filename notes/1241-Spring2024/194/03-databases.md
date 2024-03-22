@@ -471,6 +471,10 @@ insert into Ownership (personId,assetId,numShares) values
 3. Process your results
 4. Clean up your resources
 
+## Misc
+
+* There are other, "better" solutions: ORMs = Object-Relational Mappings (Java: JPA = Java Persistence API) 
+
 ```text
 
 

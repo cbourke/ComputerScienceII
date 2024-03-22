@@ -485,6 +485,36 @@ select p.lastName as `Last Name` from Person p
 3. Process your results
 4. Clean up your resources
 
+### Observations
+
+* ORMs = Object Relational Mappsing Systems; Java: JPA = Java Persistence API
+* When executing a `PreparedStatement`:
+  * Use `executeQuery()` if you expect a `ResultSet`
+  * Use `executeUpdate()` if you are inserting/deleting/updating data in the database
+* Do some basic data validation: both in terms of nullable columns and to ensure that records are unique *if they need to be*
+* If doing multiple inserts (emails): only use ONE prepared statement (over and over), don't close/reopen unnecessarily
+* If you need generated key values back from an insert statement, use `Statement.RETURN_GENERATED_KEYS` and `ps.getGeneratedKeys();` to retrieve them
+
+## Best Practices
+
+### Avoid the star operator
+
+* Example: don't do `select * from Person` in JDBC
+* This sends ALL data over the wire (network) whether you want it or not
+* It makes it brittle to database changes: suppose someone adds a BLOB column (image for the person)
+* Be more intentional: only select the columns you are actually going to use so that you are not sending redundant or useless data over the network
+* Future proofs you: if someone comes in and adds a new column with a lot of data `blob`s = binary large objects
+
+### Security Issues
+
+* For this course (only) are we storing the password in a Java source file
+* This is unfortunately common
+* Number one github.com attack: look at all public repos for variables named "password"
+* For this course: it is okay
+* Advanced solution: setting up a "data source"
+* Firewall everything BUT trusted servers (network admins)
+
+
 ```text
 
 

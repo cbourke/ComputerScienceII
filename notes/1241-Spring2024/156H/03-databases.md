@@ -535,6 +535,43 @@ select * from Person p
 3. Process your results
 4. Clean up your resources
 
+## Observations
+
+* JDBC is a LOT of boilerplate CRUD: at least 4 operations per table to support ALL operations of a database
+* Solution (in real life): ORM (JPA)
+* For select queries use `executeQuery()` which returns a `ResultSet rs` that you iterate over
+  * When iterating: use a `while` loop with `rs.next()`
+  * If expecting only 1 record or not expecting 0 records, write defensive logic   
+* For update/delete/insert statements use `executeUpdate()` (there are no separate `exeucteInsert()` methods!)
+* If you need the resulting generated keys use:
+  * `Statement.RETURN_GENERATED_KEYS` when you prepare the statement and
+  * `ps.getGeneratedKeys()` to retrieve them so you can use them as FKs to insert more related records
+
+## Best Practices
+
+### Avoid the star operator
+
+* Example: don't do `select * from Person` in JDBC
+* This sends ALL data over the wire (network) whether or not you're going to use it!
+* Be more intentional: generally `select` statements should enumerate only the columns you care about
+* You risk sending redundant or irrelevant data over the network
+* Future proofs you: if someone comes in and adds a new column with a lot of data `blob`s = binary large objects
+
+### Security Issues
+
+* Generally you do NOT want to put your database passwords/credentials in plaintext in your code
+* BUT: for this class you will
+* unfortunately this is still very common
+* crawl all public repos on github.com for variable names like "password"
+* In practice:
+  * option: define "data source": no password at all, just approve certain apps from certain servers, etc.
+  * You can have a password, but it is manually entered
+  * You can also firewall out all other servers
+
+### Other Security Issues
+
+* Do not store sensitive info (passwords) in your database itself!
+* Especially plaintext
 
 ```text
 
