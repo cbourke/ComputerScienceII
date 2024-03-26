@@ -488,6 +488,7 @@ create table if not exists Ownership (
 * Never use anything else!
 * Its just simpler to use on method to connect to a database
 
+### Proper Logging
 
 ```text
 

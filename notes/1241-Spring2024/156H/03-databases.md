@@ -572,6 +572,42 @@ select * from Person p
 
 * Do not store sensitive info (passwords) in your database itself!
 * Especially plaintext
+* Do not store database passwords within code (except for this course's project)
+* Number one github.com attack: look at all public repos for variables named "password"
+* For this course: it is okay
+* In real life: setup a "data source"
+* Generally trust a server based on IP address and limit access through network solution (firewalling everyone else)
+
+### Close Your Resources!
+
+* Failure to close resources: `ResultSet`s, `PreparedStatement`s and `Connection`s: you will eventually run out of connections
+* Make sure you do it in the proper order: generally in reverse order than what you opened them in
+* Do not close them until you are done using them
+* Close them immediately after you are done with them
+* It can be very difficult to track down which piece of code is not closing a resource!
+
+### Dealing with `SQLExceptions`
+
+* Unfortunately: JDBC is quite "mature" and so it uses old-school style *checked exceptions*: ones that you are forced to surround with a `try-catch` and deal with
+* Best practice: catch and release: `catch` the exception and rethrow it as a `RuntimeException`
+
+### Always Use `PreparedStatements`
+
+* In general, strings can contain anything including unsanitized SQL code
+* If you use `PreparedStatement`s then you are generally safe from that!
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+
+### Proper Logging
+
+* No one is sitting at your terminal watching for standard output error messages, ready to jump into action
+* NEVER ever use the standard output to log error messages, information, debug statements, etc. in a real system
+* Instead: use a proper logging system
+* Features:
+  * Supports multiple levels of logging: `DEBUG, INFO, WARN, ERROR`
+  * You can configure it to printout certain levels or above/below a certain level
+  * Supports file-based, email-based, database-based logging: it doesn't necessarily go to the standard output, but can be redirected to (say) log files
+
 
 ```text
 

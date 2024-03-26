@@ -514,6 +514,42 @@ select p.lastName as `Last Name` from Person p
 * Advanced solution: setting up a "data source"
 * Firewall everything BUT trusted servers (network admins)
 
+### Close Your Resources!
+
+* Failure to close resources: `ResultSet`s, `PreparedStatement`s and `Connection`s: you will eventually run out of connections
+* Make sure you do it in the proper order: generally in reverse order than what you opened them in
+* Don't close a resource until you are done using
+* It can be very difficult to track down which piece of code is not closing a resource!
+
+### Dealing with `SQLExceptions`
+
+* Unfortunately: JDBC is quite "mature" and so it uses old-school style *checked exceptions*: ones that you are forced to surround with a `try-catch` and deal with
+* Best practice: rethrow as a `RuntimeException`
+* Do NOT print anything!  Instead, use a proper logging system (To come)
+* CS1 topic: error handling; the two things you do NOT do:
+  * quit
+  * you don't print anything!
+
+### Always Use `PreparedStatements`
+
+* In general, strings can contain anything including SQL code!
+* If you do not use `PreparedStatements` then your queries may be unsanitary
+* Instead a prepared statement sanitizes statements from any *injection attack*
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+* Never use anything else!
+* Its just easier and simpler to always use `PreparedStatement`s
+
+### Proper Logging
+
+* No one is sitting at your terminal watching for standard output error messages, ready to jump into action
+* NEVER ever use the standard output to log error messages, information, debug statements, etc. in a real system
+* Instead: use a proper logging system
+* Features:
+  * Support multiple "levels" of logging: `DEBUG, INFO, WARN, ERROR`
+  * Supports event-based actions such as emailing an admin when an error occurs
+  * Supports multiple outputs: file-based outputs, database-based outputs
+  * Supports file management: daily rolling file, size-based rolling files, etc. 
+
 
 ```text
 
