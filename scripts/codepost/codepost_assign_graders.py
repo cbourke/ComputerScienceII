@@ -96,6 +96,13 @@ def pushAssignments(grading_assignment):
       print(f"Pushing files in {path}...")
       try:
         files = getFiles(path)
+        for (fullPath,name,ext),contents in files.items():
+            # text: 1 char = 1 byte
+            # base64: 1 char = .75 byte
+            if len(contents) > config.codepost_file_size_limit:
+                # replace contents with message
+                print(f"WARNING: file too large: {name}")
+                files[(fullPath,name,ext)] = "File Size Limit Exceeded"
       except:
         e = sys.exc_info()[0]
         print("Error: %s" % e )
