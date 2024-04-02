@@ -28,6 +28,28 @@ int arr[] = new int[10];
 
 ## Array-based lists
 
+* Design the *interface* first
+* Design the *tests* next
+* Implement the interface
+* Update design, tests, implementation as you go along
+
+## Secondary Functionality
+
+* Other methods/functionality might be useful:
+  * Bulk add/remove methods (removeAll, addAll)
+  * Append, insert, merge in
+  * Copy constructor that allows you to create a new deep copy of the list, etc.
+  * Compute a sublist: given start/end indices
+  * Add functionality to *shrink* the list if necessary
+
+# Linked Lists
+
+* No underlying array, instead elements are stored inside of individual "nodes"
+* Each node references its *element* and the *next* node
+* Each node is "chained" or "linked" together
+* Each basic operation involves *traversing* the list
+
+
 
 
 ```text

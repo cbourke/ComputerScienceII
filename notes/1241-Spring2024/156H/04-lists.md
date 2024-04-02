@@ -31,6 +31,22 @@ numbers.add(42);
 ## Array-based lists
 
 * Write our own version of an `ArrayList`: how?
+* Design the *interface* first
+* Design the *tests* next
+* Implement the interface
+* Update design, tests, implementation as you go along
+
+## Secondary Functionality
+
+* Other methods/functionality might be useful:
+  * Batch operations: `removeAll` or `addAll`
+  * Splice method: insert a sublist inside of the list
+  * Sublist: given a `startIndex`, `endIndex` return a new list of those subelements
+  * Copy constructor: create a new deep copy of the list
+  * Shrink the list if necessary
+  * Return the last index: `size-1`
+  * `getFirst()`, `getLast()`
+  * `list.sorted()` vs `sort(list)`
 
 ```text
 
