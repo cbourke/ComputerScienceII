@@ -20,8 +20,14 @@ junit_tests = {
     3: "unl.soc.BaseballTests unl.soc.DnaAnalysisTests",
     4: "unl.soc.AuthorTests unl.soc.BookTests",
     5: "com.cinco.payroll.PayrollTests",
-    6: "unl.soc.ModeDemoTests unl.soc.MomentUtilsTests unl.soc.CourseTests"
+    6: "unl.soc.ModeDemoTests unl.soc.MomentUtilsTests unl.soc.CourseTests",
     #TODO: rest of them
+    9: "unl.soc.albums.AlbumTests",
+    10: "unl.soc.albums.AlbumTests",
+    11: "unl.soc.trucks.TruckListTests",
+    13: "unl.soc.sorting.SortingTests",
+    14: "unl.soc.JsonValidatorTests unl.soc.PostfixEvaluatorTests",
+    15: "unl.soc.BinarySearchTreeTests unl.soc.HeapSortTests"
 }
 
 parser = argparse.ArgumentParser()
@@ -100,11 +106,12 @@ for nuid,p in students.items():
     os.chdir(base_path + lab_number + "/" + login)
     os.system("rm -rf "+staging_dir)
     os.mkdir(staging_dir)
-    #cp library
     os.system(f"cp ../../common/{test_wrapper_file} ./{staging_dir}")
     os.system(f"cp ../../common/{junit_jar} ./{staging_dir}")
-    os.system("cp -R ../common/* ./"+staging_dir)
-    os.system("cp *.java " + staging_dir)
+    #copy any course-level jars that may be needed
+    os.system(f"cp -R ../../common/lib ./{staging_dir}");
+    os.system(f"cp -R ../common/* ./{staging_dir}")
+    os.system(f"cp *.java ./{staging_dir}")
     os.chdir(staging_dir)
 
     jars = ":".join(glob.glob("./lib/*.jar"))
