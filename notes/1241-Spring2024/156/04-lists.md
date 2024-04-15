@@ -91,7 +91,7 @@ int arr[] = new int[10];
 * `List<>, ArrayList<>, LinkedList<>`
 * Stacks/Queues: `Deque` ("deck"): double-ended queue
   * You can push/pop from both ends of the deque
-  * It allows you to treat it like a stack AND a queue with one single data strcuture implementation!
+  * It allows you to treat it like a stack AND a queue with one single data structure implementation!
 * Other applications of a deque...
 
 ```text
