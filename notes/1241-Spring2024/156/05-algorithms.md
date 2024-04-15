@@ -115,6 +115,64 @@ $$t(n) = 0.00064101n^2 -0.11168n + 9.7822$$
 
 ## Asymptotics
 
+* Step 5: Provide an asymptotic characterization of the complexity function
+* Motivation: want to characterize an algorithm's performance/efficiency with respect to the input size $n$
+* We're interested in how the algorithm performs as the input size $n$ grows larger: $n \rightarrow \infty$
+* Everything performs well for "small" inputs
+* We want a tool that will allow us to focus on:
+  * The growth rate of the algorithm
+  * Ignore constants and lower order terms
+* Tool: Big-O analysis
+
+### Definition
+
+Definition: let $f(n)$ and $g(n)$ be two functions (for our purposes, they represent the complexity of two algorithms, $A, B$).  We say that $f(n)$ is Big-O of $g(n)$ if there is a positive constant $c$ and an integer $n_0$ such that
+  $$f(n) \leq c g(n)$$
+for all $n \geq n_0$
+
+* We write: $f(n) = O(g(n))$
+* Big-O characterizes the *relative rate of growth* of two functions as $n \rightarrow \infty$
+* $f(n)$ has a less than or equal to rate of growth as $g(n)$
+* $g(n)$'s growth rate is *at least* as big as that of $f(n)$
+* They could have the *same* rate of growth: it is only a relative measure
+* Examples:
+  * $3n + 3 = O(n)$ (tightest possible bound)
+  * $3n + 3 = O(n^2)$ (looser bounds)
+  * $3n + 3 = O(n^3)$
+  * $3n + 3 = O(2^n)$
+  * NOT true: $3n+3 = O(\log{n})$
+  * NOT true: $n^2 = O(n)$
+* Big-O analysis provides an *upper bound* on the rate of growth of a function
+* It is not necessarily a *tight bound* (it can be)
+
+### Proofs
+
+* Given two functions: $f(n)$ and $g(n)$ how do you prove that $f(n) = O(g(n))$
+* First step: write out your intuition
+* Two techniques:
+  * Approach A: find a "cross over point": the largest value of $n$ for which the two functions intersect (have the same value)
+  * You are fixing $c = 1$ (or something) and then finding the $n_0$: the largest/biggest point where the two functions intersect (find roots)
+  * Easy only if finding the roots is easy
+* Technique B:
+  * Simply setup an inequality and make your function bigger and bigger until it matches $g(n)$
+  * You are fixing an $n_0$ (and possibly changing it) and then finding a $c$
+  * You set up an inequality and simply make it bigger and bigger until it matches $cg(n)$
+  * This is the *much* easier technique: all you have to do is make it bigger
+* Technique C: you set up a limit
+  * Requires some calculus
+  * Some limits are obvious: if numerator/denominator are growing but the other is not, then it is obvious
+  * You may require some other techniques: l'Hopital's Rule, etc.
+
+* Categories of functions:
+  * Constant: $O(1)$ (formula computation)
+  * Logarithmic: $O(\log{(n)})$ (binary search)
+  * Linear: $O(n)$ (linear search)
+  * Quasilinear: $O(n\log{(n)})$ (efficient sorting algos)
+  * Quadratic: $O(n^2)$ (selection sort, insertion sort)
+  * Cubic: $O(n^3)$
+  * Polynomial: $O(n^k)$
+  * Exponential $O(2^n)$
+  * Superexponential: $O(n!)$
 
 
 

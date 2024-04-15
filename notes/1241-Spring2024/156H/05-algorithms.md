@@ -117,7 +117,65 @@
 * Selection Sort
 * Insertion Sort
 
+## Asymptotics
+
+* Step 5: Provide an asymptotic characterization of the complexity function
+* Motivation: want to characterize an algorithm's performance/efficiency with respect to the input size $n$
+* Want to ignore lower order terms and any constants
+* Want to focus on the order of growth/rate of growth
+* We're interested in how the algorithm performs as the input size $n$ grows larger: $n \rightarrow \infty$
+* Everything performs well for "small" inputs
+* Tool: Big-O Analysis
+
+### Definition
+
+Definition: let $f(n)$ and $g(n)$ be two functions (for our purposes, they represent the complexity of two algorithms, $A, B$).  We say that $f(n)$ is Big-O of $g(n)$ if there is a positive constant $c$ and an integer $n_0$ such that
+  $$f(n) \leq c g(n)$$
+for all $n \geq n_0$
+
+* Big-O characterizes the relative growth rate of two functions as $n \rightarrow \infty$
+* We often write $f(n) = O(g(n))$
+* $f(n)$'s growth rate is *bounded above* by $g(n)$'s growth rate
+* $g(n)$'s rate of growth is *at least as big* as $f(n)$
+* This is not necessarily a *tight* characterization
+* Example:
+  * $3n+3 = O(n)$ (tight)
+  * More true: $3n+3 = \Theta(n)$ (TIGHT characterization)
+  * $3n+3 = O(n^2)$ (true, but not tight)
+  * $3n + 3 = O(n^3)$
+  * $3n + 3 = O(2^n)$
+  * BUT: $n^2 = O(n)$ (NOT true)
+  * It is true that $n^2 = \Omega(n)$ (lower bound)
+
+### Proofs
+
+* Given two functions: $f(n), g(n)$ how do you prove that $f(n) = O(g(n))$
+  * First step: express your intuition
+* Two (algebraic) techniques:
+  * Approach A: find the "cross over point": the largest value of $n$ for which the two functions intersect (they have the same value)
+  * A works really well for simple polynomials, not so much for higher order polynomials or logarithms, or exponentials, etc.
+  * Approach B: fix $n_0 = 0$ (or something small) and find a constant $c$ such that the inequality holds
+  * Easiest technique: setup an inequality and make the right hand side bigger and bigger until it equals $g(n)$
+  * Technique C: setup a limit of the two functions
+$$\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)}$$  
+  * If the limit converges to zero, then $f(n) = O(g(n))$
+  * If the limit diverges to $\infty$ then $g(n) = O(f(n))$
+  * If the limit converges to $c > 0$ then they have the same rate of growth, $f(n) = \Theta(g(n))$ (BOTH $f(n) = O(g(n))$ AND $g(n) = O(f(n))$
+
+* Categories of functions:
+  * Constant: $O(1)$ (formula computation)
+  * Logarithmic: $O(\log{(n)})$ (binary search)
+  * Linear: $O(n)$ (linear search)
+  * Quasilinear: $O(n\log{(n)})$ (efficient sorting algos)
+  * Quadratic: $O(n^2)$ (selection sort, insertion sort)
+  * Cubic: $O(n^3)$
+  * Polynomial: $O(n^k)$
+  * Exponential $O(2^n)$
+  * Superexponential: $O(n!)$
+
+
 ```text
+
 
 
 
