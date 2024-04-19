@@ -32,7 +32,7 @@
   * A tree has no cycles
   * A disconnected tree is called a "forest"
 
-* OBservations
+* Observations
   * For a connected tree with $n$ vertices, there are $m = n-1$ edges
   * Between any two nodes there is *exactly* one path
 

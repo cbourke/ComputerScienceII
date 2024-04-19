@@ -139,7 +139,7 @@ for all $n \geq n_0$
 ### Proofs
 
 * Given two functions: $f(n)$ and $g(n)$ how do you prove that $f(n) = O(g(n))$
-* Two techniques:
+* Two (algebraic) techniques:
   * Approach A: find a "cross over point": the largest value of $n$ for which the two functions intersect (have the same value)
 * Technique B:
   * Simply setup an inequality and make your function bigger and bigger until it matches $g(n)$

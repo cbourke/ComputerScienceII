@@ -173,6 +173,30 @@ $$\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)}$$
   * Exponential $O(2^n)$
   * Superexponential: $O(n!)$
 
+## Analyzing Recursive Algorithms
+
+### Quick Sort
+
+* Basic Idea:
+  * You choose a *pivot* element $p$
+  * Partition around this element: $<p$: to the left, $>p$: to the right, place $p$ in the middle
+  * You then recurse on each partition: left and right...
+  * Until... the size of the sub array/collection is less than or equal to 1
+
+### Analysis
+
+1. You define a *recursive* function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of "recursive" work: how many calls to the function do you make and how big is the input size for each call?  And (if applicable): the amount of non-recursive work done
+3. You "solve" the recursion
+
+### Merge Sort
+
+* Still divide and conquer
+* Divides the input *FIRST*: into two roughly equal parts: $n/2$
+* ...Until you have a sub collection/array of size $\leq 1$
+* Given two sorted sub arrays: you merge them together
+
+### Binary Search
 
 ```text
 

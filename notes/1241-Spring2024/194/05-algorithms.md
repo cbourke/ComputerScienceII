@@ -100,10 +100,115 @@
 * It may require some art, some summations or other calculations, finding closed forms solutions or even super advanced math
 * In general, you want to assume the *worst case* scenario: you want to provide an *upperbound* on the worst running time or other resource that the algorithm could cost you.
 
-## Examples
+### Examples
 
-* Selection Sort: 
+* Selection Sort
+* Insertion Sort
+
+## Asymptotics
+
+* Step 5: Provide an asymptotic characterization of the complexity function
+* Motivation: want to characterize an algorithms' performance/efficiency with respect to the input size $n$
+* We want to:
+  * ignore lower order terms
+  * ignore constants
+* We're interested in how the algorithm performs as the input size $n$ grows larger: $n \rightarrow \infty$
+* We don't care about "small" inputs
+* Tool: Big-O analysis
+
+### Definition
+
+Definition: let $f(n)$ and $g(n)$ be two functions (for our purposes, they represent the complexity of two algorithms, $A, B$).  We say that $f(n)$ is Big-O of $g(n)$ if there is a positive constant $c$ and an integer $n_0$ such that
+  $$f(n) \leq c g(n)$$
+for all $n \geq n_0$
+
+* Big-O characterizes the relative growth rate of two functions as $n \rightarrow \infty$
+* We write that $f(n) = O(g(n))$ "f of n is Big-O of g of n" (Big-O: omicron)
+* $f(n)$'s growth rate is *bounded above* by $g(n)$'s growth rate
+* $g(n)$ is an UPPER BOUND on $f(n)$
+* Ultimately: this allows us to ignore lower order terms and constants!  
+  * We do not generally write $f(n) = O(3n^2 + n + 2)$
+  * Instead we would write $f(n) = O(n^2)$
+* This is not a "tight" characterization
+  * $3n+3 = O(n)$ (tight)
+  * $3n+3 = O(n^2)$ (loose)
+  * $3n + 3 = O(n^3)$
+  * $3n + 3 = O(2^n)$
+  * NOT TRUE: $n^2 = O(n)$
+
+### Proofs
+
+* Given two functions: $f(n)$ and $g(n)$ how do you prove that $f(n) = O(g(n))$
+* First step: declare your intuition
+* Two (algebraic) techniques:
+  * Approach A: you find the "last" "crossover point": you find the largest value such that the two functions are equal
+  * Approach A is essentially fixing $c = 1$ and finding $n_0$ and demonstrating that hte inequality holds
+  * Approach B: Fixing $n_0 = 0$ (or something small) and finding a $c$ that works (demonstrates the inequality)
+  * Setup the inequality and make $f(n)$ bigger and bigger until it looks like $g(n)$
+* Calc technique:
+$$\lim_{n\rightarrow\infty} \frac{f(n)}{g(n)}$$  
+  * If the limit converges to zero, then $f(n) = O(g(n))$
+  * If the limit diverges to $\infty$ then $g(n) = O(f(n))$
+  * If the limit converges to $c > 0$ then they have the same rate of growth, $f(n) = \Theta(g(n))$: it means that both $f(n) = O(g(n))$ *and* $g(n) = O(f(n))$
+
+* Categories of functions:
+  * Constant: $O(1)$ (formula computation)
+  * Logarithmic: $O(\log{(n)})$ (binary search)
+  * Linear: $O(n)$ (linear search)
+  * Quasilinear: $O(n\log{(n)})$ (efficient sorting algos)
+  * Quadratic: $O(n^2)$ (selection sort, insertion sort)
+  * Cubic: $O(n^3)$
+  * Polynomial: $O(n^k)$
+  * Exponential $O(2^n)$
+  * Superexponential: $O(n!)$
+
+### Analysis of Recursive Algorithms
+
+1. You define a *recursive* function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of "recursive" work: how many calls to the function do you make and how big is the input size for each call?
+3. You "solve" the recursion: Use the Master Theorem to provide an asymptotic analysis (if applicable)
+
+#### Quick Sort
+
+* Basic Idea: you choose a pivot element $p$, and partition around it
+* Everything in the left partition is less than $p$, everything in the right is greater than $p$
+* Recursively quick sort the left and the right (2 recursive calls), until your sub array/collection is one or fewer elements
+* Assuming an even split: you make 2 recursive calls on inputs half as large
+  $$C(n) = 2C(n/2) + (n -1)$$
+* We then used the Master Theorem to determine that QS (best/average case) is
+  $$O(n\log{(n)})$$
+* However, in the worst case, the split may be uneven: $C(0)$, $C(n-1)$:
+  $$C(n) = C(0) + C(n-1) + (n-1)$$
+* Wost case ends up being
+  $$O(n^2)$$
+
+#### Merge Sort
+
+* Guarantees the best case running time: it splits the input in half *first* guaranteeing an even split
+* Splits the input up into 2 equal halves until you get down to 1 or 0 elements
+* By definition these will be sorted sub arrays/collections
+* On the way back up from the recursion, you *merge* two sorted arrays together
+
+#### Misc
+
+* For 20 years the default sorting algorithm in Java: hybrid merge sort
+  * It uses merge sort to do the recursion BUT it doens't use $n = 1$ as a base case
+  * It instead uses a threshold: $n=7$; at which point it no longer recurses
+  * It then uses insertion sort (the best "in practice" slow algorithm) to sort the 7 elements
+* More recent versions use a variation of Tim Sort: $O(n\log{n})$ but even better in practice than other "fast" sorting algorithms
+
+### Binary Search
+
+* If an array is sorted, you can use binary search to do FAST searching of elements
+* Idea: compare the key to the middle element
+  * If equal: stop, found the element
+  * If $k < m$: recurse to the left
+  * If $k > m$: recurse to the right
+
 ```text
+
+
+
 
 
 

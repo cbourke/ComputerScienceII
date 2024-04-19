@@ -174,10 +174,37 @@ for all $n \geq n_0$
   * Exponential $O(2^n)$
   * Superexponential: $O(n!)$
 
+## Analysis of Recursive Algorithms
 
+### Quick Sort
 
+* Idea: you choose a pivot element and *partition* around that element
+* All elements less than $p$ are to the left, all elements greater are to the right
+* Recurse until you have an array of size $\leq 1$
+
+### Analysis
+
+1. You define a *recursive* function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of "recursive" work: how many calls to the function do you make and how big is the input size for each call?
+3. You "solve" the recursion
+   * OR: you can use the master theorem if the recurrence is of the proper form
+
+### Merge Sort
+
+* Basic Idea:
+  * Ensure a good/equal split in the collection by breaking it into 2 parts FIRST
+  * Until you have a sub collection/array of size $\leq 1$
+  * As you return from the recursion, you merge the two sorted arrays together
+* Using the MT, we know that Merge Sort has a guaranteed complexity of $O(n\log{n})$
+* For 20 years Java used a *hybrid* mergesort
+  * They used mergesort until it got to small $n= 7$, then they switched over to insertion sort
+  * Now Tim Sort is used
+
+### Binary Search
 
 ```text
+
+
 
 
 
