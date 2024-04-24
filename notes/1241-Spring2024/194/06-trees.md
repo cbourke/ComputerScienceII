@@ -43,7 +43,46 @@
   * Observation: between any two nodes there is exactly ONE and ONLY one path
 
 
+### Orientation
+
+* Trees can be oriented: top to bottom, left to right
+* The top is the *root* of the tree
+* Nodes may have parents/children (siblings, ancestors/descendants)
+* A node with NO children is a *leaf*
+* All other nodes are *internal nodes*
+* More structure: we will limit the number of children to at most 2
+  * Neither (leaf)
+  * Left Child
+  * Right Child
+  * Both
+* This is called a *binary tree*
+* The *depth* of a node $u$ is the length of the *unique* path from the root to the node $u$
+* The depth of the root node is 0
+* The depth of the tree itself is the maximal depth of any node
+
+### How can we exploit this structure?
+
+* Suppose you had a *full* binary tree: every node was present at every level/depth up until the maximal depth of the tree.
+* If we can develop a way to insert/retrieve/delete elements from a binary tree such that
+  * All operations are proportional to the depth AND
+  * The depth is "small"
+* A "full" or nearly full binary tree has a guarantee on its depth: $d = O(\log{n})$ where $n$ is the number of nodes
+  * if you can perform operations proportional to the depth...
+  * operations will be efficient: $O(\log{n})$
+
+
+
+
+
+
+
+
+
 ```text
+
+
+
+
 
 
 
