@@ -70,7 +70,28 @@
   * if you can perform operations proportional to the depth...
   * operations will be efficient: $O(\log{n})$
 
+## Traversals
 
+* Preorder: root-left-right
+  * Solution: using a stack
+  * Solution: using recursion
+* Inorder: left-root-right
+* post-order: left-right-root
+* All of them have stack-based and recursive solutions
+* BFS = Breadth First Search, same as preorder but we use a queue!
+* Efficiency:
+  * Elementary operation: node traversal
+  * Elementary operation: processing the data in the node
+  * You only process a node exactly once, $O(n)$
+  * If you use traversal: you visit each node at most 3 times, $3n = O(n)$
+* We need more structure
+
+## Binary Search Trees
+
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* For our purposes: consider integers (ascending)
+* Binary search trees contain data and a *key* (WLOG: assume keys are integers)
+* For every node $u$ with key value $k$, every node in its left sub-tree has a key value *less* than $k$; every node in its right sub-tree has a key value *greater* than $k$
 
 
 

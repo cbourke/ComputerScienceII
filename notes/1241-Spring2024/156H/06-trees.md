@@ -72,6 +72,28 @@
 
 * Demonstration
 
+### Traversal Strategies
+
+* Preorder: root-left-right
+* Inorder: left-root-right
+* Preorder: left-right-root
+* BFS = Breadth First Search
+* Efficiency:
+  * Elementary Operation: processing a node: $O(n)$: every node is processed exactly once
+  * Elementary Operation: node traversal: at most $3n = O(n)$ node/edge traversals!
+  * Catch: these are designed to traverse the *ENTIRE* tree
+
+## Binary Search Trees
+
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* In a binary search tree: you store both data and a *key* element
+* BST Property: for a node with key $k$, EVERY node in its left subtree has a key value LESS than $k$, EVERY node in its right subtree has a key value GREATER than $k$
+* Practical issues:
+  * For our purposes, we'll key the data and key the same (You can always keep track of 2 things)
+  * They will be integers (every object can be given an integer representation; in Java you use the `.hashCode()`)
+  * They will be distinct (YOu can always break ties somehow)
+* To search requires at most $d + 1$ comparisons, $O(d)$
+* However, the depth is not guaranteed to be $O(\log{n})$, it can be $d = O(n)$ in the worst/degenerate case
 
 ```text
 

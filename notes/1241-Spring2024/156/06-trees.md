@@ -77,9 +77,23 @@
 * Preorder traversal: root-left-right
 * Inorder traversal: left-root-right
 * Postorder traversal: left-root-right
+* BFS: breadth first search
+* Each one has a stack/queue-based solution (ideal)
+* Each one (except BFS) has a recursive version
+* Each one has their own applications
+* Efficiency: each one is designed/intended to process *every* node
+  * $O(n)$: it processes each node exactly once, there are $n$ nodes and so it ends up being $O(n)$
+  * IF you consider a node *traversal* your elementary operation: it is still $O(n)$
+* Original goal: to have efficent operations for search/retrieve and insert/delete
 
+## Binary Search Trees
 
-
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* Binary Search Tree: all nodes have a *key* element, $k$
+  * For our purposes: the data and the key will be the same
+  * AND key values will be simple integers (There is always a way to treat data as an integer)
+  * AND we will not allow duplicates (There is always a way to break ties)
+* For every node with key value $k$: ALL nodes in its left subtree have key values LESS than $k$.  ALL nodes in its right subtree have key values GREATER than $k$
 
 ```text
 
