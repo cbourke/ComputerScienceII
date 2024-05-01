@@ -84,7 +84,7 @@
 * Efficiency: each one is designed/intended to process *every* node
   * $O(n)$: it processes each node exactly once, there are $n$ nodes and so it ends up being $O(n)$
   * IF you consider a node *traversal* your elementary operation: it is still $O(n)$
-* Original goal: to have efficent operations for search/retrieve and insert/delete
+* Original goal: to have efficient operations for search/retrieve and insert/delete
 
 ## Binary Search Trees
 
@@ -94,6 +94,36 @@
   * AND key values will be simple integers (There is always a way to treat data as an integer)
   * AND we will not allow duplicates (There is always a way to break ties)
 * For every node with key value $k$: ALL nodes in its left subtree have key values LESS than $k$.  ALL nodes in its right subtree have key values GREATER than $k$
+
+### Operations
+
+* Search:
+  * start at the root
+  * traverse left/right until found or go past a leaf
+  * Complexity: $O(d)$
+  * However, there is no guarantee that $d = O(\log{n})$, it could be "degenerate" (a linked list) and $d = O(n)$
+
+* Insert:
+  * You start the root
+  * You do a basic search: if the element exists, do ____ (we do not allow duplicates)
+    * Option A: throw a fit (exception)
+    * Option B: noop = no operation
+    * Option C: noop, but also inform the calling function
+  * If no such element is found, then you end up at a leaf node: you end up where the element *should have been* if it existed
+  * Insert as a new leaf node; taking care of the left/right child of the parent and the parent reference
+
+* Delete
+  * Step 1: Find the element (if no such element: noop or exception, etc.)
+  * If it is a leaf: simply delete it (careful for edge cases: deleting the root with no children)
+  * If it has only ONE child: promote the single child up to be the new child of the node's parent (careful: left/right with respect to the parent and left/right with respect to the promoted child)
+  * If it has both children: go either
+    * left tree and find the max value
+    * right tree and find the min value
+    * promote one or the other to the deleted node
+    * delete the promoted node (it is guaranteed to have at most one child!)
+  * Just be careful with corner cases
+  * Finding it: $O(d)$ (no guarantee on the depth)
+  * What about finding the max value? Just traverse right until you can go no further; $O(d)$
 
 ```text
 

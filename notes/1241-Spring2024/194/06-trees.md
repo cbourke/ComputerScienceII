@@ -91,7 +91,16 @@
 * Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
 * For our purposes: consider integers (ascending)
 * Binary search trees contain data and a *key* (WLOG: assume keys are integers)
+* To simplify: we will not allow duplicates
 * For every node $u$ with key value $k$, every node in its left sub-tree has a key value *less* than $k$; every node in its right sub-tree has a key value *greater* than $k$
+
+### Implementation & Operations
+
+* Demonstration
+* Search
+* Insertion
+* Deletion
+
 
 
 

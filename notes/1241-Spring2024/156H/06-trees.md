@@ -95,6 +95,57 @@
 * To search requires at most $d + 1$ comparisons, $O(d)$
 * However, the depth is not guaranteed to be $O(\log{n})$, it can be $d = O(n)$ in the worst/degenerate case
 
+### Operations
+
+* Search:
+  * start at the root
+  * traverse left/right until found or go past a leaf
+  * Complexity: $O(d)$
+  * However, there is no guarantee that $d = O(\log{n})$, it could be "degenerate" (a linked list) and $d = O(n)$
+
+* Insert:
+  * Always insert as a leaf
+  * If its duplicate: reject it somehow
+
+  * Delete
+    * Step 1: Find the element (if no such element: noop or exception, etc.)
+    * If it is a leaf: simply delete it (careful for edge cases: deleting the root with no children)
+    * If it has only ONE child: promote the single child up to be the new child of the node's parent (careful: left/right with respect to the parent and left/right with respect to the promoted child)
+    * If it has both children: go either
+      * left tree and find the max value
+      * right tree and find the min value
+      * promote one or the other to the deleted node
+      * delete the promoted node (it is guaranteed to have at most one child!)
+    * Just be careful with corner cases
+    * Finding it: $O(d)$ (no guarantee on the depth)
+    * What about finding the max value? Just traverse right until you can go no further; $O(d)$
+
+## Heaps
+
+* Heaps are not binary search trees, but they are *balanced binary trees*
+  * Guarantee that their depth is $O(\log{n})$
+  * There is not a BST property, there is a HEAP property
+* Fullness property: every child is present at every level except for possibly the last (deepest) level but at that level, all nodes are "full to the left"
+* Heap property: the key of every node is less than *both* its children (min heap)
+* OBservations:
+  * The fullness property guarantees that the depth of a heap is logarithmic: $O(\log{(n)})$
+  * The minimum element is always at the root
+  * if the operations can be made $O(d)$ then they are efficient
+  * NOT a general purpose data structure
+* Restricted Access Data Structure
+  * get-and-remove-min: $O(d) = O(\log{n})$
+  * add-element: $O(d) = O(\log{n})$
+* Add Element
+  * Insert the new node as the "last" element
+  * Heapify: compare it with its parent and swap if out of order until either a) the heap property is satisfied or b) it becomes the new root
+  * $O(d)$ comparisons (assuming that we can "jump" to the last element)
+* Remove (and return) the min element:
+  * Save the root off into a temp. variable
+  * Replace the root with the "last" element
+  * Heapify downward: swap this element with the min child until the heap property is satisfied or you reach the bottom of the tree
+  * $O(d)$
+
+
 ```text
 
 
