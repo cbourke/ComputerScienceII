@@ -105,7 +105,7 @@ def pushAssignments(grading_assignment):
                 files[(fullPath,name,ext)] = "File Size Limit Exceeded"
       except:
         e = sys.exc_info()[0]
-        print("Error: %s" % e )
+        print("Error getting files: %s" % e )
         files = {}
       if files:
         if commit:
