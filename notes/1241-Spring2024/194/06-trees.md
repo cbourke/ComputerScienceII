@@ -101,9 +101,35 @@
 * Insertion
 * Deletion
 
+## Heaps
 
-
-
+* Heaps are not binary search trees, but they are *balanced binary trees*
+  * Guarantee that their depth is $O(\log{n})$
+  * There is not a BST property, there is a HEAP property
+* Fullness property: every child is present at every level except for possibly the last (deepest) level but at that level, all nodes are "full to the left"
+* Heap property: the key of every node is less than *both* its children (min heap)
+* OBservations:
+  * The fullness property guarantees that the depth of a heap is logarithmic: $O(\log{(n)})$
+  * The minimum element is always at the root
+  * NOT a general purpose data structure
+* Restricted Access Data Structure
+  * get-and-remove-min: $O(d) = O(\log{n})$
+  * add-element: $O(d) = O(\log{n})$
+* Add Element
+  * Insert the new node as the "last" element
+  * Heapify: compare it with its parent and swap if out of order until either a) the heap property is satisfied or b) it becomes the new root
+  * $O(d)$ comparisons (assuming that we can "jump" to the last element)
+* Remove (and return) the min element:
+  * Save the root off into a temp. variable
+  * Replace the root with the "last" element
+  * Heapify downward: swap this element with the min child until the heap property is satisfied or you reach the bottom of the tree
+  * $O(d)$
+* Implementation:
+  * A tree representation is possible, but finding the "last" element or the "next" available slot is $O(d)$
+  * Instead: consider...
+* Application: a priority queue
+  * Allows $O(\log{n})$ operations
+* Application: 
 
 
 

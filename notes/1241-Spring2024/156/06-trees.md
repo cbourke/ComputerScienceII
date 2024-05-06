@@ -125,6 +125,32 @@
   * Finding it: $O(d)$ (no guarantee on the depth)
   * What about finding the max value? Just traverse right until you can go no further; $O(d)$
 
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* BSTs in general may have $d = O(n)$ which kills efficiency on all of the operations
+* Solution: "balanced" BSTs, AVL, 2-3/B-trees, Red-Black trees; each guaranteeing that $d = O(\log(n))$
+* Our solution: a *Heap* data structure: it is a binary tree that has the following properties:
+  * It is *full*: every child is present at every level except for possibly the last (deepest) level but at that level, all nodes are "full to the left"
+  * It satisfies the *heap property*: the key of every node is less than *both* its children (min heap)
+* Observations:
+  * The minimum element is always at the root
+  * The fullness property guarantees that the depth of a heap is logarithmic: $O(\log{(n)})$
+  * NOT a general purpose data structure
+* Two basic operations:
+  * Get and remove the minimum element
+    * Save off the root and "remove" it
+    * Replace the root with the "last" element
+    * HEapfiy/fix the heap: swap the element with the minimum of is left/right child until a) the heap property is satisified or b) you reach a leaf node
+    * $O(d) = O(\log{n})$ (this assumes that you have free or efficient access to the "last" node)
+  * Add an element
+    * You insert it as the "last" element (to preserve the fullness property)
+    * Swap with a parent all the way up the tree until a) the heap property is satisfied or b) you reach the root
+    * $O(d)$ comparisons are made; this is $O(\log{n})$ because of the fullness property!
+    * But: this assumes you have "free" access to the "next" available slot
+* Application: a priority queue
+* Application: sorting
+
 ```text
 
 
