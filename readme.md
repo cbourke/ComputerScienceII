@@ -39,6 +39,10 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ## Course Offerings
 
+<details>
+
+<summary>Archived Offerings</summary>
+
 ### Spring 2024
 
 - Course Link: https://canvas.unl.edu/courses/167152
@@ -50,10 +54,6 @@ This course is offered at UNO as ECEN 194:
 
 - Course Link: https://canvas.unl.edu/courses/172648
 - Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZVbJUDDw8JAtYHR-0cKLmLA
-
-<details>
-
-<summary>Archived Offerings</summary>
 
 ### Spring 2023
 
