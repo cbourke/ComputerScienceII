@@ -35,7 +35,7 @@ your code, artifacts, and submissions still work as expected.
 
 # Linux Server
 
-You have access to a (SUSE) linux server hosted at `cse-linux-01.unl.edu`.  You
+You have access to a (SUSE) linux server hosted at `nuros.unl.edu`.  You
 can login to this server using SSH (Secure Shell) using your Canvas login and
 password.  Your Canvas login will look something like `cbourke3`; it is *not*
 your NUID.
@@ -63,11 +63,11 @@ For windows users, you may have better luck with the following installation:
 
 ## Connecting to the MySQL Server
 
-You have access to a MySQL server hosted on `cse-linux-01.unl.edu` using your
+You have access to a MySQL server hosted on `nuros.unl.edu` using your
 Canvas login ID and a *separate, different* password that should have been
 sent to you via your school email.  Using MySQL Workbench, connect to this
 server with:
-  * Host: `cse-linux-01.unl.edu`
+  * Host: `nuros.unl.edu`
   * Port: `3306`
   * Username: your Canvas login ID (ex: `cbourke3`)
   * Ignore any warnings about an incompatible server
