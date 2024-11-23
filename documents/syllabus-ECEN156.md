@@ -1,6 +1,6 @@
 # Computer Science II
 
-### ECEN 194 - Syllabus - Spring 2024
+### ECEN 194 - Syllabus - Spring 2025
  [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska-Lincoln](https://unl.edu/)  
@@ -101,19 +101,15 @@ day, lecture will still be livestreamed.
 
 ## Assessment
 
-Assessment (grading) will be based on labs and assignments.  There are 14 labs,
-20 points each.  They are graded based on completion.  Credit is only awarded
-if 100% of all unit tests pass.  Your lowest lab grade will be dropped.  The
-vast majority of your assessment will be based
-on assignments whose point values vary.  To start you out on the right foot,
-you have been awarded 15 free starter points.  You are currently earning an
-A in this course; keep it up!
+Assessment (grading) will be based on labs and assignments.  To start you
+out on the right foot, you have been awarded XX free starter points.  You
+are currently earning an A in this course; keep it up!
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Starter Pts |        |   15   |
-| Labs        | 13     |  260   |
-| Assignments | 9      |  975   |
+| Starter Pts |        |   XX   |
+| Labs        | 14     |  350   |
+| Assignments | 8      |  XXX   |
 | Total       |        | 1250   |
 
 ### Scale
@@ -139,9 +135,16 @@ individual assignments.
 | D-           | >= 60%  |
 | F            | < 60%   |
 
-### Labs
+### Labs & Attendance
 
-There are weekly labs that give you hands-on exercises for topics
+There are 14 labs.  They are graded based on completion which means *all*
+of the test cases must compile, run, **and pass**.  If any test(s) fail
+no points will be awarded.  Each lab is worth 25 points: 20 for the actual
+lab and 5 points for attendance at lab.  However, if you cannot attend or
+choose not to attend you can still earn the 5 points back by earning full
+credit on the lab itself.  
+
+Labs give you hands-on exercises for topics
 recently covered in lecture. The purpose of lab is not only to give you
 further working experience with lecture topics, but also to provide you
 with additional information and details not necessarily covered in
@@ -164,20 +167,19 @@ or you may complete the lab on your own.
 
 ### Assignments
 
-There are 8 assignments as well as a design document. Assignments will
-be due 1 second before midnight Friday evening the week that they are due.
-Code and other relevant *artifacts* must be submitted using handin
-unless otherwise stated. If there
-are written portions of the homework, they should be typed. You should
-typeset code snippets using a monotype font (courier for example) for
-readability. Figures may be hand drawn, but you are encouraged to use
-some sort of software to render them.
+The majority of your assessment will be based on assignments whose point
+values may vary.  There are 8 assignments as well as a design document.
+Assignments will be due 1 second before midnight Friday evening the week that
+they are due. Code and other relevant *artifacts* must be submitted using
+handin unless otherwise stated.
 
 In this course, most of the assignments build on prior assignments.
 Therefore, it is **extremely important** for you to stay on task and not
 fall behind with assignments. You should start on assignments early and
 resolve any and all issues (bugs, design flaws) as soon as possible so
-they do not carry over to the next assignment.
+they do not carry over to the next assignment.  To facilitate good
+time management, we have provided a **Gantt Chart** with a recommended
+schedule of work.
 
 ### Grading Policy
 

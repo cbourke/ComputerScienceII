@@ -1,6 +1,6 @@
 # Computer Science II
 
-### CSCE 156 - Syllabus - Spring 2024
+### CSCE 156 - Syllabus - Spring 2025
  [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska-Lincoln](https://unl.edu/)  
@@ -96,19 +96,17 @@ day, lecture may still be livestreamed.
 
 ## Assessment
 
-Assessment (grading) will be based on labs and assignments.  There are 14 labs,
-20 points each.  They are graded based on completion and your lowest lab
-grade will be dropped.  The vast majority of your assessment will be based
-on assignments whose point values vary.  To start you out on the right foot,
-you have been awarded 15 free starter points.  You are currently earning an
-A in this course; keep it up!
+Assessment (grading) will be based on labs and assignments.  To start you
+out on the right foot, you have been awarded 20 free starter points.  You
+are currently earning an A in this course; keep it up!
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Starter Pts |        |   15   |
-| Labs        | 13     |  260   |
-| Assignments | 9      |  975   |
-| Total       |        | 1250   |
+| Starter Pts |        |   20   |
+| Surveys     |        |   30   |
+| Labs        | 14     |  350   |
+| Assignments | 8      |  950   |
+| Total       |        | 1350   |
 
 The honor section point distribution is similar but there are more total points
 due to additional required points on the assignments.
@@ -136,9 +134,16 @@ individual assignments.
 | D-           | >= 60%  |
 | F            | < 60%   |
 
-### Labs
+### Labs & Attendance
 
-There are weekly labs that give you hands-on exercises for topics
+There are 14 labs.  They are graded based on completion which means *all*
+of the test cases must compile, run, **and pass**.  If any test(s) fail
+no points will be awarded.  Each lab is worth 25 points: 20 for the actual
+lab and 5 points for attendance at lab.  However, if you cannot attend or
+choose not to attend you can still earn the 5 points back by earning full
+credit on the lab itself.  
+
+Labs give you hands-on exercises for topics
 recently covered in lecture. The purpose of lab is not only to give you
 further working experience with lecture topics, but also to provide you
 with additional information and details not necessarily covered in
@@ -161,9 +166,10 @@ or you may complete the lab on your own.
 
 ### Assignments
 
-There are 8 assignments as well as a design document. Assignments will
-be due 1 second before midnight Friday evening the week that they are
-due. Code and other relevant *artifacts* must be submitted using
+The majority of your assessment will be based on assignments whose point
+values may vary.  There are 8 assignments as well as a design document.
+Assignments will be due 1 second before midnight Friday evening the week that
+they are due. Code and other relevant *artifacts* must be submitted using
 handin unless otherwise stated.
 
 In this course, most of the assignments build on prior assignments.
