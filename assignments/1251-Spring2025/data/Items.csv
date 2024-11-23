@@ -1,0 +1,16 @@
+uuid,type,name,field(s)
+2dd5220e-6779-4fe7-81d2-b79dcbff3415,E,Dragline,DX200b,347125
+4c0c851d-0466-42c8-8631-0b414db5be98,E,Bulldozer,XPXY4,125500
+984bac8d-96f7-4d6b-9948-1cabae15ba51,E,Compactor,FLT100,4500
+50e6f93f-3792-459f-b1c6-b512b994ff2b,E,Dump Truck,DUMPRX5000,90450
+e9afb98d-ac99-4974-a274-2dca5c1238f5,E,Skid-Steer,S4325,8500
+ac47e0f6-5d5b-49fe-af54-a6625a6374a8,M,concrete,bag,40
+72e157ac-5b46-4b3b-b86b-599a89be7289,M,sand,ton,1500
+97dc9f91-c009-4e8d-b08c-3d4d0ded0bad,M,nails,box,15
+30bebf58-ba44-4bef-885f-8fccb7db9544,M,lumber,lft,8
+8c8bbffa-a939-44f4-98b7-66837e7d16e9,M,drywall,sheet,35
+38bebacb-a3ca-459e-a71f-8e5826a2f7fa,C,foundation pour,0673a09a-5cc1-4269-88f2-e665c2f3f33c
+699607c3-d9db-4aef-a8ab-b3a6cab21e12,C,footing pour,0673a09a-5cc1-4269-88f2-e665c2f3f33c
+ce9fc7f6-8be8-48cb-9236-7873dbf9b2b7,C,concrete pad pour,0673a09a-5cc1-4269-88f2-e665c2f3f33c
+97ee84b8-dc93-4db2-84bd-48e72a7f3131,C,electric install,a8bae950-96ac-43a9-9a29-729db552e981
+b118fa82-14cf-46f4-8574-41e583badc27,C,generator install,a8bae950-96ac-43a9-9a29-729db552e981

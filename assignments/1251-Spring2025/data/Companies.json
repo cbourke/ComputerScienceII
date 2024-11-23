@@ -1,0 +1,102 @@
+{
+"companies": [
+  {
+    "uuid": "d631d183-5276-49cd-8136-ba130df24826",
+    "name": "Jacobi and White",
+    "contact": {
+      "personUuid": "cc88a3dc-64d6-4070-b9b0-b2ae9ace0061",
+      "lastName": "Tombs",
+      "firstName": "Gottfried",
+      "phone": "506-723-1101",
+      "emails": [
+        "gtombs2@youtube.com",
+        "gtombs2@tamu.edu",
+        "gtombs2@mashable.com"
+      ]
+    },
+    "address": {
+      "street": "46 Ruskin Lane",
+      "city": "Amarillo",
+      "state": "TX",
+      "zipCode": "79176"
+    }
+  },
+  {
+    "uuid": "a8bae950-96ac-43a9-9a29-729db552e981",
+    "name": "Klocko Inc",
+    "contact": {
+      "personUuid": "ddd24cee-31fa-48ac-b311-04fc329bb03b",
+      "lastName": "Ashwin",
+      "firstName": "Vivyanne",
+      "phone": "501-748-5672",
+      "emails": [
+        "vashwin3@mediafire.com"
+      ]
+    },
+    "address": {
+      "street": "0 Ridge Oak Trail",
+      "city": "Washington",
+      "state": "DC",
+      "zipCode": "20566"
+    }
+  },
+  {
+    "uuid": "0673a09a-5cc1-4269-88f2-e665c2f3f33c",
+    "name": "Mitchell LLC",
+    "contact": {
+      "personUuid": "bc0d9b2c-39ad-4c01-a835-02cfe79bf43e",
+      "lastName": "O\u0027Kynsillaghe",
+      "firstName": "Lusa",
+      "phone": "204-377-9576",
+      "emails": [
+        "lokynsillaghe4@netlog.com",
+        "lokynsillaghe4@cdc.gov"
+      ]
+    },
+    "address": {
+      "street": "5887 Bobwhite Trail",
+      "city": "Philadelphia",
+      "state": "PA",
+      "zipCode": "19136"
+    }
+  },
+  {
+    "uuid": "d7d7b071-e63f-4af5-88f3-2e47a09852fb",
+    "name": "Weissnat and Okuneva",
+    "contact": {
+      "personUuid": "30f42bcf-2556-491e-8c0c-4e52d7dcfd90",
+      "lastName": "Tarren",
+      "firstName": "Mateo",
+      "phone": "358-254-9580",
+      "emails": [
+        "mtarren0@cocolog-nifty.com"
+      ]
+    },
+    "address": {
+      "street": "531 Bunting Way",
+      "city": "Pasadena",
+      "state": "CA",
+      "zipCode": "91131"
+    }
+  },
+  {
+    "uuid": "e2b1228a-1066-4f79-99c6-321658ef1587",
+    "name": "Abernathy-Schamberger",
+    "contact": {
+      "personUuid": "96aa54a4-f452-405c-82b2-12f262095f75",
+      "lastName": "Haugeh",
+      "firstName": "Lydie",
+      "phone": "556-404-8530",
+      "emails": [
+        "lhaugeh1@liveinternet.ru",
+        "lhaugeh1@dyndns.org"
+      ]
+    },
+    "address": {
+      "street": "243 Oriole Avenue",
+      "city": "Seattle",
+      "state": "WA",
+      "zipCode": "98148"
+    }
+  }
+]}

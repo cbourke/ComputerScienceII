@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<items>
+<product>
+  <code>2dd5220e-6779-4fe7-81d2-b79dcbff3415</code>
+  <name>Dragline</name>
+  <modelNumber>DX200b</modelNumber>
+  <retailCost>347125.0</retailCost>
+</product>
+<material>
+  <code>30bebf58-ba44-4bef-885f-8fccb7db9544</code>
+  <name>lumber</name>
+  <unit>lft</unit>
+  <pricePerUnit>8.0</pricePerUnit>
+</material>
+<contract>
+  <code>ce9fc7f6-8be8-48cb-9236-7873dbf9b2b7</code>
+  <name>concrete pad pour</name>
+  <servicer>
+    <uuid>0673a09a-5cc1-4269-88f2-e665c2f3f33c</uuid>
+    <name>Mitchell LLC</name>
+    <contact>
+      <personUuid>bc0d9b2c-39ad-4c01-a835-02cfe79bf43e</personUuid>
+      <lastName>O&apos;Kynsillaghe</lastName>
+      <firstName>Lusa</firstName>
+      <phone>204-377-9576</phone>
+      <emails>
+        <email>lokynsillaghe4@netlog.com</email>
+        <email>lokynsillaghe4@cdc.gov</email>
+      </emails>
+    </contact>
+    <address>
+      <street>5887 Bobwhite Trail</street>
+      <city>Philadelphia</city>
+      <state>PA</state>
+      <zipCode>19136</zipCode>
+    </address>
+  </servicer>
+  <amount>0.0</amount>
+</contract>
+<product>
+  <code>4c0c851d-0466-42c8-8631-0b414db5be98</code>
+  <name>Bulldozer</name>
+  <modelNumber>XPXY4</modelNumber>
+  <retailCost>125500.0</retailCost>
+</product>
+<contract>
+  <code>97ee84b8-dc93-4db2-84bd-48e72a7f3131</code>
+  <name>electric install</name>
+  <servicer>
+    <uuid>a8bae950-96ac-43a9-9a29-729db552e981</uuid>
+    <name>Klocko Inc</name>
+    <contact>
+      <personUuid>ddd24cee-31fa-48ac-b311-04fc329bb03b</personUuid>
+      <lastName>Ashwin</lastName>
+      <firstName>Vivyanne</firstName>
+      <phone>501-748-5672</phone>
+      <emails>
+        <email>vashwin3@mediafire.com</email>
+      </emails>
+    </contact>
+    <address>
+      <street>0 Ridge Oak Trail</street>
+      <city>Washington</city>
+      <state>DC</state>
+      <zipCode>20566</zipCode>
+    </address>
+  </servicer>
+  <amount>0.0</amount>
+</contract>
+<material>
+  <code>97dc9f91-c009-4e8d-b08c-3d4d0ded0bad</code>
+  <name>nails</name>
+  <unit>box</unit>
+  <pricePerUnit>15.0</pricePerUnit>
+</material>
+<material>
+  <code>ac47e0f6-5d5b-49fe-af54-a6625a6374a8</code>
+  <name>concrete</name>
+  <unit>bag</unit>
+  <pricePerUnit>40.0</pricePerUnit>
+</material>
+<contract>
+  <code>699607c3-d9db-4aef-a8ab-b3a6cab21e12</code>
+  <name>footing pour</name>
+  <servicer>
+    <uuid>0673a09a-5cc1-4269-88f2-e665c2f3f33c</uuid>
+    <name>Mitchell LLC</name>
+    <contact>
+      <personUuid>bc0d9b2c-39ad-4c01-a835-02cfe79bf43e</personUuid>
+      <lastName>O&apos;Kynsillaghe</lastName>
+      <firstName>Lusa</firstName>
+      <phone>204-377-9576</phone>
+      <emails>
+        <email>lokynsillaghe4@netlog.com</email>
+        <email>lokynsillaghe4@cdc.gov</email>
+      </emails>
+    </contact>
+    <address>
+      <street>5887 Bobwhite Trail</street>
+      <city>Philadelphia</city>
+      <state>PA</state>
+      <zipCode>19136</zipCode>
+    </address>
+  </servicer>
+  <amount>0.0</amount>
+</contract>
+<contract>
+  <code>b118fa82-14cf-46f4-8574-41e583badc27</code>
+  <name>generator install</name>
+  <servicer>
+    <uuid>a8bae950-96ac-43a9-9a29-729db552e981</uuid>
+    <name>Klocko Inc</name>
+    <contact>
+      <personUuid>ddd24cee-31fa-48ac-b311-04fc329bb03b</personUuid>
+      <lastName>Ashwin</lastName>
+      <firstName>Vivyanne</firstName>
+      <phone>501-748-5672</phone>
+      <emails>
+        <email>vashwin3@mediafire.com</email>
+      </emails>
+    </contact>
+    <address>
+      <street>0 Ridge Oak Trail</street>
+      <city>Washington</city>
+      <state>DC</state>
+      <zipCode>20566</zipCode>
+    </address>
+  </servicer>
+  <amount>0.0</amount>
+</contract>
+<product>
+  <code>e9afb98d-ac99-4974-a274-2dca5c1238f5</code>
+  <name>Skid-Steer</name>
+  <modelNumber>S4325</modelNumber>
+  <retailCost>8500.0</retailCost>
+</product>
+<material>
+  <code>72e157ac-5b46-4b3b-b86b-599a89be7289</code>
+  <name>sand</name>
+  <unit>ton</unit>
+  <pricePerUnit>1500.0</pricePerUnit>
+</material>
+<material>
+  <code>8c8bbffa-a939-44f4-98b7-66837e7d16e9</code>
+  <name>drywall</name>
+  <unit>sheet</unit>
+  <pricePerUnit>35.0</pricePerUnit>
+</material>
+<product>
+  <code>984bac8d-96f7-4d6b-9948-1cabae15ba51</code>
+  <name>Compactor</name>
+  <modelNumber>FLT100</modelNumber>
+  <retailCost>4500.0</retailCost>
+</product>
+<contract>
+  <code>38bebacb-a3ca-459e-a71f-8e5826a2f7fa</code>
+  <name>foundation pour</name>
+  <servicer>
+    <uuid>0673a09a-5cc1-4269-88f2-e665c2f3f33c</uuid>
+    <name>Mitchell LLC</name>
+    <contact>
+      <personUuid>bc0d9b2c-39ad-4c01-a835-02cfe79bf43e</personUuid>
+      <lastName>O&apos;Kynsillaghe</lastName>
+      <firstName>Lusa</firstName>
+      <phone>204-377-9576</phone>
+      <emails>
+        <email>lokynsillaghe4@netlog.com</email>
+        <email>lokynsillaghe4@cdc.gov</email>
+      </emails>
+    </contact>
+    <address>
+      <street>5887 Bobwhite Trail</street>
+      <city>Philadelphia</city>
+      <state>PA</state>
+      <zipCode>19136</zipCode>
+    </address>
+  </servicer>
+  <amount>0.0</amount>
+</contract>
+<product>
+  <code>50e6f93f-3792-459f-b1c6-b512b994ff2b</code>
+  <name>Dump Truck</name>
+  <modelNumber>DUMPRX5000</modelNumber>
+  <retailCost>90450.0</retailCost>
+</product>
+</items>

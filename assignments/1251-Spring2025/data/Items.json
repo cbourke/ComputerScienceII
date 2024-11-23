@@ -1,0 +1,186 @@
+{
+"items": [
+  {
+    "modelNumber": "DX200b",
+    "retailCost": 347125.0,
+    "code": "2dd5220e-6779-4fe7-81d2-b79dcbff3415",
+    "name": "Dragline"
+  },
+  {
+    "unit": "lft",
+    "pricePerUnit": 8.0,
+    "code": "30bebf58-ba44-4bef-885f-8fccb7db9544",
+    "name": "lumber"
+  },
+  {
+    "servicer": {
+      "uuid": "0673a09a-5cc1-4269-88f2-e665c2f3f33c",
+      "name": "Mitchell LLC",
+      "contact": {
+        "personUuid": "bc0d9b2c-39ad-4c01-a835-02cfe79bf43e",
+        "lastName": "O\u0027Kynsillaghe",
+        "firstName": "Lusa",
+        "phone": "204-377-9576",
+        "emails": [
+          "lokynsillaghe4@netlog.com",
+          "lokynsillaghe4@cdc.gov"
+        ]
+      },
+      "address": {
+        "street": "5887 Bobwhite Trail",
+        "city": "Philadelphia",
+        "state": "PA",
+        "zipCode": "19136"
+      }
+    },
+    "amount": 0.0,
+    "code": "ce9fc7f6-8be8-48cb-9236-7873dbf9b2b7",
+    "name": "concrete pad pour"
+  },
+  {
+    "modelNumber": "XPXY4",
+    "retailCost": 125500.0,
+    "code": "4c0c851d-0466-42c8-8631-0b414db5be98",
+    "name": "Bulldozer"
+  },
+  {
+    "servicer": {
+      "uuid": "a8bae950-96ac-43a9-9a29-729db552e981",
+      "name": "Klocko Inc",
+      "contact": {
+        "personUuid": "ddd24cee-31fa-48ac-b311-04fc329bb03b",
+        "lastName": "Ashwin",
+        "firstName": "Vivyanne",
+        "phone": "501-748-5672",
+        "emails": [
+          "vashwin3@mediafire.com"
+        ]
+      },
+      "address": {
+        "street": "0 Ridge Oak Trail",
+        "city": "Washington",
+        "state": "DC",
+        "zipCode": "20566"
+      }
+    },
+    "amount": 0.0,
+    "code": "97ee84b8-dc93-4db2-84bd-48e72a7f3131",
+    "name": "electric install"
+  },
+  {
+    "unit": "box",
+    "pricePerUnit": 15.0,
+    "code": "97dc9f91-c009-4e8d-b08c-3d4d0ded0bad",
+    "name": "nails"
+  },
+  {
+    "unit": "bag",
+    "pricePerUnit": 40.0,
+    "code": "ac47e0f6-5d5b-49fe-af54-a6625a6374a8",
+    "name": "concrete"
+  },
+  {
+    "servicer": {
+      "uuid": "0673a09a-5cc1-4269-88f2-e665c2f3f33c",
+      "name": "Mitchell LLC",
+      "contact": {
+        "personUuid": "bc0d9b2c-39ad-4c01-a835-02cfe79bf43e",
+        "lastName": "O\u0027Kynsillaghe",
+        "firstName": "Lusa",
+        "phone": "204-377-9576",
+        "emails": [
+          "lokynsillaghe4@netlog.com",
+          "lokynsillaghe4@cdc.gov"
+        ]
+      },
+      "address": {
+        "street": "5887 Bobwhite Trail",
+        "city": "Philadelphia",
+        "state": "PA",
+        "zipCode": "19136"
+      }
+    },
+    "amount": 0.0,
+    "code": "699607c3-d9db-4aef-a8ab-b3a6cab21e12",
+    "name": "footing pour"
+  },
+  {
+    "servicer": {
+      "uuid": "a8bae950-96ac-43a9-9a29-729db552e981",
+      "name": "Klocko Inc",
+      "contact": {
+        "personUuid": "ddd24cee-31fa-48ac-b311-04fc329bb03b",
+        "lastName": "Ashwin",
+        "firstName": "Vivyanne",
+        "phone": "501-748-5672",
+        "emails": [
+          "vashwin3@mediafire.com"
+        ]
+      },
+      "address": {
+        "street": "0 Ridge Oak Trail",
+        "city": "Washington",
+        "state": "DC",
+        "zipCode": "20566"
+      }
+    },
+    "amount": 0.0,
+    "code": "b118fa82-14cf-46f4-8574-41e583badc27",
+    "name": "generator install"
+  },
+  {
+    "modelNumber": "S4325",
+    "retailCost": 8500.0,
+    "code": "e9afb98d-ac99-4974-a274-2dca5c1238f5",
+    "name": "Skid-Steer"
+  },
+  {
+    "unit": "ton",
+    "pricePerUnit": 1500.0,
+    "code": "72e157ac-5b46-4b3b-b86b-599a89be7289",
+    "name": "sand"
+  },
+  {
+    "unit": "sheet",
+    "pricePerUnit": 35.0,
+    "code": "8c8bbffa-a939-44f4-98b7-66837e7d16e9",
+    "name": "drywall"
+  },
+  {
+    "modelNumber": "FLT100",
+    "retailCost": 4500.0,
+    "code": "984bac8d-96f7-4d6b-9948-1cabae15ba51",
+    "name": "Compactor"
+  },
+  {
+    "servicer": {
+      "uuid": "0673a09a-5cc1-4269-88f2-e665c2f3f33c",
+      "name": "Mitchell LLC",
+      "contact": {
+        "personUuid": "bc0d9b2c-39ad-4c01-a835-02cfe79bf43e",
+        "lastName": "O\u0027Kynsillaghe",
+        "firstName": "Lusa",
+        "phone": "204-377-9576",
+        "emails": [
+          "lokynsillaghe4@netlog.com",
+          "lokynsillaghe4@cdc.gov"
+        ]
+      },
+      "address": {
+        "street": "5887 Bobwhite Trail",
+        "city": "Philadelphia",
+        "state": "PA",
+        "zipCode": "19136"
+      }
+    },
+    "amount": 0.0,
+    "code": "38bebacb-a3ca-459e-a71f-8e5826a2f7fa",
+    "name": "foundation pour"
+  },
+  {
+    "modelNumber": "DUMPRX5000",
+    "retailCost": 90450.0,
+    "code": "50e6f93f-3792-459f-b1c6-b512b994ff2b",
+    "name": "Dump Truck"
+  }
+]}

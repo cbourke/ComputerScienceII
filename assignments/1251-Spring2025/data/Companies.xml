@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<companies>
+<company>
+  <uuid>d631d183-5276-49cd-8136-ba130df24826</uuid>
+  <name>Jacobi and White</name>
+  <contact>
+    <personUuid>cc88a3dc-64d6-4070-b9b0-b2ae9ace0061</personUuid>
+    <lastName>Tombs</lastName>
+    <firstName>Gottfried</firstName>
+    <phone>506-723-1101</phone>
+    <emails>
+      <email>gtombs2@youtube.com</email>
+      <email>gtombs2@tamu.edu</email>
+      <email>gtombs2@mashable.com</email>
+    </emails>
+  </contact>
+  <address>
+    <street>46 Ruskin Lane</street>
+    <city>Amarillo</city>
+    <state>TX</state>
+    <zipCode>79176</zipCode>
+  </address>
+</company>
+<company>
+  <uuid>a8bae950-96ac-43a9-9a29-729db552e981</uuid>
+  <name>Klocko Inc</name>
+  <contact>
+    <personUuid>ddd24cee-31fa-48ac-b311-04fc329bb03b</personUuid>
+    <lastName>Ashwin</lastName>
+    <firstName>Vivyanne</firstName>
+    <phone>501-748-5672</phone>
+    <emails>
+      <email>vashwin3@mediafire.com</email>
+    </emails>
+  </contact>
+  <address>
+    <street>0 Ridge Oak Trail</street>
+    <city>Washington</city>
+    <state>DC</state>
+    <zipCode>20566</zipCode>
+  </address>
+</company>
+<company>
+  <uuid>0673a09a-5cc1-4269-88f2-e665c2f3f33c</uuid>
+  <name>Mitchell LLC</name>
+  <contact>
+    <personUuid>bc0d9b2c-39ad-4c01-a835-02cfe79bf43e</personUuid>
+    <lastName>O&apos;Kynsillaghe</lastName>
+    <firstName>Lusa</firstName>
+    <phone>204-377-9576</phone>
+    <emails>
+      <email>lokynsillaghe4@netlog.com</email>
+      <email>lokynsillaghe4@cdc.gov</email>
+    </emails>
+  </contact>
+  <address>
+    <street>5887 Bobwhite Trail</street>
+    <city>Philadelphia</city>
+    <state>PA</state>
+    <zipCode>19136</zipCode>
+  </address>
+</company>
+<company>
+  <uuid>d7d7b071-e63f-4af5-88f3-2e47a09852fb</uuid>
+  <name>Weissnat and Okuneva</name>
+  <contact>
+    <personUuid>30f42bcf-2556-491e-8c0c-4e52d7dcfd90</personUuid>
+    <lastName>Tarren</lastName>
+    <firstName>Mateo</firstName>
+    <phone>358-254-9580</phone>
+    <emails>
+      <email>mtarren0@cocolog-nifty.com</email>
+    </emails>
+  </contact>
+  <address>
+    <street>531 Bunting Way</street>
+    <city>Pasadena</city>
+    <state>CA</state>
+    <zipCode>91131</zipCode>
+  </address>
+</company>
+<company>
+  <uuid>e2b1228a-1066-4f79-99c6-321658ef1587</uuid>
+  <name>Abernathy-Schamberger</name>
+  <contact>
+    <personUuid>96aa54a4-f452-405c-82b2-12f262095f75</personUuid>
+    <lastName>Haugeh</lastName>
+    <firstName>Lydie</firstName>
+    <phone>556-404-8530</phone>
+    <emails>
+      <email>lhaugeh1@liveinternet.ru</email>
+      <email>lhaugeh1@dyndns.org</email>
+    </emails>
+  </contact>
+  <address>
+    <street>243 Oriole Avenue</street>
+    <city>Seattle</city>
+    <state>WA</state>
+    <zipCode>98148</zipCode>
+  </address>
+</company>
+</companies>
