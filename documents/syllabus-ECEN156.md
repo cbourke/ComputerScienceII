@@ -1,6 +1,6 @@
 # Computer Science II
 
-### ECEN 194 - Syllabus - Spring 2025
+### ECEN 156 - Syllabus - Spring 2025
  [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska-Lincoln](https://unl.edu/)  
