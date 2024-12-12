@@ -101,16 +101,13 @@ day, lecture will still be livestreamed.
 
 ## Assessment
 
-Assessment (grading) will be based on labs and assignments.  To start you
-out on the right foot, you have been awarded XX free starter points.  You
-are currently earning an A in this course; keep it up!
+Assessment (grading) will be based on labs and assignments.  
 
 | Category    | Number | Points |
 |-------------|--------|--------|
-| Starter Pts |        |   XX   |
 | Labs        | 14     |  350   |
-| Assignments | 8      |  XXX   |
-| Total       |        | 1250   |
+| Assignments | 8      |  950   |
+| Total       |        | 1300   |
 
 ### Scale
 
