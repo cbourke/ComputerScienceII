@@ -23,14 +23,19 @@ points being deducted.
   written in Java, should accept command line arguments as specified,
   and execute successfully on the grader.  All your classes should
   be in the `unl.soc` package and your source files should have the
-  following names: `ThreePoints.java`, `WaterUtils.java`, `PatientData.java`
+  following names:
+    * `ThreePoints.java`
+    * `RunningUtils.java`, `ConvertMapTests.java`, `ElevationGainTests.java`
+    * `RunReports.java`
 
 * **For those in the honors section**: your programs must be written
   in python (unless you have no prior Java experience, in which case,
   you should do the Java version), should accept command line arguments
   as specified, and execute successfully on the grader.  Your source
-  files should have the following file names: `three_points.py`, `water_utils.py`,
-  and `patient_data.py`
+  files should have the following file names:
+    * `three_points.py`
+    * `running_utils.py`, `test_running_utils.py`
+    * `run_reports.py`
 
 # Exercises
 
@@ -126,7 +131,152 @@ as specified, you will be required to *add* additional test cases to the `unitte
 testing suite.  Specifically, you need to add at least 2 valid test cases *for
 each function* you need to implement.  
 
-## Exercise 3: TBD
+## Exercise 3: Running App Data
+
+NighKey has successfully tested a running app on several runs and now
+need your help to validate the data.
+
+The data for each run includes GPS data (latitude/longitude), elevation
+data (in meters above sea level), and a unique date/time stamp in
+(the proper) ISO 8601 format in a CSV formatted data file.  In each
+file the first line is the header/metadata and each subsequent line
+is a data point.  However, the data points are not necessarily in any
+particular order.  For example:
+
+```text
+latitude,longitude,elevation,time
+41.30359,-96.168361,378.8,2024-11-16T16:12:52
+41.303385,-96.167966,378.4,2024-11-16T16:13:03
+41.303608,-96.16839,378.9,2024-11-16T16:12:51
+...
+```
+
+A full sample run will have thousands of data points.  **However**
+the app does **not** necessarily record data for *every* second.
+  - For any data "gap" of *less than* 10 seconds it is assumed that
+    the app simply did not record data or the runner may have paused to
+    (say) tie their shoe; in any case we will assume that the
+    runner was *moving* during this gap.
+  - For any data gap of 10 seconds **or more**, it is assumed that
+    the runner paused the app for a longer water or bathroom
+    break.  In this case we will assume the runner was *waiting*
+    (not moving) during this gap.
+
+You will write a program that produces several reports based on these
+assumptions.
+
+## Elevation Report
+
+The first report you will output will be the highest and lowest elevations
+recorded during the run.  Your first report should look something like the
+following.
+
+```text
+=====================
+ Elevation Report
+=====================
+Highest Elevation: 385.60m
+Lowest Elevation:  334.70m
+```
+
+## Elevation Gain Report
+
+The *elevation gain* only includes the elevation increase from
+one data point to the next (regardless of time gaps).  For example an
+elevation change from 383.2m to 383.5m would be +.3m and would count as a
+gain.  An elevation change from 383.2m to 383.0m would be -.2m and would
+not count toward the total gain.
+
+Your second report will compute the total elevation gain during the run and
+should look something like the following.
+
+```text
+=====================
+ Elevation Gain Report
+=====================
+Elevation Gain: +185.50m
+```
+
+## Distance Report
+
+The next report will report the total distance of the run.  The
+distance can be computed between two points using the latitude/longitude.
+The distance between these two locations can be computed using the
+Spherical Law of Cosines:
+
+$$d = \arccos{(\sin(\varphi_1) \sin(\varphi_2) + \cos(\varphi_1) \cos(\varphi_2) \cos(\Delta) )} \cdot R$$
+
+where
+
+-   $\varphi_1$ is the latitude of location $A$, $\varphi_2$ is the
+    latitude of location $B$
+
+-   $\Delta$ is the difference between location $B$'s longitude and
+    location $A$'s longitude
+
+-   $R$ is the (average) radius of the earth, 6,371 kilometers
+
+Your report should look something like the following.
+
+```text
+=====================
+ Distance Report
+=====================
+Total distance: 16.89km
+```
+
+## Time Reports
+
+This report will compute the total *moving time* and total *wait time*
+during the run (as defined above) as well as the total time of the run
+(the sum of the moving and wait time).  We've provided some starter code
+to help you make these computations and formatting.  Your report will
+need to be formatted as follows.
+
+```text
+=====================
+ Time Report
+=====================
+Moving time:    01:34:16 (5656s)
+Wait time:      00:10:22 (622s)
+Total time:     01:44:38 (6278s)
+```
+
+## Data Anomalies
+
+The running app has been developed for both Android and iOS.  NighKey
+wants to make sure the data collected is consistent between these two
+versions.  A second data file has been made available for each run.
+The final report will report any *inconsistencies* or *missing data*
+between the two datasets:
+
+- Report any data point in data set A (identified by date/time stamp)
+  that is *missing* in data set B, *or* any data point in B that is
+  missing in A.
+- Report any (matching) data point between the two datasets whose
+  location data (latitude or longitude) differs by more than 0.001
+  degrees.
+- Report a total number of missing and inconsistent records
+
+Your output should look something like the following.
+
+```text
+==========================================
+Inconsistent/Missing Data Reports
+==========================================
+Data point 2024-11-16T17:07:50  41.248660, -96.155317 (342.60) missing in Data Set B
+Data points are inconsistent:
+	 2024-11-16T17:38:56  41.279074, -96.157908 (353.90)
+	 2024-11-16T17:38:56  41.279074, -96.257908 (353.90)
+Data point 2024-11-16T17:53:37  41.300846, -96.159428 (360.70) missing in Data Set B
+Data point 2024-11-16T17:44:26  41.286694, -96.157942 (382.90) missing in Data Set A
+Number of missing data points: 3
+Number of inconsistent data points: 1
+```
+
+Your report is *required to be efficient*; a brute-force approach
+(comparing all possible pairs of data) may not work and is not acceptable.  
+You will need to use efficient searching and sorting techniques.  
 
 # Installing and Using JUnit 5 in Eclipse
 
