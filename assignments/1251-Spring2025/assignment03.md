@@ -137,7 +137,7 @@ have access to the test cases, nor can you debug with respect to it.
 -   In addition, you will be writing a design document. The first draft
     of this document is due 1 week prior to this assignment.
 
-# Rubric (050 points total)
+# Rubric (100 points total)
 
 Grading will be based on the following items
 
@@ -174,7 +174,7 @@ Design (25)
   *  Proper use of Polymorphism
     *  At least 1 instance of polymorphic behavior
 
-Correctness (65)
+Correctness (50)
 
   *  Submitted JAR must contain code and artifacts and properly run on the grader
   *  All test cases properly execute and display correct output
