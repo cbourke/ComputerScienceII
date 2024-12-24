@@ -42,14 +42,14 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 ### Spring 2025
 
 - Course Link: https://canvas.unl.edu/courses/188528
-- Lectures: TBD
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZW4I81WGJiT_tty3Sayu_Ab
 
 #### University of Nebraska-Omaha
 
 This course is offered at UNO as ECEN 156:
 
 - Course Link: https://canvas.unl.edu/courses/193740
-- Lectures: TBD
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZUYVg5ns59M67byW1NbaURX
 
 <details>
 
