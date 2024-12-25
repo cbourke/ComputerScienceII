@@ -1,3 +1,6 @@
+"""
+A single class to model an assignment in Canvas
+"""
 
 class Assignment:
     """
@@ -35,4 +38,4 @@ class Assignment:
         """
         Equality and ordering is determined based only on (canvas) id
         """
-        return (self.id < other.id)
+        return self.assignmenet_id < other.assignmenet_id
