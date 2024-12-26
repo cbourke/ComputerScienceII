@@ -1,3 +1,6 @@
+"""
+Person class
+"""
 
 class Person:
     """
@@ -35,7 +38,7 @@ class Person:
         self.canvas_email = canvas_email
 
     def __str__(self):
-        return "%-30s (%s) %s"%(self.name,self.nuid,self.canvas_email)
+        return f'{self.name:-30s} ({self.nuid}) {self.canvas_email}'
 
     def __hash__(self):
         return hash(self.nuid)
@@ -50,7 +53,10 @@ class Person:
         """
         Equality and ordering is determined based only on NUID
         """
-        return (self.nuid < other.nuid)
+        return self.nuid < other.nuid
 
-    def toCsv(self):
-        return "%s,%s,%s,%s,%s\n"%(self.nuid,self.name.replace(", ", ","),self.canvas_id,self.canvas_email,self.canvas_login)
+    def to_csv(self):
+        """
+        Returns a CSV-formatted representation of this `Person`
+        """
+        return f'{self.nuid},{self.name.replace(", ", ",")},{self.canvas_id},{self.canvas_email},{self.canvas_login}'
