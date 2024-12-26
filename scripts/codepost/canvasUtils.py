@@ -222,7 +222,7 @@ def getGroups(roster):
             members.append(p)
             p.group = g
             break
-      g.addMembers(members)
+      g.add_members(members)
       groups.append(g)
 
   # iterate through roster and create groups of one:
@@ -230,7 +230,7 @@ def getGroups(roster):
     # but only if they have not already been assigned to a group
     if p.group is None:
       g = Group()
-      g.addMembers([p])
+      g.add_members([p])
       p.group = g
       groups.append(g)
   return groups

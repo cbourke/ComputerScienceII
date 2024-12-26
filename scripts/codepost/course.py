@@ -66,7 +66,7 @@ class Course:
         for g in groups:
           # if the group leader (first listed) is a student, then add them
           if len(g.members) == 0:
-            print(f"Warning: Group {g.canvasGroupName} ({g.canvasGroupId}) has no members")
+            print(f"Warning: Group {g.canvas_group_name} ({g.canvas_group_id}) has no members")
           elif g.members[0].nuid in self.students:
             self.groups.append(g)
 
