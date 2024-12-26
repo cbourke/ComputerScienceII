@@ -1,3 +1,7 @@
+"""
+Module/class to support groups in a course
+"""
+
 from operator import attrgetter
 
 class Group:
@@ -13,31 +17,33 @@ class Group:
     submission may have more than one student assicated with it.
     """
 
-    canvasGroupId   = None
-    canvasGroupName = None
+    canvas_group_id = None
+    canvas_group_name = None
     # This is an array of Persons
     members = []
 
-    def __init__(self, canvasGroupId = None,
-                       canvasGroupName = None):
-        self.canvasGroupId   = canvasGroupId
-        self.canvasGroupName = canvasGroupName
+    def __init__(self, canvas_group_id=None, canvas_group_name=None):
+        self.canvas_group_id = canvas_group_id
+        self.canvas_group_name = canvas_group_name
 
     def __str__(self):
-        s = ""
+        s = ''
         if len(self.members) > 1:
-          s = "  %-20s (%s) \n"%(self.canvasGroupName,self.canvasGroupId)
-          for member in self.members:
-            s += f"    {member}\n"
+            s = f'  {self.canvas_group_name:-20s} ({self.canvas_group_id})\n'
+            for member in self.members:
+                s += f'    {member}\n'
         else:
-          s += f"  {self.members[0]}\n"
+            s += f'  {self.members[0]}\n'
         return s
 
-    def __eq__(self,other):
+    def __eq__(self, other):
         return self.members == other.members
 
-    def __lt__(self,other):
-        return (self.members[0].name < other.members[0].name)
+    def __lt__(self, other):
+        return self.members[0].name < other.members[0].name
 
-    def addMembers(self, members):
-        self.members = sorted(members, key=attrgetter('name'))
+    def add_members(self, members):
+        """
+        Adds the given members, sorting them by name
+        """
+        self.members = sorted(members, key=attrgetter("name"))
