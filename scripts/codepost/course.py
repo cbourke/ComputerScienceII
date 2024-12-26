@@ -86,7 +86,7 @@ class Course:
         r += "CSV Data:\n"
         r += "nuid,name,canvas_id,canvas_email,canvas_login\n"
         for nuid,p in self.students.items():
-            r += p.toCsv()
+            r += p.to_csv()
         r += "Emails:\n"
         for nuid,p in self.students.items():
             r += str(p.canvas_email) + "\n"
