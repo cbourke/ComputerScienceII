@@ -8,7 +8,7 @@ JUnit and test wrapper class
 """
 test_wrapper_file = "TestWrapper.java"
 test_wrapper_class = "unl.soc.TestWrapper"
-junit_jar = "junit-platform-console-standalone-1.9.2.jar"
+junit_jar = "junit-platform-console-standalone-1.11.3.jar"
 
 """
 Mapping of lab (numbers using the handin directory names) to
@@ -21,7 +21,6 @@ junit_tests = {
     4: "unl.soc.AuthorTests unl.soc.BookTests",
     5: "com.cinco.payroll.PayrollTests",
     6: "unl.soc.ModeDemoTests unl.soc.MomentUtilsTests unl.soc.CourseTests",
-    #TODO: rest of them
     9: "unl.soc.albums.AlbumTests",
     10: "unl.soc.albums.AlbumTests",
     11: "unl.soc.trucks.TruckListTests",
