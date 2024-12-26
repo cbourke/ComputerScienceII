@@ -246,7 +246,7 @@ def get_sections():
     return result_data
 
 
-def get_rade(assignment_id, user_id):
+def get_grade(assignment_id, user_id):
     """
     Returns the grade (generally a float) from the canvas gradebook
     for the given assignment and user.  If no grade has been assigned,
