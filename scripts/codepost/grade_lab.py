@@ -57,6 +57,7 @@ import glob
 import os
 import pprint
 import subprocess
+import sys
 from config import config
 from course import course
 from canvas_utils import get_assignments

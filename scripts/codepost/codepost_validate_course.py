@@ -11,53 +11,53 @@ codepost.configure_api_key(config.codepost_api_key)
 
 codepost_course = codepost.course.retrieve(id=config.codepost_course_id)
 
-print("Codepost.io Course: ")
-print("Id     = " + str(codepost_course.id))
-print("Name   = " + codepost_course.name)
-print("Period = " + codepost_course.period)
+print('Codepost.io Course: ')
+print(f'Id     = {str(codepost_course.id)}')
+print(f'Name   = {codepost_course.name}')
+print(f'Period = {codepost_course.period}')
 
-print("Assignments (" + str(len(codepost_course.assignments)) + "): ")
+print(f'Assignments ({str(len(codepost_course.assignments))}): ')
 for a in codepost_course.assignments:
-    print("%-20s (id=%d)" % (a.name, a.id))
+    print(f'{a.name:-20s} (id={a.id})')
 
 roster = codepost.roster.retrieve(id=config.codepost_course_id)
 graders = list()
 students = list()
 
-print("Admins (", len(roster.courseAdmins), ")")
+print(f'Admins ({len(roster.courseAdmins)})')
 for a in roster.courseAdmins:
-    print("  %s" % a)
+    print(f'  {a}')
     graders.append(a)
-print("Graders (", len(roster.graders), ")")
+print(f'Graders ({len(roster.graders)})')
 for g in roster.graders:
-    print("  %s" % g)
+    print(f'  {g}')
     graders.append(g)
 graders = list(set(graders))
-print("Students (", len(roster.students), ")")
+print(f'Students ({len(roster.students)})')
 for s in roster.students:
-    print("  %s" % s)
+    print(f'  {s}')
     students.append(s)
 
 # check that codepost graders are in canvas class
-print("Checking Instructors...")
+print('Checking Instructors...')
 for nuid, instructor in course.instructors.items():
     if instructor.canvas_email not in graders:
-        print("Instructor %s not in codepost" % instructor)
+        print(f'Instructor {instructor} not in codepost')
     else:
         graders.remove(instructor.canvas_email)
 if graders:
-    print("Instructors in codepost missing in canvas:")
+    print('Instructors in codepost missing in canvas:')
     for g in graders:
-        print("  %s" % g)
+        print(f'  {g}')
 
 # check that codepost students are in canvas class
-print("Checking Students...")
+print('Checking Students...')
 for nuid, student in course.students.items():
     if student.canvas_email not in students:
-        print("Student %s not in codepost" % student)
+        print(f'Student {student} not in codepost')
     else:
         students.remove(student.canvas_email)
-if student:
-    print("Students in codepost missing in canvas:")
+if students:
+    print('Students in codepost missing in canvas:')
     for s in students:
-        print("  %s" % s)
+        print(f'  {s}')
