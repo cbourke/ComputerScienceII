@@ -18,7 +18,7 @@ print(f'Period = {codepost_course.period}')
 
 print(f'Assignments ({str(len(codepost_course.assignments))}): ')
 for a in codepost_course.assignments:
-    print(f'{a.name:-20s} (id={a.id})')
+    print(f'{a.name:20s} (id={a.id})')
 
 roster = codepost.roster.retrieve(id=config.codepost_course_id)
 graders = list()
