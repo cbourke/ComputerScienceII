@@ -12,18 +12,20 @@ grades need to be changed after this run, it should be
 done manually.
 
 """
+import argparse
+import sys
+
+import codepost
+
 from config import config
 from course import course
 from codepost_utils import get_assignment_id
 from canvas_utils import get_assignments
 from canvas_utils import get_grade
 from canvas_utils import set_grade
-import argparse
-import codepost
-import pprint
-import sys
 
-print(codepost.__version__)
+
+print(f'Using codepost script version: {codepost.__version__}')
 
 parser = argparse.ArgumentParser()
 parser.add_argument("assignment_name", help=
@@ -44,14 +46,14 @@ assignment_name = args.assignment_name
 codepost_assignment_id = get_assignment_id(assignment_name)
 if codepost_assignment_id is None:
     print(f"Codepost assignment for '{assignment_name}' not found", file=sys.stderr)
-    exit(1)
+    sys.exit(1)
 canvas_assignments = get_assignments(name=assignment_name)
 if not canvas_assignments:
     print(f"Canvas assignment for '{assignment_name}' not found", file=sys.stderr)
-    exit(1)
+    sys.exit(1)
 elif len(canvas_assignments) > 1:
     print(f"Multiple Canvas assignments for '{assignment_name}' found!", file=sys.stderr)
-    exit(1)
+    sys.exit(1)
 canvas_assignment = canvas_assignments[0]
 canvas_assignment_id = canvas_assignment.id
 commit_to_canvas = args.commit
@@ -90,7 +92,6 @@ for nuid,p in course.students.items():
     print(f"{p}:")
     print(f"    codepost: {codepost_grade}")
     print(f"    canvas:   {canvas_grade}")
-    message = None
     if canvas_grade is not None:
         print(f"    Skipping, Canvas grade exists...")
         if canvas_grade != codepost_grade:
@@ -103,7 +104,7 @@ for nuid,p in course.students.items():
             comment = "No Submission"
         else:
             log = f"    Updating Canvas grade to {codepost_grade}..."
-            score = codepost_grade;
+            score = codepost_grade
             comment = None
         print(log)
         if commit_to_canvas:
