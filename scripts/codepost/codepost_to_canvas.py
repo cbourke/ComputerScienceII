@@ -15,9 +15,9 @@ done manually.
 from config import config
 from course import course
 from codepost_utils import get_assignment_id
-from canvasUtils import getAssignments
-from canvasUtils import getGrade
-from canvasUtils import setGrade
+from canvas_utils import get_assignments
+from canvas_utils import get_grade
+from canvas_utils import set_grade
 import argparse
 import codepost
 import pprint
@@ -45,7 +45,7 @@ codepost_assignment_id = get_assignment_id(assignment_name)
 if codepost_assignment_id is None:
     print(f"Codepost assignment for '{assignment_name}' not found", file=sys.stderr)
     exit(1)
-canvas_assignments = getAssignments(name=assignment_name)
+canvas_assignments = get_assignments(name=assignment_name)
 if not canvas_assignments:
     print(f"Canvas assignment for '{assignment_name}' not found", file=sys.stderr)
     exit(1)
@@ -86,7 +86,7 @@ for submission in assignment_submissions:
 #   report
 for nuid,p in course.students.items():
     codepost_grade = None if p.canvas_email not in codepost_grades else codepost_grades[p.canvas_email]
-    canvas_grade = getGrade(canvas_assignment_id, p.canvas_id)
+    canvas_grade = get_grade(canvas_assignment_id, p.canvas_id)
     print(f"{p}:")
     print(f"    codepost: {codepost_grade}")
     print(f"    canvas:   {canvas_grade}")
@@ -107,7 +107,7 @@ for nuid,p in course.students.items():
             comment = None
         print(log)
         if commit_to_canvas:
-            setGrade(canvas_assignment_id, p.canvas_id, score, comment)
+            set_grade(canvas_assignment_id, p.canvas_id, score, comment)
 
 if not commit_to_canvas:
     print("Cowardly refusing to commit grades to canvas; rerun with --commit if you wanna.")

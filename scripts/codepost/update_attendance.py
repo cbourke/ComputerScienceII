@@ -15,9 +15,9 @@ from types import SimpleNamespace
 import sys
 
 from course import course
-from canvasUtils import getAssignments
-from canvasUtils import getGrade
-from canvasUtils import setGrade
+from canvas_utils import get_assignments
+from canvas_utils import get_grade
+from canvas_utils import set_grade
 
 parser = argparse.ArgumentParser()
 parser.add_argument("module_name", help=
