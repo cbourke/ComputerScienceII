@@ -5,13 +5,13 @@ groups.
 
 """
 
-from canvasUtils import getRoster
-from canvasUtils import getGroups
+from canvas_utils import get_roster
+from canvas_utils import get_groups
 
 # {"NUID" => Person}
-roster = getRoster()
+roster = get_roster()
 # [Group]
-groups = getGroups(roster)
+groups = get_groups(roster)
 
 if __name__ == "__main__":
     for nuid,p in roster.items():
