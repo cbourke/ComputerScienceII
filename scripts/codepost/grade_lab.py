@@ -2,13 +2,21 @@
 Grader script for JUnit-based labs.
 """
 import argparse
+import glob
+import os
+import pprint
+import subprocess
+import sys
 
-"""
-JUnit and test wrapper class
-"""
-test_wrapper_file = "TestWrapper.java"
-test_wrapper_class = "unl.soc.TestWrapper"
-junit_jar = "junit-platform-console-standalone-1.11.3.jar"
+from config import config
+from course import course
+from canvas_utils import get_assignments
+from canvas_utils import set_grade
+from canvas_utils import get_grade
+
+TEST_WRAPPER_FILE = "TestWrapper.java"
+TEST_WRAPPER_CLASS = "unl.soc.TestWrapper"
+JUNIT_JAR = "junit-platform-console-standalone-1.11.3.jar"
 
 """
 Mapping of lab (numbers using the handin directory names) to
@@ -52,17 +60,6 @@ if push_to_canvas:
     print(f"Committing all results to canvas")
 else:
     print(f"Cowardly not pushing results to canvas, run with --commit to do so.")
-
-import glob
-import os
-import pprint
-import subprocess
-import sys
-from config import config
-from course import course
-from canvas_utils import get_assignments
-from canvas_utils import set_grade
-from canvas_utils import get_grade
 
 lab_name = f"Lab {args.lab_number:.1f}"
 lab_number = f"L{args.lab_number:02d}"
@@ -116,8 +113,8 @@ for nuid, p in students.items():
         os.chdir(base_path + lab_number + "/" + login)
         os.system("rm -rf " + staging_dir)
         os.mkdir(staging_dir)
-        os.system(f"cp ../../common/{test_wrapper_file} ./{staging_dir}")
-        os.system(f"cp ../../common/{junit_jar} ./{staging_dir}")
+        os.system(f"cp ../../common/{TEST_WRAPPER_FILE} ./{staging_dir}")
+        os.system(f"cp ../../common/{JUNIT_JAR} ./{staging_dir}")
         # copy any course-level jars that may be needed
         os.system(f"cp -R ../../common/lib ./{staging_dir}")
         os.system(f"cp -R ../common/* ./{staging_dir}")
@@ -125,11 +122,11 @@ for nuid, p in students.items():
         os.chdir(staging_dir)
 
         jars = ":".join(glob.glob("./lib/*.jar"))
-        javac_cmd = f"{javac} -cp ./:./{junit_jar}:{jars} -d . *.java"
+        javac_cmd = f"{javac} -cp ./:./{JUNIT_JAR}:{jars} -d . *.java"
 
         os.system(javac_cmd)
 
-        java_cmd = f"{java} -cp ./:./{junit_jar}:{jars} {test_wrapper_class} {junit_test_classes}"
+        java_cmd = f"{java} -cp ./:./{JUNIT_JAR}:{jars} {TEST_WRAPPER_CLASS} {junit_test_classes}"
 
         result = subprocess.run([java_cmd, ""], shell=True, stdout=subprocess.PIPE)
         output = result.stdout.decode("utf-8")

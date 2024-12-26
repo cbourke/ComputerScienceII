@@ -77,11 +77,11 @@ if not os.path.exists(assignment_dir):
     print('perhaps you need more practice operating your computer machine')
     sys.exit(1)
 
-grading_assignment = course.getGradingAssignment()
+grading_assignment = course.get_grading_assignment()
 s = course.assignment_to_string(grading_assignment)
 print(s)
 
-csv = course.assignmentToCSV(grading_assignment)
+csv = course.assignment_to_csv(grading_assignment)
 f = open(f'{handin_assignment_number}.csv', 'w')
 f.write(csv)
 f.close()
