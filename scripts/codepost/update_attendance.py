@@ -46,8 +46,8 @@ def update_attendance(module, student):
     print(f'Processing student: {student}...')
 
 
-    lab_score = getGrade(module.lab.id, student.canvas_id)
-    attend_score = getGrade(module.attendance.id, student.canvas_id)
+    lab_score = get_grade(module.lab.id, student.canvas_id)
+    attend_score = get_grade(module.attendance.id, student.canvas_id)
 
     comment = f'Original attendance score: {attend_score}/5.'
 
@@ -61,10 +61,10 @@ def update_attendance(module, student):
     print("\t",comment)
 
     if commit_to_canvas:
-        setGrade(module.attendance.id, student.canvas_id, attend_score, comment)
+        set_grade(module.attendance.id, student.canvas_id, attend_score, comment)
 
 print(f"Processing Attendance for {module_name}...")
-assignments = getAssignments(module_name)
+assignments = get_assignments(module_name)
 module = SimpleNamespace()
 module.lab        = next(filter(lambda x: 'Lab' in x.name and x.points == 20, assignments), None)
 module.attendance = next(filter(lambda x: 'Lab' in x.name and x.points == 5, assignments), None)
