@@ -35,7 +35,7 @@ import codepost
 import pprint
 from config import config
 from course import course
-from fileUtils import getFiles
+from file_utils import get_files
 from codepost_utils import get_assignment_id
 
 parser = argparse.ArgumentParser()
