@@ -38,7 +38,7 @@ class Person:
         self.canvas_email = canvas_email
 
     def __str__(self):
-        return f'{self.name:-30s} ({self.nuid}) {self.canvas_email}'
+        return f'{self.name:30s} ({self.nuid}) {self.canvas_email}'
 
     def __hash__(self):
         return hash(self.nuid)
@@ -59,4 +59,4 @@ class Person:
         """
         Returns a CSV-formatted representation of this `Person`
         """
-        return f'{self.nuid},{self.name.replace(", ", ",")},{self.canvas_id},{self.canvas_email},{self.canvas_login}'
+        return f'{self.nuid},{self.name.replace(", ", ",")},{self.canvas_id},{self.canvas_email},{self.canvas_login}\n'
