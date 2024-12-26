@@ -1,6 +1,6 @@
 """
 This script interfaces with canvas, the SoC's handin file server
-(cse-linux-01.unl.edu) and codepost.io to assign graders to student
+(nuros.unl.edu) and codepost.io to assign graders to student
 submissions for a particular assignment and pushes all submission
 files to codepost.io.
 
@@ -32,26 +32,32 @@ import argparse
 import sys
 import os
 import codepost
-import pprint
+
 from config import config
 from course import course
 from file_utils import get_files
 from codepost_utils import get_assignment_id
 
 parser = argparse.ArgumentParser()
-parser.add_argument("handin_assignment_number", help=
-  """The handin directory in which files are stored;
+parser.add_argument(
+    'handin_assignment_number',
+    help="""The handin directory in which files are stored;
   ex: A1 would be expected to be in {handin_directory}/A1)
-  """
-  )
-parser.add_argument("codepost_assignment_name", help=
-  """The codepost.io assignment name; ex: "Assignment 1.0"
-  """)
-parser.add_argument("--commit", action='store_true', help=
-  """Commmits the changes to the gradebook.  If this is not
+  """,
+)
+parser.add_argument(
+    'codepost_assignment_name',
+    help="""The codepost.io assignment name; ex: 'Assignment 1.0'
+  """,
+)
+parser.add_argument(
+    '--commit',
+    action='store_true',
+    help="""Commmits the changes to the gradebook.  If this is not
   provided, the script will run in coward mode and not make
   any modifications, only reporting what would have been done.
-  """)
+  """,
+)
 args = parser.parse_args()
 
 codepost.configure_api_key(config.codepost_api_key)
@@ -62,70 +68,79 @@ codepost_assignment_id = get_assignment_id(codepost_assignment_name)
 commit = args.commit
 
 if codepost_assignment_id is None:
-    print(f"Unable to find codepost assignment: {codepost_assignment_name}")
-    exit(1)
+    print(f'Unable to find codepost assignment: {codepost_assignment_name}')
+    sys.exit(1)
 
-assignment_dir = f"{config.handin_directory}{handin_assignment_number}/"
+assignment_dir = f'{config.handin_directory}{handin_assignment_number}/'
 if not os.path.exists(assignment_dir):
-    print(f"assignment directory: {assignment_dir} does not seem to exist")
-    print("perhaps you need more practice operating your computer machine")
-    exit(1)
+    print(f'assignment directory: {assignment_dir} does not seem to exist')
+    print('perhaps you need more practice operating your computer machine')
+    sys.exit(1)
 
 grading_assignment = course.getGradingAssignment()
-s = course.assignmentToString(grading_assignment)
+s = course.assignment_to_string(grading_assignment)
 print(s)
 
 csv = course.assignmentToCSV(grading_assignment)
-f = open(handin_assignment_number+".csv", "w")
+f = open(f'{handin_assignment_number}.csv', 'w')
 f.write(csv)
 f.close()
 
-print(f"Grading Assignment {handin_assignment_number} (server), pushing to assignment {codepost_assignment_id} (codepost.io)")
+print(f'Grading Assignment {handin_assignment_number} (server), pushing to assignment {codepost_assignment_id} (codepost.io)...')
 
-def pushAssignments(grading_assignment):
-  for grader,groups in grading_assignment.items():
-    for g in groups:
-      # Try the first student...
-      s = g.members[0]
-      path = f"{assignment_dir}{s.canvas_login}/"
-      if not os.path.isdir(path) and len(g.members) > 1:
-          s = g.members[1]
-          og_path = path
-          path = f"{assignment_dir}{s.canvas_login}/"
-          print(f"WARNING: {og_path} does not exist, attempting secondary student: path = {path}")
-      print(f"Pushing files in {path}...")
-      try:
-        files = getFiles(path)
-        for (fullPath,name,ext),contents in files.items():
-            # text: 1 char = 1 byte
-            # base64: 1 char = .75 byte
-            if len(contents) > config.codepost_file_size_limit:
-                # replace contents with message
-                print(f"WARNING: file too large: {name}")
-                files[(fullPath,name,ext)] = "File Size Limit Exceeded"
-      except:
-        e = sys.exc_info()[0]
-        print("Error getting files: %s" % e )
-        files = {}
-      if files:
-        if commit:
-          submission = codepost.submission.create(
-            assignment=codepost_assignment_id,
-            students=[m.canvas_email for m in g.members],
-            grader=grader.canvas_email)
-        for (fullPath,name,ext),contents in files.items():
-          print(f"  pushing {name}...")
-          if not name or name.isspace() or not ext or ext.isspace():
-              print(f"  WARNING: invalid name or extension, skipping")
-          elif commit:
-            codepost.file.create(
-              name=name,
-              code=contents,
-              extension=ext,
-              submission=submission.id
-            )
+
+def push_assignments(grading_assignment):
+    """
+    Pushes files and sets graders in codepost.io based on the
+    given `grading_assignment`
+    """
+    for grader, groups in grading_assignment.items():
+        for g in groups:
+            # Try the first student...
+            s = g.members[0]
+            path = f'{assignment_dir}{s.canvas_login}/'
+            if not os.path.isdir(path) and len(g.members) > 1:
+                s = g.members[1]
+                og_path = path
+                path = f'{assignment_dir}{s.canvas_login}/'
+                print(
+                    f'WARNING: {og_path} does not exist, attempting secondary student: path = {path}'
+                )
+            print(f'Pushing files in {path}...')
+            try:
+                files = get_files(path)
+                for (full_path, name, ext), contents in files.items():
+                    # text: 1 char = 1 byte
+                    # base64: 1 char = .75 byte
+                    if len(contents) > config.codepost_file_size_limit:
+                        # replace contents with message
+                        print(f'WARNING: file too large: {name}')
+                        files[(full_path, name, ext)] = 'File Size Limit Exceeded'
+            except:
+                e = sys.exc_info()[0]
+                print(f'Error getting files: {e}')
+                files = {}
+            if files:
+                if commit:
+                    submission = codepost.submission.create(
+                        assignment=codepost_assignment_id,
+                        students=[m.canvas_email for m in g.members],
+                        grader=grader.canvas_email,
+                    )
+                for (full_path, name, ext), contents in files.items():
+                    print(f'  pushing {name}...')
+                    if not name or name.isspace() or not ext or ext.isspace():
+                        print(f'  WARNING: invalid name or extension, skipping')
+                    elif commit:
+                        codepost.file.create(
+                            name=name,
+                            code=contents,
+                            extension=ext,
+                            submission=submission.id,
+                        )
+
 
 if not commit:
-  print("Cowardly refusing to push source files to codepost.io; rerun with --commit if you wanna.")
+    print('Cowardly refusing to push source files to codepost.io; rerun with --commit if you wanna.')
 
-pushAssignments(grading_assignment)
+push_assignments(grading_assignment)
