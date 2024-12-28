@@ -1,0 +1,37 @@
+=====================
+ Elevation Report
+=====================
+Highest Elevation: 18.20m
+Lowest Elevation:  1.70m
+
+
+=====================
+ Elevation Gain Report
+=====================
+Elevation Gain: +55.10m
+
+
+=====================
+ Distance Report
+=====================
+Total distance: 14.20km
+
+
+=====================
+ Time Report
+=====================
+Moving time: 01:16:53 (4613)
+Wait time:   00:04:19 (259)
+Total time:  01:21:12 (4872)
+
+
+==========================================
+Inconsistent/Missing Data Reports
+==========================================
+Data point 2024-07-27T10:36:48  42.367362, -71.067895 (4.00) missing in Data Set B
+Data point 2024-07-27T10:39:31  42.363605, -71.070540 (4.10) missing in Data Set B
+Data point 2024-07-27T11:32:47  42.351793, -71.078055 (4.40) missing in Data Set B
+Data point 2024-07-27T11:44:58  42.359054, -71.059687 (14.60) missing in Data Set B
+
+Number of missing data points: 4
+Number of inconsistent data points: 0

@@ -27,6 +27,8 @@ points being deducted.
     * `ThreePoints.java`
     * `RunningUtils.java`, `ConvertMapTests.java`, `ElevationGainTests.java`
     * `RunReports.java`
+  However, you are allowed and encouraged to submit any additional
+  supporting files as long as they work on the grader.
 
 * **For those in the honors section**: your programs must be written
   in python (unless you have no prior Java experience, in which case,
@@ -36,6 +38,8 @@ points being deducted.
     * `three_points.py`
     * `running_utils.py`, `test_running_utils.py`
     * `run_reports.py`
+  However, you are allowed and encouraged to submit any additional
+  supporting files as long as they work on the grader.
 
 # Exercises
 
@@ -163,7 +167,8 @@ the app does **not** necessarily record data for *every* second.
     (not moving) during this gap.
 
 You will write a program that produces several reports based on these
-assumptions.
+assumptions.  We have provided some starter code to make some of the
+exercises simpler and we have provided some data file samples and output.
 
 ## Elevation Report
 
