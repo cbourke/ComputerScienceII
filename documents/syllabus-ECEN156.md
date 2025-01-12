@@ -15,8 +15,7 @@
 
 ## Course Info
 
-**Prerequisites**: Unofficially, you need to have successfully
-completed Computer Science I or equivalent.
+**Prerequisites**: A grade of "P" or "C" or better in ECEN 155E; coreq: MATH 1950.
 
 **Description**: Data structures, including linked lists, stacks,
 queues, and trees; algorithms, including searching, sorting, and
