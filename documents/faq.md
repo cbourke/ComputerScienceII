@@ -23,8 +23,9 @@ your code, artifacts, and submissions still work as expected.
 
 ## Installation
 
-  - You'll first need to install the Java Developer Kit (JDK):  
-    <https://www.oracle.com/java/technologies/downloads/>  
+  - You'll first need to install the Java Developer Kit (JDK); we recommend
+    Amazon's Corretto:
+    <https://aws.amazon.com/corretto/>  
     This is *not* the same thing as "Java" (which is usually the JRE or
     Java Runtime Environment); the JDK is necessary to *develop* in Java.
 
