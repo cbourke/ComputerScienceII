@@ -46,22 +46,26 @@ def update_attendance(module, student):
     print(f'Processing student: {student}...')
 
 
-    lab_score = get_grade(module.lab.id, student.canvas_id)
-    attend_score = get_grade(module.attendance.id, student.canvas_id)
+    lab_score = get_grade(module.lab.assignment_id, student.canvas_id)
+    attend_score = get_grade(module.attendance.assignment_id, student.canvas_id)
 
-    comment = f'Original attendance score: {attend_score}/5.'
+    comment = f'Original attendance score: {attend_score}/5. '
+    category = 1
 
     if attend_score < 5:
         if lab_score >= 20:
             attend_score = 5
             comment += f'Lab completed, attendance points awarded: {attend_score}/5'
+            category = 2
         else:
             comment += f'Lab not complete, attendance points not awarded: {attend_score}/5'
+            category = 3
 
     print("\t",comment)
 
     if commit_to_canvas:
-        set_grade(module.attendance.id, student.canvas_id, attend_score, comment)
+        set_grade(module.attendance.assignment_id, student.canvas_id, attend_score, comment)
+    return category
 
 print(f"Processing Attendance for {module_name}...")
 assignments = get_assignments(module_name)
@@ -78,7 +82,9 @@ if a != "Y":
     print("Cowardly exiting...")
     sys.exit(1)
 
+results = (0, 0, 0)
 for (nuid,s) in course.students.items():
-    update_attendance(module, s)
+    category = update_attendance(module, s)
+    results[category] += 1
 if not commit_to_canvas:
     print("Cowardly refused to commit changes to canvas, run with --commit jabroni.")

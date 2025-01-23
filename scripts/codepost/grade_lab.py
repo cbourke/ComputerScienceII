@@ -99,14 +99,14 @@ for nuid, p in students.items():
     login = p.canvas_login
     canvas_id = p.canvas_id
     full_path = f"{base_path}{lab_number}/{login}/"
-    score = get_grade(canvas_assignment.id, p.canvas_id)
+    score = get_grade(canvas_assignment.assignment_id, p.canvas_id)
     if score is not None:
         print(f"    SKIPPED: Score already in gradebook: {score}/20")
     elif not os.path.exists(full_path):
         print(f"    FAILED: no directory ({full_path}), 0/20")
         comment = f"No Submission 0/20"
         if push_to_canvas:
-            set_grade(canvas_assignment.id, p.canvas_id, 0, comment)
+            set_grade(canvas_assignment.assignment_id, p.canvas_id, 0, comment)
         print(f"\tRESULT: {comment}")
         ugly += 1
     else:
@@ -140,7 +140,7 @@ for nuid, p in students.items():
             score = points
             good += 1
         if push_to_canvas:
-            set_grade(canvas_assignment.id, p.canvas_id, score, comment)
+            set_grade(canvas_assignment.assignmenet_id, p.canvas_id, score, comment)
         print(f"\tRESULT: {comment}, {score}")
         os.chdir("..")
         os.system("rm -rf " + staging_dir)
