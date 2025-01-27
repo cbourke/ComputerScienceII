@@ -195,6 +195,152 @@ if(isStudent) {
   * Is true if one or the other or both operands are true
 * Negation Operator: `!` (not `not`)
 
+```java
+
+		double a = 10;
+		double b = 20;
+		double c = 30;
+
+		// x = -b +- sqrt(b^2 - 4ac) / 2a
+		if (a != 0 && b * b - 4 * a * c >= 0) {
+			double root1 = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+			double root2 = (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+		} else {
+			System.out.println("Can't handle that, sorry");
+		}
+```
+
+# Loops
+
+* Java has `for` loops and `while` loops
+* Java also has "enhanced for loops"
+
+```java
+
+		int n = 10;
+		for(int i=0; i<n; i++) {
+			System.out.println(i);
+		}
+
+		System.out.println("=========");
+		int i = 0;
+		while(i < n) {
+			System.out.println(i);
+			i++;
+		}
+
+
+		//goal: given a value n, determine how many
+		// digits are in n
+		//TODO: fix this code for zero and negative values
+		int n = 0;
+		int originalValue = n;
+		int digitCount = 0;
+		while(n > 0) {
+			//divide by 10
+			n /= 10;
+			//update a counter
+			digitCount++;
+		}
+		System.out.printf("There are %d digits in %d\n", digitCount, originalValue);
+
+
+		//FizzBuzz:
+		// print numbers 1 to 100
+		//  except: if the number is divisible by 3 then print "fizz"
+		//          if the numbe ris divisilbe by 5 then print "buzz"
+		//          if divisible by *both* 3 and 5: print "fizzbuzz"
+		int n = 100;
+		for(int i=1; i<=n; i++) {
+			if(i % 15 == 0) {
+				System.out.println("fizzbuzz");
+			} else if(i % 3 == 0) {
+				System.out.println("fizz");
+			} else if(i % 5 == 0) {
+				System.out.println("buzz");
+			} else {
+				System.out.println(i);
+			}
+		}
+```
+
+# Arrays and Collections
+
+* Java has basic arrays
+* They are 0-indexed
+* They are created with a *fixed size*, they cannot grow, shrink, etc.
+* Only ever use arrays *if you have to*
+* There is no memory management: no `malloc`, no `free`, no pointers, etc.
+* ONce you start using: lists, sets, maps, you will *never* want to use an array again!
+
+```java
+int numbers[] = new int[10];
+numbers[0] = 42;
+numbers[1] = 101;
+//last element:
+numbers[9] = 202;
+//other elements not initialized: default value of 0
+for(int i=0; i<numbers.length; i++) {
+	System.out.printf("arr[%d] = %d\n", i, numbers[i]);
+}
+
+//enhanced for loop:
+// if you don't care about the index variable i, you can do:
+for(int x : numbers) {
+	System.out.println(x);
+}
+```
+
+# Lists
+
+* A dynamic ordered data structure that automatically grows/shrinks as you add stuff/remove stuff from it!
+* They hold any type of value/variable
+* They have dozens of methods that you can use to manipulate them
+* Still: 0-indexed, holds stuff in an *ordered* manner and allow duplicates
+
+```java
+
+		List<Integer> numbers = new ArrayList<>();
+		//nope: numbers.add("Hello");
+		//.add adds the element to the end of the list
+		numbers.add(10);
+		numbers.add(20);
+		numbers.add(30);
+		System.out.println(numbers);
+
+		numbers.add(40);
+		System.out.println(numbers);
+
+		//adds 42 to index 1:
+		numbers.add(1, 42);
+		System.out.println(numbers);
+
+		//nopte, out of bounds:
+//		numbers.add(100, 42);
+//		System.out.println(numbers);
+
+		//remove element from index 3
+		numbers.remove(3);
+		System.out.println(numbers);
+
+		//get the element at index 2:
+		int x = numbers.get(2);
+		System.out.println(x);
+		System.out.println(numbers);
+
+		//get the size of a list:
+		int size = numbers.size();
+		System.out.println(size);
+
+		for(int i=0; i<numbers.size(); i++) {
+			System.out.printf("numbers of %d = %d\n", i, numbers.get(i));
+		}
+
+		for(int num : numbers) {
+			System.out.println(num);
+		}
+```
+
 ```text
 
 
