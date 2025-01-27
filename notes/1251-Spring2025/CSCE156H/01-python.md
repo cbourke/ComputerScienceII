@@ -252,7 +252,279 @@ for i in range(0, n, 3):
   * Sets - unordered collections of *unique* elements
   * Dictionaries - maps mapping integers and/or strings to other elements
 
+```python
+import pprint
+
+# empty list:
+primes = []
+print(len(primes))
+
+# empty list:
+primes = [2, 3, 5, 7, 11, 13, 17]
+# len gives the size of the list
+print(len(primes))
+
+# not the pythonic way:
+for i in range(len(primes)):
+    x = primes[i]
+    print(x)
+
+for x in primes:
+    print(x)
+
+# add stuff:
+primes.append(19)
+primes.append(23)
+
+pprint.pprint(primes)
+
+# remove the last element:
+x = primes.pop()
+print(x)
+pprint.pprint(primes)
+
+primes.insert(0, 42)
+# negative values wrap around to the end
+primes.insert(-3, 101)
+pprint.pprint(primes)
+
+# larger values are just to the end!?
+primes.insert(12, 202)
+pprint.pprint(primes)
+
+# Retrieval is based on indices:
+first = primes[0]
+# negatives wrap around
+foo = primes[-1]
+print(foo)
+
+#larger values in either direction are errors
+#bar = primes[-30]
+#print(bar)
+
+# You can access a subarray using index values:
+# from index 3 up to 5
+foo = primes[3:6]
+print(primes)
+print(foo)
+
+# starts at index 0 up to 5
+foo = primes[:6]
+print(primes)
+print(foo)
+
+# start at index 3 all the way to the end
+foo = primes[3:]
+print(primes)
+print(foo)
+
+## Sets
+
+names = set()
+names.add("Chris")
+names.add("Dansby")
+names.add("Kyle")
+names.add("Kyle")
+
+pprint.pprint(names)
+
+# set to a list:
+names_list = list(names)
+names_list.append("Kyle")
+pprint.pprint(names_list)
+
+# list to a set:
+primes_set = set(primes)
+pprint.pprint(primes_set)
+
+# Dictionaries
+
+name_map = {
+    3.5: "Foo",
+    0: "Chris",
+    3: "Kyle",
+    "Kyle": 45,
+    "Foo": 4.5
+}
+
+pprint.pprint(name_map)
+
+x = name_map["Kyle"]
+print(x)
+name_map["Kyle"] = 43
+pprint.pprint(name_map)
+
+# Key elements are unique
+# Two different keys can map to the same value
+# but one key maps to one value
+
+# add stuff:
+name_map['Craig'] = -1
+pprint.pprint(name_map)
+
+#empty map
+map = {}
+n = 100
+for i in range(n):
+    map[i] = i + 1
+pprint.pprint(map)
+```
+
+# Comprehensions
+
+```python
+import sys
+import pprint
+
+primes = [2, 3, 5, 7, 11, 13, 17, 19, 23]
+
+# all the primes great than or equal to 10
+foo = [ x for x in primes if x >= 10 ]
+pprint.pprint(foo)
+
+evens = [x for x in primes if x % 2 == 0]
+pprint.pprint(evens)
+
+large_primes = [x for x in primes if x > 10000000]
+pprint.pprint(large_primes)
+
+foo = [ x + 1 for x in primes ]
+pprint.pprint(foo)
+
+foo = { x + 1 for x in primes }
+pprint.pprint(foo)
+
+# maps:
+foo = { v:v+1 for v in primes }
+pprint.pprint(foo)
+
+# iterating over a map
+# iterate over keys:
+for k in foo.keys():
+    print(k)
+
+# iterate over values:
+for v in foo.values():
+    print(v)
+
+# iterate over key-value pairs
+for k,v in foo.items():
+    print(f'{k} maps to {v}')
+
+# identity matrix n x n
+n = 5
+ident = [ [ 1 if j == i else 0 for j in range(n) ] for i in range(n) ]
+pprint.pprint(ident)
+
+# comprehensions are good for "simple" stuff
+# can get really complicated for stuff that is even a little "not simple"
+
+pprint.pprint(sys.argv)
+args = [ int(x) for x in sys.argv[1:] ]
+pprint.pprint(args)
+
+# Tuples
+# tuples are ordered sequences of values
+# singleton, pairs, triples, quadruples
+pair = (1, "one")
+pprint.pprint(pair)
+triple = (1, 2, "shoe")
+pprint.pprint(triple)
+
+#for i = 0...n-2
+#  for j = i+1...n-1
+
+all_pairs_with_self_reference = [ (i, j) for i in range(n) for j in range(i, n)]
+
+all_unique_pairs = [ (i, j) for i in range(n-1) for j in range(i+1, n)]
+
+all_pairs_all = [ (i, j) for i in range(n) for j in range(0, n)]
+pprint.pprint(all_pairs_all)
+
+# n choose 2: n*(n-1) / 2 + diagonal = n
+print(len(all_pairs_with_self_reference)) #15
+# n choose 2: n*(n-1) / 2
+print(len(all_unique_pairs)) #10
+# entire matrix
+print(len(all_pairs_all)) #25
+
+pprint.pprint(all_pairs_with_self_reference)
+
+numbers = set( [1, 2, 3, 4] )
+names = set( ["Kyle", "Chris", "Criag", "Joe"])
+
+#A x B = { (a,b) for a in A and b in B}
+#(1, "Kyle"), (1, "Chris"), (2, "Kyle")
+
+cross_product = [ (a,b) for a in numbers for b in names ]
+pprint.pprint(cross_product)
+```
+
+```python
+import sys
+import pprint
+
+zips = [
+  "05026",
+  "56605",
+  "56605",
+  "56605",
+  "56605",
+  "63260",
+  "24873",
+  "33992",
+  "41588",
+  "99493",
+  "94624",
+  "68508",
+  "68508",
+  "68508",
+  "68508",
+  "68508",
+  "41743",
+]
+
+# grab all zipcodes that start with 0
+zero_zips = [ x for x in zips if x.startswith("0")]
+pprint.pprint(zero_zips)
+
+# how many times does each zip code appear?
+count = { zip:zips.count(zip) for zip in zips}
+pprint.pprint(count)
+
+count_rev = { v:k for k,v in count.items() }
+pprint.pprint(count_rev)
+
+# most common COUNT of the most common zip:
+x = max(count_rev.keys())
+print(x)
+
+# map a count to a list of zip codes that appear that many times
+count_rev = { k:set([x for x in zips if zips.count(x) == k]) for k in count_rev.keys() }
+pprint.pprint(count_rev)
+```
+
+# Strings
+
+* Strings are a built-in type in Python
+* Strings are immutable, once created you cannot change them
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```text
+
+
+
 
 
 
