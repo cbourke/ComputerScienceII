@@ -364,7 +364,162 @@ for(int i=0; i<arr.length; i++) {
 * Maps are even better than all of them combined
 * Key - value mapping
 
+* Aside: 2-D arrays (matrices, tables):
 
+```java
+//3 rows, 5 columns
+int matrix[][] = new int[3][5];
+for(int i=0; i<matrix.length; i++) {
+	for(int j=0; j<matrix[i].length; j++) {
+		matrix[i][j] = i + 2;
+	}
+}
+```
+
+```java
+
+		//A map maps keys to values
+		Map<Integer, String> nuidToName = new HashMap<>();
+		nuidToName.put(35140602, "Chris");
+		nuidToName.put(12345678, "Joe");
+		nuidToName.put(87654321, "Jane");
+
+		System.out.println(nuidToName);
+
+		//retrieve: you need the key
+		String name = nuidToName.get(35140602);
+		System.out.println(name);
+
+		//retrieve something that does not exist:
+		name = nuidToName.get(1);
+		if(name == null) {
+			System.out.println("Cannot find value with key 1");
+		} else {
+			System.out.println(name);			
+		}
+
+		//replace stuff:
+		String oldValue = nuidToName.put(35140602, "Kris");
+		System.out.println(nuidToName);
+
+		nuidToName.remove(12345678);
+		System.out.println(nuidToName);
+
+		//iterate over the key values
+		for(Integer key : nuidToName.keySet()) {
+			System.out.println(key);
+		}
+
+		//iterate over the values themselves:
+		for(String value : nuidToName.values()) {
+			System.out.println(value);
+		}
+
+		//iterate over "both"
+		for(Integer key : nuidToName.keySet()) {
+			String value = nuidToName.get(key);
+			System.out.println(key + " maps to " + value);
+		}
+```
+
+```java
+
+		List<String> zipCodes = new ArrayList<>();
+		zipCodes.add("68508");
+		zipCodes.add("68508");
+		zipCodes.add("68508");
+		zipCodes.add("68116");
+		zipCodes.add("68116");
+		zipCodes.add("90210");
+		zipCodes.add("12345");
+
+		// goal: determine how many times each zip code
+		// appears
+		// 2. what is the most common zip code?
+		Map<String, Integer> zipCodeCount = new HashMap<>();
+		// outline:
+		// for each zipcode in zipCodes:
+		// find the zipcode counter in the map
+		// 1. If this is the first time we see it, set it to 1
+		// 2. If it is not the first time, set it ++
+		for (String zip : zipCodes) {
+			Integer count = zipCodeCount.get(zip);
+			if (count == null) {
+				// first time we've seen zip
+				zipCodeCount.put(zip, 1);
+			} else {
+				count++;
+				zipCodeCount.put(zip, count);
+			}
+		}
+		System.out.println(zipCodeCount);
+
+		int maxValue = Collections.max(zipCodeCount.values());
+		System.out.println(maxValue);
+
+		// create a new map that maps:
+		// a counter (number of times it appears) to a Set
+		// of all zip codes that appear that many times
+
+		// create the map:
+		Map<Integer, Set<String>> counterToZips = new HashMap<>();
+		// for each key (zip):
+		for (String zip : zipCodeCount.keySet()) {
+			int count = zipCodeCount.get(zip);
+			Set<String> zips = counterToZips.get(count);
+			// if its the first time we've seen it..
+			if (zips == null) {
+				// initialize the set
+				zips = new HashSet<>();
+				// add the zipcode to the set
+			}
+			zips.add(zip);
+			counterToZips.put(count, zips);
+		}
+		System.out.println(counterToZips);
+```
+
+# Strings
+
+* Java has a `String` class
+  * There is no null-terminator
+	* There is no memory management
+	* There is a large library of string functions to use
+* Extra: see https://regex101.com/ for regular expressions!
+
+```java
+
+		String name = "chris";
+		System.out.println(name);
+		String foo = name.toUpperCase();
+		System.out.println(name);
+		System.out.println(foo);
+
+		char initial = name.charAt(0);
+		System.out.println(initial);
+
+		String bar = name.replace('c', 'C');
+		System.out.println(bar);
+
+		String differentName = new String(name);
+
+		String message = "Hello " + "World";
+
+		//comma separated values:
+		//data tokens separated by commas
+		String csvData = "Chris,Bo urke,35140602,chris.bo\turke@u   nl\n.edu,472-5008";
+		String tokens[] = csvData.split(",");
+		System.out.println( Arrays.toString(tokens) );
+		for(String token : tokens) {
+			System.out.println(token);
+		}
+
+		tokens = csvData.split("\\s+");
+		System.out.println( Arrays.toString(tokens) );
+
+		String s = csvData.replaceAll("[0-9]+", "foo");
+		System.out.println(s);
+```
 
 ```text
 
