@@ -291,6 +291,33 @@ for(int x : numbers) {
 }
 ```
 
+```java
+
+		//2-D Arrays
+		//matrices, table
+
+		//create an integer matrix/table of size 3 x 5:
+		int mat[][] = new int[3][5];
+		for(int i=0; i<mat.length; i++) { //for each row
+			for(int j=0; j<mat[i].length; j++) { //for each column
+				mat[i][j] = i*j + 10;
+			}
+		}
+
+		for(int i=0; i<mat.length; i++) { //for each row
+			System.out.print("[ ");
+			for(int j=0; j<mat[i].length-1; j++) { //for each column
+				System.out.print(mat[i][j] + ", ");
+			}
+			System.out.print(mat[i][mat[i].length-1]);
+			System.out.print(" ]\n");
+		}
+
+		for(int i=0; i<mat.length; i++) {
+			System.out.println( Arrays.toString(mat[i]) );
+		}
+```
+
 # Lists
 
 * A dynamic ordered data structure that automatically grows/shrinks as you add stuff/remove stuff from it!
@@ -315,7 +342,7 @@ for(int x : numbers) {
 		numbers.add(1, 42);
 		System.out.println(numbers);
 
-		//nopte, out of bounds:
+		//nope, out of bounds:
 //		numbers.add(100, 42);
 //		System.out.println(numbers);
 
@@ -341,7 +368,169 @@ for(int x : numbers) {
 		}
 ```
 
+# Sets
+
+* `Set`s are *unordered* collections of *unique* elements
+  * There is no first, last or `i`-th element!
+
+```java
+
+		Set<String> names = new HashSet<>();
+		names.add("Chris");
+		names.add("Kyle");
+		names.add("Grace");
+		names.add("Craig");
+
+		System.out.println(names);
+
+		names.add("Craig");
+		System.out.println(names);
+
+		int size = names.size();
+		System.out.println(size);
+
+		names.remove("Chris");
+		System.out.println(names);
+
+		names.add("Chris");
+		for(String name : names) {
+			System.out.println(name);
+		}
+
+		//change a set into a list:
+		//Deep copy
+		List<String> foo = new ArrayList<>(names);
+		names.add("Joe");
+		System.out.println(names);
+		System.out.println(foo);
+
+		//converting a list to a set
+		Set<String> bar = new HashSet<>(foo);
+```
+
+## Maps
+
+* Kinda like a "dictionary" in python
+* It is a key-value pair mapping: it maps keys to values
+* Keys are unique: you cannot have a key map to more than one thing
+* Values can be duplicates: you can have different keys mapping to the same value
+* Powerful (better than dictionaries): you can map *any* type to *any* type!
+
+
+```java
+
+		//key, value
+		Map<Integer, String> nuidToName = new HashMap<>();
+		nuidToName.put(35140602, "Chris");
+		nuidToName.put(12345678, "Grace");
+		nuidToName.put(87654321, "Alan");
+		System.out.println(nuidToName);
+
+		nuidToName.put(87654321, "Joe");
+		nuidToName.put(87654320, "Joe");
+		System.out.println(nuidToName);
+
+		//retrieve
+		String me = nuidToName.get(35140602);
+		System.out.println(me);
+
+		String you = nuidToName.get(99999999);
+		System.out.println(you);
+		if(you == null) {
+			System.out.println("Not able to find you");
+		}
+
+		nuidToName.remove(87654320);
+		System.out.println(nuidToName);
+
+		//iterate over values
+		//1. iterate over the values in the list:
+		for(String name : nuidToName.values()) {
+			System.out.println(name);
+		}
+
+		//2. iterate over the keys:
+		for(Integer nuid : nuidToName.keySet()) {
+			String name = nuidToName.get(nuid);
+			System.out.println(nuid + " maps to " + name);
+		}
+```
+
+## Exercise: Zip Codes
+
+```java
+
+		List<String> zipCodes = new ArrayList<>();
+		zipCodes.add("68116");
+		zipCodes.add("68503");
+		zipCodes.add("68503");
+		zipCodes.add("68116");
+		zipCodes.add("68116");
+		zipCodes.add("68503");
+		zipCodes.add("68116");
+		zipCodes.add("68503");
+		zipCodes.add("68116");
+		zipCodes.add("90210");
+		zipCodes.add("12345");
+
+		System.out.println(zipCodes);
+		//report how many times each zip code appears
+		Map<String, Integer> zipCounts = new HashMap<>();
+
+		for(String zip : zipCodes) {
+			Integer count = zipCounts.get(zip);
+			if(count == null) {
+				count = 1;
+			} else {
+				count++;
+			}		
+			zipCounts.put(zip, count);
+		}
+		System.out.println(zipCounts);
+
+```
+
+# Strings
+
+* Java has a `String` class/type
+  * No memory management
+  * No null-terminating character
+  * Basic concatenation: `+`
+* In Java, strings are *immutable*: once created, the contents of the string *cannot* be changed
+* LOTS of nifty methods to call in the string library: RTM!
+
+```java
+
+		String name = "chris";
+		System.out.println(name);
+		String foo = name.toUpperCase();
+		System.out.println(name);
+		System.out.println(foo);
+
+		String bar = name.substring(3);
+		System.out.println(bar);
+
+		String baz = name.substring(1,3);
+		System.out.println(baz);
+```
+
+
+
+
+
+
+
+
+
+
+
+
 ```text
+
+
+
+
+
 
 
 
