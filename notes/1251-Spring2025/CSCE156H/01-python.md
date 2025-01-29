@@ -509,16 +509,121 @@ pprint.pprint(count_rev)
 * Strings are a built-in type in Python
 * Strings are immutable, once created you cannot change them
 
+```python
+import sys
+import pprint
+import re
 
 
+csv_data = "Chris,Bo\turke,105 Sch\n\n\norr,402-472-5008,School of Computing"
+data = csv_data.split(",")
+pprint.pprint(data)
 
 
+data = re.split("[0-9]{3}",csv_data)
 
+data = re.split("\\s+",csv_data)
+pprint.pprint(data)
+```
 
+# Functions, Modules
 
+* Modules are little more than files
+* You can create a "library" or "module" by putting methods or varaibles or code into a file: `library.py`
+* THere is no call by reference: there are no pointers!
 
+* `library.py`
+```python
+"""
+This would be documentation for the library as a whole
+"""
+import math
 
+def euclidean_distance(x1, y1, x2, y2):
+    """
+    This function computes the Euclidean distance between
+    the two points `(x1, y1)` and `(x2, y2)`
+    """
+    return math.sqrt( (x1-x2) ** 2 + (y1-y2) ** 2 )
 
+def foo(x, y, z = 10):
+    bar = x + y
+    baz = y + z
+    x = -42
+    return bar + baz
+
+def get_sum(list):
+    result = sum(list)
+    list.append(42)
+    return result
+
+```
+
+* `demo.py`
+
+```python
+import sys
+import pprint
+import re
+
+# import library
+from library import euclidean_distance
+from library import foo
+from library import get_sum
+
+dist = euclidean_distance(2, 2, 4, 4)
+print(dist)
+
+x = foo(10, 20, 30)
+print(x)
+
+x = foo(10, 20)
+print(x)
+
+y = "ten"
+x = foo(y, "twenty", "thirty")
+print(x)
+print(y)
+
+foo = [10, 20, 30]
+total = get_sum(foo)
+pprint.pprint(foo)
+```
+
+# Basic File I/O
+
+* YOu can open to a file using `open()`
+* Very similar to `fopen`
+
+## Output
+
+```python
+# file output
+# f is a "file handle" that points to the file
+f = open("data.txt", "w")
+
+x = 42
+y = 3.14159
+z = "Chris"
+f.write("Hello world!\n")
+f.write(f'{x}\n')
+f.write(f'{x}, {y:.2f}, {z}\n')
+f.close()
+```
+
+## Input
+
+* `readlines()` retains endline characters
+* Trailing empty lines are retained!
+
+```python
+f = open("data.txt", "r")
+lines = f.readlines()
+
+lines = [ line.rstrip() for line in lines if not line.isspace() ]
+
+pprint.pprint(lines)
+```
 
 
 ```text
