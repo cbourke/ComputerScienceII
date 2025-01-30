@@ -486,6 +486,7 @@ for(int i=0; i<matrix.length; i++) {
 	* There is no memory management
 	* There is a large library of string functions to use
 * Extra: see https://regex101.com/ for regular expressions!
+* Or: https://regexr.com/
 
 ```java
 
@@ -520,6 +521,102 @@ for(int i=0; i<matrix.length; i++) {
 		String s = csvData.replaceAll("[0-9]+", "foo");
 		System.out.println(s);
 ```
+
+* Comparing Strings
+
+```java
+//lexicographic order: according to the asciitable.com
+String a = "123";
+String b = "9";
+
+int result = a.compareTo(b);
+if(result < 0) {
+	System.out.println(a + " comes before " + b);
+} else if(result > 0) {
+	System.out.println(b + " comes before " + a);
+} else {
+	System.out.println(a + " equals " + b);			
+}
+```
+
+# Methods/Functions
+
+* In Java, "functions" are referred to as "methods"
+* `public`: any part of the code can "see" your method/function and thus call/use it
+* `static` means that the method belongs to the class; consequence: you invoke the function (call the function) using the `ClassName.functionName()`
+* You declare functions inside a relevant class and provide the definition
+* The documentation, signature, and definition are all together
+* All functions are pass by value
+* Generally:
+  * Use `lowerCamelCasing` for method names
+	* method names should be *verbs*
+	* ALL non-trivial methods require java-doc style documentation
+	* You can have multiple functions with the same name (function overloading) as long as their parameters are different
+	* Java supports method overloading: you can have multiple functions of the same name as long as they take different parameters
+
+# File I/O
+
+* File I/O involves opening a file, processing it, and then closing
+* File output:
+
+```java
+
+		int a = 42;
+		double b = 3.14159;
+		String c = "Chris";
+
+		//open a file:
+		File f = new File("/etc/passwd");
+		try {
+			PrintWriter pw = new PrintWriter(f);
+			pw.println("Hello Wolrd!!!");
+			pw.printf("%d, %f, %s\n", a, b, c);
+			pw.print("Goodbye World\n");
+			pw.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+```
+
+* File input:
+
+```java
+List<Double> ratings = new ArrayList<>();
+File f = new File("data/books.csv");
+Scanner s;
+try {
+	s = new Scanner(f);
+	//waste the first line which is header data
+	s.nextLine();
+	while (s.hasNextLine()) {
+		String line = s.nextLine();
+		if (!line.isEmpty()) {
+			//Book Id,Title,Last,First,ISBN13,Average Rating,Publisher,Original Publication Year,Date Read
+			String tokens[] = line.split(",");
+			double rating = Double.parseDouble(tokens[5]);
+			ratings.add(rating);
+			System.out.println(line);
+		}
+	}
+	s.close();
+} catch (FileNotFoundException e) {
+	throw new RuntimeException(e);
+}
+Collections.sort(ratings);
+System.out.println(ratings);
+```
+
+# Classes
+
+* Classes in Java allow you to *encapsulate* more than one piece of data into one logical unit: a class
+* Classes also allow you to include *methods* that act on that data or process that data
+* Class Design:
+  * Break an entity down into its parts until...
+	* You can represent it by a built-in type: `int, double, String`
+	* Or there are mulitiple pieces of "subdata": create a new class, unless...
+	* a class already exists to represent that entity
+* A class can consist of other instances of other classes: `Book` class "owns" several strings and is *composed* of other classes: `String, LocalDate, Person`: "composition"
+* Another purpose of writing classes: *abstraction*: we don't want to have to worry about how data is represented, we just want to interact with it!
 
 ```text
 
