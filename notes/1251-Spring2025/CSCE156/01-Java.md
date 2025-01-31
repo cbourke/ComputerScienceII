@@ -512,12 +512,100 @@ for(int x : numbers) {
 
 		String baz = name.substring(1,3);
 		System.out.println(baz);
+
+		//String comparisons: lexicographic: asciitable.com
+		String a = "123";
+		String b = "9";
+
+		int result = a.compareTo(b);
+		if(result < 0) {
+			System.out.println(a + " comes before " + b);
+		} else if(result > 0) {
+			System.out.println(b + " comes before " + a);
+		} else {
+			System.out.println(a + " equals " + b);
+		}
 ```
 
+## Methods/Functions
 
+* In Java functions are called "methods"
+* Methods are just function inside a class
 
+```java
 
+	/**
+	 * Computes the distance (Euclidean) between the two points
+	 * (x1, y1) and (x2, y2).
+	 *
+	 * <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean Distance</a>
+	 *
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 */
+	public static double euclideanDistance(double x1, double y1, double x2, double y2) {
+		return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2) * (y1-y2));
+	}
 
+	public static void main(String[] args) {
+
+		double x1 = 0;
+		double y1 = 0;
+		double x2 = 1;
+		double y2 = 1;
+		double distance = Demo.euclideanDistance(x1, y1, x2, y2);
+		System.out.println(distance);
+	}
+```
+
+* All functions are pass-by-value for variables
+* However, lists, sets, etc. are passed by reference variable, so changes to the lists, etc. are made in the calling function as well
+* Generally:
+  * use `lowerCamelCasing` for function names
+	* They should be *verbs*
+* For now all our functions will be `public static`
+  * `public` - all of your code can "see" it and therefore use it
+	* `static` - it belongs to the class and so you call it or invoke it using the `ClassName.functionName()`
+* Java supports method overloading: more than one function can have the same name!
+  * Ex: `Math.abs`: there are 4 versions!
+* Use `return` to return a variable value to the calling function
+* You can define a `void` function that does not return anything
+* For this class: ALL non-trivial functions *require* doc-style comments/documentation
+  * Trivial function: `main`
+* we are still requiring author headers on the "main" class
+
+# File I/O
+
+* There are always 3 steps:
+  1. Open The file
+	2. Process: read or write
+	3. Close the file
+
+## File Output
+
+```java
+
+		int a = 42;
+		double b = 3.5;
+		String name = "Huskers";
+
+		File f = new File("data/output.txt");
+		try {
+			PrintWriter pw = new PrintWriter(f);
+			pw.println("Hello World");
+			pw.print("No endline here!   ");
+			pw.printf("a = %d, b = %f, c = %s\n", a, b, name);
+			pw.close();
+		} catch (FileNotFoundException e) {
+			//catch and rethrow (release)
+			throw new RuntimeException(e);
+		}
+```
+
+## File Input
 
 
 
