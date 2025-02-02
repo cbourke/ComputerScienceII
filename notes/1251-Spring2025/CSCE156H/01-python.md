@@ -625,6 +625,94 @@ lines = [ line.rstrip() for line in lines if not line.isspace() ]
 pprint.pprint(lines)
 ```
 
+## Demo
+
+* `book.py`
+
+```python
+from functools import total_ordering
+
+@total_ordering
+class Book:
+    """
+    Represents a book
+    """
+
+    def __init__(self, id, title, last, first, isbn, rating, year):
+        self.id = int(id)
+        self.title = title
+        self.last = last
+        self.first = first
+        self.title = title
+        self.isbn = isbn
+        self.rating = float(rating)
+        self.year = int(year)
+
+    def __str__(self):
+        return f'{self.title} by {self.last}, {self.first} ({self.rating:.2f})'
+
+    def __repr__(self):
+        return f'{self.title} by {self.last}, {self.first} ({self.rating:.2f})'
+
+    def __eq__(self, other):
+        return self.id == other.id
+
+    def __lt__(self, other):
+        return self.id < other.id
+
+```
+
+* `book_demo.py`
+
+```python
+import pprint
+from book import Book
+
+f = open("books.csv", "r")
+lines = f.readlines()
+
+lines = [ line.rstrip() for line in lines[1:] if not line.isspace() ]
+
+books = []
+for line in lines:
+    tokens = line.split(",")
+    book = Book(*tokens)
+    books.append(book)
+
+pprint.pprint(books)
+
+# What's the best book
+numbers = [3, 5, 6, 7, 8, 4, 0]
+numbers.sort(reverse=True)
+pprint.pprint(numbers)
+
+books.sort(key = lambda book : book.rating, reverse=True)
+pprint.pprint(books)
+best_book = books[0]
+pprint.pprint(best_book)
+
+# Oldest?  Newest?
+books.sort(key = lambda book : book.year)
+oldest_book = books[0]
+newest_book = books[-1]
+
+pprint.pprint(oldest_book)
+pprint.pprint(newest_book)
+
+# All book(s) by douglas adams
+adams_books = [ b for b in books if (b.first,b.last) == ("Douglas", "Adams") ]
+pprint.pprint(adams_books)
+
+# sort by author then by year
+books.sort(key = lambda book : (book.last, book.first, book.year) )
+pprint.pprint(books)
+
+author_to_books = { (b.first,b.last):[bb for bb in books if (bb.first,bb.last) == (b.first,b.last)] for b in books }
+print("\n\n\n\n")
+pprint.pprint(author_to_books)
+```
+
+
 
 ```text
 
