@@ -607,8 +607,73 @@ for(int x : numbers) {
 
 ## File Input
 
+* Use a `Scanner` and read line-by-line
+
+```java
+File f = new File("data/books.csv");
+try {
+	Scanner s = new Scanner(f);
+	//skip the first line:
+	s.nextLine();
+	while(s.hasNextLine()) {
+		String line = s.nextLine();
+		if(!line.isEmpty()) {
+			//process the the line
+			String tokens[] = line.split(",");
+			System.out.println(Arrays.toString(tokens));
+		}
+	}
+	s.close();
+} catch (FileNotFoundException e) {
+	throw new RuntimeException(e);
+}
+```
+
+## Classes
 
 
+## Sorting
+
+```java
+
+		List<Integer> numbers = Arrays.asList(5, 8, 3, 4, 2, 0, 3);
+		System.out.println(numbers);
+		Collections.sort(numbers);
+		System.out.println(numbers);
+
+		//sort in descending order:
+		//1. Create a *comparator* to order in descending order
+
+		Comparator<Integer> cmpIntDesc = new Comparator<>() {
+			@Override
+			public int compare(Integer a, Integer b) {
+				return -a.compareTo(b);
+//				if(a < b) {
+//					return 1;
+//				} else if(a > b) {
+//					return -1;
+//				} else {
+//					return 0;
+//				}
+			}			
+		};
+		Collections.sort(numbers, cmpIntDesc);
+		System.out.println(numbers);
+
+		List<String> names = Arrays.asList("Chris", "Zoe", "John", "Grace", "grace", "zoe");
+		Collections.sort(names);
+		System.out.println(names);
+		Comparator<String> caseInsensitive = new Comparator<>() {
+
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}
+
+		};
+		Collections.sort(names, caseInsensitive);
+		System.out.println(names);
+```
 
 
 
