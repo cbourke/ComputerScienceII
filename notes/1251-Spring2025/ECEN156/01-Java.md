@@ -618,6 +618,47 @@ System.out.println(ratings);
 * A class can consist of other instances of other classes: `Book` class "owns" several strings and is *composed* of other classes: `String, LocalDate, Person`: "composition"
 * Another purpose of writing classes: *abstraction*: we don't want to have to worry about how data is represented, we just want to interact with it!
 
+
+# Searching & Sorting
+
+```java
+
+		List<Integer> numbers = Arrays.asList(5, 3, 8, 2, 9, 1, 0, 5, 6);
+		System.out.println(numbers);
+		//default: "natural order": ascending
+		Collections.sort(numbers);
+		System.out.println(numbers);
+
+		//sort descending
+		Comparator<Integer> cmpIntDesc = new Comparator<>() {
+
+			@Override
+			public int compare(Integer a, Integer b) {
+				if(a < b) {
+					return 1;
+				} else if(a > b) {
+					return -1;					
+				} else {
+					return 0;
+				}
+			}
+
+		};
+		Collections.sort(numbers, cmpIntDesc);
+		System.out.println(numbers);
+
+		List<String> names = Arrays.asList("Chris", "Grace", "Zoe", "chris", "kris", "grace");
+		Collections.sort(names);
+		System.out.println(names);
+		Comparator<String> cmpIgnoreCase = new Comparator<>() {
+			@Override
+			public int compare(String a, String b) {
+				return a.compareToIgnoreCase(b);
+			}			
+		};
+		Collections.sort(names, cmpIgnoreCase);
+		System.out.println(names);
+```
 ```text
 
 
