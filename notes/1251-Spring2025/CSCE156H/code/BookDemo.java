@@ -30,7 +30,7 @@ public class BookDemo {
 					double rating = Double.parseDouble(tokens[5]);
 					String publisher = tokens[6];
 					int pubYear = Integer.parseInt(tokens[7]);
-					//LocalDate dateRead = LocalDate.parse(tokens[8]);
+					// LocalDate dateRead = LocalDate.parse(tokens[8]);
 					Book b = new Book(bookId, title, author, isbn, rating, publisher, pubYear);
 					books.add(b);
 				}
@@ -42,14 +42,14 @@ public class BookDemo {
 		return books;
 
 	}
-	
+
 	public static void main(String args[]) {
-		
+
 		List<Book> books = BookDemo.loadBookData("data/books.csv");
-				
-		//what is the best/worst book?
-		//1. sort by ratings
-		//  a. Create a comparator for books by rating
+
+		// what is the best/worst book?
+		// 1. sort by ratings
+		// a. Create a comparator for books by rating
 //		Comparator<Book> byRating = new Comparator<>() {
 //
 //			@Override
@@ -64,59 +64,70 @@ public class BookDemo {
 //			}
 //			
 //		};
-		
-		//more modern:
+
+		// more modern:
 		Comparator<Book> byRatingAsc = Comparator.comparing(Book::getRating);
 		Comparator<Book> byRatingDesc = byRatingAsc.reversed();
-		
-		//lambda function/functional style
+
+		// lambda function/functional style
 		Collections.sort(books, (a, b) -> Double.compare(b.getRating(), a.getRating()));
-		for(Book b : books) {
+		for (Book b : books) {
 			System.out.println(b);
 		}
 
-		//oldest/newest:
+		// oldest/newest:
 		System.out.println("\n===============================\n");
 		Comparator<Book> byYear = Comparator.comparing(Book::getPublicationYear);
 		Collections.sort(books, byYear);
-		for(Book b : books) {
+		for (Book b : books) {
 			System.out.println(b);
 		}
 
-		//author then by year
+		// author then by year
 		System.out.println("\n===============================\n");
-		Comparator<Book> byAuthorYear = 
-				Comparator.comparing(Book::getAuthor)
-				          .thenComparing(Book::getPublicationYear);
+		Comparator<Book> byAuthorYear = Comparator.comparing(Book::getAuthor).thenComparing(Book::getPublicationYear);
 		Collections.sort(books, byAuthorYear);
-		for(Book b : books) {
+		for (Book b : books) {
 			System.out.println(b);
 		}
-		
-		//searching
-		//find A murakami book: using binary search
+
+		// searching
+		// find A murakami book: using binary search
 		Person murakami = new Person("Haruki", "Murakami");
 		Book murakamiKey = new Book(murakami);
-		//1. sort the collection by author
-		Comparator<Book> byAuthor = 
-				Comparator.comparing(Book::getAuthor);
+		// 1. sort the collection by author
+		Comparator<Book> byAuthor = Comparator.comparing(Book::getAuthor);
 		Collections.sort(books, byAuthor);
 		int index = Collections.binarySearch(books, murakamiKey, byAuthor);
 		Book someMurakamiBook = books.get(index);
 		System.out.println("\n===============================\n");
 		System.out.println(someMurakamiBook);
 
-		//organize all books by their authors
-		//map: Author => List<Book>
+		// organize all books by their authors
+		// map: Person => List<Book>
 		Map<Person, List<Book>> authorToBooks = new HashMap<>();
-		//outline:
+		// outline:
 		// for each book:
-		//   find the author's key/list
-		//   if list exists: add the book
-		//   if list does not exist: create it and add the book
-		
-		
-		
+		for (Book b : books) {
+			Person author = b.getAuthor();
+			// find the author's key/list
+			List<Book> authorsBooks = authorToBooks.get(author);
+			// if list does not exist: create it and add the book
+			if (authorsBooks == null) {
+				authorsBooks = new ArrayList<>();
+				authorToBooks.put(author, authorsBooks);
+			}
+			// if list exists: add the book
+			authorsBooks.add(b);
+		}
+
+		for (Person author : authorToBooks.keySet()) {
+			System.out.println(author);
+			for (Book b : authorToBooks.get(author)) {
+				System.out.println("\t" + b);
+			}
+		}
+
 	}
 
 }
