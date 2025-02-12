@@ -71,6 +71,16 @@ Usually is comprised of three things:
   * Is a person a string?
   * Is an address a string?
 
+## Inheritance
+
+* Inheritance allows you to reuse a class by `extends`ing it and creating a *subclass*
+  * A superclass/subclass relationship is an **is a** relationship: the subclass *is an* instance of the superclass
+  * Alternative: parent/child relation
+* Pattern:
+  * Common functionality is shared in the super class while
+  * Specific functionality is *overridden* in the subclass
+  * Ex: Animal, Dog, Cat
+
 ```text
 
 
