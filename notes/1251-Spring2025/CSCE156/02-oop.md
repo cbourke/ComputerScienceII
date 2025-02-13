@@ -31,9 +31,78 @@ Formally an object is a general entity characterized by:
   * YAGNI = You Ain't Gonna Need It (don't over engineer your classes)
   * KISS = Keep It Simple, (i said) SIMPLE!
 
+## Four Pillars:
+
+* Abstraction
+* Encapsulation
+* Inheritance
+* Polymorphism
+
+## Abstraction
+
+* Implementation or "information hiding"
+* Consider: `Math.sqrt()`: who cares how it works, it just does
+  * Procedural abstraction: the details are hidden inside the function, we don't have to worry about them
+* Consider: `LocalDateTime`: how does it *represent* a date/time
+  * ISO8601 formatted string?
+  * several integers: one for each field: day, month, year, hour, minute, second, fractional second
+  * a single number: unix epoch number
+  * Who cares?  THe representation is *internal* to the class
+* Abstraction allows you to *reason about an object* without knowing how it works or how it is represented
+
+## Encapsulation
+
+Usually is comprised of three things:
+1. The grouping of data into one logical unit
+2. The protection of data from the outside world
+3. The grouping of methods (behavior) that act on that data
+
+Generally:
+* All member variables should be `private` to protect them unless you have a Very Good Reason to do otherwise
+* You can make as many constructors as you want in order to make your objects flexible
+* You should avoid setter functions: you should prefer immutable objects
+* Better patterns: copy constructors
+* Another better pattern: Builder pattern (see the advanced activities in Lab 4)
+
+## Inheritance
+
+* Inheritance allows you to reuse a class by `extends`ing it and creating a *subclass*
+  * A superclass/subclass relationship is an **is a** relationship: the subclass *is an* instance of the superclass
+  * Alternative: parent/child relation
+* Overall:
+  * General functionality is located in the super class and shared among all of the subclasses
+  * Specific functionality is located in the subclasses
+* Classic example: Animal, Cat, Dog
+* Specific functionality is *overridden* in the subclass
+* Demonstration:
+  * Extend our `Person` class so that we have `Author` and a `Director`
+* Inheritance defines an *is-a* relationship: a `Dog` is-a `Animal`
+* WHen a subclass `extends` a superclass, it *inherits* its state and functionality
+
+### Observations:
+
+* If a class `A` `extends` a class `B`:
+  * `A` is the subclass/child class/derived
+  * `B` is the superclass/parent class/
+* Inheritance defines an "is-a" relationship
+  * A `Dog` *is-a* `Animal`
+  * A `Cat` *is-a* `Animal`
+  * An `Animal` is not necessarily a `Cat/Dog`
+  * It is *never* the case that a `Cat` is-a `Dog`
+* HOwever, you really need to think about your inheritance design
+  * Ex: there are some `Persons` that have directed films *and* written books
+* Generally you can "prefer composition over inheritance"
+  * Perfect use case: Director/Author
+
 
 
 ```text
+
+
+
+
+
+
 
 
 
