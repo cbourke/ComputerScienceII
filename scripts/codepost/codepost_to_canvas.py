@@ -55,7 +55,7 @@ elif len(canvas_assignments) > 1:
     print(f"Multiple Canvas assignments for '{assignment_name}' found!", file=sys.stderr)
     sys.exit(1)
 canvas_assignment = canvas_assignments[0]
-canvas_assignment_id = canvas_assignment.id
+canvas_assignment_id = canvas_assignment.assignment_id
 commit_to_canvas = args.commit
 
 print(f"Processing assignment '{assignment_name}' (codepost id={codepost_assignment_id}) to (canvas id={canvas_assignment_id})...")
