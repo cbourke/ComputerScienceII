@@ -80,6 +80,76 @@ Usually is comprised of three things:
   * Common functionality is shared in the super class while
   * Specific functionality is *overridden* in the subclass
   * Ex: Animal, Dog, Cat
+* The *is-a* relationship **must be invariant**
+  * A hierarchy of inheritance *must be well designed* up front, otherwise it collapses when you have an example that doesn't fit the hierarchy
+  * Alternative: "prefer composition over inheritance"
+
+### Tools:
+  * UML Sketches: https://app.diagrams.net/
+  * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
+
+### Observations:
+
+* If a class `A` `extends` a class `B`:
+  * `A` is the subclass/child class/derived
+  * `B` is the superclass/parent class/
+* Inheritance defines an "is-a" relationship
+  * A `Dog` *is-a* `Animal`
+  * An `Author` *is-a* `Person`
+* If the relation is not invariant or not well-defined, avoid inheritance
+* Three types of relations in inheritance:
+  * Covariance: you can always treat a subclass as a super class (always safe)
+  * Constravariance: sometimes you can treat a superclass as a subclass (but often times not): not always safe
+  * Invariance: you can never treat "sibling" classes as another sibling class
+*  You can **sometimes** use the `instanceof` keyword to determine the type or subtype of a variable
+  * However, you should almost *NEVER* use this in a program
+  * It is completely **wrong** to use `instanceof` to determine the control flow of your program.
+  * The only time you should use this is when creating copies or instances of an object: there is no such thing as a "polymorphic constructor"
+* Motivations for inheritance:
+  * It provides a way for *code reuse*
+  * It provides a way to *organize* code
+  * Reduces redundancy
+  * If well-designed, the introduction of new classes or new behavior or functionality **should not break any other piece of code**
+
+### More Inheritance - Pitfalls
+
+An inheritance hierarchy needs to be **very well defined**.
+  * The *is-a* relationship *must* be invariant
+  * Once a hierarchy has been established and code is now *dependent* on it, it *cannot be changed* without substantially breaking other code
+
+Pitfalls
+* Rectangle Problem
+  * Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+  * Another Example: Author, Director, Person hierarchy no longer makes sense if you have a person who is BOTH an author and director
+  * This is a violation of the Liskov Substitution Principle (SOLID)
+ * Antipattern (a bad behavior or bad but common mistake in code): yo-yo antipattern
+  * You don't want your inheritance hierarchies to be too deep
+  * YOU should prefer shallow hierarchies
+  * Or: "prefer composition over inheritance"
+  * YAGNI = You Ain't Gonna Need It
+* Diamond Problem Antipattern
+  * Animal/Dog/Cat
+  * Some languages allow you to inherit from multiple classes!
+  * It is ambiguous as to which behavior you are inheriting!
+  * For languages (C++) that allow this, you have to write code to explicitly state what you are inheriting: defeats the purpose of code reuse anyway
+  * Java (and most sane) programming languages do not allow this
+
+### More Inheritance Tricks
+
+* Java allows you to create `abstract` classes: classes that you are not allowed to instantiate instances of but that you can define state and behavior in
+* In Java, you can create an `abstract` classes:
+  * You can still inherit from an `abstract` class
+  * However, you cannot create an instance of an `abstract` class
+  * `abstract` classes can define state (variables) or methods that are inherited by any sublcass
+  * You can have `abstract` subclasses but at some point it needs to be an actual implementation
+  * You provide the behavior in NON-abstract *subclasses*
+* An `interface` is a *pure* abstract class: it only has method signatures, no state, no implementations
+  * This has the advantage that you can `implements` multiple interfaces!
+
+# Polymorphism
+
+* Polymorph = multiple form(s)
+
 
 ```text
 
