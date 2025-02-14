@@ -77,7 +77,11 @@ Generally:
 * Demonstration:
   * Extend our `Person` class so that we have `Author` and a `Director`
 * Inheritance defines an *is-a* relationship: a `Dog` is-a `Animal`
-* WHen a subclass `extends` a superclass, it *inherits* its state and functionality
+* When a subclass `extends` a superclass, it *inherits* its state and functionality
+
+### Tools:
+  * UML Sketches: https://app.diagrams.net/
+  * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
 
 ### Observations:
 
@@ -89,12 +93,34 @@ Generally:
   * A `Cat` *is-a* `Animal`
   * An `Animal` is not necessarily a `Cat/Dog`
   * It is *never* the case that a `Cat` is-a `Dog`
-* HOwever, you really need to think about your inheritance design
+* However, you really need to think about your inheritance design
   * Ex: there are some `Persons` that have directed films *and* written books
 * Generally you can "prefer composition over inheritance"
   * Perfect use case: Director/Author
+* Three types of relations:
+  * Covariant relationship: you can treat a subclass as a super class (Dog **is an** Animal); ALWAYS safe
+  * Contravariant relationship: you can *sometimes* treat a subclass as a superclass (an Animal is sometimes a Dog); sometimes safe
+  * Invariant relationship: a cat is never a dog, a dog is never a cat, NEVER safe
+* Sometimes it is okay to check before you perform a contravariance...
+  * You can use `instanceof` keyword to determine if it is of the appropriate type
+  * HOWEVER: you generally don't want to do this unless you *have* to
+  * If you find yourself doing this *often* then it is likely a *bad design*
+  * Generally the only time you *have* to use `instanceof` and do a contravariance is when  you are making copies (calling a copy constructor)
+* Motivations for inheritance:
+  * It provides a way to utilize *code resuse*
+  * It provides a way to reduce redundancy
+  * It provides a way to reason about and organize your classes into a *hierarchy*
+  * It is well-designed if the introduction of a new class does not break any of the other code
 
+### More Inheritance - Pitfalls
 
+An inheritance hierarchy needs to be **very well defined**.
+  * The **is-a** relationship *must* be invariant
+  * Once a hierarchy has been established and code is not *dependent* on the hierarchy, it *cannot be changed* (not without breaking all other code)
+
+### Demo
+
+* Create some classes to support assets: `Stock` and `Annuity`
 
 ```text
 

@@ -73,6 +73,60 @@ Generally:
 * Better patterns: copy constructors
 * Another better pattern: Builder pattern (see the advanced activities in Lab 4)
 
+## Inheritance
+
+* Inheritance allows you to reuse a class by `extends`ing it and creating a *subclass*
+  * A superclass/subclass relationship is an **is a** relationship: the subclass *is an* instance of the superclass
+  * Alternative: parent/child relation
+* Overall:
+  * General functionality is located in the super class and shared among all of the subclasses
+  * Specific functionality is located in the subclasses
+* Classic example: Animal, Cat, Dog
+* Specific functionality is *overridden* in the subclass
+* Demonstration:
+  * Extend our `Person` class so that we have `Author` and a `Director`
+* Inheritance defines an *is-a* relationship: a `Dog` is-a `Animal`
+* When a subclass `extends` a superclass, it *inherits* its state and functionality
+
+### Tools:
+  * UML Sketches: https://app.diagrams.net/
+  * UML Generation: plantUML: https://github.com/cbourke/ComputerScienceII/blob/master/resources/uml.md
+
+### Observations:
+
+* If a class `A` `extends` a class `B`:
+  * `A` is the subclass/child class/derived
+  * `B` is the superclass/parent class/
+* Inheritance defines an "is-a" relationship
+  * A `Dog` *is-a* `Animal`
+  * A `Cat` *is-a* `Animal`
+  * An `Animal` is not necessarily a `Cat/Dog`
+  * It is *never* the case that a `Cat` is-a `Dog`
+* However, you really need to think about your inheritance design
+  * Ex: there are some `Persons` that have directed films *and* written books
+* Generally you can "prefer composition over inheritance"
+  * Perfect use case: Director/Author
+* Three types of relations:
+  * Covariant relationship: you can treat a subclass as a super class (Dog **is an** Animal); ALWAYS safe
+  * Contravariant relationship: you can *sometimes* treat a subclass as a superclass (an Animal is sometimes a Dog); sometimes safe
+  * Invariant relationship: a cat is never a dog, a dog is never a cat, NEVER safe
+* Sometimes it is okay to check before you perform a contravariance...
+  * You can use `instanceof` keyword to determine if it is of the appropriate type
+  * HOWEVER: you generally don't want to do this unless you *have* to
+  * If you find yourself doing this *often* then it is likely a *bad design*
+  * Generally the only time you *have* to use `instanceof` and do a contravariance is when  you are making copies (calling a copy constructor)
+* Motivations for inheritance:
+  * It provides a way to utilize *code resuse*
+  * It provides a way to reduce redundancy
+  * It provides a way to reason about and organize your classes into a *hierarchy*
+  * It is well-designed if the introduction of a new class does not break any of the other code
+
+## Demo:
+
+* Design classes to support assets: a stock, an annuity
+  * Stocks: shares and share price
+  * Annuity: monthly payment and number of years
+
 ```text
 
 
