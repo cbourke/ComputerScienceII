@@ -29,11 +29,11 @@ class Group:
     def __str__(self):
         s = ''
         if len(self.members) > 1:
-            s = f'  {self.canvas_group_name:-20s} ({self.canvas_group_id})\n'
+            s = f'  {self.canvas_group_name:<20s} ({self.canvas_group_id})\n'
             for member in self.members:
-                s += f'    {member}\n'
+                s += f'    {str(member):<s}\n'
         else:
-            s += f'  {self.members[0]}\n'
+            s += f'  {str(self.members[0]):<s}\n'
         return s
 
     def __eq__(self, other):
