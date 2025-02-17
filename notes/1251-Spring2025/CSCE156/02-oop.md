@@ -122,6 +122,101 @@ An inheritance hierarchy needs to be **very well defined**.
 
 * Create some classes to support assets: `Stock` and `Annuity`
 
+#### Observations
+
+* What happens if you have well-defined subclasses, but not-so-well-defined superclasses
+  * In Java, you can create an `abstract` class:
+  * It is a class that you can inherit from
+  * YOu can define methods and state in your class, but also
+  * You can define `abstract` methods: methods that have no "default behavior"
+  * You provide the behavior in NON-abstract subclasses
+  * You cannot instantiate (create) an abstract class even if it has a constructor!
+* An `interface` takes this to another level
+  * An interface is a pure abstraction: it only defines abstract methods, no state, no behavior
+  * You can `implements` multiple interfaces: it provides more flexiblity
+  * It means that you can define a collection of abstract methods and then a class can `implements` that interface
+
+### Pitfalls
+
+* Rectangle Problem: Shape, Rectangle, Square
+  * Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+  * Another example: Author, Director, Person hierarchy: it no longer made sense when we had a person that was *both*
+  * If you have mutable methods (setters) that can change what an object "is" that violate the hierarchy, it is probably not a well-designed hierarchy
+  * This is a violation of the Liskov Substitution Principle (SOLID)
+* Antipattern (a bad behavior or bad but common mistake in code): yo-yo antipattern
+  * Suppose you have a *deep* inheritance hierarchy: 10 or 20 classes deep
+  * It is best to keep a hierarchy *shallow*: limit the number of classes/subclasses
+  * Or: "prefer composition over inheritance"
+* Diamond Problem Antipattern
+  * Animal, Dog, Cat
+  * Suppose you could inherit from *multiple classes*
+  * You can create "something" that inherits from both `Cat` *and* `Dog`
+  * For this reason, MOST OOP languages do not allow multiple inheritance
+  * C++ is the only one (that I know of) that does allow this
+  * Java does not allow multiple inheritance
+  * HOwever: most languages allow you to create more "general" ideas of inheritance: `abstract` classes and `interface`s (pure abstract classes)
+  * Java is a *single inheritance hierarch*: all things `extends` from `Object`
+
+# Polymorphism
+
+* Polymorph = multiple form(s)
+* Code: one piece of code (variable, method, class) can be written *generically* so that it can be applied to many types
+* Other languages:
+  * Python: `list.sort()`
+  * C: `qsort()`
+  * Java: `Collections.sort()`
+* It allows you to write generic code, one function/method that can be applied to *any* type
+
+### Subtype Polymorphism
+
+* This is the "classic" or "default" type of polymorphism
+* You can treat any subtype as a supertype so that you can apply generic code to it
+* Ex: `Robin` can be treated as a `Bird`
+* Ex: `ArrayList` can be treated as a `List`
+
+### Method Overloading
+
+* Ex: from C, how many "absolute value" functions are there?
+  * `abs()` (integers), `fabs()` (floating point numbers), `labs()`, `llabs()`
+  * C does not have function overloading: if you write a function ONLY that function can have that name
+  * Python doesn't have it either
+  * Java does: how many absolute value functions does the math library have?
+* You can have more than one function with the same name but with different types of arguments (inputs/parameters)
+* The compiler is "smart enough" to figure out which one you want to call based on the value you give it: `int` it calls the version that takes an integer, `double`: it calls the version that takes a `double`
+* This mechanism is known as "static dispatch" (the compiler *dispatches* the function call at *compile time* that's what static means)
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String`: string concatenation
+  * `int + int`: addition
+  * `String + int`: string concatenation
+* Consider C:
+  * `int + int`: addition
+  * `char * + char *`: memory address + memory address = some other memory address
+* Python:
+  * `string + string`: concatenation
+  * `int + int`: addition
+  * `int + string`: error!  You are forced to use `str(int) + string`
+* C and python do not support *operator overloading*
+* Operator overloading: an operator (`+`) can have more than one meaning depending on the types you apply it!
+* Java: does support *limited* operator overloading
+* Generally operator overloading is a bad idea:
+  * `Time + Time` mean?
+  * `List + List` mean?
+  * Python: `list + list`: list concatenation/appending
+  * Alternative: Union: $A \cup B$
+  * Intersection?
+  * Math: coordinate-wise addition (vector addition)
+  * Ideally: it should be completely understood, unambiguous
+  * C++ is the only language that supports full user-defined operator overloading
+    * You *could* redefine `+` to mean subtraction!
+    * Even if you do use operator overloading: you have to write a function to do!  So you may as well give that function a name!  A *meaningful* name
+* Operator overloading is a thing, but **should be extremely limited**
+
+### Parameterized Polymorphism
+
+
 ```text
 
 

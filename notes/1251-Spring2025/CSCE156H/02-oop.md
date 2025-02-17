@@ -127,6 +127,102 @@ Generally:
   * Stocks: shares and share price
   * Annuity: monthly payment and number of years
 
+
+### Observations
+
+* What happens if you have well-defined subclases but not-so-well-defined superclasses
+* In Java you can create an `abstract` class
+  * You use the keyword `abstract`
+  * Then you can have `abstract` methods: methods with no *default* behavior, no method body, etc.
+  * Then subclasses that inherit this `abstract` method, MUST provide an implementation
+  * Even if you have a constructor, you *cannot* instantiate an abstract class!
+* In Java you can also create a *pure* abstract class: `interface`
+  * An interface allows you to define any number of methods with NO default behavior
+  * This allows classes to `implements` multiple interfaces
+
+### More Inheritance - Pitfalls
+
+An inheritance hierarchy needs to be **very well defined**.
+  * The *is-a* relationship *must* be invariant
+  * Once a hierarchy has been established and code is now *dependent* on it, it *cannot be changed* without substantially breaking other code
+
+
+#### Rectangle Problem:
+  * Shape, Rectangle, Square
+  * Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+  * Our example: Author, Director, Person: not a great design because it doesn't allow a person that is both
+  * Our example: Author, Director, Person: not a great design because it doesn't allow a person that is both
+  * This is an example of a violation of the Liskov Substitution Principle (SOLID)  
+  * Prefer composition over inheritance
+
+#### Yo-yo Antipattern
+  * Antipattern = common, but bad habit that you see in code
+  * Pattern: common pattern that is useful and good design in code
+  * Deep inheritance hierarchies (20 classes/levels) deep are bad
+  * Keep your hierarchy shallow, OR
+  * "Prefer Composition over Inheritance": it gets you the same or similar benefits of code reuse but without locking you into the hierarchy!
+
+#### Diamond Problem/Antipattern
+  * Really only C++ allows you to do this: you can inherit from *multiple* classes
+  * The problem: what gets inherited from what superclass?
+  * Java does not allow this (good), most programming languages do not allow this
+  * Even in C++: you end up having to disambiguate it: you have to explicitly write code that you inherit from one or the other
+    * Anyone using it has to RTM
+    * You have to write code anyway, defeats hte purpose of code reuse
+
+# Polymorphism
+
+* Poly = Many, Morph = Form
+* Code: one piece of code (variable, method or class) can be written generically and applied to many types
+* C: `qsort()` can be used for any type because it uses `void *`
+* Python: `list.sort()` as well
+* Any language will only have one sort method in general which can be applied to any type
+* All you have to do is *configure* it with a comparator
+
+### Subtype Polymorphism
+
+* This is the "classic" OOP polymorphism
+* You can treat any subtype as a supertype
+* You can treat a `Robin` as a `Bird`
+* You can treat an `ArrayList` as a `List`
+* It simplifies code and means you only have to write on list or one method to process that list (or other types)
+
+### Method Overloading
+
+* C: how many absolute value functions does C have?  `abs()`, `fabs()`, `labs()`, `llabs()`, etc.
+* This is because C does not have method overloading: once you have defined a function with a name `foo` there can be NO other function with that name!
+* OOP allows method overloading: you can define multiple functions with the same name but with different paratemers/input types
+* The compiler is "smart enough" to know which function you want based on the paratmer type you call it with: if you call it with an `int` as input, it calls one version, if you call it with a `double` it calls another version, etc.
+* This mechanism is known as "static dispatch"
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String`: `+` means concatenation
+  * `int + int`: `+` means addition
+  * `String + int`: `+`: means (conver the `int` to a string, then...) concatenation
+* Python:
+  * `string + string`: concatenation
+  * `int + int`: addition
+  * `string + int`: ERROR, you need to use `string + str(int)`
+* C:
+  * `char * + char *`: memory addition: weird things happen
+  * C does not have ANY operator overloading
+* C++: full operator overloading: you can write code to redefine ANY operator.  ex: you redefine `+` to mean subtraction
+* This is bad in general:
+  * `List + List`:
+    * Appending (python)
+    * Coordinatewise vector addition
+    * $A \cup B$: union
+  * `Time + Time`: meaningless
+* If you do use operator overloading:
+  * You have to write a method/fucntion to define it anyway
+  * If you're writing a function, *give it a meaningful name* and use it!
+
+### Parameterized Polymorphism
+
+* Constructor vs Destructor/Destroyer or "clean up" function
+
 ```text
 
 
