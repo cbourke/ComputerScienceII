@@ -149,9 +149,133 @@ Pitfalls
 # Polymorphism
 
 * Polymorph = multiple form(s)
+* Code: one piece of code (variable, method or class) can be written generically and applied to many types
+* C: `qsort()`
+* Java: `Collections.sort()`
+* This allows code reuse at an even higher level!
+
+## Subtype Polymorphism
+
+* Is the "classic" polymorphism: you can treat a subtype as a supertype
+* You can treat a `Robin` as a `Bird`
+* Covariance: it always safe (as long as it is designed correctly)!
+* If you don't need the specialized behavior of a subclass, you can write more generic code to apply to ALL subclasses
+
+### Method Overloading
+
+* Example: in C how many absolute value functions did you have? `abs(), fabs(), labs(), llabs()`
+* In a language without method overloading, once you create a function with a given name, `foo`, that is the ONLY function that can have that name
+* You end up "polluting the namespace": libraries will typically prepend ALL functions with some acronym: `gmp_function_name`
+* In an OOP language: you have method overloading: you can have more than one method with the same name but with different parameter types!
+* The compiler is able to determine which method you intended to call based on the input(s) you give it: this is known as "static dispatch"
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String`: `+` means concatenation
+  * `int + int`: `+` is addition
+  * `String + int`: convert the `int` to a string and concatenate
+* C:
+  * `int + int`: addition
+  * `char * + char *`: memory address + memory address (nonsense)
+* Other languages it may cause an error (python) or it may try to convert the string to a number and add (php)
+* In java: only this particular instance is an operator overloaded
+* C++: you can customize and change ANY operator to ANY operation
+  * You could redefine `+` to mean subtraction!
+  * most languages have *some* built in operator overloading
+  * most languages do not allow user-defined operator overloading (good)
+* `array + array`:
+  * Append the second array to the first (creating a new array)
+  * Math: coordinate-wise addition (vector addition)
+  * Union: $A \cup B$
+  * Confusion!
+* In C++ or any language that *would* support this:
+  * YOu have to write a function to define it
+  * If you're gonna write a fucntion anyway, give it good name: `arrayAppend()`, `vectorAdd()`, `union()`
+* Other things make no sense at all:
+  * `Time + Time`
+* Most languages do not allow customization of operator overloading and even if they did: you'd have to write a function
+
+### Parameterized Polymorphism
+
+* In Java you can create a parameterized class, variable, or method
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+  of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should represent one thing and represent it well
+* Violation: God-Class: the class is responsible for everything, knows everything, does everything
+* You can still violate it by having it do 2 things
+  * `Person` vs `Address`
+  * Loading Data, Converting Data, Saving Data
+* YAGNI Principle: You Aint Gonna Need It: don't over engineering things
+  * Person: UUID, last name, first name, DOB, etc.
+* Avoid "leaky abstractions":
+  * Code should not require users to use it in a *specific* way
+  * If you were forced to call `initialize_math()` before you called any `Math` function
+* Ex: exposing how emails are stored: a particular list, a set, an array, etc.  
+  * `public ArrayList<String> getEmails()`
+  * Better: `public List<String> getEmails()`
+  * Best: return a copy of the emails as a new `Collection<String>`
+  * Even worse: `public String[] getEmails()`
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide a *general* behavior that should *NOT* be changed otherwise:
+    * It must have been a bad design to begin with OR
+    * changing it breaks all other code
+* Violation: `instanceof` to determine business logic (the value of an account, the cost of items)
+
+```java
+if(object.getType().equals("Stock")) {
+  //do stock thiings here
+} else if(object.getType().equals("Annuity")) {
+  //do annuity things here
+}
+
+//also wronger:
+if(object instanceof Stock) {
+  //do stock thiings here
+} else if(object instanceof Annuity) {
+  //do annuity things here
+}
+
+```
+
+* The only time you *should* (in fact have to) use the `instanceof` keyword or type checks: when you call a constructor
+
+* In Java: you can enforce this principle using the `final` keyword:
+  * `final` variables mean you are making them constant
+  * A `final` class cannot be extended: ex: `Integer`
+  * A method can be made `final` and subclasses cannot override it!
+
+
+## L = Liskov Substitution Principle
+
+## I = Interface Segregation Principle
+
+## D = Dependency Inversion Principle
+
 
 
 ```text
+
+
+
+
+
+
+
+
+
+
 
 
 
