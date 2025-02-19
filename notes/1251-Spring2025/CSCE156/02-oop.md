@@ -216,6 +216,71 @@ An inheritance hierarchy needs to be **very well defined**.
 
 ### Parameterized Polymorphism
 
+* In Java you can create a parameterized variable, class or method
+* That one variable can be any type, method can act on any type, class can be associated with any type!
+* Demonstration
+* Allows you to write one piece of code that can apply to many types
+  * `Collections.sort()`
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+  of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+## SOLID Principles
+
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should represent one thing and represent it well
+* Violation: God-Class: the class is responsible for everything, knows everything, does everything
+  * Are persons and companies the same thing?
+  * Be careful: you still need good modeling and good composition
+  * Loading Data, Converting Data, Saving Data
+* YAGNI Principle: You Aint Gonna Need It: don't over engineering things
+* Avoid "leaky abstractions":
+  * Code should not require users to use it in a *specific* way
+  * If you were forced to call `initialize_math()` before you called any `Math` function
+* Ex: exposing how emails are stored: a particular list, a set, an array, etc.  
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide a *general* behavior that should *NOT* be changed otherwise:
+    * It must have been a bad design to begin with OR
+    * changing it breaks all other code
+* Violation: `instanceof` to determine business logic (the value of an account, the cost of items)
+
+
+```java
+if(object.getType().equals("Stock")) {
+  //do stock thiings here
+} else if(object.getType().equals("Annuity")) {
+  //do annuity things here
+}
+
+//also wronger:
+if(object instanceof Stock) {
+  //do stock thiings here
+} else if(object instanceof Annuity) {
+  //do annuity things here
+}
+
+```
+
+
+* The only time you *should* (in fact have to) use the `instanceof` keyword or type checks: when you call a constructor
+
+* In Java: you can enforce this principle using the `final` keyword:
+  * `final` variables mean you are making them constant
+  * A `final` class cannot be extended: ex: `Integer`
+  * A method can be made `final` and subclasses cannot override it!
+
+## L = Liskov Substitution Principle
+
+## I = Interface Segregation Principle
+
+## D = Dependency Inversion Principle
+
 
 ```text
 
