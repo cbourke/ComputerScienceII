@@ -231,7 +231,7 @@ Some examples:
 
 -   Your program *must* be runnable from a class named
     `DataConverter.java` which *must* be in the package
-    `com.vbg`
+    `com.vgb`
 
 -   Your input/output test case files *must* be in a `data`
     directory in your project when you hand it in.
@@ -337,3 +337,6 @@ Bonus/Honors Items (10 each)
 
  *  Both XML and JSON formats are used
  *  Test Case submitted 1 week prior to due date
+   * All test case files (csv and xml or json) must be handed in through the webhandin
+     inside your JAR file as specified.  They must all be well-formatted and **may not
+     be copies of ours**
