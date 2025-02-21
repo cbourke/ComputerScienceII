@@ -277,9 +277,96 @@ if(object instanceof Stock) {
 
 ## L = Liskov Substitution Principle
 
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+* Subtype polymorphism!
+
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+LinkedList<Integer> numbers2 = new LinkedList<>();
+
+//better:
+List<Integer> numbers = new ArrayList<>();
+```
+
+* Violation: Rectangle/Square example
+* Author, Director, Person
+
+
 ## I = Interface Segregation Principle
 
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`
+* A bad design would *force* you to implement both of these things even if you didn't want to...
+  * `onDoubleClick()` calls `onClick()`
+  * NOOP = No Operation
+* Instead: all interfaces should be as small as possible
+
+
+
 ## D = Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Ex:
+  * You write code that connects to a (Free) MySQL database with very-specific MySQL methods, etc.
+  * Now you've grown as a company and need to migrate to MSSQL
+  * Throw away all DB code and connect to the MSSQL server: rewrite EVERYTHING
+  * Vendor lock: the cost of switching is greater than the cost of staying with the current vendor
+  * Instead: you should have written generic code for an *interface* that each one of the databases *implements*
+
+* Library A:  
+`double GPSLocator.getLatitude()`  
+`double GPSLocator.getLongitude()`
+* Library B:  
+`AndroidLocation AndroidNative.getLocation()`  
+ `AndroidLocation.getLatitude()`   `AndroidLocation.getLongitude()`
+ * Library C: `CellTowerGPS.getLatitudeRad(), CellTowerGPS.getLongitudeRad()`
+
+ ```java
+
+ if(Library A) {
+   return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+ } else if(Library B) {
+   AndroidLocation l =  AndroidNative.getLocation();
+   return new Location(l.getLatitude(), l.getLongitude());  
+ } else if(Library C) {
+    return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()),
+     Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+ }
+```
+
+* INversion:
+
+```java
+
+public interface Locator {
+
+  public Location getLocation();
+
+}
+
+public AndroidLocator implements Locator {
+
+
+  public Location getLocation() {
+    AndroidLocation l =  AndroidNative.getLocation();
+    return new Location(l.getLatitude(), l.getLongitude());  
+
+  }
+
+}
+
+//client code: doesn't care about the type of Locator
+Locator l = new AndroidLocator();
+Location = l.getLocation();
+
+
+```
+
+* "Inverting" a dependency means creating an interface between the "highlevel" object/class/thing and the low-level library that `implements` it
+* In general, you should prefer *loose coupling* so that software components can easily be interchanged
+
 
 
 ```text
