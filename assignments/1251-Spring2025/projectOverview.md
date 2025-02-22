@@ -173,8 +173,7 @@ https://www.youtube.com/watch?v=lfGVthy2A14&list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANO
     `lib` at the root of your project. Your project should look
     something like the following.
 
-    ![Your project setup should look something like this
-    figure.](images/organization.png)
+    ![Your project setup should look something like this figure.](images/organization.png)
 
     To add external JAR files to your project do the following.
 
@@ -203,7 +202,7 @@ To export your project for submission to webgrader, do the following:
     look something like the following.
 
     ::: center
-    ![image](export.png)
+    ![image](images/export.png)
     :::
 
 5.  You can now click `Finish` and it should save the project as
