@@ -37,7 +37,7 @@
     * Create (`insert`) - inserting new records into a table
     * Retrieve (`select`) - pull out records or data from a table
     * Update (`update`) - modifying currently existing records
-    * Destroy (`delete`) - removing/deleting records in a table: THERE IS NO, ABSOLUTELY NO UNDO
+    * Destroy (`delete`) - removing/deleting records in a table: THERE IS NO, **ABSOLUTELY NO** UNDO
 
 ## Getting Started
 
@@ -548,7 +548,7 @@ select p.lastName as `Last Name` from Person p
   * Support multiple "levels" of logging: `DEBUG, INFO, WARN, ERROR`
   * Supports event-based actions such as emailing an admin when an error occurs
   * Supports multiple outputs: file-based outputs, database-based outputs
-  * Supports file management: daily rolling file, size-based rolling files, etc. 
+  * Supports file management: daily rolling file, size-based rolling files, etc.
 
 
 ```text
