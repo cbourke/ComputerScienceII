@@ -189,6 +189,185 @@ select * from game where gameId in (3, 7, 13);
 select * from game where gameId in (select gameId from game where publisherId = 5);
 ```
 
+### Observations
+
+* If you `update` or `delete` without a `where` clause: it may affect *every* record in the table!
+  * Generally SAFE MODE will save you from this
+  * Later on: in Java when we connect to the database, there is NO safe mode
+* If you have a parent/child table then:
+  * The parent must exist before you can create any child records
+  * The child(ren) records must be deleted before the parent record can be deleted
+  * Parent: one, child: many in a one-to-many relationship
+  * The child has the FK = Foreign Key
+* Style:
+  * You can break up long lines, use a beautifier
+  * Use modern `lowercase` for SQL keywords (save your pinkie)
+
+### Math
+
+* All of SQL is based on set theory
+  * $a \in A$ where $A = \{a, b, c\}$
+  * $x \not\in A$
+* What about projections in math?
+  * Geometrically:
+  * Suppose you ahve a 3D cube and you "project" it down onto a 2D plane: you get a square
+  * $(x, y, z) \rightarrow (x, y)$
+* Suppose you ahve two sets: $A = \{a, b, c\}$, $B = \{1, 2\}$
+  * The cartesian product (cross product):
+  * $A \times B = \{(a, b) | a \in A \wedge b \in B\}$
+  * $A \times B = \{(a, 1), (a, 2), (b, 1), (b, 2), (c, 1), (c, 2)\}$
+  * $|A| = 3, |B| = 2$, $|A \times B| = 6$
+  * Generally: $|A| = n$, $|B| = m$, $|A\times B| = n \cdot m$
+  * $(x, y) \in \mathbb{R} \times \mathbb{R}$: cartesian coordinates/plane
+* A *binary relation* bewteen two sets $A, B$ is a subset of the cartesian product:
+  $$R \subseteq A \times B$$
+  $$(x, y) \in R \iff x \leq y$$
+* Basic set operations:
+  * $A \cup B$: union of two sets (no duplicates)
+  * $A \cap B$: intersection: elements in BOTH sets
+
+```sql
+use cbourke3;
+
+-- how many games are published by each publisher?
+select * from game;
+
+-- use group by to aggregate projected data:
+select publisherId, count(*) as numberOfTitles from game group by publisherId;
+
+-- you can filter results *after* a project using "having"
+-- you cannot use a where clause
+select publisherId,
+       count(*) as numberOfTitles
+from game group by publisherId having numberOfTitles > 2;
+
+-- you can still use a combination:
+select publisherId,
+       count(*) as numberOfTitles
+from game
+where publisherId > 2
+group by publisherId
+having numberOfTitles > 2;
+
+-- now we need to bring multiple tables together...
+select count(*) from game; -- 20
+select count(*) from publisher; -- 15
+
+-- blind cross join:
+-- it is WAY too big
+-- it makes no sense: it is not following our *relations*
+-- in the tables!
+select count(*) from game join publisher;
+
+-- join based on a FK Foreign Key = PK Primay Key
+select * from game
+  join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- you do this so often that you can use shorthand:
+select * from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+-- a "join" is an "outer" join: it will join only on the
+-- values that are matched
+-- game -> publisher: the values are guaranteed to exist  
+-- order matters:
+-- a normal "join" does not preserve records in table A
+-- to table B
+select * from publisher;
+select * from publisher p
+  join game g
+  on p.publisherId = g.publisherId;
+
+-- a "left join" preserves records in table A joined to table B
+-- that do not have any matching records in table B
+select * from publisher p -- table A
+  left join game g -- table B
+  on p.publisherId = g.publisherId;
+
+-- is there a right join?  Yes:
+-- generally prefer left joins
+-- English read left to right
+select * from game g
+  right join publisher p
+  on g.publisherId = p.publisherId;
+
+-- solve the original problem: how many games has
+-- each publisher published: want to know the publisher AND
+-- include all publishers with zero games
+select p.name, count(g.gameId) as numberOfTitles from publisher p
+  left join game g
+  on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+-- go back to the beginging: flatten the entire data model
+-- so you can dump it to a CSV
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union
+select * from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+-- exercises...
+
+# 01. List all video games in the database
+select * from game ;
+# List all video games that start with 'G'
+select * from game where name like 'G%';
+# 02. List all publishers in the database
+select * from publisher;
+# 03. List all video games along with their publishers
+# 04. List all video games along with their publishers, but only the relevant fields
+select p.name as publisher, g.name as title from publisher p
+  join game g
+  on p.publisherId = g.publisherId;
+# 05. List all publishers in the database along with all their games, even if they don't have any
+select p.name as publisher, g.name as title from publisher p
+  left join game g
+  on p.publisherId = g.publisherId;
+# 06. List all publishers with a count of how many games
+-- they have
+# 07. List all games and all systems that they are available on
+# 08. List all games that are not available on any system
+# 09. List the oldest game(s) and its platform(s)
+# 10. Flatten the entire data model by returning all data on all games
+
+# . Insert a new game, Assassin's Creed, published by Ubisoft
+-- insert multiple records at once:
+insert into publisher (name) values
+  ('Ubisoft'),
+  ('Microsoft'),
+  ('Macrosoft');
+insert into game (name, publisherId) values ('Assassin\'s Creed',
+  (select publisherId from publisher where name = 'Ubisoft'));
+# . Make the new game available on at least two platforms
+insert into availability (gameId, platformId, publishYear) values (
+  (select gameId from game where name = 'Assassin\'s Creed'),
+  (select platformId from platform where name = 'Playdate'),
+  2025);
+insert into availability (gameId, platformId, publishYear) values (
+  (select gameId from game where name = 'Assassin\'s Creed'),
+  (select platformId from platform where name = 'Index'),
+  2025);
+
+# . Update the record for Megaman 4: the publisher should be Capcom, not Eidos
+
+# . Delete the publisher Eidos: how?
+# You need to first delete any game associated with Eidos, but
+# any availability record that refers to all the games that Eidos
+# has published.
+
+# . Write a query to return all games along with the number of platforms they
+#   are available on
+
+```
+
+
 ```text
 
 
