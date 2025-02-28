@@ -146,6 +146,104 @@ from
 
 ## Basic R = Retrieve (`select`)
 
+```sql
+use cbourke3;
+
+-- blind, select all records and all columns:
+select * from game;
+
+-- select only a subset of columns:
+select gameId, name from game;
+
+-- order of columns does not matter:
+select name, gameId from game;
+
+-- you can use an alias to rename the column *in the result*:
+select name as gameTitle, gameId from game;
+
+-- aggregate functions
+select count(*) from game;
+select count(*) as numberOfGames from game;
+-- more: min, max, avg
+-- find the oldest game:
+select min(publishYear) from availability;
+-- find the newest game:
+select max(publishYear) from availability;
+select avg(publishYear) from availability;
+
+-- lexicographically it works:
+select max(name) from game;
+select min(name) from game;
+
+-- you can turn your $10M database into a nice calculator:
+select 8 * 4 - 1 + 5 / 9;
+-- you can use it in combination with queries:
+select avg(publishYear) * 3.5 from availability;
+select avg(publishYear) * max(publishYear) from availability;
+-- careful:
+select 8 from game;
+
+-- you can limit results using where clauses:
+select * from game where gameId = 7;
+select * from game where gameId != 7;
+select * from game where gameId >= 7;
+select * from game where gameId > 7;
+
+-- you can use compound logic: or and (higher precedence)
+-- use parentheses as necessary
+select * from game where (gameId = 7 or gameId < 3) and gameId != 2;
+
+-- string matching:
+select * from game where name = 'Portal 2';
+select * from game where name = 'portal 2';
+-- everything is lexicographic AND case sensitive
+select * from game where name >= 'Portal 2';
+select * from game where name <= 'A'; -- case insensive?
+
+-- check the collation for <, <=, >, >=
+select * from game where name <= 'm'; -- case insensive?
+
+-- partial string matching using the string wildcard: %
+-- you have to use like with wildcards:
+select * from game where name like 'G%';
+select * from game where name like '%e%';
+-- it IS case sensitive
+select * from game where name like '%E%';
+-- % matches 0 or more of ANY characters
+select * from game where name like '%C%';
+
+-- single character wildcard: _
+select * from game where name like '_o%';
+select * from game where name like '___o%';
+
+-- Ordering
+-- generally the order of columns AND rows does not matter
+-- ascending is the default (lexicographic or otherwise)
+select * from game order by publisherId;
+select * from game order by name;
+-- you can reverse it into descending using desc
+select * from game order by name desc;
+-- you can do a combination of columns:
+select * from game order by publisherId asc, name desc;
+
+-- you can use the distinct key word to get unique results:
+select distinct publisherId from game;
+
+-- you can use the "in" clause to avoid complex disjunctions (ORs)
+select * from game where gameId = 3 or gameId = 5 or gameId = 17;
+select * from game where gameId in (3, 5, 17);
+select * from game where gameId in (select gameId from game where publisherId > 7);
+
+
+-- data projection:
+select * from game;
+select publisherId, count(*) as numberOfTitles from game group by publisherId;
+
+select * from publisher;
+
+select * from game join game g2;
+```
+
 ### Math!
 
 * Basic set theory
@@ -167,6 +265,8 @@ from
   * Suppose you ahve a 3D cube and you "project" it down onto a 2D plane
   * You have a square
   * $(x, y, z) \rightarrow (x, y)$
+
+
 
 ```text
 
