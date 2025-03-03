@@ -233,6 +233,108 @@ select publisherId, count(*) as numberOfGames from game group by publisherId;
 select count(*) from game join game g2;
 ```
 
+* More math
+  * A binary relation between two sets $A, B$ is a subset:
+    $$R \subseteq A \times B$$
+  * For example: Let $R$ be a relation on the sets $\mathbb{Z}$, $\mathbb{Z}$ defined by $a \leq b$ for $(a, b) \in R$
+  * ex: $(5, 10) \in R$?
+  * ex: $(5, 5) \in R$?
+  * ex: $(10, 5) \not\in R$?
+* Consider two sets: $A, B$
+  * $A \cup B$ (union)
+  * $A \cap B$ (intersection)
+
+```sql
+use cbourke3;
+
+-- problem: who are the publishers?
+select count(*) from publisher;
+-- problem: what about publishers with no games?
+select count(*) from game;
+
+select publisherId, count(*) as numberOfGames from game group by publisherId;
+
+-- blind cross join: A x B, not what you want
+select * from game
+  join publisher;
+
+-- you only want *related* records
+-- add an "on" clause (inner join)
+select * from game
+  join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- you can short hand joins using aliases for tables:
+select * from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+select p.name as publisherName, count(*) as numberOfGames
+  from game g
+  join publisher p on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+-- outer (left) join: you use this when you want to
+-- preserve records from the *left*
+select * from publisher p
+  left join game g
+  on g.publisherId = p.publisherId;
+
+select p.name as publisherName, count(g.gameId) as numberOfGames
+  from publisher p
+  left join game g
+  on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+-- is there a right join?
+-- Yes! But it forces you to read in reverse
+-- sometimes you need though...
+select p.name as publisherName, count(g.gameId) as numberOfGames
+  from game g
+  right join publisher p on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+-- flatten the entire data model...
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union
+select * from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+
+-- write a query to determine how many games were published on each
+-- platform
+select p.name as platformName, count(a.gameId) as numberOfGames from platform p
+  left join availability a on p.platformId = a.platformId
+  group by p.platformId;
+
+-- find more info about the oldest game...
+select min(publishYear) from availability;
+
+select * from game g
+  join availability a on g.gameId = a.gameId
+  where a.publishYear = (select min(publishYear) from availability);
+
+-- hardcoding values is OKAY for test data or mock data, but not
+-- for actual queries
+
+select * from game g
+  join availability a on g.gameId = a.gameId
+  where a.publishYear = (select max(publishYear) from availability);
+
+insert into game (name, publisherId) values ('Assassin\'s Creed II', 10);
+insert into game (name, publisherId) values ("Assassin's Creed II", 10);
+```
+
+## Designing & Implementing a Database
+
+* Create a database to model the asset java classes/problem (Asset, Annuity, Stock, Person (owner), Email(s) of a person, etc.)
+
+
 ```text
 
 
