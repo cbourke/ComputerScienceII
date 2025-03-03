@@ -265,7 +265,238 @@ select * from game join game g2;
   * Suppose you ahve a 3D cube and you "project" it down onto a 2D plane
   * You have a square
   * $(x, y, z) \rightarrow (x, y)$
+* MOre: a relation between two sets, $A, B$ is a subset:
+  $$R \subseteq A \times B$$
+  * Ex: let $R$ be a relation on $\mathbb{Z}$ and $\mathbb{Z}$ such that $(a, b) \in R$ if and only if $a \leq b$
+  * $(5, 10) \in R$, $(5, 5) \in R$, $(10, 5) \not\in R$
+* Set operations
+  * $A \cup B$ (or, union)
+  * $A \cap B$ (and, intersection)
 
+```sql
+use cbourke3;
+
+-- problem: who are the publishers?
+select count(*) from publisher;
+-- problem: what about publishers with no games?
+select count(*) from game;
+
+select publisherId, count(*) as numberOfGames from game group by publisherId;
+
+-- "blind" cross join
+select count(*) from game
+  join publisher;
+
+-- make a join based on the *relation*
+-- you do this using an "on" clause:
+select * from game
+  join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- short cuts: alias table names
+select * from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+select p.name as publisherName, count(*) as numberOfGames
+  from game g
+  join publisher p on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+-- left joins preserve records from table A to table B:
+select * from publisher p
+  left join game g
+  on p.publisherId = g.publisherId;
+
+select p.name as publisherName, count(g.gameId) as numberOfGames
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+-- yes, right joins exist:
+-- but, who reads left to right?
+select * from game g
+  right join publisher p
+  on g.publisherId = p.publisherId;
+
+-- however, sometimes it is necessary...
+-- flatten the entire data model
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union
+select * from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+select * from platform;
+
+-- insert data with special characters:
+insert into game (name, publisherId) values ('️Luigi\'s Revenge', 5);
+
+-- create a report that details: for each platform, how many games
+-- are available on that platform
+-- but only if they have a substantial (more than 3) games on them...
+select p.name as platform_name, count(a.gameId) as number_of_games from platform p
+  left join availability a on p.platformId = a.platformId
+  group by p.platformId
+  having number_of_games > 3;
+
+-- recall that you can determine the oldest game:
+select min(publishYear) from availability;
+
+select * from game g
+  join availability a on g.gameId = a.gameId
+  where a.publishYear = (select min(publishYear) from availability);
+
+select * from game g
+  join availability a on g.gameId = a.gameId
+  where a.publishYear = (select max(publishYear) from availability);
+
+-- hardcoding values is okay for test data, but not real queries
+
+-- stuff that is too long: error
+insert into game (name, publisherId) values ('Lorem ipsum odor amet, consectetuer adipiscing elit. Tristique dictumst nam felis consequat rhoncus aliquam rhoncus etiam. Tincidunt sapien lacinia conubia suspendisse eleifend dis, odio tempor. Quisque tempor scelerisque purus risus etiam porta. Consectetur scelerisque convallis amet a taciti rutrum. Dis hac a hac facilisis interdum nibh dignissim sit porttitor.
+
+Semper nascetur suspendisse conubia scelerisque posuere magna mi a. Elementum tortor libero lacinia non donec odio feugiat luctus. Lobortis finibus hac praesent augue phasellus metus venenatis ante orci. Id libero dictum curae lobortis velit taciti. Neque mattis penatibus placerat quam pulvinar porttitor dictum. Praesent pellentesque sit ligula tristique finibus nibh. Vivamus duis porta; blandit porttitor suspendisse phasellus odio pellentesque netus. Sollicitudin scelerisque vulputate dis quam ante nisi finibus volutpat. Conubia curabitur potenti enim est vitae non!
+
+Purus dolor posuere cubilia conubia efficitur dictum a magnis dui. Nam faucibus eros urna tempus sit ex ut facilisi id. Rutrum bibendum erat sapien torquent montes hendrerit maximus. Libero iaculis dui sit sem habitant varius turpis laoreet. Duis varius adipiscing maecenas diam risus morbi malesuada fames. Turpis cras in at parturient conubia donec! Fermentum odio leo sodales urna placerat varius maecenas. Luctus maximus dui condimentum quis pellentesque feugiat habitasse. Conubia facilisis vel enim luctus nisi dignissim tellus.
+
+Donec diam augue porttitor ultricies phasellus. Dictumst sem nunc penatibus lorem blandit consectetur maximus tortor ultrices. Imperdiet consectetur duis ullamcorper ultricies purus curabitur. Curabitur pharetra fusce egestas porttitor litora curae. Id facilisis duis duis bibendum convallis dictumst. Maecenas nostra mi sociosqu luctus cubilia pretium. Sed litora purus accumsan porttitor ullamcorper lacinia. Sit tincidunt nam dictumst proin convallis aliquam. Vitae vestibulum justo ullamcorper consectetur ornare eleifend. Per posuere cubilia natoque praesent bibendum posuere luctus cubilia duis.
+
+Ac aliquam ante quisque habitant lobortis facilisis. Convallis tellus ultrices consequat cubilia fames sit nascetur iaculis parturient. Ornare auctor senectus natoque augue; pharetra auctor. Risus senectus nec fringilla scelerisque ornare quis tincidunt sociosqu. Dignissim imperdiet ut dolor facilisis potenti ante. Curabitur neque consequat mattis euismod ultricies potenti lobortis. Donec luctus leo integer eleifend potenti turpis est consectetur finibus. Eleifend a orci parturient sodales mus accumsan ipsum pretium.', 10);
+
+-- careful: not truncation, not an error, rounds for some reason
+insert into game (name, publisherId) values ('Mario\'s Revenge', 5.2);
+
+select * from game;
+
+insert into game (name) values ('Mario\'s Revenge', 5, 'bar');
+
+-- reset your password
+-- set password=password('1234');
+-- drop database cbourke3;
+-- create database cbourke3;
+
+
+
+
+use cbourke3;
+
+-- problem: who are the publishers?
+select count(*) from publisher;
+-- problem: what about publishers with no games?
+select count(*) from game;
+
+select publisherId, count(*) as numberOfGames from game group by publisherId;
+
+-- "blind" cross join
+select count(*) from game
+  join publisher;
+
+-- make a join based on the *relation*
+-- you do this using an "on" clause:
+select * from game
+  join publisher
+  on game.publisherId = publisher.publisherId;
+
+-- short cuts: alias table names
+select * from game g
+  join publisher p
+  on g.publisherId = p.publisherId;
+
+select p.name as publisherName, count(*) as numberOfGames
+  from game g
+  join publisher p on g.publisherId = p.publisherId
+  group by p.publisherId;
+
+-- left joins preserve records from table A to table B:
+select * from publisher p
+  left join game g
+  on p.publisherId = g.publisherId;
+
+select p.name as publisherName, count(g.gameId) as numberOfGames
+  from publisher p
+  left join game g on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+-- yes, right joins exist:
+-- but, who reads left to right?
+select * from game g
+  right join publisher p
+  on g.publisherId = p.publisherId;
+
+-- however, sometimes it is necessary...
+-- flatten the entire data model
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union
+select * from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+select * from platform;
+
+-- insert data with special characters:
+insert into game (name, publisherId) values ('️Luigi\'s Revenge', 5);
+
+-- create a report that details: for each platform, how many games
+-- are available on that platform
+-- but only if they have a substantial (more than 3) games on them...
+select p.name as platform_name, count(a.gameId) as number_of_games from platform p
+  left join availability a on p.platformId = a.platformId
+  group by p.platformId
+  having number_of_games > 3;
+
+-- recall that you can determine the oldest game:
+select min(publishYear) from availability;
+
+select * from game g
+  join availability a on g.gameId = a.gameId
+  where a.publishYear = (select min(publishYear) from availability);
+
+select * from game g
+  join availability a on g.gameId = a.gameId
+  where a.publishYear = (select max(publishYear) from availability);
+
+-- hardcoding values is okay for test data, but not real queries
+
+-- stuff that is too long: error
+insert into game (name, publisherId) values ('Lorem ipsum odor amet, consectetuer adipiscing elit. Tristique dictumst nam felis consequat rhoncus aliquam rhoncus etiam. Tincidunt sapien lacinia conubia suspendisse eleifend dis, odio tempor. Quisque tempor scelerisque purus risus etiam porta. Consectetur scelerisque convallis amet a taciti rutrum. Dis hac a hac facilisis interdum nibh dignissim sit porttitor.
+
+Semper nascetur suspendisse conubia scelerisque posuere magna mi a. Elementum tortor libero lacinia non donec odio feugiat luctus. Lobortis finibus hac praesent augue phasellus metus venenatis ante orci. Id libero dictum curae lobortis velit taciti. Neque mattis penatibus placerat quam pulvinar porttitor dictum. Praesent pellentesque sit ligula tristique finibus nibh. Vivamus duis porta; blandit porttitor suspendisse phasellus odio pellentesque netus. Sollicitudin scelerisque vulputate dis quam ante nisi finibus volutpat. Conubia curabitur potenti enim est vitae non!
+
+Purus dolor posuere cubilia conubia efficitur dictum a magnis dui. Nam faucibus eros urna tempus sit ex ut facilisi id. Rutrum bibendum erat sapien torquent montes hendrerit maximus. Libero iaculis dui sit sem habitant varius turpis laoreet. Duis varius adipiscing maecenas diam risus morbi malesuada fames. Turpis cras in at parturient conubia donec! Fermentum odio leo sodales urna placerat varius maecenas. Luctus maximus dui condimentum quis pellentesque feugiat habitasse. Conubia facilisis vel enim luctus nisi dignissim tellus.
+
+Donec diam augue porttitor ultricies phasellus. Dictumst sem nunc penatibus lorem blandit consectetur maximus tortor ultrices. Imperdiet consectetur duis ullamcorper ultricies purus curabitur. Curabitur pharetra fusce egestas porttitor litora curae. Id facilisis duis duis bibendum convallis dictumst. Maecenas nostra mi sociosqu luctus cubilia pretium. Sed litora purus accumsan porttitor ullamcorper lacinia. Sit tincidunt nam dictumst proin convallis aliquam. Vitae vestibulum justo ullamcorper consectetur ornare eleifend. Per posuere cubilia natoque praesent bibendum posuere luctus cubilia duis.
+
+Ac aliquam ante quisque habitant lobortis facilisis. Convallis tellus ultrices consequat cubilia fames sit nascetur iaculis parturient. Ornare auctor senectus natoque augue; pharetra auctor. Risus senectus nec fringilla scelerisque ornare quis tincidunt sociosqu. Dignissim imperdiet ut dolor facilisis potenti ante. Curabitur neque consequat mattis euismod ultricies potenti lobortis. Donec luctus leo integer eleifend potenti turpis est consectetur finibus. Eleifend a orci parturient sodales mus accumsan ipsum pretium.', 10);
+
+-- careful: not truncation, not an error, rounds for some reason
+insert into game (name, publisherId) values ('Mario\'s Revenge', 5.2);
+
+select * from game;
+
+insert into game (name) values ('Mario\'s Revenge', 5, 'bar');
+
+-- reset your password
+-- set password=password('1234');
+-- drop database cbourke3;
+-- create database cbourke3;
+
+
+
+
+```
+
+## Designing & Implementing a Database
+
+* Create a database to model the asset java classes/problem (Asset, Annuity, Stock, Person (owner), Email(s) of a person, etc.)
 
 
 ```text
