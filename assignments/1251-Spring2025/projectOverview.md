@@ -107,7 +107,7 @@ applied.
 -   Purchased equipment has a 5.25% use tax applied.  However, when leased
     the taxes are based on the retail price of the equipment: any equipment
     less than $5,000 has no tax; for leases costing $5,000 but less than $12,500
-    a flat tax of $500 is applied; for all leases $100,000 or more, a tax
+    a flat tax of $500 is applied; for all leases $12,500 or more, a tax
     of $1,500 is applied.  For rentals, a 4.38% sales tax is applied.
 
 -   All materials have a 7.15% sales tax rate
