@@ -367,6 +367,85 @@ insert into availability (gameId, platformId, publishYear) values (
 
 ```
 
+## Designing & Implementing a Database
+
+* Demonstration: create a database to model the asset classes (`Annuity`, `Stock`, `Person` and their emails)
+
+```sql
+use cbourke3;
+
+drop table if exists Account;
+drop table if exists Email;
+drop table if exists Person;
+
+-- order matters!
+
+-- Represents a person
+create table if not exists Person (
+  personId int not null primary key auto_increment,
+  uuid varchar(36) not null unique key,
+  firstName varchar(255) not null,
+  middleName varchar(255),
+  lastName varchar(255) not null
+);
+
+-- Represents a person's email(s)
+-- There is a one to many relation from person to email
+create table if not exists Email (
+  emailId int not null primary key auto_increment,
+  address varchar(255) not null,
+  personId int not null,
+  foreign key (personId) references Person(personId)
+);
+
+-- TODO: consider supporting a SSN (YAGNI?)
+-- TODO: consider an address (what relation to person?)
+
+create table if not exists Account (
+  accountId int not null primary key auto_increment,
+  accountNumber varchar(36) unique key,
+  personId int not null,
+  accountType varchar(1) not null,
+  -- TODO: consider a constraint to force it to be 'S' = Stock, 'A' = Annuity
+
+  -- Annuity
+  monthlyPayment double,
+  termYear int,
+
+  -- Stock
+  name varchar(255),
+  sharePrice double,
+  numShares double,
+  constraint `onlyAorS` check (accountType = 'S' or accountType = 'A'),
+  constraint `validData` check (
+    (monthlyPayment is not null and termYear is not null) or
+    (name is not null and sharePrice is not null and numShares is not null and numShares >= 0) ),
+  foreign key (personId) references Person(personId)
+);
+
+-- insert some test data
+-- insert 3 people with 0, 1, 2 emails respectively
+insert into Person (personId,uuid,firstName,lastName) values
+ (10,'38a53d55-72ba-4adf-bc34-d079684a2637','John','Smith'),
+ (20,'7be1a7f1-38ba-4b9c-b54e-fbd18cdc1d5b','Jane','Smith'),
+ (30,'9849a291-d1e0-4cbe-b11c-0d31ad94e147','Craig','Counsell');
+
+insert into Email (address,personId) values
+  ('jsmith@gmail.com', 20),
+  ('ccounsell@cubs.com', 30),
+  ('oldemail@brewers.com', 30);
+
+select * from Person p
+  left join Email e on p.personId = e.personId;
+
+-- insert some account test data:
+-- at least 2 of each type, such that person 3 owns 2, person 2 owns 1 and person 1 owns zero
+-- TODO: use a tool!
+```
+
+
+
+
 
 ```text
 
