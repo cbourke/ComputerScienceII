@@ -374,6 +374,7 @@ insert into availability (gameId, platformId, publishYear) values (
 ```sql
 use cbourke3;
 
+drop table if exists Ownership;
 drop table if exists Account;
 drop table if exists Email;
 drop table if exists Person;
@@ -404,7 +405,7 @@ create table if not exists Email (
 create table if not exists Account (
   accountId int not null primary key auto_increment,
   accountNumber varchar(36) unique key,
-  personId int not null,
+  -- personId int not null,
   accountType varchar(1) not null,
   -- TODO: consider a constraint to force it to be 'S' = Stock, 'A' = Annuity
 
@@ -415,12 +416,11 @@ create table if not exists Account (
   -- Stock
   name varchar(255),
   sharePrice double,
-  numShares double,
   constraint `onlyAorS` check (accountType = 'S' or accountType = 'A'),
   constraint `validData` check (
     (monthlyPayment is not null and termYear is not null) or
-    (name is not null and sharePrice is not null and numShares is not null and numShares >= 0) ),
-  foreign key (personId) references Person(personId)
+    (name is not null and sharePrice is not null and numShares is not null and numShares >= 0) )
+  -- foreign key (personId) references Person(personId)
 );
 
 -- insert some test data
@@ -441,8 +441,111 @@ select * from Person p
 -- insert some account test data:
 -- at least 2 of each type, such that person 3 owns 2, person 2 owns 1 and person 1 owns zero
 -- TODO: use a tool!
+
+-- represents an ownership: many-to-many relation between
+-- person table and the account table
+create table if not exists Ownership (
+  ownershipId  int not null primary key auto_increment,
+  personId int not null,
+  accountId int not null,
+  numShares double, -- stock types only
+  foreign key (personId) references Person(personId),
+  foreign key (accountId) references Account(accountId),
+  unique key (personId,accountId)
+);
+
+-- TODO: insert some test/mock data
+-- TODO: write some basic queries to give your database design a workout
 ```
 
+## Summary
+
+### Database Design Observations
+
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Be consistent in your naming conventions
+  * Do not pluralize table names
+  * Modern convention: tables should be `UpperCamelCased`
+  * Modern convention: columns should be `lowerCamelCased`
+  * Old school: `UPPER_UNDERSCORE` for tables `lower_underscore_casing` for columns
+  * Avoid abbreviations; unless it is well-understood (`uuid`, `ssn`, `nuid`)
+* Make sure that **every table** has a PK that:
+  * Is an integer (don't use `double` or `varchar`s)
+  * Use a name that is the `tableName` + `Id`
+* Foreign keys should have the same name as the PK they reference
+  * Sometimes you may *have* to violate this guideline if necessary
+* Define `unique key`s to ensure uniqueness on other columns
+  * PKs = surrogate keys that are generated and managed by the database
+  * Keys = natural keys (SSN, NUID, UUID, etc.) that are not managed by our database (if we don't control them, they should not control us)
+* Join tables should be used to model a many-to-many relationship
+* Be sure that there is plenty of test/mock data in your database
+  * There are plenty of tools!  Mockaroo (it can also generate SQL `insert` statements)
+  *  You can use any CSV to SQL/JSON/XML
+* Check an uniqueness constraints can be defined to ensure data integrity
+  * MySQL: does not necessarily enforce check constraints
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* They build on each other: you cannot have a higher normal form without having ALL lower normal forms
+* First Normal Form: "each attribute (column) in a table only has atomic values"
+  * Each column in a table represents *one* piece of data
+  * Violation: storing a series of emails in one column as a CSV data: `email1@foo.com,email2@bar.com,foo@email.com`
+  * Violation: store multiple columns instead of a proper one-to-many relation: `primaryEmail`, `secondaryEmail`, `tertiaryEmail`
+  * You should always create a *true* one-to-many relationship
+  * Best practice: separate out into another table and define a one-to-many relationship
+  * FKs go in the "child" table
+* Second Normal Form: it has to be 1-NF: no non-prime attribute (column) is dependent on a proper subset of prime attributes
+  * Having a PK auto-incremented gives you 2NF automatically
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * Suppose the PK is `customerId/storeId` (ie a combination of the two)
+  * IF you defined a PK as a combination of `customerId/storeId` then you violate 2NF: `storeAddress` only depends on the second half of the key
+  * It is often useful or necessary to have "compound keys", but they should always be *secondary* keys
+  * You split everything out into its own table
+* Third Normal Form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+* Violation: store the `termYears, monthlyPayment` AND `totalValue` (`= termYears * monthlyPayment * 12`)
+  * Violation: that the `totalValue` is stored when it should be *recomputed* based on the other values
+  * The other two columns give enough data to determine the third (the third is transitively dependent on the first two)
+  * Gives rise to possible data anomalies: if you change one value, it means the transitively dependent value is now *wrong*
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is a LOT more
+  * DBA = DataBase Administrator
+  * Triggers: event-based actions in a database
+  * Views: read-only "tables" in a database
+  * Transaction: an atomic operation on a database that supports the ACID principles
+    * Atomicity
+    * Consistency
+    * Isolation
+    * Durability
+
+```sql
+use cbourke3;
+
+start transaction;
+delete from Email where emailId > 0;
+commit;
+-- or rollback;
+
+select * from Email;
+```
+  * Temp tables: temporary tables that can be created within a transaction to make data processing easier
+  * Stored Procedures: functions you can define with reusable SQL code that you can treat like a function
+  * Loops, variables (cursors), etc.
+  * Soft vs Hard deletes: a hard delete is a result of a `delete` statement (no undo, no recycle bin).
+  * Soft delete: an `isActive` boolean column in a table
+    * Delete: `update RECORD set isActive = false where BLAH;`
+    * When you select, you only pull *active* records
+  * Generally you want to use a *single table inheritance* strategy with databases vs OOP models
+    * You *could* do a table-per-class or table-per-subclass strategy (more complicated: YAGNI)
+
+## Programmatically Connecting to a Database & Processing Data
+
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
 
 
 
