@@ -336,8 +336,10 @@ insert into game (name, publisherId) values ("Assassin's Creed II", 10);
 
 
 ```sql
+
 use cbourke3;
 
+drop table if exists Ownership;
 drop table if exists Account;
 drop table if exists Email;
 drop table if exists Person;
@@ -368,7 +370,7 @@ create table if not exists Email (
 create table if not exists Account (
   accountId int not null primary key auto_increment,
   accountNumber varchar(36) unique key,
-  personId int not null,
+  -- personId int not null,
   accountType varchar(1) not null,
   -- TODO: consider a constraint to force it to be 'S' = Stock, 'A' = Annuity
 
@@ -377,14 +379,13 @@ create table if not exists Account (
   termYear int,
 
   -- Stock
-  name varchar(255),
+  name varchar(255) unique key,
   sharePrice double,
-  numShares double,
-  constraint `onlyAorS` check (accountType = 'S' or accountType = 'A'),
-  constraint `validData` check (
-    (monthlyPayment is not null and termYear is not null) or
-    (name is not null and sharePrice is not null and numShares is not null and numShares >= 0) ),
-  foreign key (personId) references Person(personId)
+  constraint `onlyAorS` check (accountType = 'S' or accountType = 'A')
+  -- constraint `validData` check (
+  --  (monthlyPayment is not null and termYear is not null) or
+  --  (name is not null and sharePrice is not null and numShares is not null and numShares >= 0) )
+  -- foreign key (personId) references Person(personId)
 );
 
 -- insert some test data
@@ -405,7 +406,58 @@ select * from Person p
 -- insert some account test data:
 -- at least 2 of each type, such that person 3 owns 2, person 2 owns 1 and person 1 owns zero
 -- TODO: use a tool!
+
+create table if not exists Ownership (
+  ownershipId int not null primary key auto_increment,
+  personId int not null,
+  accountId int not null,
+  numShares double,
+  foreign key (personId) references Person(personId),
+  foreign key (accountId) references Account(accountId),
+  unique key (personId,accountId),
+  constraint `numSharesNotNegative` check (numShares >= 0)
+);
+
 ```
+
+## Misc
+
+* There is a LOT more
+  * DBA = DataBase Administrator
+  * Triggers: event-based actions in a database
+  * Views: read-only "tables" in a database
+  * Transaction: an atomic operation on a database that supports the ACID principles
+    * Atomicity
+    * Consistency
+    * Isolation
+    * Durability
+
+```sql
+use cbourke3;
+
+start transaction;
+delete from Email where emailId > 0;
+commit;
+-- or rollback;
+
+select * from Email;
+
+```
+
+  * Temp tables: temporary tables that can be created within a transaction to make data processing easier
+  * Stored Procedures: functions you can define with reusable SQL code that you can treat like a function
+  * Loops, variables (cursors), etc.
+  * Soft vs Hard deletes: a hard delete is a result of a `delete` statement (no undo, no recycle bin).
+  * Soft delete: an `isActive` boolean column in a table
+    * Delete: `update RECORD set isActive = false where BLAH;`
+    * When you select, you only pull *active* records
+  * Generally you want to use a *single table inheritance* strategy with databases vs OOP models
+    * You *could* do a table-per-class or table-per-subclass strategy (more complicated: YAGNI)
+
+## Programmatically Connecting to a Database & Processing Data
+
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+
 
 ```text
 
