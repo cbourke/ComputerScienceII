@@ -187,6 +187,5 @@ Test Case(s) (15)
 Bonus/Honors Items (10 each)
 
   *  Summary report prints in order of sales total (highest to lowest) *and*
-     store summary report prints in order of manager's last name/first name, *then*
-     by sales total (highest to lowest)
+     company summary report prints in order of company name
   *  Test Case submitted 1 week prior to due date
