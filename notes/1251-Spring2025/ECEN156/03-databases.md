@@ -546,6 +546,34 @@ select * from Email;
 ## Programmatically Connecting to a Database & Processing Data
 
 * In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download the Connector/J jar file and include it in your project: <https://dev.mysql.com/downloads/connector/j/>
+  * Add it to your project as usual
+  * Start writing your JDBC code!
+
+## Overview
+
+* Goal: programmatically connect to a database and process or persist (save) data
+* Most languages have some support for *database connectivity*
+* Java: JDBC = Java DataBase Connectivity API
+* API = Application Programmer Interface
+* Perfect illustration of *Dependency Inversion*
+* Don't program toward a specific database, but a generic interface
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+## Process
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
 
 
 

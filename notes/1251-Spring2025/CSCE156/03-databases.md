@@ -454,10 +454,87 @@ select * from Email;
   * Generally you want to use a *single table inheritance* strategy with databases vs OOP models
     * You *could* do a table-per-class or table-per-subclass strategy (more complicated: YAGNI)
 
+## Summary
+
+### Database Design Observations
+
+* Semantics dictate design: usually you have one table per "entity"
+* Style tips:
+  * Be consistent in your naming conventions
+  * Avoid verbs, use nouns
+  * Avoid abbreviations, do not pluralize table names
+  * Modern convention: tables should be `UpperCamelCased`
+  * Modern convention: columns should be `lowerCamelCased`
+  * Old school: `UPPER_UNDERSCORE` for tables `lower_underscore_casing` for columns
+* Make sure that **every table** has a PK that:
+  * Is an integer (don't use `double` or `varchar`s)
+  * Use a name that is the `tableName` + `Id`
+* Foreign keys should have the same name as the PK they reference
+  * Sometimes you may *have* to violate this guideline if necessary
+* Define `unique key`s to ensure uniqueness on other columns
+  * PKs = surrogate keys that are generated and managed by the database
+  * Keys = natural keys (SSN, NUID, UUID, etc.) that are not managed by our database (if we don't control them, they should not control us)
+* Join tables should be used to model a many-to-many relationship
+* Be sure that there is plenty of test/mock data in your database
+  * There are plenty of tools!  Mockaroo (it can also generate SQL `insert` statements)
+  *  You can use any CSV to SQL/JSON/XML
+* Check and uniqueness constraints can be defined to ensure data integrity
+  * MySQL (MariaDB): does not necessarily enforce check constraints
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* They build on each other: you cannot have a higher normal form without having ALL lower normal forms
+* First Normal Form: "each attribute in a table only has atomic values"
+  * Each column only represents ONE piece of data, ONE value
+  * Violation: storing multiple pieces of data as a single CSV string: `email1,email2,email3`
+  * Violation: multiple columns to support multiple values: 3 columns for 3 emails: `primaryEmail`, `secondaryEmail`, `tertiaryEmail`
+  * Be sure to separate data out into separate tables as necessary
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Using a PK auto-generated, not null gets you 2-NF automatically!
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * If the PK is a combination of `customerId/storeId` the `storeAddress` is only dependent on the second part
+  * It is often useful and necessary to define combination keys, but *keep them secondary*!
+  * You split everything out into its own table
+* Third Normal form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+  * Example: store `termsYears, monthlyPayment` for an annuity, but *also* I store the `value = termsYears * monthlyPayment * 12`
+  * THe `total` is transitively dependent on the other two values so **we do not store it**
+  * Storing data that is dependent on other data is *wrong*: because it quickly may become out of sync with the other data
+  * Instead: transitively dependent data should be *recomputed* (in a query or in a program)
+  * It gives a failure point: it introduces a possible data anomaly (if one value changes then the other value(s) may need to do so as well)
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+
 ## Programmatically Connecting to a Database & Processing Data
 
 * In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download the Connector/J jar file and include it in your project: <https://dev.mysql.com/downloads/connector/j/>
 
+## Overview
+
+* Goal: programmatically connect to a database and process or persist (save) data
+* Most languages have some support for *database connectivity*
+* Java: JDBC = Java DataBase Connectivity API
+* API = Application Programmer Interface
+* Perfect illustration of *Dependency Inversion*
+* Don't program toward a specific database, but a generic interface
+* Vendors (Oracle, IBM, etc.) provide a *driver* library that conforms to the API
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+* ORMs (Object-Relational Mappings) systems also exist (JPA, jOOQ)
+
+## Process
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
 
 ```text
 
