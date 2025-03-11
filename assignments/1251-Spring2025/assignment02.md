@@ -212,7 +212,7 @@ Design (60)
 
   *  Classes are implemented and utilized properly
   *  Classes are well-designed
-  *  Proper use of Encapsulation
+  *  Proper use of Encapsulation  
     *  Related functionality and data are properly grouped in associated classes
     *  Each member field has an appropriate type
     *  Each class properly models the entity it represents
