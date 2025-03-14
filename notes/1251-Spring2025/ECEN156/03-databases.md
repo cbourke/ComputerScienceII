@@ -575,7 +575,67 @@ select * from Email;
 3. Process your results
 4. Clean up your resources
 
+## Observations
 
+* JDBC is a LOT of boilerplate CRUD: at least 4 operations per table to support ALL operations of a database
+* There are other, "better" solutions: ORMs = Object-Relational Mappings (Java: JPA = Java Persistence API)
+* For select queries use `executeQuery()` which returns a `ResultSet rs` that you iterate over
+  * When iterating: use a `while` loop with `rs.next()` (if expecting multiple records)
+  * If only expecting one, you can use an `if-else` statement
+* For update/delete/insert statements use `executeUpdate()` (there are no separate `exeucteInsert()` methods!)
+* If you need the resulting generated keys use:
+  * `Statement.RETURN_GENERATED_KEYS` when you prepare the statement and
+  * `ps.getGeneratedKeys()` to retrieve them so you can use them as FKs to insert more related records
+
+## Best Practices
+
+### Avoid the star operator
+
+* Example: don't do `select * from Person` in JDBC
+* This sends ALL data over the wire (network) whether or not you're going to use it!
+* Be more intentional: generally `select` statements should enumerate only the columns you care about
+* You risk sending redundant or irrelevant data over the network
+* Future proofs you: if someone comes in and adds a new column with a lot of data `blob`s = binary large objects
+
+### Security Issues
+
+* Generally you do NOT want to put your database passwords/credentials in plaintext in your code
+* BUT: for this class you will
+* Unfortunately this is still very common: go github.com: scan all public repos for the keyword `password`
+* In practice:
+  * option: define "data source": no password at all, just approve certain apps from certain servers, etc.
+  * option: an admin enters the password once at startup
+* Never store passwords in a database (for users), at least never in plaintext (hashed MAY be okay)
+
+### Close Your Resources!
+
+* Failure to close resources: `ResultSet`s, `PreparedStatement`s and `Connection`s: you will eventually run out of connections
+* Make sure you do it in the proper order: generally in reverse order than what you opened them in
+* Do not close them until you are done using them
+* Close them immediately after you are done with them
+* It can be very difficult to track down which piece of code is not closing a resource!
+
+### Dealing with `SQLExceptions`
+
+* Unfortunately: JDBC is quite "mature" and so it uses old-school style *checked exceptions*: ones that you are forced to surround with a `try-catch` and deal with
+* Best practice: catch and release: `catch` the exception and rethrow it as a `RuntimeException` (catch and release)
+
+### Always Use `PreparedStatements`
+
+* In general, strings can contain anything including unsanitized SQL code
+* If you use `PreparedStatement`s then you are generally safe from that!
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+
+### Proper Logging System
+
+* No one is sitting at your terminal watching for standard output error messages, ready to jump into action
+* NEVER use the standard output for log messages: it is brittle, it is lost
+* Instead: use a proper logging system
+* Features:
+  * Supports multiple levels of logging: `DEBUG, INFO, WARN, ERROR`
+  * You can configure it to printout certain levels or above/below a certain level
+  * Supports file-based, email-based, database-based logging: it doesn't necessarily go to the standard output, but can be redirected to (say) log files
+  * Handles/maintains the files: you can place "daily rolling limits" or file size-based limits etc.
 
 
 ```text
