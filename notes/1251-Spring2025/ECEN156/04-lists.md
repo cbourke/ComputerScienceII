@@ -34,7 +34,7 @@ Solution: design and implement a dynamic list data structure
 * Debug as necessary
 * Update design, tests, implementation as you go along
 
-### Secondary Functionality
+## Secondary Functionality
 
 * Bulk operations: `addAll`, `clear`
 * Get a new (deep) copy that is a sublist (elements from `start` to `end` indices), etc.
@@ -44,6 +44,24 @@ Solution: design and implement a dynamic list data structure
   * `contains()`
   * `indexOf()`
   * `update()`: replace a given element with another
+
+## Improvements
+
+* What is `MyIntegerArrayList` good for? Only `int` types :(
+* We want a list that can be applicable to ALL types
+
+# Linked Lists
+
+* No underlying array, instead elements are stored inside of individual "nodes"
+* Each node has:
+  * A piece of data
+  * A reference to the next node in the list
+* All the nodes are chained together
+* The first node is the "head"
+* The last node is the "tail" (whose "next" is `null`)
+* Basic operation: list/node traversal
+* You always start at the head, traverse node by node
+* Thus you have no "random access"
 
 ```text
 
