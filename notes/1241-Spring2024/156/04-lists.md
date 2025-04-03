@@ -66,7 +66,7 @@ int arr[] = new int[10];
 
 * Stacks are a *restricted access data structure*
 * Collections (lists, sets, etc.) are "unstructured": they just hold stuff
-* YOu can *impose* a structure on (say) lists by sorting them: you rearrange the list so that they are "in order"; that's imposed on the data structure's *state*
+* You can *impose* a structure on (say) lists by sorting them: you rearrange the list so that they are "in order"; that's imposed on the data structure's *state*
 * Alternative: create structure through an object/data structure's *behavior*: its publicly available interface (public methods)
 * A stack does this by restricting how you interface with it:
 * Basic operations:
