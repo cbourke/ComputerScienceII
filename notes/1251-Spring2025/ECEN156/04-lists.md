@@ -113,7 +113,33 @@ Solution: design and implement a dynamic list data structure
 * `List<>, ArrayList<>, LinkedList<>`
 * Stacks/Queues: `Deque` ("deck"): double-ended queue
   * You can push/pop from both ends of the deque
-  * It allows you to treat it as a stack AND a queue with one single implmentation! 
+  * It allows you to treat it as a stack AND a queue with one single implementation!
+
+## Other Considerations
+
+* What happens when you pop/dequeue from an empty stack/queue?  Throw exception, return a special value, etc?
+* You could design stack/queue with a max capacity
+  * What happens when you push/enqueue onto a "full" stack/queue?
+* You *could* support the arbitrary removal of elements (line leavers)
+* You could allow arbitrary insertions: priority (VIPs, line jumpers)
+* Priority Queue: allows you to define "priorities" and insert elements at a location such that the elements are served highest priority first
+* A more general data structure that can simulate both a stack and a queue is a `Deque` ("deck"): "a double ended queue"
+* Why work at both ends?
+  * push/pop from one end and pop from the other: supporting a limited number of undo operations
+  * Push/op at one end and push at the other
+* Applications:
+  * Stack:
+    * Call stack
+    * Breadcrumbs: you keep track of where you have been so you can *backtrack*
+    * DFS = Depth First Search (graphs or solutions to an optimization problem)
+    * Simulate recursion
+    * Shunting Yard algorithm
+  * Queues:
+    * Buffers
+    * Resource Pools/connection pools
+    * Server requests or a "Consumer Producer" scenario
+* What is the best implementation?  Array-based or Linked List?
+  * Java's `Deque` is a very good implementation for both (`ArrayDeque`, `LinkedList`)
 
 ```text
 
