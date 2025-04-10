@@ -62,6 +62,54 @@ $$t(n) = 0.00064101n^2 -0.11168n + 9.7822$$
 4. Determine how many times the elementary operation is executed with respect to the input size
 5. Provide a Big-O analysis
 
+### Identifying the Input
+
+* Generally this is given as part of the pseudocode
+* In some cases: it is less clear
+* Ex: if you have *multiple* inputs
+  * Keep things simple: focus only on one
+  * You choose the most relevant or the input that has the biggest impact on the performance of the algorithm
+  *  Example: linear search has both a collection and a key, choose the collection: its size will have the greatest impact on the performance of the algorithm
+  * Example: Euclid's GCD algorithm (GCD = Greatest Common Divisor): you are given two integers as inputs $a, b$
+  * WLOG = Without Loss of Generality, we can choose the "larger" of the two inputs: assume that $a \geq b$, then choose $a$
+
+### Identify the Input Size
+
+* Subtle but important and may be tricky!
+* Obvious: a collection (set, list, array, etc.): the size of the collection (number of elements in it, cardinality)
+  * Matrix: $n \times m$: WLOG assume that $n \geq m$ so that size of the matrix is $n \cdot m \leq n \cdot n = n^2$; to simplify further, you can assume that $N = n^2$, so the size is $N$
+  * A single number (integer): $a$, what is the "size" of a single number?
+  * The input size of a number (in general) is the number of bits required to represent it: $\log{(x)}$
+
+### Elementary Operation
+
+* Ultimately: we only want to focus on ONE operation in an algorithm
+* We want a simple analysis
+* We choose the operation that is the:
+  * Most common
+  * Most expensive
+  * Most relevant
+* Generally you do NOT consider anything related to the control structure of the algorithm  
+* Examples:
+  * Comparisons (searching or sorting algorithms)
+  * Arithmetic Operations: additions/subtractions, multiplications/divisions
+  * LInked list operations: node traversal (similar for graph algorithms)
+
+### Analysis
+
+* Analyze how many times the elementary operation is executed with respect to the input size, $n$
+* You come up with a *resource function* ($t$ is for time):
+  $$t: \mathbb{N} \rightarrow \mathbb{R}^+$$
+  * $\mathbb{N}$ (`\mathbb{N}`) is our domain because we do not have "negatively" sized nor "fractional" input sizes
+  * $\mathbb{R}^+$ (`\mathbb{R}^+`) is our codomain because we do not want to consider "negative" resources
+* We really only consider monotone increasing functions, ie NOT $\frac{1}{n}$ or $\sin{n}$
+* It may require some art, some summations or other calculations, finding closed forms solutions or even super advanced math
+* There is no clear guideline: everything is going to be slightly different
+* You should generally focus on the *worst case* scenario
+
+
+LEFT OFF: binary search analysis
+
 ```text
 
 
