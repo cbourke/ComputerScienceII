@@ -160,6 +160,57 @@ for all $n \geq n_0$
 * Technique B:
   * Simply setup an inequality and make your function bigger and bigger until it matches $g(n)$
   * You are fixing an $n_0$ (and possibly changing it) and then finding a $c$
+* Technique C: you set up a limit
+  * Requires some calculus
+  * Some limits are obvious: if numerator/denominator are growing but the other is not, then it is obvious
+  * You may require some other techniques: l'Hopital's Rule, etc.
+
+### Categories of functions
+
+* Constant: $O(1)$ (formula computation)
+* Logarithmic: $O(\log{(n)})$ (binary search)
+* Linear: $O(n)$ (linear search)
+* Quasilinear: $O(n\log{(n)})$ (merge sort, quick sort)
+* Quadratic: $O(n^2)$ (insertion sort, selection sort, naive linked list iteration)
+* Cubic: $O(n^3)$ (matrix operations: multiplication, graph algorithms)
+* Polynomial: $O(n^k)$
+* Exponential $O(2^n)$
+  * Not all exponentials are create equal: $2^n = O(3^n)$, but $3^n \neq O(2^n)$
+* Superexponential: $O(n!)$
+
+## Analysis of Recursive Algorithms
+
+1. You define a *recursive* function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of "recursive" work: how many calls to the function do you make and how big is the input size for each call?
+3. You "solve" the recursion
+
+### Merge Sort
+
+* Basic Idea:
+  * Ensure a good/equal split in the collection by breaking it into 2 parts FIRST
+  * Until you have a sub collection/array of size $\leq 1$
+  * As you return from the recursion, you merge the two sorted arrays together
+
+### Quick Sort
+
+* Basic Idea:
+  * Given an array of $n$ elements, you choose a *pivot* element
+  * We then *partition* the other elements *around* the pivot
+  * Things less than the pivot will be placed in the left half
+  * Things greater than the pivot will be placed in the right half
+  * Recurse on each partition, left/right
+
+### Summary
+
+* Selection sort: terrible, $O(n^2)$
+* Insertion Sort: $O(n^2)$, but *can* be better than selection sort in the best case/average case
+* Merge Sort: guaranteed to be $O(n\log{n})$
+* Quick sort: likely to be $O(n\log{n})$ but can be (in the worst case) $O(n^2)$
+* Tim Sort: also $O(n\log{n})$ (adaptive), in practice it is very fast (Java, Python use this)
+* Older Java used a *hybrid* algorithm:
+  * For small inputs it uses a "slow" sorting algorithm because the recursion would be more expensive than the savings
+  * For larger inputs it uses recursion (mergesort)
+* Heap Sort: really smart data structure (heap): $O(n\log{n})$
 
 ```text
 

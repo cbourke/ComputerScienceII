@@ -183,6 +183,32 @@ for all $n \geq n_0$
 
 ## Analysis of Recursive Algorithms
 
+### Analysis
+
+1. You define a *recursive* function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of "recursive" work: how many calls to the function do you make and how big is the input size for each call?
+3. You "solve" the recursion
+
+### Merge Sort
+
+* Basic Idea:
+  * Ensure a good/equal split in the collection by breaking it into 2 parts FIRST
+  * Until you have a sub collection/array of size $\leq 1$
+  * As you return from the recursion, you merge the two sorted arrays together
+* Using the MT, we know that Merge Sort has a guaranteed complexity of $O(n\log{n})$
+
+### Review of Sorting Algorithms
+
+* Selection Sort: $O(n^2)$, terrible time
+* Insertion Sort: $O(n^2)$, but in practice was kinda good (better than selection sort)
+* Quick Sort: worst case $O(n^2)$ (but that's extremely unlikely), in average/best: $O(n\log{n})$
+* Merge Sort: guaranteed running time of $O(n\log{n})$ (it "requires" additional space/memory)
+* Tim Sort (from python, Tim Peters)
+* Hybrid Sorting:
+  * on "small" inputs a "slow" algorithm may ironically be faster
+  * on "large" inputs a fast algorithm may be better
+  * If the input is small: use insertion sort
+  * if the input is large: use merge sort
 
 
 
