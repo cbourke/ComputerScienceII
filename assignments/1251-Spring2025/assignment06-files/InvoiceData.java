@@ -1,4 +1,4 @@
-package com.vbg;
+package com.vgb;
 
 import java.time.LocalDate;
 import java.util.UUID;
