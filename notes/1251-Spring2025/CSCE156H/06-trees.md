@@ -75,6 +75,54 @@
 
 * Demonstration
 
+### Traversals
+
+* YOu need a way to access data in a binary tree
+* You need to be systematic about it
+* Preorder traversal: root-left-right
+  * It uses a stack to keep track of subtrees/sub nodes that *still need to be processed*
+  * We'll always prefer to go left *then* right
+  * Simplest and easiest to implement
+* Inorder Traversal: left-root-right
+  * Binary Search Trees: provides a sorted order
+* Postorder traversal: left-root-right
+  * Tree Deletion
+* Each one has a recursive solution
+  * You simply change when you process it, before, middle or after recursing!
+  * Still prefer in-memory stacks, don't abuse the call stack!
+* BFS: breadth first search: top to bottom, left to right
+  * Uses a queue, but otherwise nearly exact same code as preorder
+* Efficiency: each one is designed/intended to process *every* node
+  * Nodes are only processed ONCE
+  * Nodes may be visited up to three times, but only processed once
+  * As a consequence: all of them are $O(n)$
+  * $n$ nodes, $n-1$ edges
+  * IF you consider a node *traversal* your elementary operation: it is still $O(n)$
+* Original goal: to have efficient operations for search/retrieve and insert/delete
+
+## Binary Search Trees
+
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* Binary Search Tree: all nodes have a *key* element, $k$
+  * For simplicity, our keys will all be integers
+  * All our keys will be *unique*: you can always find a tie breaker: a memory address, a surrogate database key
+  * For demonstration the key and the data will be the same
+* Binary Search Tree Property: For every node with key value $k$: ALL nodes in its left subtree have key values LESS than $k$.  ALL nodes in its right subtree have key values GREATER than $k$
+
+
+### Basic Operations: CRUD
+
+* Searching:
+  * Start at the root
+  * You make comparisons to go left or right until you find what you are looking for
+  * Complexity: at most $d+1$ comparisons which is $O(d)$
+  * However, there is no guarantee that $d = O(\log{n})$, it could be "degenerate" (a linked list) and $d = O(n)$
+
+* Insert:
+  * You start the root
+  * YOu do a basic search until you a) find the element (noop = no operation) or b) find the "space" in which it *would* have existed, insert it as a new leaf at that location
+  * Insert as a new leaf node; taking care of the left/right child of the parent and the parent reference
+
 ```text
 
 

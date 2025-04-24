@@ -73,6 +73,35 @@
 
 ### How can we exploit this structure?
 
+* Suppose you had a *full* binary tree: every node was present at every level/depth up until the maximal depth of the tree.
+* If we can develop a way to insert/retrieve/delete elements from a binary tree such that
+  * all operations are proportional to the depth *and*
+  * we can guarantee that the depth is "small": $O(\log{n})$
+* A "full" or nearly full binary tree has a guarantee on its depth: $d = O(\log{n})$ where $n$ is the number of nodes
+
+### Traversals
+
+* Preorder traversal: root-left-right
+  * Simplest and easiest implementation
+* Inorder traversal: left-root-right
+  * Binary Search Trees: provides a *sorted* order!
+* Postorder traversal: left-right-root
+  * Deleting a tree node-by-node (C/C++)
+* BFS: breadth first search
+* Each one has a stack/queue-based solution (ideal)
+  * Avoid recursion: it abuses the call stack
+* Each one has a recursive solution, but avoid
+* Each one has its own applications
+* Efficiency:
+  * Each one is dependent on the *size* of the tree
+  * Size of a tree: $n$, the number of nodes (recall that the number of edges is always $n-1 = O(n)$)
+  * Each algorithm "processes" the node exactly once!
+  * Processing is our elementary operation
+  * All traversal algorithms are $O(n)$ (linear)
+  * If you *have* to process all nodes, this is the best you can do.
+* Original goal: to have efficient operations for search/retrieve and insert/delete
+
+
 ```text
 
 

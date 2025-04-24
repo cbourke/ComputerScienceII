@@ -78,6 +78,14 @@
   * However, general trees are not necessarily full
   * You can have "degenerate" trees: $d = O(n)$ (a linked list is an example)
 
+## Binary Search Trees
+
+* Generally we store elements in a tree node, you can also impose additional structure on that data: that it be *ordered*
+* Binary Search Tree: all nodes have a *key* element, $k$
+  * For our purposes: the data and the key will be the same, we'll use integers and assume them to be unique
+* For every node with key value $k$: ALL nodes in its left subtree have key values LESS than $k$.  ALL nodes in its right subtree have key values GREATER than $k$
+
+
 ```text
 
 
