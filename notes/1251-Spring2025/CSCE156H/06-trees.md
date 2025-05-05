@@ -123,6 +123,59 @@
   * YOu do a basic search until you a) find the element (noop = no operation) or b) find the "space" in which it *would* have existed, insert it as a new leaf at that location
   * Insert as a new leaf node; taking care of the left/right child of the parent and the parent reference
 
+* Delete
+  * Step 1: Find the element (if no such element: noop or exception, etc.)
+  * Case 1: the node is a leaf
+    * No problems with deleting it
+    * Make its parent point to null (careful: is the node a left or right child?)
+  * Case 2: the node has one child
+    * We can "promote" the child up
+    * It is no different than deleting in a linked list
+  * Case 3: both children are present
+    * Go to the left subtree and find the maximum value; promote it and delete that node
+    * Go to the right subtree and find the minimum value; promote it and delete that node
+
+* Efficiency:
+  * Elementary operations: comparisons, node walks
+  * Searching: $O(d)$
+  * Insertion: $O(d)$ (you search for it, $O(d)$, a constant number of reference changes)  
+  * Deletion: two searches: $2*O(d) = O(d)$, delete of a node with only 1 child
+  * All operations are $O(d)$
+  * However, there is no guarantee that $d = O(\log{n})$
+  * One solution: *balanced* binary search trees: AVL Trees, Red-black trees, $b$-trees, a couple of dozen others with various properties and applications, each one guarantees that $d = O(\log{n})$
+
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* BSTs in general may have $d = O(n)$ which kills efficiency on all of the operations
+* Our solution: a *Heap* data structure: it is a binary tree that has the following properties:
+  * It is *full*: every child is present at every level except for possibly the last (deepest) level but at that level, all nodes are "full to the left"
+  * It satisfies the *heap property*: the key of every node is less than *both* its children (min heap)
+* Observations:
+  * The minimum element is always at the root
+  * The fullness property guarantees that the depth of a heap is logarithmic: $O(\log{(n)})$
+  * Not a general purpose data structure: we cannot arbitrarily insert/search/delete elements efficiently
+* Two basic *efficient* operations
+  * Get and remove the minimum element
+  * Insert an element into the heap
+* Insert an element into the heap:
+  * Always insert at the next available slot (lowest level, the left most available slot)
+  * Yes, you can do this efficiently on a tree (using Math!)
+  * Then: heapify (fix the heap): you swap the new value with its parent until the heap has been fixed (heap property is satisfied)
+  * At most, you need to perform $d$ swaps/comparisons: $O(d) = O(\log{n})$
+* Get and remove the minimum element
+  * Save off the root and "remove" it
+  * Replace the root with the "last" element (assuming you can get the last element efficiently)
+  * HEapfiy/fix the heap: swap the element with the minimum of is left/right child until a) the heap property is satisified or b) you reach a leaf node
+  * $O(d)$ for swaps/comparisons
+  * $O(d) = O(\log{n})$ (this assumes that you have free or efficient access to the "last" node)
+* Implementation
+  * A tree (nodes, left/right/parent) is possible, but a bit complex (and requires some mathy stuff to find the next gap/last element)
+  * A better implementation is an array
+* Applications
+  * Priority Queue: things are waiting, but the thing with the highest/lowest (max/min heap) priority is the next thing out (efficient for both operations, this is a restricted access data structure)
+  * Sorting
+
 ```text
 
 
