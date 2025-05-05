@@ -85,6 +85,72 @@
   * For our purposes: the data and the key will be the same, we'll use integers and assume them to be unique
 * For every node with key value $k$: ALL nodes in its left subtree have key values LESS than $k$.  ALL nodes in its right subtree have key values GREATER than $k$
 
+### Operations
+
+* Search:
+  * start at the root
+  * traverse left/right until found or go past a leaf
+  * Complexity: $O(d)$
+  * However, there is no guarantee that $d = O(\log{n})$, it could be "degenerate" (a linked list) and $d = O(n)$
+
+* Insert:
+  * You start the root
+  * You do a basic search: if the element exists, do ____ (we do not allow duplicates)
+    * Option A: throw a fit (exception)
+    * Option B: noop = no operation
+    * Option C: noop, but also inform the calling function
+  * If no such element is found, then you end up at a leaf node: you end up where the element *should have been* if it existed
+  * Insert as a new leaf node; taking care of the left/right child of the parent and the parent reference
+
+* Delete
+  * Step 1: Find the element (if no such element: noop or exception, etc.)
+  * If it is a leaf: simply delete it (careful for edge cases: deleting the root with no children)
+  * If it has only ONE child: promote the single child up to be the new child of the node's parent (careful: left/right with respect to the parent and left/right with respect to the promoted child)
+  * If it has both children: go either
+    * left tree and find the max value
+    * right tree and find the min value
+    * promote one or the other to the deleted node
+    * delete the promoted node (it is guaranteed to have at most one child!)
+  * Just be careful with corner cases
+  * Finding it: $O(d)$ (no guarantee on the depth)
+  * What about finding the max value? Just traverse right until you can go no further; $O(d)$
+
+## Heaps
+
+* Motivation: BST are not necessarily *balanced*
+* BSTs in general may have $d = O(n)$ which kills efficiency on all of the operations
+* Solution: "balanced" BSTs, AVL, 2-3/B-trees, Red-Black trees; each guaranteeing that $d = O(\log(n))$
+* Our solution: a *Heap* data structure: it is a binary tree that has the following properties:
+  * It is *full*: every child is present at every level except for possibly the last (deepest) level but at that level, all nodes are "full to the left"
+  * It satisfies the *heap property*: the key of every node is less than *both* its children (min heap)
+* Observations:
+  * The minimum element is always at the root
+  * The fullness property guarantees that the depth is logarithmic: $d = O(\log{n})$
+  * NOT a general purpose data structure
+* Two basic operations:
+  * Get and remove the minimum element
+  * Add an element
+* Get and remove the minimum element
+  * The minimum element is at the root, save it for a return value
+  * Replace the root with the "last" element
+  * Heapfiy/fix the heap: swap the element with the minimum of is left/right child until a) the heap property is satisfied or b) you reach a leaf node
+  * $O(d) = O(\log{n})$: logarithmic number of comparisons/swaps
+  * This all assumes you have free or efficient access to the "last" element
+* Add an element
+  * You insert it as the "last" element (to preserve the fullness property)
+  * Swap with a parent all the way up the tree until a) the heap property is satisfied or b) you reach the root
+  * $O(d)$ comparisons are made; this is $O(\log{n})$ because of the fullness property!
+  * But: this assumes you have "free" access to the "next" available slot
+* Observation: this is a *restricted access* data structure
+* How do we "find" the last element/find the next available slot efficiently?
+  * You *can* do it with a tree data structure: just use some math
+  * Store everything as an array: ignore index 0
+  * Root is stored at index 1
+  * Each left/right child of index $i$ is $2i$ and $2i+1$, parent is at $\lfloor\frac{i}{2}\rfloor$
+* Application: a priority queue
+* Application: sorting: Heap Sort
+
+
 
 ```text
 
