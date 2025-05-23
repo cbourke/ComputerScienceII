@@ -270,7 +270,9 @@ def get_grade_comments(assignment_id, user_id):
     result = []
     # we still explicitly check that the comments are included
     if 'submission_comments' in result_data:
-        result = result_data['submission_comments']
+        #pull only the comment text for each one
+        for c in result_data['submission_comments']:
+            result.append(c['comment'])
     return result
 
 
