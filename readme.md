@@ -41,15 +41,8 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ### Spring 2026
 
-- Course Link: TBD
-- Lectures: TBD
-
-#### University of Nebraska-Omaha
-
-This course is offered at UNO as ECEN 156:
-
-- Course Link: TBD
-- Lectures: TBD
+- Course Link: https://canvas.unl.edu/courses/209758
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZVqOQ5sjIm6_fKOsCDXE1xe
 
 <details>
 

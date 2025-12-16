@@ -8,16 +8,21 @@ This subdirectory hosts documents specific to the honors section
 
 ## Course Offerings
 
-### Spring 2025
+### Spring 2026
 
-- Course Link: https://canvas.unl.edu/courses/188557
-- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZW8W_je1fAe74uq4jtGfb6B
+- Course Link: https://canvas.unl.edu/courses/209771
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWy2dXSnEX0Vk6S5dF7LWg3
 
 <details>
 
 https://canvas.unl.edu/courses/188557
 
 <summary>Archived Offerings</summary>
+
+### Spring 2025
+
+- Course Link: https://canvas.unl.edu/courses/188557
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZW8W_je1fAe74uq4jtGfb6B
 
 ### Spring 2024
 
