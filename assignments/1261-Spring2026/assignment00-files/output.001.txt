@@ -1,0 +1,43 @@
+
+
+=======================================
+Totals Report
+=======================================
+Type            Count             Total
+=======================================
+PAYMENT            13  $      185043.97
+TRANSFER            1  $      383691.53
+WITHDRAWAL          8  $      632346.15
+DEBIT               1  $        3225.27
+DEPOSIT            10  $     1818410.07
+=======================================
+Total              33  $     3022716.99
+
+
+=======================================
+Balance Validation Report
+=======================================
+  Invalid Transaction, off by $0.01:
+	003C45B2-1356-4C7F-8D8A-EBB7BF026F16: C386278926  -> C1113941243 ( DEPOSIT) $ 149504.20 ($56082.00 -> $205586.19)
+  Invalid Transaction, off by $0.01:
+	458BF06E-1E34-4E1B-9656-7D78032C70E0: C1325645367 -> M1735850501 ( PAYMENT) $   4319.43 ($15463.00 -> $11143.58)
+  Invalid Transaction, off by $103.00:
+	1DBB66AE-9222-4D3D-8651-BAB82CB48488: C1824038590 -> C621979846  ( DEPOSIT) $ 270574.43 ($119.00 -> $270590.43)
+  Invalid Transaction, off by $-2.00:
+	4836A6C0-FDFE-4107-8A7F-5BA8C941BB3E: C1959818177 -> C1929973011 (TRANSFER) $ 383691.53 ($570869.03 -> $187175.50)
+  Invalid Transaction, off by $-100.00:
+	1F5B3912-352E-412D-AEF7-4ED65BF38CE0: C327263195  -> C956086567  ( DEPOSIT) $ 281292.06 ($17468.00 -> $298860.06)
+Number of invalid balances found: 5
+Loading 2nd Snapshot Database...
+
+
+=======================================
+Database Snapshot Tampering Report
+=======================================
+Missing transaction: 4836A6C0-FDFE-4107-8A7F-5BA8C941BB3E in database A but not in B
+Inconsistent data: 
+	A: BC377639-37CC-4824-81AF-60177418B46D: C1906093041 -> M95867054   ( PAYMENT) $  14535.18 ($83310.00 -> $68774.82)
+	B: BC377639-37CC-4824-81AF-60177418B46D: C1906093041 -> M95867054   ( PAYMENT) $  14530.18 ($83310.00 -> $68774.82)
+Missing transaction: C306CA7E-80A0-499E-8CDE-13DFB50C6753 in database B but not in A
+Total missing records:      2
+Total inconsistent records: 1
