@@ -191,7 +191,7 @@ Design (40)
 * Proper objected oriented design
   *  ADT is properly abstracted and awareness of its state is not required for proper use
   *  Data and functionality is properly encapsulated
-  *  Design supports code resuse
+  *  Design supports code reuse
 * ADT provides means to:
   *  Add elements
   *  Remove elements

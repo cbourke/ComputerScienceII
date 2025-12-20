@@ -72,6 +72,14 @@ contains the following data, separated by commas.
     -   For licenses, the begin date and end date is provided in the same
         `YYYY-MM-DD` format
 
+## Output
+
+Examples of what this should look like have been provided in our `data_example`
+directory.  You don't need to match the formatting exactly, but you should
+output *at least* as much information as our example does.  When you output
+your report, it should output to the *standard output*.  However,
+you are required include a copy in a file named `output.txt` in the `data` directory.
+
 ### Example
 
 An example follows; note that it will not necessarily be in any particular order.
