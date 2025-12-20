@@ -1,0 +1,41 @@
+--
+-- 1.  A query to retrieve the main attributes of each person (their UUID,
+--     and last/first name)
+--
+-- 2.  A query to retrieve the major fields for every person including
+--     their email address(es)
+--
+-- 3.  A query to get the email addresses of a specific person
+--
+-- 4.  A query to change the email address of a specific email record
+--
+-- 5.  A query (or series of queries) to remove a specific person record
+--
+-- 6.  A query to get all the items on a specific invoice record
+--
+-- 7.  A query to get all the items purchased by a specific customer
+--
+-- 8.  A query to find the total number of invoices for each customer
+--     *even if they do not have any**
+--
+-- 9.  A query to find the total number of sales made by each salesperson;
+--     do not include anyone who has zero sales
+--
+-- 10. A query to find the subtotal charge of all **equipment** purchased
+--     in each invoice (hint: you can take an aggregate of a mathematical expression).
+--     Do not include taxes.
+--
+-- 11. A query to detect invalid data in a invoice as follows. When a customer
+--     purchases **equipment** they buy a certain number of units.  It should
+--     not be the case that they buy (say) 20 monitors and then another 30
+--     monitors in two different records.  Instead there should be one record
+--     of 50.
+--
+--     Write a query to find and report any invoice
+--     that includes multiple records like this.  If your
+--     database design prevents such a situation, you should still write
+--     this query (but of course would never expect any results).
+--
+-- 12. Write a query to detect a potential instance of fraud where an
+--     employee makes a sale to their own company (the same person is the sales
+--     person as well as the customer's primary contact).
