@@ -75,7 +75,7 @@ data.
     training, troubleshooting, installation, etc.  Services are
     associated with a consultant (a person) and are billed
 	  to the client on a per-hour basis.  In addition to the hourly cost,
-	  there is a flat \$125 service fee.  When invoiced, a service has a
+	  there is a flat $125 service fee.  When invoiced, a service has a
     total number of billable hours.  Thus, the total cost is
     the hourly rate multiplied by the number of billable hours plus
     the service fee.
@@ -96,7 +96,7 @@ items charged to a particular customer.  Each invoice includes:
 
 -   The date that the invoice was created
 
--   The customer (and their info) that the invoice is for; VGB is a B2B
+-   The customer (and their info) that the invoice is for; CCC is a B2B
     (business-to-business) operation and so customers are *companies* with
     a name, address, and a primary contact (person).
 
