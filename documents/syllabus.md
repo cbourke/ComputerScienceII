@@ -1,6 +1,6 @@
 # Computer Science II
 
-### CSCE 156 - Syllabus - Spring 2025
+### CSCE 156 - Syllabus - Spring 2026
  [School of Computing](https://computing.unl.edu/)  
  [College of Engineering](https://engineering.unl.edu/)  
  [University of Nebraska-Lincoln](https://unl.edu/)  
@@ -103,10 +103,10 @@ are currently earning an A in this course; keep it up!
 | Category    | Number | Points |
 |-------------|--------|--------|
 | Starter Pts |        |   20   |
-| Surveys     |        |   30   |
-| Labs        | 14     |  350   |
+| PC Quiz     |        |   30   |
+| Labs        | 15     |  375   |
 | Assignments | 8      |  950   |
-| Total       |        | 1350   |
+| Total       |        | 1375   |
 
 The honor section point distribution is similar but there are more total points
 due to additional required points on the assignments.
