@@ -1,0 +1,27 @@
+09:59:15.517 [main] INFO  com.cinco.database.DatabaseDataLoader - Started...
+Loading from: csv...
+Outputing:    sorted...
++-------------------------------------------------------------------------+
+| Invoices by Total                                                       |
++-------------------------------------------------------------------------+
+Invoice                              Customer                  Total     
+f2d5a98b-2f83-476f-94a2-d94712ab967a Millstone Ventures        $  39683.92
+e6c9d8e0-bb5a-4b5f-b1b6-d07a547fcf25 Whitmore & Associates     $   5582.50
+d4f1c30d-0427-4d92-86d5-931865cd73f4 Greenfield Technologies   $      0.00
++-------------------------------------------------------------------------+
+| Invoices by Customer                                                    |
++-------------------------------------------------------------------------+
+Invoice                              Customer                  Total     
+d4f1c30d-0427-4d92-86d5-931865cd73f4 Greenfield Technologies   $      0.00
+f2d5a98b-2f83-476f-94a2-d94712ab967a Millstone Ventures        $  39683.92
+e6c9d8e0-bb5a-4b5f-b1b6-d07a547fcf25 Whitmore & Associates     $   5582.50
++-------------------------------------------------------------------------+
+| Customer Invoice Totals                                                 |
++-------------------------------------------------------------------------+
+Customer                  Number of Invoices        Total
+Greenfield Technologies   1                    $      0.00
+Southgate Industries      0                    $      0.00
+Westbrook Solutions       0                    $      0.00
+Whitmore & Associates     1                    $   5582.50
+Millstone Ventures        1                    $  39683.92
+

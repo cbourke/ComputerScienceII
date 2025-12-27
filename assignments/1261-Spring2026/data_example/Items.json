@@ -1,0 +1,83 @@
+{
+"items": [
+  {
+    "costPerHour": 25.0,
+    "code": "8ff9b933-dc7e-44b9-9864-e5e76f1c7357",
+    "name": "Phone Tech Support"
+  },
+  {
+    "costPerHour": 350.45,
+    "code": "9eb9938f-b581-43c1-b4bc-b5fa4c6f60f7",
+    "name": "Software Development"
+  },
+  {
+    "serviceFee": 500.75,
+    "annualFee": 120.15,
+    "code": "bbf7a3e0-d4f0-47e2-bb3a-6f3ed3fd5f17",
+    "name": "AI Slop Cleanup 400"
+  },
+  {
+    "pricePerUnit": 17.5,
+    "code": "ff4b3209-1ac5-49ab-a84f-93b5475cf346",
+    "name": "Greentooth Mouse"
+  },
+  {
+    "pricePerUnit": 8.99,
+    "code": "3dff1b7f-1ed0-44b3-a763-f6d04b6e0ff1",
+    "name": "Surge Protector"
+  },
+  {
+    "serviceFee": 25.99,
+    "annualFee": 1212.12,
+    "code": "b4f02d75-d29b-468d-a244-1a1e3d5d92a6",
+    "name": "SM Office"
+  },
+  {
+    "pricePerUnit": 25.95,
+    "code": "b215f55a-84a7-4b67-a920-1fc157a4da7f",
+    "name": "Keyboard"
+  },
+  {
+    "pricePerUnit": 650.0,
+    "code": "0a3d88d9-2b8a-441f-beb3-cbe03f77db02",
+    "name": "Server Rack"
+  },
+  {
+    "costPerHour": 50.0,
+    "code": "864c15b2-c21f-4cb9-95de-97fd245fa473",
+    "name": "Delivery"
+  },
+  {
+    "serviceFee": 150.0,
+    "annualFee": 600.0,
+    "code": "fa9cdbd8-c9b7-4f89-9be6-bc64b62fe6c0",
+    "name": "SM367"
+  },
+  {
+    "pricePerUnit": 199.99,
+    "code": "dca4b8e6-9c13-4b1d-aeef-1e3f237f9a9a",
+    "name": "Monitor"
+  },
+  {
+    "costPerHour": 75.0,
+    "code": "4c3cb0ec-833b-41b3-b842-54a5d27bcb9e",
+    "name": "Tech Analysis"
+  },
+  {
+    "costPerHour": 125.5,
+    "code": "7c1b401b-4a6b-4d31-80a2-03798183e4f9",
+    "name": "White Glove Tech Support"
+  },
+  {
+    "serviceFee": 50.0,
+    "annualFee": 12500.0,
+    "code": "2b727fbc-257d-4ef1-a9d0-f3e09b72a59b",
+    "name": "Cloud Storage"
+  },
+  {
+    "serviceFee": 0.0,
+    "annualFee": 36000.36,
+    "code": "5416e75f-34d4-4974-9d19-bfdb8a5c2fc9",
+    "name": "Oracle Database"
+  }
+]}

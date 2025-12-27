@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<items>
+<service>
+  <code>8ff9b933-dc7e-44b9-9864-e5e76f1c7357</code>
+  <name>Phone Tech Support</name>
+  <costPerHour>25.0</costPerHour>
+</service>
+<service>
+  <code>9eb9938f-b581-43c1-b4bc-b5fa4c6f60f7</code>
+  <name>Software Development</name>
+  <costPerHour>350.45</costPerHour>
+</service>
+<license>
+  <code>bbf7a3e0-d4f0-47e2-bb3a-6f3ed3fd5f17</code>
+  <name>AI Slop Cleanup 400</name>
+  <serviceFee>500.75</serviceFee>
+  <annualFee>120.15</annualFee>
+</license>
+<equipment>
+  <code>ff4b3209-1ac5-49ab-a84f-93b5475cf346</code>
+  <name>Greentooth Mouse</name>
+  <pricePerUnit>17.5</pricePerUnit>
+</equipment>
+<equipment>
+  <code>3dff1b7f-1ed0-44b3-a763-f6d04b6e0ff1</code>
+  <name>Surge Protector</name>
+  <pricePerUnit>8.99</pricePerUnit>
+</equipment>
+<license>
+  <code>b4f02d75-d29b-468d-a244-1a1e3d5d92a6</code>
+  <name>SM Office</name>
+  <serviceFee>25.99</serviceFee>
+  <annualFee>1212.12</annualFee>
+</license>
+<equipment>
+  <code>b215f55a-84a7-4b67-a920-1fc157a4da7f</code>
+  <name>Keyboard</name>
+  <pricePerUnit>25.95</pricePerUnit>
+</equipment>
+<equipment>
+  <code>0a3d88d9-2b8a-441f-beb3-cbe03f77db02</code>
+  <name>Server Rack</name>
+  <pricePerUnit>650.0</pricePerUnit>
+</equipment>
+<service>
+  <code>864c15b2-c21f-4cb9-95de-97fd245fa473</code>
+  <name>Delivery</name>
+  <costPerHour>50.0</costPerHour>
+</service>
+<license>
+  <code>fa9cdbd8-c9b7-4f89-9be6-bc64b62fe6c0</code>
+  <name>SM367</name>
+  <serviceFee>150.0</serviceFee>
+  <annualFee>600.0</annualFee>
+</license>
+<equipment>
+  <code>dca4b8e6-9c13-4b1d-aeef-1e3f237f9a9a</code>
+  <name>Monitor</name>
+  <pricePerUnit>199.99</pricePerUnit>
+</equipment>
+<service>
+  <code>4c3cb0ec-833b-41b3-b842-54a5d27bcb9e</code>
+  <name>Tech Analysis</name>
+  <costPerHour>75.0</costPerHour>
+</service>
+<service>
+  <code>7c1b401b-4a6b-4d31-80a2-03798183e4f9</code>
+  <name>White Glove Tech Support</name>
+  <costPerHour>125.5</costPerHour>
+</service>
+<license>
+  <code>2b727fbc-257d-4ef1-a9d0-f3e09b72a59b</code>
+  <name>Cloud Storage</name>
+  <serviceFee>50.0</serviceFee>
+  <annualFee>12500.0</annualFee>
+</license>
+<license>
+  <code>5416e75f-34d4-4974-9d19-bfdb8a5c2fc9</code>
+  <name>Oracle Database</name>
+  <serviceFee>0.0</serviceFee>
+  <annualFee>36000.36</annualFee>
+</license>
+</items>

@@ -1,0 +1,95 @@
+09:58:19.355 [main] INFO  com.cinco.database.DatabaseDataLoader - Started...
+Loading from: csv...
+Outputing:    main...
++--------------------------------------------------------------------------------------------------------+
+| Summary Report - By Total                                                                              |
++--------------------------------------------------------------------------------------------------------+
+Invoice #                            Customer                       Num Items          Tax       Total
+f2d5a98b-2f83-476f-94a2-d94712ab967a Millstone Ventures             2          $      0.00 $  39683.92
+e6c9d8e0-bb5a-4b5f-b1b6-d07a547fcf25 Whitmore & Associates          3          $    271.94 $   5582.50
+d4f1c30d-0427-4d92-86d5-931865cd73f4 Greenfield Technologies        0          $      0.00 $      0.00
++--------------------------------------------------------------------------------------------------------+
+                                                                    5          $    271.94 $  45266.42
+
++----------------------------------------------------------------+
+| Company Invoice Summary Report                                 |
++----------------------------------------------------------------+
+Company                        # Invoices Grand Total    
+Greenfield Technologies        1          $      0.00
+Millstone Ventures             1          $  39683.92
+Southgate Industries           0          $      0.00
+Westbrook Solutions            0          $      0.00
+Whitmore & Associates          1          $   5582.50
++----------------------------------------------------------------+
+                               3          $  45266.42
+
+Invoice#  f2d5a98b-2f83-476f-94a2-d94712ab967a
+Date      2026-01-17
+Customer: 
+Millstone Ventures (58c32fa3-e51a-44f4-bf1e-ea53a820b9f5)
+McLain, Riley (d9bb5e0b-89fa-4a5d-a5ec-0132f118dd6a) 
+	[]
+
+	9200 Oak Ridge Dr
+	Los Angeles CA 90045
+Sales Person: 
+Brennan, Olivia (118c68be-6fa1-4684-843f-f72fe77b5491) 
+	[obrennan7@gmail.com, obrennan7@linkedin.com]
+Items (2)                                                            Tax       Total
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                          -=-=-=-=-=- -=-=-=-=-=-
+b4f02d75-d29b-468d-a244-1a1e3d5d92a6 (License)            SM Office 
+	181 days (2026-01-01 -> 2026-06-30) @ $1212.12 /year 
+	Service Fee: $25.99 
+                                                             $      0.00 $    627.07
+2b727fbc-257d-4ef1-a9d0-f3e09b72a59b (License)        Cloud Storage 
+	1139 days (2024-01-31 -> 2027-03-14) @ $12500.00 /year 
+	Service Fee: $50.00 
+                                                             $      0.00 $  39056.85
+                                                             -=-=-=-=-=- -=-=-=-=-=-
+                                                   Subtotals $      0.00 $  39683.92
+                                                 Grand Total             $  39683.92
+Invoice#  e6c9d8e0-bb5a-4b5f-b1b6-d07a547fcf25
+Date      2026-01-01
+Customer: 
+Whitmore & Associates (d7b92a68-b6f3-40f3-a852-33c3d722e1ab)
+Winters, Eva (c7a945dd-61b3-4e99-95a1-68e5c22624d3) 
+	[ewinters2@webmd.com, ewinters2@spotify.com]
+
+	5827 Harrison Ave
+	Chicago IL 60609
+Sales Person: 
+Brennan, Olivia (118c68be-6fa1-4684-843f-f72fe77b5491) 
+	[obrennan7@gmail.com, obrennan7@linkedin.com]
+Items (3)                                                            Tax       Total
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                          -=-=-=-=-=- -=-=-=-=-=-
+dca4b8e6-9c13-4b1d-aeef-1e3f237f9a9a (Purchase)              Monitor 
+	25 units @ $199.99/unit 
+                                                             $    262.49 $   4999.75
+b215f55a-84a7-4b67-a920-1fc157a4da7f (Lease)             Keyboard 
+	10 units 
+                                                             $      0.00 $     10.81
+864c15b2-c21f-4cb9-95de-97fd245fa473 (Service)             Delivery 
+	3.50 hours @ $50.00/unit 
+	Serviced by Garcia, Isaac 
+                                                             $      9.45 $    300.00
+                                                             -=-=-=-=-=- -=-=-=-=-=-
+                                                   Subtotals $    271.94 $   5310.56
+                                                 Grand Total             $   5582.50
+Invoice#  d4f1c30d-0427-4d92-86d5-931865cd73f4
+Date      2026-01-03
+Customer: 
+Greenfield Technologies (aaec1bcf-02b3-4b88-8e9a-b0b8fc97392d)
+Peterson, Amanda (aec587f1-0f4d-48ff-95c9-0a14e9b7889f) 
+	[apeterson9@wordpress.com, apeterson9@amazon.com]
+
+	1346 W. Adams Street
+	San Diego CA 92101
+Sales Person: 
+Hayes, Sophia (5a52fe3b-2a5e-4c15-9f82-249d091f2d9e) 
+	[shayes1@live.com, shayes1@dropbox.com]
+Items (0)                                                            Tax       Total
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                          -=-=-=-=-=- -=-=-=-=-=-
+                                                             -=-=-=-=-=- -=-=-=-=-=-
+                                                   Subtotals $      0.00 $      0.00
+                                                 Grand Total             $      0.00
+

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<companies>
+<company>
+  <uuid>1b05d3d2-3d59-46fb-9736-b6c9785328c9</uuid>
+  <name>Westbrook Solutions</name>
+  <address>
+    <street>2154 Maplewood Drive</street>
+    <city>Orlando</city>
+    <state>FL</state>
+    <zipCode>32801</zipCode>
+  </address>
+  <invoices/>
+</company>
+<company>
+  <uuid>aaec1bcf-02b3-4b88-8e9a-b0b8fc97392d</uuid>
+  <name>Greenfield Technologies</name>
+  <address>
+    <street>1346 W. Adams Street</street>
+    <city>San Diego</city>
+    <state>CA</state>
+    <zipCode>92101</zipCode>
+  </address>
+  <invoices/>
+</company>
+<company>
+  <uuid>58c32fa3-e51a-44f4-bf1e-ea53a820b9f5</uuid>
+  <name>Millstone Ventures</name>
+  <address>
+    <street>9200 Oak Ridge Dr</street>
+    <city>Los Angeles</city>
+    <state>CA</state>
+    <zipCode>90045</zipCode>
+  </address>
+  <invoices/>
+</company>
+<company>
+  <uuid>d7b92a68-b6f3-40f3-a852-33c3d722e1ab</uuid>
+  <name>Whitmore &amp; Associates</name>
+  <address>
+    <street>5827 Harrison Ave</street>
+    <city>Chicago</city>
+    <state>IL</state>
+    <zipCode>60609</zipCode>
+  </address>
+  <invoices/>
+</company>
+<company>
+  <uuid>ffcd2c88-b85d-48db-9187-c837dd13a12e</uuid>
+  <name>Southgate Industries</name>
+  <address>
+    <street>3185 Birchwood Road</street>
+    <city>Austin</city>
+    <state>TX</state>
+    <zipCode>73301</zipCode>
+  </address>
+  <invoices/>
+</company>
+</companies>

@@ -1,0 +1,16 @@
+uuid,type,name,field(s)
+dca4b8e6-9c13-4b1d-aeef-1e3f237f9a9a,E,Monitor,199.99
+b215f55a-84a7-4b67-a920-1fc157a4da7f,E,Keyboard,25.95
+ff4b3209-1ac5-49ab-a84f-93b5475cf346,E,Greentooth Mouse,17.50
+0a3d88d9-2b8a-441f-beb3-cbe03f77db02,E,Server Rack,650
+3dff1b7f-1ed0-44b3-a763-f6d04b6e0ff1,E,Surge Protector,8.99
+864c15b2-c21f-4cb9-95de-97fd245fa473,S,Delivery,50
+8ff9b933-dc7e-44b9-9864-e5e76f1c7357,S,Phone Tech Support,25
+4c3cb0ec-833b-41b3-b842-54a5d27bcb9e,S,Tech Analysis,75
+7c1b401b-4a6b-4d31-80a2-03798183e4f9,S,White Glove Tech Support,125.50
+9eb9938f-b581-43c1-b4bc-b5fa4c6f60f7,S,Software Development,350.45
+2b727fbc-257d-4ef1-a9d0-f3e09b72a59b,L,Cloud Storage,50,12500
+5416e75f-34d4-4974-9d19-bfdb8a5c2fc9,L,Oracle Database,0,36000.36
+fa9cdbd8-c9b7-4f89-9be6-bc64b62fe6c0,L,SM367,150,600
+bbf7a3e0-d4f0-47e2-bb3a-6f3ed3fd5f17,L,AI Slop Cleanup 400,500.75,120.15
+b4f02d75-d29b-468d-a244-1a1e3d5d92a6,L,SM Office,25.99,1212.12
