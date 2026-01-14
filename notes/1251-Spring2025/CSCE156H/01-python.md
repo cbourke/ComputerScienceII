@@ -98,6 +98,7 @@ PI = 3
 ### Misc Math
 
 * Integers in python are arbitrary precision integers
+* Floating point numbers are 64-bit IEEE754 (`double`s)
 * Math library
 
 ```python
