@@ -165,7 +165,143 @@ int a = 10;
 # Basic I/O
 
 * Interactive Input: you can read keyboard inputs if you want (but generally you don't want to)
-* NExt time: command line arguments (CLAs)
+* Command line arguments (CLAs)
+  * Non-interactive input: you provide *command line arguments* as input to your program
+
+```java
+int numArgs = args.length;
+System.out.println(numArgs);
+
+//convert them:
+int x = Integer.parseInt(args[0]);
+double y = Double.parseDouble(args[1]);
+String foo = args[2];
+
+System.out.printf("x = %d, y = %f, foo = %s\n", x, y, foo);
+```
+
+# Conditionals
+
+* You have traditional `if`, `else-if` and `if-else-if`
+
+```java
+int huskerScore = 90;
+int oregonScore = 55;
+
+if(huskerScore > oregonScore) {
+	System.out.println("Huskers Win!");
+} else if(huskerScore < oregonScore){
+	System.out.println("Oregon Wins");
+} else {
+	System.out.println("Tie, go to OT");
+}
+```
+
+* Numerical comoparison operators: `<, <=, >, >=, !=, ==`
+  * These are ONLY for numbers, NEVER strings
+  * Java has `boolean` variables
+
+```java
+boolean isStudent = false;
+isStudent = true;
+
+if(isStudent) {
+	System.out.println("BB ticket discount!");
+}
+
+```
+
+* Boolean operators: logical and, or not, etc.
+  * Logical And: `&&`  
+  * Logical Or: `||`  
+	* Logical negation: `!`
+
+```java
+if( !(isStudent && age < 21) ) {
+	System.out.println("BB ticket discount! no beer");
+}
+```
+
+* More examples:
+
+```java
+
+		double a = 10;
+		double b = 20;
+		double c = 1;
+
+		double root1 = (-b + Math.sqrt(Math.pow(b, 2) - 4 * a * c)) / (2 * a);
+		double root2 = (-b - Math.sqrt(Math.pow(b, 2) - 4 * a * c)) / (2 * a);
+
+		if(b*b - 4*a*c < 0) {
+			System.out.println("I cannot handle complex roots");
+		} else {
+			System.out.println("Roots: " + root1 + ", " + root2);
+		}
+
+		double x = a / 0;
+		System.out.println(x);
+
+		x = Math.log(0);
+		System.out.println(x);
+```
+
+# Loops
+
+* Java has `for` loops and `while` loops
+* Java also has "enhanced for loops"
+
+```java
+
+		int n = 10;
+		for(int i=0; i<n; i++) {
+			System.out.println(i);
+		}
+
+		for(int i=2; i<n; i+=3) {
+			System.out.println(i);
+		}
+
+		System.out.println("=-=-=-=-=-=-=-=");
+		int i = 0;
+		while(i<n) {
+			i++;
+			System.out.println(i);
+		}
+		System.out.println(i);
+
+		//enhanced for loops:
+		// you can iterate over an array, list, set, etc.
+		int primes[] = {2, 3, 5, 7, 11, 13, 17};
+		for(i=0; i<primes.length; i++) {
+			System.out.printf("primes[%d] = %d\n", i, primes[i]);
+		}
+		//for each integer x in the collection primes...
+		for(int x : primes) {
+			System.out.println(x);
+		}
+```
+
+# Arrays and Collections
+
+* Java has basic arrays
+* They are 0-indexed
+* They are created with a *fixed size*, they cannot grow, shrink, etc.
+
+```java
+int n = 10;
+int numbers[] = new int[n];
+
+numbers[0] = 1;
+numbers[n-1] = 42;
+System.out.println(Arrays.toString(numbers));
+
+//both invalid, results in an exception
+numbers[10] = 102;
+numbers[-1] = 102;
+
+```
+
 
 ```text
 
