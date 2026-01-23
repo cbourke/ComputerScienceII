@@ -302,6 +302,281 @@ numbers[-1] = 102;
 
 ```
 
+## Lists
+
+* Lists are *ordered* collections of similar elements
+* Duplicates are allowed
+* Dozens of methods to help process data
+
+```java
+
+		List<Integer> numbers = new ArrayList<>();
+		numbers.add(10);
+		numbers.add(20);
+		numbers.add(30);
+		System.out.println(numbers);
+		numbers.add(40);
+		System.out.println(numbers);
+		numbers.add(0, 50);
+		System.out.println(numbers);
+		numbers.add(3, 60);
+		System.out.println(numbers);
+
+		numbers.remove(0);
+		System.out.println(numbers);
+		numbers.remove(2);
+		System.out.println(numbers);
+
+		//get the 1-th element:
+		int x = numbers.get(1);
+		System.out.println(x);
+		for(int y : numbers) {
+			System.out.println(y);
+		}
+```
+
+## Sets
+
+* A set is an *unordered* collection of *unique* elements (no duplicates)
+* ex:
+
+```java
+
+		Set<String> names = new HashSet<>();
+
+		names.add("Chris");
+		names.add("Alex");
+		names.add("Jane");
+		names.add("John");
+
+		System.out.println(names);
+
+		//duplicates are not allowed
+		names.add("Chris");
+		System.out.println(names);
+
+		//instead, you use a for loop:
+		for(String name : names) {
+			System.out.println(name);
+		}
+
+		names.remove("Chris");
+		System.out.println(names);
+
+		//convert the set to a list:
+		List<String> namesList = new ArrayList<>(names);
+		System.out.println(namesList);
+		namesList.add("Alex");
+		System.out.println(namesList);
+
+		//convert a list back to a set:
+		Set<String> noDups = new HashSet<>(namesList);
+		System.out.println(noDups);
+```
+
+## Maps
+
+* A map is a key-value pair collection
+* It stores elements using a key that maps to a value
+
+```java
+
+		//nuid to last name
+		Map<Integer, String> nuidToLastName = new HashMap<>();
+
+		//values may contain duplicates, but...
+		nuidToLastName.put(35140602, "Bourke");
+		nuidToLastName.put(12345678, "Bourke");
+		nuidToLastName.put(12121212, "Bourke");
+		System.out.println(nuidToLastName);
+
+		//but keys cannot, keys are unique!
+		nuidToLastName.put(35140602, "Jones");
+		System.out.println(nuidToLastName);
+
+		//retrieval: you need the key
+		String foo = nuidToLastName.get(35140602);
+		System.out.println(foo);
+
+		foo = nuidToLastName.get(55555555);
+		System.out.println(foo);
+
+		//iterate over a map:
+		//iterate over the keys:
+		for(Integer key : nuidToLastName.keySet()) {
+			String value = nuidToLastName.get(key);
+			System.out.println(key + " maps to " + value);
+		}
+
+		nuidToLastName.remove(35140602);
+		System.out.println(nuidToLastName);
+
+		//iterate over a map's values:
+		for(String name : nuidToLastName.values()) {
+			System.out.println(name);
+		}
+```
+
+# Strings
+
+* Java has a `String` class/type
+  * No memory management
+  * No null-terminating character
+  * Basic concatenation: `+`
+* In Java, strings are *immutable*: once created, the contents of the string *cannot* be changed
+* LOTS of nifty methods to call in the string library: RTM = Read the Manual!
+
+```java
+
+		String name = "chris";
+		System.out.println(name);
+		String upper = name.toUpperCase();
+		System.out.println(name);
+		System.out.println(upper);
+		//this creates a brand new string:
+		name = "Christopher Bourke";
+
+		//dozens of nice methods:
+		String lastName = name.substring(12);
+		System.out.println(lastName);
+		String firstName = name.substring(0, 5);
+		System.out.println(firstName);
+
+		System.out.println(firstName.length());
+
+		//comparing strings
+		String a = "apple";
+		String b = new String("apple");
+
+		if(a.equals(b)) {
+			System.out.println("equal!");
+		} else {
+			System.out.println("not equal");
+		}
+
+		//ordering is based on ASCII table = lexicographic ordering
+		a = "123";
+		b = "9";
+
+		if(a.compareTo(b) < 0) {
+			System.out.println(a + " comes before " + b);
+		} else if(a.compareTo(b) > 0) {
+			System.out.println(b + " comes before " + a);
+		} else {
+			System.out.println(a + " equals " + b);
+
+		}
+```
+
+## Methods/Functions
+
+* In Java functions are called "methods"
+* Methods are just function inside a class
+
+```java
+/**
+ *
+ * Computes the Euclidean distance between the two given points <code>(x1, y1)</code>
+ * and <code>(x2, y2)</code>.  For more information, see <a href="https://en.wikipedia.org/wiki/Euclidean_distance">here</a>
+ *
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ * @return
+ */
+public static double getEuclideanDistance(double x1, double y1, double x2, double y2) {
+
+	double distance = Math.sqrt( (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2) );
+	return distance;
+}
+```
+
+* All NON-Trivial methods require full doc-style comments!
+* All of your first assignment classes require author documentation!
+* All functions are pass-by-value for variables (there are no pointers!)
+* However, if you pass collections (set, list, map) then they *are* passed by reference
+  * A method *can* make changes to the collection!
+* Generally:
+  * use `lowerCamelCasing` for function names
+  * They should be *verbs*
+* For now all our functions will be `public static`
+  * `public` - all of your code can "see" it and therefore use it
+  * `static` - it belongs to the class and so you call it or invoke it using the `ClassName.functionName()`
+* Java supports method overloading: more than one function can have the same name!
+  * Ex: `Math.abs`: there are 4 versions!
+* Use `return` to return a variable value to the calling function
+* You can define a `void` function that does not return anything
+* For this class: ALL non-trivial functions *require* doc-style comments/documentation
+  * Trivial function: `main`
+
+# File I/O
+
+* There are always 3 steps:
+  1. Open The file
+	2. Process: read or write
+	3. Close the file
+
+## File Output
+
+```java
+
+		int x = 42;
+		double y = 3.5;
+		String name = "Jane";
+
+		File f = new File("data/output.txt");
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter(f);
+			pw.println("Hello World!");
+			pw.print("Goodbye Everyone!\n");
+			pw.printf("x = %d, y = %f, hello %s\n", x, y, name);
+			pw.close();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+```
+
+## File Input
+
+* Use a `Scanner` and read line-by-line
+
+```java
+
+		//read in the books.csv data line by line
+		File f = new File("data/books.csv");
+		String line = null;
+		try {
+			Scanner s = new Scanner(f);
+			line = s.nextLine();
+			while(s.hasNextLine()) {
+				line = s.nextLine();
+				//process the data in each line...
+				//tokenize each line and get each piece of data separately
+				//Book Id,Title,Author last,Author first,ISBN,Average Rating,Publisher,Original Publication Year,Date Added
+				String tokens[] = line.split(",");
+				int bookId = Integer.parseInt(tokens[0]);
+				String title = tokens[1];
+				String authorLastName = tokens[2];
+				String authorFirstName = tokens[3];
+				String isbn = tokens[4];
+				double averageRating = Double.parseDouble(tokens[5]);
+				//TODO: finish this up!
+				System.out.printf("%s by %s, %s\n", title, authorLastName, authorFirstName);
+			}
+
+			s.close();
+		} catch (Exception e) {
+			System.err.println("Something when wrong on this line: " + line);
+			throw new RuntimeException(e);
+		}
+
+```
+
+# Sorting
+
+
 
 ```text
 

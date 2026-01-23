@@ -208,7 +208,7 @@ while i < n:
   * Sets - unordered collections of *unique* elements
   * Dictionaries - maps mapping integers and/or strings to other elements
 
-```java
+```pyhton
 import pprint
 
 # create an empty list:
@@ -413,6 +413,216 @@ for z in all_unique_pairs:
     x, y = z
     print(x)
     print(y)
+```
+
+# Strings
+
+* Strings are a built-in type in Python
+* Strings are immutable, once created you cannot change them
+* Library of functions: https://docs.python.org/3/library/string.html
+
+```python
+
+s = 'chris'
+#nope:
+#s[0] = 'C';
+
+# substrings do work:
+s = 'C' + s[1:]
+print(s)
+
+csv_data = 'Chris,Bourke,105 Schorr,402-472-5008,School of Computing,Lincoln,NE'
+data = csv_data.split(',')
+pprint.pprint(data)
+
+# regular expression verion:
+data = re.split("[0-9]{3}", csv_data)
+# look up also: re.find, re.findAll ?
+pprint.pprint(data)
+
+# regular expresion for whitespace:
+csv_data = 'Chris,Bo  urke,105 Scho\trr,402-47\n2-5008,School of Computing,Lincoln,NE'
+data = re.split("\\s+", csv_data)
+pprint.pprint(data)
+
+```
+# Functions, Modules
+
+* Modules are little more than files
+* You can create a "library" or "module" by putting methods or variables or code into a file: `library.py`
+* All modules (files) and non-trivial methods will require proper doc-style documentation
+* In python, there can only be one function with a particular name
+
+* `utils.py`:
+
+```python
+"""
+A collection of utilities
+
+Chris Bourke
+2026-01-21
+"""
+import math
+
+
+def euclidean_distance(x1, y1, x2, y2):
+    """
+    Computes the Euclidean distance between the two
+    points `(x1,y1)` and `(x2,y2)`
+    """
+    result = math.sqrt( (x1-x2) ** 2 + (y1-y2) ** 2 )
+    return result
+
+def foo(x, y = 2, z = 1):
+    if type(x) != float and type(x) != int:
+        print("ERROR: x must be a number")
+        return 0
+    return x + y * z
+
+```
+
+* demo:
+
+```python
+import pprint
+import sys
+import re
+import utils
+from utils import euclidean_distance
+from utils import foo
+
+distance = euclidean_distance(0,0,1,1)
+print(distance)
+
+result = foo(10, 20, 30)
+print(result)
+
+result = foo(10)
+print(result)
+
+result = foo(10, z = 30, y = 20)
+print(result)
+
+result = foo("ten", 20, 30)
+print(result)
+
+
+
+```
+
+# Basic File I/O
+
+* You can open to a file using `open()`
+* Very similar to `fopen`
+
+```python
+
+#file input
+f = open('data.txt', 'r')
+lines = f.readlines()
+# endline characters are retained!
+pprint.pprint(lines)
+
+lines = [line.rstrip() for line in lines if not line.isspace() ]
+pprint.pprint(lines)
+
+#be sure to close your resources!
+f.close()
+
+# file output
+f = open('message.txt', 'w')
+f.write('Hello world!\n')
+x = 42
+f.write(f'x = {x}\n')
+f.write(f'pi is {math.pi:.4f}')
+f.close()
+```
+
+# Classes
+
+* Use `class ClassName`
+* Use `UpperCamelCasing`
+* Use `lower_underscore_casing` for variables
+* No predefined "member variables"
+
+## Book Demo
+
+```python
+import pprint
+import sys
+import re
+import utils
+import math
+from book import Book
+
+
+f = open('my_goodreads_data.csv', 'r')
+lines = f.readlines()
+
+#pprint.pprint(lines)
+# step 1 : read all of them in as tuples of strings
+
+books = []
+for line in lines[1:]:
+    tokens = line.split(',')
+    book = Book(*tokens)
+    books.append(book)
+
+#pprint.pprint(books)
+
+books = [ Book(*line.rstrip().split(',')) for line in lines[1:] ]
+
+#pprint.pprint(books)
+
+# what is the "best" book?
+# what is the "worst" book?
+# what is the oldest book?
+# what is the newest book?
+# what are the books written by Terry Pratchett
+
+# what is the oldest book?
+
+#let's sort instead
+
+# numbers = [4, 6, 8, 3, 2, 1, 5, 3, 4]
+# numbers.sort()
+# pprint.pprint(numbers)
+
+# numbers.sort(reverse=True)
+# pprint.pprint(numbers)
+
+# names = ["Joe","Jane", "Chris", "bob"]
+# names.sort()
+# # sorting is lexicographic for strings
+# pprint.pprint(names)
+
+# years = ["1908", "400", "1916", "2026"]
+# years.sort()
+# pprint.pprint(years)
+
+# sort books by publish_year
+books.sort(key = lambda book : (book.author_last_name, book.author_first_name, -book.rating), reverse=True )
+pprint.pprint(books)
+
+# sort by year
+books.sort(key = lambda book : book.publish_year)
+oldest_book = books[0]
+newest_book = books[-1]
+
+pprint.pprint(f'oldest: {oldest_book}')
+pprint.pprint(f'newest_book: {newest_book}')
+
+pratchett_books = [book for book in books if (book.author_first_name,book.author_last_name) == ('Terry', 'Pratchett')]
+pprint.pprint(pratchett_books)
+
+# is there a binary search? No
+# create a map that maps an author (tuple: first/last) to a list of their books
+
+authors = { (b.author_last_name,b.author_first_name) for b in books }
+
+author_to_books = { a:[b for b in books if (b.author_last_name,b.author_first_name) == a ] for a in authors }
+pprint.pprint(author_to_books)
+
 ```
 
 ```text
