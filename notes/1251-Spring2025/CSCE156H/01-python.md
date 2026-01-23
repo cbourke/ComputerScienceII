@@ -530,8 +530,8 @@ pprint.pprint(data)
 # Functions, Modules
 
 * Modules are little more than files
-* You can create a "library" or "module" by putting methods or varaibles or code into a file: `library.py`
-* THere is no call by reference: there are no pointers!
+* You can create a "library" or "module" by putting methods or variables or code into a file: `library.py`
+* There is no call by reference: there are no pointers!
 
 * `library.py`
 ```python
