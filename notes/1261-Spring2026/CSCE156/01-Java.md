@@ -577,6 +577,91 @@ public static double getEuclideanDistance(double x1, double y1, double x2, doubl
 # Sorting
 
 
+```java
+
+		List<Integer> numbers = Arrays.asList(5, 8, 3, 4, 2, 0, 3);
+		System.out.println(numbers);
+		// the default "natural" ordering is always ascending (non-decreasing)
+		Collections.sort(numbers);
+		System.out.println(numbers);
+
+		// I want a different order: descending!
+		Comparator<Integer> cmpIntDesc = new Comparator<>() {
+
+			@Override
+			public int compare(Integer a, Integer b) {
+				if (a < b) {
+					// they are out of order = in ascending order
+					// return something positive
+					return 1;
+				} else if (a > b) {
+					// they are in order, something negative
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+
+		};
+
+		Collections.sort(numbers, cmpIntDesc);
+		System.out.println(numbers);
+
+		Comparator<Integer> cmpIntDescending = Comparator.reverseOrder();
+
+		List<String> names = new ArrayList<>();
+		names.add("allen");
+		names.add("Chris");
+		names.add("Jane");
+		names.add("John");
+		names.add("Allen");
+		Collections.sort(names);
+		System.out.println(names);
+
+		Comparator<String> cmpIgnoreCaseStrRev = new Comparator<>() {
+
+			@Override
+			public int compare(String a, String b) {
+
+				int result = -a.compareToIgnoreCase(b);
+				return result;
+			}
+
+		};		
+
+		Collections.sort(names, cmpIgnoreCaseStrRev);
+		System.out.println(names);
+
+		Comparator<String> cmpIgnoreCaseDesc = Comparator.comparing(String::toUpperCase);
+		Collections.sort(names, cmpIgnoreCaseDesc);
+		System.out.println(names);
+
+
+```
+
+* Search: always use binary search!  It is exponentially faster!
+
+```java
+List<Integer> numbers = Arrays.asList(5, 8, 3, 4, 2, 0, 3);
+int key = 5;
+Comparator<Integer> cmpIntDesc = Comparator.reverseOrder();
+Collections.sort(numbers, cmpIntDesc);
+System.out.println(numbers);
+int index = Collections.binarySearch(numbers, key, cmpIntDesc);
+if (index >= 0) {
+	System.out.printf("SUCCESS: element %d is at index %d\n", key, index);
+} else {
+	System.out.printf("FAILURE: no such element\n");
+}
+```
+
+# Classes
+
+* Classes are a mechanism by which you can do **encapsulation**
+  * Group data together into one logical unit
+  * Protect the data (`private`)
+  * Group functionality that operates on that data within the same unit (for now: constructors, `toString()`, getters)
+
 
 ```text
 
