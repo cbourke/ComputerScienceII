@@ -662,6 +662,307 @@ if (index >= 0) {
   * Protect the data (`private`)
   * Group functionality that operates on that data within the same unit (for now: constructors, `toString()`, getters)
 
+* Book Demo
+
+* `Book.java`, `Person.java`
+
+```java
+package unl.soc;
+
+import java.time.LocalDate;
+
+public class Book {
+
+	private int bookId;
+	private String title;
+	private Person author;
+	private String isbn;
+	private double rating;
+	private String publisher;
+	private int year;
+	private LocalDate dateRead;
+
+	public Book(Person author) {
+		super();
+		this.author = author;
+	}
+
+	public Book(int bookId, String title, Person author, String isbn, double rating,
+			String publisher, int year, LocalDate dateRead) {
+		super();
+		this.bookId = bookId;
+		this.title = title;
+		this.author = author;
+		this.isbn = isbn;
+		this.rating = rating;
+		this.publisher = publisher;
+		this.year = year;
+		this.dateRead = dateRead;
+	}
+
+	public String toString() {
+		return String.format("%-30s by %-20s (%4d) %.2f",  this.title, this.author, this.year, this.rating);
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public int getBookId() {
+		return bookId;
+	}
+
+
+
+	public Person getAuthor() {
+		return author;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public LocalDate getDateRead() {
+		return dateRead;
+	}
+
+//	public void setTitle(String title) {
+//		if(title == null) {
+//			throw new RuntimeException("You cannot chagne the title to null!");
+//		}
+//		this.title = title;
+//	}
+
+
+
+}
+
+package unl.soc;
+
+import java.util.Objects;
+
+/**
+ * Represents a person
+ */
+public class Person implements Comparable<Person> {
+
+	private String lastName;
+	private String firstName;
+
+	public Person(String lastName, String firstName) {
+		super();
+		this.lastName = lastName;
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@Override
+	public String toString() {
+		return lastName + ", " + firstName;
+	}
+
+	@Override
+	public int compareTo(Person person) {
+		int result = this.lastName.compareTo(person.lastName);
+		if(result == 0) {
+			//break the tie looking at the first name
+			result = this.firstName.compareTo(person.firstName);
+		}
+		return result;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, lastName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName);
+	}
+
+
+
+}
+
+
+```
+
+* `BookDemo.java`
+
+```java
+package unl.soc;
+
+import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class BookDemo {
+
+	public static final DateTimeFormatter FORMATTER =
+	        DateTimeFormatter.ofPattern("M/d/yy");
+
+
+	/**
+	 * Loads and returns book data from the given <code>fileName</code>
+	 * @param fileName
+	 * @return
+	 */
+	public static List<Book> loadBookData(String fileName) {
+		File f = new File(fileName);
+		String line = null;
+		List<Book> books = new ArrayList<>();
+		try {
+			Scanner s = new Scanner(f);
+			line = s.nextLine();
+			while(s.hasNextLine()) {
+				line = s.nextLine();
+				//process the data in each line...
+				//tokenize each line and get each piece of data separately
+				//Book Id,Title,Author last,Author first,ISBN,Average Rating,Publisher,Original Publication Year,Date Added
+				String tokens[] = line.split(",");
+				int bookId = Integer.parseInt(tokens[0]);
+				String title = tokens[1];
+				String lastName = tokens[2];
+				String firstName = tokens[3];
+				Person author = new Person(lastName, firstName);
+				String isbn = tokens[4];
+				double averageRating = Double.parseDouble(tokens[5]);
+				String publisher = tokens[6];
+				int year = Integer.parseInt(tokens[7]);
+				LocalDate dateRead = LocalDate.parse(tokens[8], FORMATTER);
+				Book b = new Book(year, title, author, isbn, averageRating, publisher, year, dateRead);
+				books.add(b);
+			}
+
+			s.close();
+		} catch (Exception e) {
+			System.err.println("Something when wrong on this line: " + line);
+			throw new RuntimeException(e);
+		}
+		return books;
+	}
+
+	public static void main(String[] args) {
+
+		List<Book> books = BookDemo.loadBookData("data/books.csv");
+
+		//What is the oldest book I've read?
+		//What is the newest book I've read?
+		// Sort them first by year
+		Comparator<Book> cmpBooksByYear = new Comparator<>() {
+
+			@Override
+			public int compare(Book a, Book b) {
+				if(a.getYear() < b.getYear()) {
+					return -1;
+				} else if(a.getYear() > b.getYear() ) {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+
+		};
+
+		Collections.sort(books, cmpBooksByYear);
+
+		Book oldestBook = books.get(0);
+		Book newestBook = books.get(books.size()-1);
+		System.out.println("oldest: " + oldestBook);
+		System.out.println("newest: " + newestBook);
+
+
+//		for(Book b : books) {
+//			System.out.println(b);
+//		}
+
+		//What is the best/worst book I've read?
+		Comparator<Book> cmpByRating = Comparator.comparing(Book::getRating).reversed();
+		Collections.sort(books, cmpByRating);
+		Book bestBook = books.getFirst();
+		Book worstBook = books.getLast();
+		System.out.println("best: " + bestBook);
+		System.out.println("worst: " + worstBook);
+
+		//Find a book by Frank Herbert
+		//sort by author
+		Comparator<Book> cmpByAuthor = Comparator.comparing(Book::getAuthor);
+		//binary search for Frank...
+		Collections.sort(books, cmpByAuthor);
+		//create a dummy Book record with the author Frank Herbert
+		Book authorBookKey = new Book(new Person("Herbert", "Frank"));
+		int index = Collections.binarySearch(books, authorBookKey, cmpByAuthor);
+		if(index >= 0) {
+			System.out.println(books.get(index));
+		} else {
+			System.out.println("No such book with that author!");
+		}
+
+		//Who is the author whom I've read the most
+		//organize the data so that all authors -> books
+		//let's use a Map: Author -> list of books
+		Map<Person, List<Book>> bookMap = new HashMap<>();
+		//for each book
+		for(Book b : books) {
+			Person author = b.getAuthor();
+			//  if the person is mapped, then just add it to the list
+			List<Book> booksByThatAuthor = bookMap.get(author);
+			if(booksByThatAuthor == null) {
+				//this is the first time we've seen author...
+				booksByThatAuthor = new ArrayList<>();
+			}
+			//add the book to the list...
+			booksByThatAuthor.add(b);
+			bookMap.put(author, booksByThatAuthor);
+		}
+
+		//System.out.println(bookMap);
+		for(Person author : bookMap.keySet()) {
+			System.out.println(author);
+			List<Book> booksByThatAuthor = bookMap.get(author);
+			for(Book b : booksByThatAuthor) {
+				System.out.println("\t" + b);
+			}
+		}
+	}
+
+}
+
+```
 
 ```text
 
