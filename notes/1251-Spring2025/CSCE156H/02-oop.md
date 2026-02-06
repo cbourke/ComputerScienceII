@@ -104,6 +104,7 @@ Generally:
   * It is *never* the case that a `Cat` is-a `Dog`
 * However, you really need to think about your inheritance design
   * Ex: there are some `Persons` that have directed films *and* written books
+
 * Generally you can "prefer composition over inheritance"
   * Perfect use case: Director/Author
 * Three types of relations:

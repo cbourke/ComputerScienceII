@@ -47,7 +47,7 @@ Formally an object is a general entity characterized by:
   * ISO8601 formatted string?
   * several integers: one for each field: day, month, year, hour, minute, second, fractional second
   * a single number: unix epoch number
-  * Who cares?  THe representation is *internal* to the class
+  * Who cares?  The representation is *internal* to the class
 * Abstraction allows you to *reason about an object* without knowing how it works or how it is represented
 
 ## Encapsulation
