@@ -142,7 +142,183 @@ Generally:
   * If your system is well-designed, then the addition of a new type should *Only* result in one class
   * If your system is poorly designed: the addition of a new type would lead to MANY code changes
 
+  ### Observations:
+
+  * If a class `A` `extends` a class `B`:
+    * `A` is the subclass/child class/derived
+    * `B` is the superclass/parent class/
+  * Inheritance defines an "is-a" relationship
+    * A `Dog` *is-a* `Animal`
+    * A `Cat` *is-a* `Animal`
+    * An `Animal` is not necessarily a `Cat/Dog`
+    * It is *never* the case that a `Cat` is-a `Dog`
+  * However, you really need to think about your inheritance design
+    * Ex: there are some `Person` that have directed films *and* written books; would it make sense to make `Author`, `Director` `Person` into an inheritance hierarchy?
+    * Not everything makes sense to put into an inheritance hierarchy
+    * Generally you can "prefer composition over inheritance"
+      * Perfect use case: Director/Author
+* Three types of relations:
+  * Covariant relationship: you can treat a subclass as a super class (Dog **is an** Animal); ALWAYS safe
+  * Contravariant relationship: you can *sometimes* treat a subclass as a superclass (an Animal is sometimes a Dog); sometimes safe
+  * Invariant relationship: a cat is never a dog, a dog is never a cat, NEVER safe
+* Sometimes it is okay to check before you perform a contravariance...
+  * You can use `instanceof` keyword to determine if it is of the appropriate type
+  * HOWEVER: you generally don't want to do this unless you *have* to (it is almost always wrong)
+  * The ONE time you have to do this is: when you are making copies
+  (Copy constructors)
+  * If you find yourself doing this *often* then it is likely a *bad design*
+  * Generally the only time you *have* to use `instanceof` and do a constravariance is when  you are making copies (calling a copy constructor)
+* In summary:
+  * INheritance provides a way to do *code resuse*
+  * It provides a way to reduce redundancy
+  * It provides a way to reason about and organize your classes into a *hierarchy*
+  * It is well-designed if the introduction of a new class does not break any of the other code
+* In Java you can create an `abstract` class
+  * You use the keyword `abstract`
+  * Then you can have `abstract` methods: methods with no *default* behavior, no method body, etc.
+  * Then subclasses that inherit this `abstract` method, MUST provide an implementation
+  * Even if you have a constructor, you *cannot* instantiate an abstract class!
+* In Java you can also create a *pure* abstract class: `interface`
+  * An interface allows you to define any number of methods with NO default behavior
+  * This allows classes to `implements` multiple interfaces
+
+### More Inheritance - Pitfalls
+
+An inheritance hierarchy needs to be **very well defined**.
+  * The *is-a* relationship *must* be invariant
+  * Once a hierarchy has been established and code is now *dependent* on it, it *cannot be changed* without substantially breaking other code
+
+#### Rectangle Problem:
+* Shape, Rectangle, Square
+* Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+* Our example: Author, Director, Person: not a great design because it doesn't allow a person that is both
+* This is an example of a violation of the Liskov Substitution Principle (SOLID)  
+* Prefer composition over inheritance
+
+#### Yo-yo Antipattern
+* Antipattern = common, but bad habit that you see in code
+* Pattern: common pattern that is useful and good design in code
+* Deep inheritance hierarchies (20 classes/levels) deep are bad
+* Keep your hierarchy shallow, OR
+* "Prefer Composition over Inheritance": it gets you the same or similar benefits of code reuse but without locking you into the hierarchy!
+
+#### Diamond Problem/Antipattern
+* Really only C++ allows you to do this: you can inherit from *multiple* classes
+* Ex: suppose `X extends Dog AND Cat`, what is `X`?  What does `X` say?  `Meow`?  `Wolf`?
+* Java does not allow this (good), most programming languages do not allow this
+* Even in C++: you end up having to disambiguate it: you have to explicitly write code that you inherit from one or the other
+  * Anyone using it has to RTM
+  * You have to write code anyway, defeats hte purpose of code reuse
+
+# Polymorphism
+
+* Poly = Many, Morph = Form
+* Code: one piece of code (variable, method or class) can be written generically and applied to many types
+* C: `qsort()` can be used for any type because it uses `void *`
+* Python: `list.sort()` as well
+* Any language will only have one sort method in general which can be applied to any type
+
+### Subtype Polymorphism
+
+* This is the "classic" OOP polymorphism
+* You can treat any subtype as a supertype
+* You can treat a `Robin` as a `Bird`
+* You can treat an `ArrayList` as a `List`
+* It simplifies code and means you only have to write on list or one method to process that list (or other types)
+
+
+### Method Overloading
+
+* C: how many absolute value functions does C have?  `abs()`, `fabs()`, `labs()`, `llabs()`, etc.
+* This is because C does not have method overloading: once you have defined a function with a name `foo` there can be NO other function with that name!
+* OOP allows method overloading: you can define multiple functions with the same name but with different paratemers/input types
+* The compiler is "smart enough" to know which function you want based on the paratmer type you call it with: if you call it with an `int` as input, it calls one version, if you call it with a `double` it calls another version, etc.
+* This mechanism is known as "static dispatch" (static = at compile time/by the compiler)
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String`: concatenation
+  * `int + int`: addition
+  * `int + String`: convert the int to a string and concatenate
+* In Python:
+  * `string + string`: concatenation
+  * `int + int`: addition
+  * `string + int`: runtime error, you cannot do this: `string + str(int)`
+* C:
+  * `char * + char *` adds two memory addresses (nonsense)
+  * C does not have ANY operator overloading
+* C++: full operator overloading: you can write code to redefine ANY operator.  ex: you redefine `+` to mean subtraction
+* This, however is bad in general:
+  * `List + List`: what does this mean?
+    * Vector addition
+    * Appending/concatenation
+    * Dot product
+    * $A \cup B$
+  * `Time + Time`
+* If you do use operator overloading:
+  * You have to write a method/fucntion to define it anyway
+  * If you're writing a function, *give it a meaningful name* and use it!
+
+### Parameterized Polymorphism
+
+* In Java you can "parameterize" a variable, a method, or a class
+* Parameter: the type of the variable is **variable**
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+  of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+## SOLID Principles
+
+* STUPID Principles: https://williamdurand.fr/2013/07/30/from-stupid-to-solid-code/
+
+## S = Single Responsibility Principle
+
+* Good encapsulation: a class should represent one thing and represent it well
+* Violation: God-Class: the class is responsible for everything, knows everything, does everything
+* Still a violation: have bad modeling
+  * Load data, ~~Convert it~~(?), Save data
+* YAGNI Principle: You Aint Gonna Need It: don't over engineering things
+* Be careful: you still need good encapsulation and good **composition**
+* Avoid "leaky abstractions":
+  * Code should not require users to use it in a *specific* way
+  * If you were forced to call `initialize_math()` before you called any `Math` function
+  * Ex: emails in a person class: leaking information about how it is represented or makes it mutable
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide a *general* behavior that should *NOT* be changed otherwise:
+    * It must have been a bad design to begin with OR
+    * changing it breaks all other code
+* Violation: `instanceof` to determine business logic (the value of an account, the cost of items)
+
+```java
+if(object instanceof Stock) {
+  //do stock thiings here
+} else if(object instanceof Annuity) {
+  //do annuity things here
+}
+
+if(object.getType().equals("Stock")) {
+  //do stock thiings here
+} else if(object.getType().equals("Annuity")) {
+  //do annuity things here
+}
+
+```
+
+
+
 ```text
+
+
+
+
+
+
 
 
 

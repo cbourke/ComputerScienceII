@@ -56,6 +56,8 @@ Each subsequent line contains comma delimited data fields:
 
 -   Name -- the person's name in a `firstName,lastName` format
 
+-   Phone Number -- the person's phone number in a `xxx-xxx-xxxx` format
+
 -   Email Address(es) -- an (optional) list of email addresses. If there
     are multiple email addresses, they will be delimited by a comma
 
@@ -63,10 +65,10 @@ An example:
 
 ```text
 uuid,firstName,lastName,phone,email(s)
-a74cc7d9-7ab5-47b8-84cd-9a9205f7ffe7,Bety,Grof,bgrof@gmail.com,bgrof2@unl.edu
-7b70a695-33c1-4a1a-9c95-51054f4017f6,Finn,Mertens,fth@gmail.com
-840397ce-4ea9-401d-9afd-bd8c0b68f4fd,Simon,Petrikov,drpet@unl.edu,iking@ooo.com,spetrikov@unl.edu
-d6388b8b-b36b-4ca0-9f3d-48e86e78f79f,Marceline,Abadeer
+a74cc7d9-7ab5-47b8-84cd-9a9205f7ffe7,Bety,Grof,536-284-9214,bgrof@gmail.com,bgrof2@unl.edu
+7b70a695-33c1-4a1a-9c95-51054f4017f6,Finn,Mertens,536-284-1234,fth@gmail.com
+840397ce-4ea9-401d-9afd-bd8c0b68f4fd,Simon,Petrikov,536-284-3214,drpet@unl.edu,iking@ooo.com,spetrikov@unl.edu
+d6388b8b-b36b-4ca0-9f3d-48e86e78f79f,Marceline,Abadeer,536-284-3213,
 ```
 
 ## Companies Data File

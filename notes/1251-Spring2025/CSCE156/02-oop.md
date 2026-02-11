@@ -133,7 +133,7 @@ An inheritance hierarchy needs to be **very well defined**.
   * You cannot instantiate (create) an abstract class even if it has a constructor!
 * An `interface` takes this to another level
   * An interface is a pure abstraction: it only defines abstract methods, no state, no behavior
-  * You can `implements` multiple interfaces: it provides more flexiblity
+  * You can `implements` multiple interfaces: it provides more flexibility 
   * It means that you can define a collection of abstract methods and then a class can `implements` that interface
 
 ### Pitfalls
