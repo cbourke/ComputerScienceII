@@ -89,6 +89,9 @@ Generally:
   * Is an `Animal` a `Cat`? (not necessarily, sometimes)
   * Is a `Dog` a `Cat`? Definitely not
 * Covariant, Contravariant, Invariant comparisons
+  * Covariant relationship: you can treat a subclass as a super class (Dog **is an** Animal); ALWAYS safe
+  * Contravariant relationship: you can *sometimes* treat a subclass as a superclass (an Animal is sometimes a Dog); sometimes safe
+  * Invariant relationship: a cat is never a dog, a dog is never a cat, NEVER safe
 
 ```java
 
@@ -122,7 +125,109 @@ Generally:
 * Write code to support a variety of assets:
   * Stock account (stock price and a number of shares)
   * Savings Account (balance, interest rate)
-  * ??
+  * Add a new Asset class for Crypto (BTC)
+
+## Observations
+
+* Motivations for inheritance:
+  * It provides a way to utilize *code resuse*
+  * It provides a way to reduce redundancy
+  * It provides a way to reason about and organize your classes into a *hierarchy*
+  * It is well-designed if the introduction of a new class does not break any of the other code
+* What happens if you have well-defined subclasses, but not-so-well-defined superclasses
+  * Example: `Person`, `Director`, `Actor`
+* Rectangle Problem: Shape, Rectangle, Square
+  * Your object relations in an inheritance hierarchy ALWAYS need to follow the is-a relationship
+  * Another example: Author, Director, Person hierarchy: it no longer made sense when we had a person that was *both*
+  * If you have mutable methods (setters) that can change what an object "is" that violate the hierarchy, it is probably not a well-designed hierarchy
+  * This is a violation of the Liskov Substitution Principle (SOLID)
+* Your hierarchy has to be **very well defined**
+  * If not: you end up fighting
+  * or you need to redesign it!
+* Others:
+  * In Java, you can create an `abstract` class:
+    * It is a class that you can inherit from
+    * YOu can define methods and state in your class, but also
+    * You can define `abstract` methods: methods that have no "default behavior"
+    * You provide the behavior in NON-abstract subclasses
+    * You cannot instantiate (create) an instance of an abstract class, even if it has a constructor
+  * An `interface` takes this to another level
+    * An interface is a pure abstraction: it only defines abstract methods, no state, no behavior
+  * You can `implements` multiple interfaces: it provides more flexibility
+  * It means that you can define a collection of abstract methods and then a class can `implements` that interface
+
+# Polymorphism
+
+* Polymorph = multiple form(s)
+* Code: one piece of code (variable, method, class) can be written *generically* so that it can be applied to many types
+* Other languages:
+  * Python: `list.sort()`
+  * C: `qsort()`
+  * Java: `Collections.sort()`
+* It allows you to write generic code, one function/method that can be applied to *any* type
+
+### Subtype Polymorphism
+
+* This is the "classic" or "default" type of polymorphism
+* You can treat any subtype as a supertype so that you can apply generic code to it
+* Ex: `Robin` can be treated as a `Bird`
+* Ex: `ArrayList` can be treated as a `List`
+
+### Method Overloading
+
+* Ex: from C, how many "absolute value" functions are there?
+  * `abs()` (integers), `fabs()` (floating point numbers), `labs()`, `llabs()`
+  * C does not have function overloading: if you write a function ONLY that function can have that name
+  * Python doesn't have it either
+  * Java does: you can write multiple `abs()` methods that can be applied to multiple types
+* You can have more than one function with the same name but with different types of arguments (inputs/parameters)
+* The compiler is "smart enough" to figure out which one you want to call based on the value you give it: `int` it calls the version that takes an integer, `double`: it calls the version that takes a `double`
+* This mechanism is known as "static dispatch" (the compiler *dispatches* the function call at *compile time* that's what static means)
+
+### Operator Overloading
+
+* Consider in Java:
+  * `String + String`: string concatenation
+  * `int + int`: addition
+  * `String + int`: convert (automatically) the `int` to a `String` and do concatenation!
+* C:
+  * `int + int`: addition
+  * `char * + char *`: nonsense: it adds to memory locations together!
+* Python:
+  * `string + string`: concatenation
+  * `int + int`: addition
+  * `int + string`: not allowed, it is a runtime error
+  * To get it to work: `str(int) + string`
+* C and python do not support *operator overloading*
+* Opeator overloading: means that an operator (`+`) can have more than one meaning in different contexts
+* Java: does support *limited* operator overloading
+* C++ allows ANY operator overloading!
+* Generally a bad idea:
+  * `Time + Time`
+  * `List + List`: list concatenation/appending
+  * Alternative: $A \cup B$
+  * Math: coordinate-wise addition (vector addition)
+  * Ideally: it should be completely understood, unambiguous
+* Operator overloading is a thing, but **should be extremely limited**
+
+### Parameterized Polymorphism
+
+* In Java you can create a parameterized variable, class or method
+* That one variable can be any type, method can act on any type, class can be associated with any type!
+* Allows you to write one piece of code that can apply to many types
+  * `Collections.sort()`
+* the type of a variable can be *variable* itself!
+* YOu can parameterize using `<T>`, then `T` is replaced with an actual type for each method call
+* You can provide *bounds* by using the `extends` keyword
+  * Without a bound, the type `T` is only ever an `Object` which is limited to `toString()`, etc.
+  * *With* a bound: you have a minimum of information
+* PECS: Producer Extends, Consumer Super
+  * A collection (list, set) is a *producer* of elements; if you wish to pull them out and do something with them, then you need a "named" parameter: `<T extends Item>` (`T` is the name
+  of type type being used)
+  * A collection is a *consumer* of elements if you wish to put stuff in: `<? super Item>`: if you don't care about what is in the collection already; you just want to put stuff in
+
+## SOLID Principles
+
 
 ```text
 

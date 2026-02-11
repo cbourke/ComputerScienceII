@@ -109,7 +109,7 @@ Generally:
   * Perfect use case: Director/Author
 * Three types of relations:
   * Covariant relationship: you can treat a subclass as a super class (Dog **is an** Animal); ALWAYS safe
-  * Contravariant relationship: you can *sometimes* treat a subclass as a superclass (an Animal is sometimes a Dog); sometimes safe
+  * Contravariant relationship: you can *sometimes* treat a superclass as a subclass (an Animal is sometimes a Dog); sometimes safe
   * Invariant relationship: a cat is never a dog, a dog is never a cat, NEVER safe
 * Sometimes it is okay to check before you perform a contravariance...
   * You can use `instanceof` keyword to determine if it is of the appropriate type
