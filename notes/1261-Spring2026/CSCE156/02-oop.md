@@ -228,8 +228,136 @@ Generally:
 
 ## SOLID Principles
 
+## S = Single Responsibility Principle
 
+* Good encapsulation: a class should represent one thing and represent it well
+* Ex: `Book` is responsible for book things, `Person` is responsible for person things
+* Violation: God-Class: the class is responsible for everything, knows everything, does everything
+  * Are persons and companies the same thing?
+  * Be careful: you still need to have good modeling and composition: how do you represent a person in a `Company` class? String?  `UUID` WRONG. It should be a `Person`
+  * How are emails represented? A single string?  Wrong
+  * Loading Data, Converting Data, Saving Data
+* YAGNI Principle: You Aint Gonna Need It: don't over engineering things
+  * Bourke said that any two pieces of data needs a class: `lastName` and `firstName` are two pieces of data, thus I should have a `Name`
+* Avoid "leaky abstractions":
+  * Code should not require users to use it in a *specific* way
+  * If you were forced to call `initialize_math()` before you called any `Math` function
+  * Person/email demo
+
+## O = Open/Closed Principle
+
+* Every unit (module, class, method) should be *open for extension* and *closed for modification*
+* Classical inheritance:
+  * Superclasses provide a *general* behavior that should *NOT* be changed otherwise:
+    * It must have been a bad design to begin with OR
+    * changing it breaks all other code
+* Violation: `instanceof` to determine business logic (the value of an account, the cost of items)
+
+```java
+if(object instanceof Stock) {
+  //do stock thiings here
+  //ex: determine its value
+} else if(object instanceof Crypto) {
+  //do annuity things here
+}
+
+//also wrong:
+if(object.getType().equals("Stock")) {
+  //do stock thiings here
+} else if(object.getType().equals("Crypto")) {
+  //do annuity things here
+}
+```
+
+* The only time you *should* (in fact have to) use the `instanceof` keyword or type checks: when you call a constructor
+  * Ex: you may need to make a copy of `Service` without knowing what the object type is (call a copy constructor)
+
+* In Java: you can enforce this principle using the `final` keyword:
+  * `final` variables mean you are making them constant
+  * A `final` class cannot be extended: ex: `Integer`
+  * A method can be made `final` and subclasses cannot override it!
+
+## L = Liskov Substitution Principle
+
+* If S is a subtype of T then objects of type T may be replaced with objects of type S without altering any of the desired properties of T.
+  * Violation: Rectangle/Square example
+  * `Person`: `Author` vs `Director`: invariance prevents a proper modeling of (say) STephen King who is both an author and a director
+  * Prefer composition over inheritance
+
+## I = Interface Segregation Principle
+
+* No "client" code (code that uses other code) should depend on methods it does not care about
+* Example `ClickEventHandler` is an interface that defines two methods:
+  * `onClick()`
+  * `onDoubleClick()`: you end up making this method useless: it may throw an exception, it may simply call `onClick()`, or it may be a NOOP = No Operation
+* A bad design would *force* you to implement both of these things even if you didn't want to...
+* INstead: all interfaces should be as small as possible (most are 1 or 2 or 3 at most methods)
+
+## D = Dependency Inversion Principle
+
+* High-level modules (classes) should not depend on low-level modules
+* Ex:
+  * You write code that connects to a (Free) MySQL database with very-specific MySQL methods, etc.
+  * Now you've grown as a company and need to migrate to MSSQL
+  * Throw away all DB code and connect to the MSSQL server: rewrite EVERYTHING
+  * Vendor lock: the cost of switching is greater than the cost of staying with the current vendor
+  * Instead: you should have written generic code for an *interface* that each one of the databases *implements*
+
+* Without Inversion:
+
+```java
+if(Library A) {
+  return new Location(GPSLocator.getLatitude(), GPSLocator.getLongitude());
+} else if(Library B) {
+  AndroidLocation l =  AndroidNative.getLocation();
+  return new Location(l.getLatitude(), l.getLongitude());  
+} else if(Library C) {
+   return new Location(Utils.radiansToDegrees(CellTowerGPS.getLatitudeRad()),
+    Utils.radiansToDegrees(CellTowerGPS.getLongitudeRad()));
+}
+```
+
+* "Inverted"
+
+```java
+
+public interface Locator {
+
+  public Location getLocation();
+
+}
+
+
+public AndroidLocator implements Locator {
+
+
+  public Location getLocation() {
+    AndroidLocation l =  AndroidNative.getLocation();
+    return new Location(l.getLatitude(), l.getLongitude());  
+
+  }
+
+}
+
+
+//client code: doesn't care about the type of Locator
+Locator l = new AndroidLocator();
+Location = l.getLocation();
+
+```
+
+* "Inverting" a dependency means creating an interface between the "highlevel" object/class/thing and the low-level library that `implements` it
+* In general, you should prefer *loose coupling* so that software components can easily be interchanged
+
+* https://williamdurand.fr/2013/07/30/from-stupid-to-solid-code/#premature-optimization
 ```text
+
+
+
+
+
+
+
 
 
 

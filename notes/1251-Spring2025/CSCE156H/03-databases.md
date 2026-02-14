@@ -15,7 +15,7 @@
 * Data is repeated unnecessarily
 * Consistency issues: data anomalies
 * Integrity issues: different ways of representing missing or non-existant data
-* There is no enforcmeent of rules: if you expected a `double` (GPA) there is nothing stopping you from entering "hello"
+* There is no enforcment of rules: if you expected a `double` (GPA) there is nothing stopping you from entering "hello"
 * Organization problems: not sorted
 * There is no security
 * Formatting issues
