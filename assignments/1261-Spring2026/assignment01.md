@@ -338,7 +338,6 @@ Test Case(s) (15)
 Bonus/Honors Items (10 each)
 
  *  Both XML and JSON formats are used
- *  Test Case submitted 1 week prior to due date
-   * All test case files (csv and xml or json) must be handed in through the webhandin
-     inside your JAR file as specified.  They must all be well-formatted and **may not
-     be copies of ours**
+ *  Test Case submitted 1 week prior to due date.  To receive this bonus, all test case files (csv and xml or json)
+    must be handed in through the webhandin inside your JAR file as specified.  They must all
+    be well-formatted and **may not be copies of ours**.
