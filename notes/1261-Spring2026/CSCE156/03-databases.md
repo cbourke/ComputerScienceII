@@ -89,6 +89,17 @@ insert into game (name,publisherId) values
 
 ```
 
+### Observations
+
+* If you `update` or `delete` without a `where` clause: it may affect *every* record in the table!
+  * Generally SAFE MODE will save you from this
+  * Later on: in Java when we connect to the database, there is NO safe mode
+* If you have a parent/child table then:
+  * The parent must exist before you can create any child records
+  * The child(ren) records must be deleted before the parent record can be deleted
+  * Parent: one, child: many in a one-to-many relationship
+  * The child has the FK = Foreign Key
+
 # Retrieve = `select`
 
 * You use the `select` keyword but it has MANY modifiers
@@ -108,6 +119,91 @@ select name,gameId from game;
 
 # you can limit the number of records:
 select * from game limit 5;
+```
+
+## More basics
+
+```sql
+use `cbourke3`;
+
+
+select * from game where name >= 'Portal';
+-- the percent sign is a wildcard that matches one or more characters
+select * from game where name like 'G%';
+select * from game where name like '%a%';
+-- you can also match single cahracters using _
+select * from game where name like '_o%';
+
+-- ordering
+-- asc is the default
+select * from game order by name desc;
+select * from game order by publisherId asc, name desc;
+
+-- distinct will only give you unique elements:
+select distinct publisherId from game;
+
+
+use `cbourke3`;
+
+select * from publisher
+  join game on publisher.publisherId = game.publisherId;
+
+select *
+  from publisher p
+  join game g
+  on p.publisherId = g.publisherId;
+
+select *
+  from publisher p
+  left join game g
+  on p.publisherId = g.publisherId;  
+
+-- how many games has each publisher published?
+select p.name as publisherName, count(g.gameId) as numberOfTitles from publisher p
+  left join game g on p.publisherId = g.publisherId
+  group by p.publisherId;
+
+
+# 07. List all games and all systems that they are available on
+
+select * from publisher p
+  join game g on p.publisherId = g.publisherId
+  join availability a on g.gameId = a.gameId
+  join platform plat on a.platformId = plat.platformId;
+
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId;
+
+# 08. List all games that are not available on any system
+
+select * from game g
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+  where plat.platformId is null;
+
+# 09. List the oldest game(s) and its platform(s)
+
+select g.name, a.publishYear from game g
+  join availability a on g.gameId = a.gameId
+  where a.publishYear = (select min(publishYear) from availability);
+
+# 10. Flatten the entire data model by returning all data on all games
+
+select * from publisher p
+  left join game g on p.publisherId = g.publisherId
+  left join availability a on g.gameId = a.gameId
+  left join platform plat on a.platformId = plat.platformId
+union
+select * from publisher p
+  right join game g on p.publisherId = g.publisherId
+  right join availability a on g.gameId = a.gameId
+  right join platform plat on a.platformId = plat.platformId;
+
+
+
+
 ```
 
 ```text
