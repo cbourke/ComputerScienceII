@@ -33,6 +33,7 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 - Lab 10.0 - JDBC II https://github.com/cbourke/CSCE156-Lab10
 - Lab 11.0 - Linked Lists https://github.com/cbourke/CSCE156-Lab11
 - Lab 12.0 - Recursion https://github.com/cbourke/CSCE156-Lab12
+- Lab - PDC Connection Pooling https://github.com/cbourke/PDCPooling
 - Lab 13.0 - Sorting https://github.com/cbourke/CSCE156-Lab13
 - Lab 14.0 - Stacks & Queues https://github.com/cbourke/CSCE156-Lab14
 - Lab 15.0 - Binary Search Trees https://github.com/cbourke/CSCE156-Lab15
