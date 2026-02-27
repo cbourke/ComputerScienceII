@@ -201,10 +201,69 @@ select * from publisher p
   right join availability a on g.gameId = a.gameId
   right join platform plat on a.platformId = plat.platformId;
 
+```
 
+## Designing & Implementing a Database
+
+* Create a database to model the asset java classes/problem (Asset, Savings, Stock, Person (owner), Email(s) of a person, etc.)
+
+```sql
+use `cbourke3`;
+
+-- My Assets database
+-- Chris bourke
+-- date
+-- other author stuff
+
+drop table if exists Email;
+drop table if exists Person;
+
+-- represents a person
+create table if not exists Person (
+  personId int not null primary key auto_increment,
+  uuid varchar(36) not null unique key,
+  lastName varchar(255) not null,
+  firstName varchar(255)
+);
+
+-- represnt an email
+create table if not exists Email (
+  emailId int not null primary key auto_increment,
+  address varchar(255) not null,
+  personId int not null,
+  foreign key (personId) references Person(personId)
+);
+
+insert into Person (personId,uuid,lastName,firstName) values
+  (1, 'b5abdbbb-cb12-4b77-871e-ea018da6dc9b', 'Bourke', 'Chris'),
+  (2, '8b1726a1-e672-4496-8e70-647ab1f0ee17', 'Bourke', 'Jeff'),
+  (3, '62466e21-39d7-4268-afe4-b724bc17a251', 'Smith', 'John');
+
+-- TODO: insert email records...
 
 
 ```
+
+### Observations
+
+* Sematics dictate design: for every "real world" entity, you are likely to have a table
+* Style observations:
+  * Be consistent in your naming conventions
+  * Avoid verbs, use nouns
+  * Avoid abbreviations, do not pluralize table names
+  * Modern convention: `UpperCamelCasing` for tables
+  * Modern convention: `lowerCamelCasing` for columns
+* All tables should have a PK = Primary Key
+  * it should be an integer (NOT a `double` or `varchar`)
+  * Use naming: `tableName` + `Id`
+  * All of them should be: `int not null primary key auto_increment`
+* Foreign Keys (FKs) should have the same name as the PK they reference
+  * Sometimes you have to violate this
+* Define `unique key`s to ensure uniqueness on other columns
+  * `unique` ensures that column values are unique
+  * `key` makes sure they are indexed: they can be searched very efficiently
+  * PKs = surrogate keys that are generated and managed by the database
+  * Other keys may be "natural" keys: SSN, NNUID, UUIDs, etc: they are NOT managed by the database we still want them
 
 ```text
 
