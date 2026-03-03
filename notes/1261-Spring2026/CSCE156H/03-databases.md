@@ -405,6 +405,66 @@ create table if not exists Ownership (
 
 ```
 
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* They build on each other: you cannot have a higher normal form without having ALL lower normal forms
+* First Normal Form: "each attribute in a table only has atomic values"
+  * Each column only represents ONE piece of data, ONE value
+  * Violation: storing multiple pieces of data as a single CSV string: `email1,email2,email3`
+  * Violation: multiple columns to support multiple values: 3 columns for 3 emails: `primaryEmail`, `secondaryEmail`, `tertiaryEmail`
+  * Be sure to separate data out into separate tables as necessary
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Using a PK auto-generated, not null gets you 2-NF automatically!
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * If the PK is a combination of `customerId/storeId` the `storeAddress` is only dependent on the second part
+  * It is often useful and necessary to define combination keys, but *keep them secondary*!
+  * You split everything out into its own table
+* Third Normal form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+  * Example: suppose we store `numberOfShares` and `sharePrice` *as well as* `value = numberOfShares * sharePrice` (we store all three of these in the same table)
+  * The `value` is transitively dependent on the two other columns (`numberOfShares, sharePrice`): violation of 3NF
+  * We *don't* store the `value` or "total" of any computed columns, instead we *recompute* them when necessary (in a query or in our code)
+  * It gives a failure point: it introduces a possible data anomaly (if one value changes then the other value(s) may need to do so as well)
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is a lot more that we don't cover
+  * DBA = DataBase Administrator
+  * Triggers: event-based actions in a database
+  * Views: read-only "tables" in a database
+  * Transaction: an atomic operation on a database that supports the ACID principles
+    * Atomicity - every transaction is an all-or-nothing thing
+    * Consistency - before and after every transaction, the database is in a *consistent* state (all rules/constraints are enforced)
+    * Isolation - transactions do not interfere with each other
+    * Durability - even after a catastrophic failure, the database will return to a consistent state
+  * Temp tables: temporary tables that can be created within a transaction to make data processing easier
+  * Stored Procedures: functions you can define with reusable SQL code that you can treat like a function
+  * Loops, variables (cursors), etc.
+
+## Programmatically Connecting to a Database & Processing Data
+
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download the Connector/J jar file and include it in your project: <https://dev.mysql.com/downloads/connector/j/>
+
+## Overview
+
+* Goal: programmatically connect to a database and process or persist (save) data
+* Most languages have some support for *database connectivity*
+* Perfect illustration of *Dependency Inversion*
+  * Don't program toward a specific database, but a generic interface
+  * If we did: we write 10,000 LoC that connect ONLY to a MySQL database
+  * Suppose we want to switch: Postgres; we'd have to rewrite all 10k LoC
+  * Instead: we don't program toward a particular database, but to an interface
+  * Vendors (Oracle, IBM, etc.) then provide a *driver* that *implements* that interface
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+
+
 
 ```text
 

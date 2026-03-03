@@ -207,14 +207,85 @@ select * from publisher p
 
 * Create a database to model the asset java classes/problem (Asset, Savings, Stock, Person (owner), Email(s) of a person, etc.)
 
+### Observations
+
+* Sematics dictate design: for every "real world" entity, you are likely to have a table
+* Style observations:
+  * Be consistent in your naming conventions
+  * Avoid verbs, use nouns
+  * Avoid abbreviations, do not pluralize table names
+  * Modern convention: `UpperCamelCasing` for tables
+  * Modern convention: `lowerCamelCasing` for columns
+* All tables should have a PK = Primary Key
+  * it should be an integer (NOT a `double` or `varchar`)
+  * Use naming: `tableName` + `Id`
+  * All of them should be: `int not null primary key auto_increment`
+* Foreign Keys (FKs) should have the same name as the PK they reference
+  * Sometimes you have to violate this
+* Define `unique key`s to ensure uniqueness on other columns
+  * `unique` ensures that column values are unique
+  * `key` makes sure they are indexed: they can be searched very efficiently
+  * PKs = surrogate keys that are generated and managed by the database
+  * Other keys may be "natural" keys: SSN, NNUID, UUIDs, etc: they are NOT managed by the database we still want them
+* Compound Keys
+  * You can make a key that involves two or more columns
+  * Ex: want the *combination* of `assetId,personId` to be unique
+* Check Constraints
+  * Allows you to place limits on the data that is in the database
+  * Ex: you can make it so that a column is not allowed to be negative
+
+### Final Database Design
+
 ```sql
+
+```
+
+## Normalization
+
+* 1-NF, 2-NF, 3-NF
+* They build on each other: you cannot have a higher normal form without having ALL lower normal forms
+* First Normal Form: "each attribute in a table only has atomic values"
+  * Each column only represents ONE piece of data, ONE value
+  * Violation: storing multiple pieces of data as a single CSV string: `email1,email2,email3`
+  * Violation: multiple columns to support multiple values: 3 columns for 3 emails: `primaryEmail`, `secondaryEmail`, `tertiaryEmail`
+  * Be sure to separate data out into separate tables as necessary
+* Second normal form: it has to be 1-NF: no non-prime attribute is dependent on a proper subset of prime attributes
+  * Using a PK auto-generated, not null gets you 2-NF automatically!
+  * Violation: a purchase record that contains `customerId, storeId, storeAddress`
+  * If the PK is a combination of `customerId/storeId` the `storeAddress` is only dependent on
+  * It is often useful and necessary to define combination keys, but *keep them secondary*!
+  * You split everything out into its own table
+* Third Normal form: has to be 2-NF (and transitively 1-NF)
+  * No non-prime column is transitively dependent on the key
+  * Example: store `termsYears, monthlyPayment` for an annuity, but *also* I store the `value = termsYears * monthlyPayment * 12`
+  * THe `total` is transitively dependent on the other two values so **we do not store it**
+  * Storing data that is dependent on other data is *wrong*: because it quickly may become out of sync with the other data
+  * Instead: transitively dependent data should be *recomputed* (in a query or in a program)
+* Every non-key attribute must provide a fact about the key (1NF), the whole key (2NF) and nothing but the key (3NF) so help you Codd
+
+## Misc
+
+* There is a LOT more
+  * DBA = DataBase Administrator
+  * Triggers: event-based actions in a database
+  * Views: read-only "tables" in a database
+  * Transaction: an atomic operation on a database that supports the ACID principles
+    * Atomicity
+    * Consistency
+    * Isolation
+    * Durability
+
+```sql
+
 use `cbourke3`;
 
--- My Assets database
--- Chris bourke
--- date
--- other author stuff
 
+-- My Assets database
+-- Chris Bourke
+-- 2026-02-27
+
+drop table if exists Ownership;
+drop table if exists Asset;
 drop table if exists Email;
 drop table if exists Person;
 
@@ -239,31 +310,82 @@ insert into Person (personId,uuid,lastName,firstName) values
   (2, '8b1726a1-e672-4496-8e70-647ab1f0ee17', 'Bourke', 'Jeff'),
   (3, '62466e21-39d7-4268-afe4-b724bc17a251', 'Smith', 'John');
 
--- TODO: insert email records...
+insert into Email (emailId, address, personId) values (1, 'rallington0@cbsnews.com', 1);
+insert into Email (emailId, address, personId) values (2, 'mroddan1@delicious.com', 1);
+insert into Email (emailId, address, personId) values (3, 'ccubbin2@printfriendly.com', 2);
 
+-- select the data
+select * from Person p
+  left join Email e on p.personId = e.personId;
+-- report how many emails for each person
+select p.personId, count(e.emailId) from Person p
+  left join Email e on p.personId = e.personId
+  group by p.personId;
 
+create table if not exists Asset (
+  assetId int not null primary key auto_increment,
+  type varchar(1) not null, -- 'S' = Stock, 'A' = Savings Account
+  name varchar(255) not null,
+
+  -- stock assets:
+  stockSymbol varchar(255),
+  sharePrice double,
+
+  -- savings accounts:
+  interestRate double
+);  
+
+insert into Asset (assetId,type,name,stockSymbol,sharePrice) values
+  (1,'S', 'Microsoft Stock', 'MSFT',200),
+  (2,'S', 'Google', 'GOOG',250);
+
+insert into Asset (assetId,type,name,interestRate) values
+  (3,'A','Mega Savings', .035),
+  (4,'A','CD', .0275);
+
+create table if not exists Ownership(
+  ownershipId int not null primary key auto_increment,
+  accountNumber varchar(255) not null unique key,
+  assetId int not null,
+  personId int not null,
+  -- stocks:
+  numberOfShares double,
+  -- savings accounts:
+  balance double,
+  foreign key (assetId) references Asset(assetId),
+  foreign key (personId) references Person(personId),
+  unique key (assetId,personId),
+  constraint `nonNegativeShares` check (numberOfShares >= 0)
+);
+
+-- 100 shares of Microsoft stock
+insert into Ownership (accountNumber,assetId,personId,numberOfShares) values ('ABCD',1,1,200);  
+insert into Ownership (accountNumber,assetId,personId,numberOfShares) values ('ABCE',2,1,100);  
+
+select *, sharePrice * numberOfShares as value from Asset a
+  join Ownership o on a.assetId = o.assetId
+  join Person p on o.personId = p.personId;
 ```
 
-### Observations
+## Programmatically Connecting to a Database & Processing Data
 
-* Sematics dictate design: for every "real world" entity, you are likely to have a table
-* Style observations:
-  * Be consistent in your naming conventions
-  * Avoid verbs, use nouns
-  * Avoid abbreviations, do not pluralize table names
-  * Modern convention: `UpperCamelCasing` for tables
-  * Modern convention: `lowerCamelCasing` for columns
-* All tables should have a PK = Primary Key
-  * it should be an integer (NOT a `double` or `varchar`)
-  * Use naming: `tableName` + `Id`
-  * All of them should be: `int not null primary key auto_increment`
-* Foreign Keys (FKs) should have the same name as the PK they reference
-  * Sometimes you have to violate this
-* Define `unique key`s to ensure uniqueness on other columns
-  * `unique` ensures that column values are unique
-  * `key` makes sure they are indexed: they can be searched very efficiently
-  * PKs = surrogate keys that are generated and managed by the database
-  * Other keys may be "natural" keys: SSN, NNUID, UUIDs, etc: they are NOT managed by the database we still want them
+* Every language has some sort of framework to connect to a database and process (insert/delete/update/select) data
+* In Java we'll use JDBC = Java Database Connectivity API (Application Programmer Interface)
+* Getting Started:
+  * Download the Connector/J jar file and include it in your project: <https://dev.mysql.com/downloads/connector/j/>
+
+## Overview
+
+* Goal: programmatically connect to MySQL/MariaDB/Postgres database and process (persist/load) data
+* Perfect illustration of *Dependency Inversion*
+  * You don't program toward a particular database
+  * You program toward an *interface* (JDBC)
+  * Then each database vendor (Oracle, Postgrese, IBM, etc.) each publish their own "driver" (JAR file) that *implements* that interface
+* JDBC provides:
+  * `Connection`
+  * `PreparedStatement`
+  * `ResultSet`
+
 
 ```text
 
