@@ -464,6 +464,70 @@ create table if not exists Ownership (
   * `PreparedStatement`
   * `ResultSet`
 
+## Process
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
+
+### Observations
+
+* When executing a `PreparedStatement`:
+  * Use `executeQuery()` if you expect a `ResultSet`
+  * Use `executeUpdate()` if you are inserting/deleting/updating data in the database
+* You should do basic data validation: records that already exist (ex)
+* If doing multiple inserts (emails): only use ONE prepared statement (over and over), don't close/reopen unnecessarily
+* If you need generated key values back from an insert statement, use
+`Statement.RETURN_GENERATED_KEYS` and `ps.getGeneratedKeys();` to retrieve them
+
+## Best Practices
+
+### Avoid the star operator
+
+* Example: don't do `select * from Person` in JDBC
+* This sends ALL data over the wire (network) even if you don't use it or want it
+* It makes it brittle to database changes: suppose someone adds a BLOB column (image for the person)
+* Be more intentional: only select the columns you are actually going to use so that you are not sending redundant or useless data over the network
+
+### Security Issues
+
+* For this course (only) are we storing the password in a Java source file
+* This is unfortunately common
+* For this course: it is okay
+* Advanced solution: setting up a "data source"
+* Firewall everything BUT trusted servers (network admins)
+
+### Close Your Resources!
+
+* Failure to close resources: `ResultSet`s, `PreparedStatement`s and `Connection`s: you will eventually run out of connections
+* Make sure you do it in the proper order: generally in reverse order than what you opened them in
+* Don't close a resource until you are done using
+* It can be very difficult to track down which piece of code is not closing a resource!
+
+### Dealing with `SQLExceptions`
+
+* Unfortunately: JDBC is quite "mature" and so it uses old-school style *checked exceptions*: ones that you are forced to surround with a `try-catch` and deal with
+* Best practice: catch and release: `catch` the exception and rethrow it as a `RuntimeException` (catch and release)
+
+### Always Use `PreparedStatements`
+
+* In general, strings can contain anything including unsanitized SQL code
+* If you use `PreparedStatement`s then you are generally safe from that!
+* `PreparedStatement`s in Java *sanitize* the inputs for you, ensuring that no SQL injection is possible
+
+### Proper Logging
+
+* No one is sitting at your terminal watching for standard output error messages, ready to jump into action
+* NEVER ever use the standard output to log error messages, information, debug statements, etc. in a real system
+* Instead: use a proper logging system
+* Features:
+  * Supports multiple levels of logging: `DEBUG, INFO, WARN, ERROR`
+  * You can configure it to printout certain levels or above/below a certain level
+  * Supports file-based, email-based, database-based logging: it doesn't necessarily go to the standard output, but can be redirected to (say) log files
+  * Handles/maintains the files: you can place "daily rolling limits" or file size-based limits etc.
 
 
 ```text

@@ -164,21 +164,19 @@ Documentation (5)
 
 Design (25)
 
-  *  Classes are implemented and utilized properly
-  *  Classes are well-designed
-  *  Proper use of Encapsulation
-    *  Related functionality and data are properly grouped in associated classes
-    *  Each member field has an appropriate type
-    *  Each class properly models the entity it represents
-    *  Constructors are appropriately defined and used
-    *  Accessor (and maybe mutator) methods are properly implemented
-  *  Proper use of Abstraction
-    *  Classes have non-trivial methods and are not just data containers
-    *  Use of a class does not require knowledge of its internal state
-  *  Proper use of Inheritance
-    *  Hierarchy of inheritance makes sense, not over-engineered
-  *  Proper use of Polymorphism
-    *  At least 1 instance of polymorphic behavior
+* Classes are implemented and utilized properly
+* Classes are well-designed
+* Proper use of Encapsulation
+  * Related functionality and data are properly grouped in associated classes
+  * Each member field has an appropriate type
+  * Each class properly models the entity it represents
+  * Constructors are appropriately defined and used
+  * Accessor (and maybe mutator) methods are properly implemented
+* Proper use of Abstraction
+  * Classes have non-trivial methods and are not just data containers
+  * Use of a class does not require knowledge of its internal state
+* Design principles are adhered to including:
+  * Single Responsibility Principle
 
 Correctness (50)
 

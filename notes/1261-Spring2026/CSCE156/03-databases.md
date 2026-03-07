@@ -380,11 +380,22 @@ select *, sharePrice * numberOfShares as value from Asset a
 * Perfect illustration of *Dependency Inversion*
   * You don't program toward a particular database
   * You program toward an *interface* (JDBC)
-  * Then each database vendor (Oracle, Postgrese, IBM, etc.) each publish their own "driver" (JAR file) that *implements* that interface
+  * Then each database vendor (Oracle, Postgres, IBM, etc.) each publish their own "driver" (JAR file) that *implements* that interface
 * JDBC provides:
   * `Connection`
   * `PreparedStatement`
   * `ResultSet`
+
+## Process
+
+1. Create a connection to your database: need user name, password, URL
+2. Create/prepare your query
+  - prepare the query
+  - execute the query
+3. Process your results
+4. Clean up your resources
+
+## Observations
 
 
 ```text
