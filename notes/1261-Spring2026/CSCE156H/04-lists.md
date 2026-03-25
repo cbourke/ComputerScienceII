@@ -34,6 +34,66 @@ Solution: design and implement a dynamic list data structure
 * Implement the interface
 * Update design, tests, implementation as you go along
 
+## Secondary Functionality
+
+* Other methods/functionality might be useful:
+  * Bulk add/remove methods: `addAll()` `removeAll()`
+  * Sort?!
+  * Append a list, insert or merge entire lists
+  * `subList(i,j)`: return a new list from `i` (inclusive) to `j` (exclusive)
+  * Copy constructor: makes deep copies of the list
+  * Add to start/end
+  * Functionality to shrink the array if too much space is wasted
+
+## Improvements
+
+* What is `IntegerArrayList` good for?  Only integers >:(
+* What is `MyArrayList<T>` good for? EVERYTHING! :)
+
+# Linked Lists
+
+* No underlying array, instead elements are stored inside of individual "nodes"
+* Each node contains:
+  * An element, and
+  * a reference to the "next" node
+* It works by linking one node to the next node in a *chain*
+* The first node is the "head" of the list
+* The last node is the "tail" of the list
+* There is no array
+  * There is no random access: to get the `i`-th element requires *traversing* the list
+* Basic operation:
+  * Traversing the list node by node starting at the head
+
+## Variations
+
+* You can add support for a *tail* element and a *previous* reference and make a "doubly linked list"
+  * Advantage: you can traverse both directions
+  * Disadvantage: twice as complex to implement
+* Circularly linked list the tail points back to the head
+  * You can use this for any circular data structures
+  * Token ring network (example)
+* Unrolled linked lists: each node may contain an *array* of elements instead of just one
+  * $m$ can be tuned to be at most one page size in memory
+  * Potential for improvements in performance
+  * Skip Lists: linked list but with *some* random access (keep track of several nexts) (local train vs express trains)
+
+# Stacks
+
+* Stacks are *restricted access data structures*
+* Collections (lists, sets, etc.) are "unstructured": they just hold stuff
+* YOu can *impose* a structure on (say) lists by sorting them: you rearrange the list so that they are "in order"; that's imposed on the data structure's *state*
+* Alternative: create structure through an object/data structure's *behavior*: its publicly available interface (public methods)
+* A stack does this by restricting how you interface with it:
+* Basic operations:
+  * `push` add an element to the "top" of the stack
+  * `pop` remove (and return) the top element of the stack
+* Stacks are a LIFO = Last-In First-Out data structure
+* You are *generally* not allowed to arbitrarily insert elements anywhere you want
+* Implementation: how?
+
+# Queues
+
+
 ```text
 
 
