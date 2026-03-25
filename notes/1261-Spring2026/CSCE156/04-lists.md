@@ -34,6 +34,35 @@ Solution: design and implement a dynamic list data structure
 * Implement the interface
 * Update design, tests, implementation as you go along
 
+## Secondary Functionality
+
+* Other methods/functionality might be useful:
+  * Bulk add/remove methods (`addAll(), clear()`)
+  * Find element, contains element
+  * Copy constructor: allows you to create a *deep* copy of your list
+  * Add to the beginning/end of the list
+  * Add functionality to "shrink" the list if it is "too big"
+  * `subList(i, j)`: a method to return a new list that is a sublist from `i` to `j` (inclusive/exclusive)
+
+## Improvements
+
+* What is `MyIntegerArrayList` good for?  Only integers :(
+* What is `MyArrayList<T>` good for? EVERYTHING! :)
+
+# Linked Lists
+
+* No underlying array, instead elements are stored inside of individual "nodes"
+* Each node contains:
+  * An element, and
+  * a reference to the "next" node
+* It works by linking one node to the next node in a *chain*
+* The first node is the "head" of the list
+* The last node is the "tail" of the list
+* There is no array!
+  * Consequence: there is no random access
+  * Getting to the `i`-th element costs you `i` operations
+
+## Design, Implementation and Testing
 
 ```text
 
