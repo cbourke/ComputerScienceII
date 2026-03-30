@@ -90,9 +90,41 @@ Solution: design and implement a dynamic list data structure
 * Stacks are a LIFO = Last-In First-Out data structure
 * You are *generally* not allowed to arbitrarily insert elements anywhere you want
 * Implementation: how?
+* NOT inheritance: a stack is not a list!
+* Instead: use *composition*
+
+## Secondary Functionality
+
+* A method to determine the size
+* A method to "peek" at the top element: return the top element but do not remove it
 
 # Queues
 
+* A "queue" is a line: FIFO = First in First Out
+* Its a line:  you get in line at the back, the next person helped is the person at the front
+* Two operations:
+  * `enqueue`: add an element to the end of the queue
+  * `dequeue`: remove/return the element at the front of the queue
+* Other considerations:
+  * What happens when you `dequeue` from an empty queue? Throw exception, return dummy value, etc.
+  * What happens when you `enqueue` into a "full" queue
+
+# Variations
+
+* YOu *could* support arbitrary removal (line leavers)
+* You could allow arbitrary insertions: priority (VIPs, line jumpers)
+* Priority Queue: allows you to define "priorities" and insert elements at a location such that the elements are served highest priority first
+* You could support (both for queues and stacks): a limited capacity
+* You could support two operations at one end, one operation at the other
+
+## In Practice
+
+* You don't roll your own implementation unless you have to
+* Lists: `List<>`, `ArrayList<>`, `LinkedList<>`
+* Stacks and QUeues in Java?
+  * Yes, there is an implentation: `Deque<>` (pronounced "deck")
+  * It can be treated as *either* a stack or queue or "double ended" queue: you can work from both ends (add/remove from both ends)
+* Both `LinkedList<>` and `ArrayDeque<>` are implementations of a `Deque<>`: they are both efficient
 
 ```text
 
