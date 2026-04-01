@@ -57,7 +57,64 @@ $$t(n) = 0.00064101n^2 -0.11168n + 9.7822$$
 
 * Linear Search: given a collection of elements $A = \{a_1, a_2, \ldots, a_3\}$ and a key element $k$, determine if $k \in A$ ($k$ is in the collection $A$)
 
+## Algorithm Analysis
 
+1. Identify the input
+2. Identify the input size, $n$
+3. Identify the *elementary operation*
+4. Determine how many times the elementary operation is executed with respect to the input size
+5. Provide a Big-O analysis
+
+### Identifying the Input
+
+* Generally this is given as part of the pseudocode
+* In some cases: it is less clear
+* Example: What if you have multiple inputs?
+  * Keep things simple: focus only on one
+  * You choose the most relevant or the input that has the biggest impact on the performance of the algorithm.
+  * Ex: linear search: the size of the collection influences the for-loop performance far greater than the single key
+  * Ex: Euclid's GCD algorithm: the input is two integers, WLOG = Without Loss of Generality, focus on the larger of the two, assume that $a \geq b$ and then focus on $a$
+
+### Identify the Input Size
+
+* Subtle but important and may be tricky!
+* Obvious: collection (list, array, set, map, etc.): the size of the input is the number of elements in the collection (cardinality)
+* Matrix: $n \times m$
+  * WLOG: assume that $n \geq m$ and so $n\cdot m \leq n^2$ (focus on $n$)
+  * WLOG: set $N = m\cdot n$ and then $N$ is  your input size
+* Input is a single number: $x$
+  * What is the "Size" of a single number?
+  * The size is the number of symbols required to represent that number: base 10 or base 2
+  * Mathematically: the size of a number is the magnitude of the number
+  * The number of bits required to represent a number is $\log_2{(n)}$ but as self respecting Computer Scientists we just write $\log{(n)}$
+
+### Elementary Operation
+
+* Ultimately: we want to focus on ONE operation to analyze
+* We want a *simple* analysis
+* Most of time: choose the  
+  * Most common
+  * Most expensive
+  * Most relevant
+* Generally, we do NOT consider any operation necessary for the control structure of the algorithm
+* Examples:
+  * Comparisons (searching or sorting algorithms)
+  * Arithmetic operations: additions/substractions or mults/divisions
+  * Linked list operations: node traversals (similar for graph and tree operations)
+
+### Analysis
+
+* Analyze how many times the elementary operation is executed with respect to the input size, $n$
+* You come up with a *resource function* ($t$ is for time):
+  $$t: \mathbb{N} \rightarrow \mathbb{R}^+$$
+  * $\mathbb{N}$: captures the input size
+  * Input sizes are NOT negative
+  * Input sizes are not fractional
+  * $\mathbb{R}^+$ (`\mathbb{R}^+`) is our codomain because we do not want to consider "negative" resources (no such thing as time travel!)
+* We really only consider monotone increasing functions, ie NOT $\frac{1}{n}$ or $\sin{n}$
+* It may require some art, some summations or other calculations, finding closed forms solutions or even super advanced math
+* There is no clear guideline: everything is going to be slightly different
+* You should generally focus on the *worst case* scenario
 
 
 

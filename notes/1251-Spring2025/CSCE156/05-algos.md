@@ -95,7 +95,7 @@ $$t(n) = 0.00064101n^2 -0.11168n + 9.7822$$
   * Arithmetic Operations: additions/subtractions, multiplications/divisions
   * LInked list operations: node traversal (similar for graph algorithms)
 
-### 5. Analysis
+### Analysis
 
 * Analyze how many times the elementary operation is executed with respect to the input size, $n$
 * You come up with a *resource function* ($t$ is for time):
