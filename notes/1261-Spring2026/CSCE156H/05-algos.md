@@ -116,9 +116,124 @@ $$t(n) = 0.00064101n^2 -0.11168n + 9.7822$$
 * There is no clear guideline: everything is going to be slightly different
 * You should generally focus on the *worst case* scenario
 
+#### Examples
+
+* Linked List demo: developed a table and created a summation and solved for it (Gauss's): $\frac{n(n-1)}{2}$
+* Linear Search: look at best/worst/average case, worst case: $n$ comparisons: $n$ comparisons
+* Selection Sort: setup a summation and solved it: $\frac{n(n-1)}{2}$
+* Binary Search (iterative version): we formulated a table and solved for how many rows/iterations the algorithm would execute (in the worst case): $\log{(n)}$
+* Insertion Sort: we had to reason about the best case and the worst case because the inner while loop did not have a direct summation
+  * Best case: $(n-1)$
+  * Worst case: each iteration of the while loop required $i-1$ comparisons, summed up, $\frac{n(n-1)}{2}$
+
+# Asymptotics
+
+* Step 5: Provide an asymptotic characterization of the complexity function
+* Motivation: want to characterize an algorithm's performance/efficiency with respect to the input size $n$
+* We're interested in how the algorithm performs as the input size $n$ grows larger: $n \rightarrow \infty$
+* Everything performs well for "small" inputs
+* We want a tool that will allow us to focus on:
+  * The growth rate of the algorithm
+  * Ignore constants and lower order terms
+* Tool: Big-O analysis
+
+### Definition
+
+Definition: let $f(n)$ and $g(n)$ be two functions (for our purposes, they represent the complexity of two algorithms, $A, B$).  We say that $f(n)$ is Big-O of $g(n)$ if there is a positive constant $c$ and an integer $n_0$ such that
+  $$f(n) \leq c g(n)$$
+for all $n \geq n_0$
+
+* We write: $f(n) = O(g(n))$ (Its better to write $f(n) \in O(g(n))$)
+* Big-O characterizes the *relative rate of growth* of two functions as $n \rightarrow \infty$
+* $f(n)$ has a less than or equal to rate of growth as $g(n)$
+* $g(n)$'s growth rate is *at least* as big as that of $f(n)$
+* They could have the *same* rate of growth: it is only a relative measure (We use $\Theta$)
+* Examples:
+  * $3n + 3 = O(n)$ (tightest possible bound)
+  * $3n + 3 = O(n^2)$ (also true! but not as "tight" of a bound!)
+  * $3n + 3 = O(n^3)$
+  * $3n + 3 = O(2^n)$
+  * $3n+3 \neq O(\log{n})$
+  * $n^2 \neq O(n)$
+* Big-O analysis provides an *upper bound* on the rate of growth of a function
+* It is not necessarily a *tight bound* (it can be)
+
+## Proofs
+
+* Given two functions: $f(n)$ and $g(n)$ how do you prove that $f(n) = O(g(n))$
+* Write out the functions: posit a guess
+* Ex: $100n^2 + 50n$ vs $n^3$
+  * Guess: $100n^2 + 50n = O(n^3)$
+* Two techniques:
+  * Approach A: find a "cross over point": the largest value of $n$ for which the two functions intersect (have the same value)
+  * After that point, the second function will always be "bigger" than the first.  Ie you are finding $n_0$ for the definition
+  * You are fixing $c = 1$ (or something) and then finding the $n_0$: the largest/biggest point where the two functions intersect (find roots)
+* Technique B:
+  * Simply setup an inequality and make your function bigger and bigger until it matches $g(n)$
+  * You are fixing an $n_0$ (and possibly changing it) and then finding a $c$
+  * You set up an inequality and simply make it bigger and bigger until it matches $cg(n)$
+  * This is the *much* easier technique: all you have to do is make it bigger
+  * Be careful: the inequalities *must* hold for all specific $n$ values
+* Technique C: you set up a limit
+  * Requires some calculus
+  * Setup a limit!
+
+* Categories of functions:
+  * Constants: $O(1)$  (formula calculations)
+  * Logarithmic: $O(\log{n})$ (binary search)
+  * Linear: $O(n)$ (linear search)
+  * Quasilinear:
+  * Quadratic: $O(n^2)$ (selection sort, insertion sort, bad linked list iteration)
+  * Cubic: $O(n^3)$ (matrix operations, matrix multipliation)
+  * Polynomial: $O(n^k)$ (for constant $k$)
+  * Exponential $O(2^n)$ (not all exponentials are created equally, $2^n = O(3^n)$ but not the other way!)
+  * Superexponentials: $O(n!)$
+
+## Analysis of Recursive Algorithms
+
+### Analysis
+
+1. You define a *recursive* function that captures the idea of "work" or the elementary operation
+2. You setup a recursion: you capture the notion of "recursive" work: how many calls to the function do you make and how big is the input size for each call?
+3. You "solve" the recursion
+
+### Merge Sort
+
+* Basic Idea:
+  * Split the array into two roughly equal parts
+  * ... until you have an array of size $\leq 1$
+  * As you return from the recursion, you Merge the two sorted arrays together
+* Using the MT, we know that Merge Sort has a guaranteed complexity of $O(n\log{n})$
+
+### Quick Sort
+
+* Basic Idea:
+  * Choose a pivot element (say the first element)
+  * Partition around that pivot element, items less than $p$ go to the left, items greater than or equal to $p$ go right
+  * Recusively sort both left and right partitions
+  * Until the partition is sized 1 or empty
+* In the best/average case, it is  $O(n\log{n})$
+* In the worst case (not likely) it is $O(n^2)$
+
+### Review of Sorting Algorithms
+
+* Selection Sort: $O(n^2)$, terrible time
+* Insertion Sort: $O(n^2)$, but in practice was kinda good (better than selection sort) on *small* arrays
+* Quick Sort: worst case $O(n^2)$ (but that's extremely unlikely), in average/best: $O(n\log{n})$
+* Merge Sort: guaranteed running time of $O(n\log{n})$ (it "requires" additional space/memory)
+* Tim Sort (from python, Tim Peters)
+* Hybrid Sorting:
+  * On "small" inputs a "slow" algorithm may be ironically faster
+  * If the input is small: use insertion sort
+  * If the input is large: use merge sort
+  
 
 
 ```text
+
+
+
+
 
 
 

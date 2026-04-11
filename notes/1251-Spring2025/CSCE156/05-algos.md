@@ -113,7 +113,7 @@ $$t(n) = 0.00064101n^2 -0.11168n + 9.7822$$
 * Linear Search: look at best/worst/average case, worst case: $n$ comparisons: $n$ comparisons
 * Binary Search (iterative version): we formulated a table and solved for how many rows/iterations the algorithm would execute (in the worst case): $\log{(n)}$
 * Selection Sort: setup a summation and solved it: $\frac{n(n-1)}{2}$
-* Insertion Sort: we had to reason about the best case adn the worst case because the inner while loop did not have a direct summation
+* Insertion Sort: we had to reason about the best case and the worst case because the inner while loop did not have a direct summation
   * Best case: $(n-1)$
   * Worst case: each iteration of the while loop required $i-1$ comparisons, summed up, $\frac{n(n-1)}{2}$
 
@@ -152,6 +152,7 @@ for all $n \geq n_0$
 ### Proofs
 
 * Given two functions: $f(n)$ and $g(n)$ how do you prove that $f(n) = O(g(n))$
+* Ex: $100n^2 + n$ vs $n^3$
 * First step: write out your intuition
 * Two techniques:
   * Approach A: find a "cross over point": the largest value of $n$ for which the two functions intersect (have the same value)
