@@ -160,6 +160,7 @@ for all $n \geq n_0$
 ### Proofs
 
 * Given two functions: $f(n)$ and $g(n)$ how do you prove that $f(n) = O(g(n))$
+* Ex: $100n^2 + n$ vs $n^3$
 * First step: write out your intuition
 * Two techniques:
   * Approach A: find a "cross over point": the largest value of $n$ for which the two functions intersect (have the same value)
