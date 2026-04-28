@@ -1,46 +1,46 @@
 
 # Trees & Tree-Based Data Structures
-## CSCE 156H - Computer Science II
+## CSCE 156 - Computer Science II
 ### Spring 2026
 
 ## Introduction
 
 * Data *structures* are good because *structure* can be exploited for efficient operations
-* Motivation: want a data structure that supports **efficient**:
-   * CRUD
-   * Retrieval/search
-   * Insertion
-   * Deletion
+* Motivation: want a data structure that supports efficient:
+  * CRUD
+  * Retrieval/search
+  * Insertion
+  * Deletion
 * Linked Lists:
-  * Insert/delete at the head/tail in constant time: $O(1)$
+  * insert/delete at the head/tail is constant time: $O(1)$
   * Arbitrary insertion/index-based search: $O(n)$
 * Array-based lists:
   * Arbitrary index-based search: $O(1)$ (random access)
   * If sorted, we can exploit that structure using binary search $O(\log{n})$
   * Inserting/deleting from the start: $O(n)$
 * Stacks/Queues/Deques:
-  * ALL operations are *always* efficient
-  * This was only because they were *restricted access* data structure
+  * All operations were *always* efficient
+  * But this was only because they were *restricted access data structures*
   * All operations are $O(1)$ but we cannot do arbitrary CRUD
 * Ultimate goal: efficient operations for a *general purpose* collection data structure
 * Trees provide a *potential* for efficient operations!
 
 ## Trees
 
-* A *graph* is a collection of *nodes* (or vertices) and *edges* that connect nodes
-  * $G = (V,E)$, $V$ is the vertex set, $E$ is the edge set (a set of pairs)
-  * Generally we use $n$ to denote the number of vertices $|V| = n$
-  * We generally use $m$ to denote the number of edges, $|E| = m$
+* A *graph* is a collection of *nodes* (vertices) and *edges* that connect pairs of nodes
+  * Generally we use $n$ to denote the number of vertices
+  * Generally we use $m$ to denote the number of edges
   * Edges are *undirected*: $(a, b) = (b, a)$
-  * Observation: the maximum number of edges in a graph with $n$ nodes is: $m \leq {n\choose 2} = \frac{n(n-1)}{2} = O(n^2)$ (`{n\choose 2} `)
+  * Observation: what are the max number of edges you can draw in a graph?
+    * A: the maximum number of edges in a graph with $n$ nodes is $m \leq \frac{n(n-1)}{2} = O(n^2)$
+    * Generally graphs can be "dense" (quadratic)
 * A *tree* is a *connected*, *acyclic* graph (a graph with no cycles)
-  * Connected means: from any vertex/node you can get to any other vertex or node through some *path*
-  * Acyclic: there are no cycles (paths that start/end at the same vertex)
   * A *path* in a graph is a sequence of connected vertices
-  * The *length* of  path is the number of edges on it = number of vertices on it $- 1$
+  * The *length* of a path is the number of edges on it = the number of vertices/nodes minus 1
   * We will only consider *simple* paths: those that do not traverse an edges more than once
   * A *cycle* is a path that begins and ends at the same node
   * The *length* of a cycle is equal to the number of edges on it = the number of vertices/nodes on it
+  * It also has to be *connected*
   * A disconnected tree is called a "forest" (not going to consider these)
 
 ### Observations
@@ -54,51 +54,53 @@
 ### Orientation
 
 * Trees can be oriented top to bottom and left to right
-* The top is a single node called a *root*
+* A the top is a single node called the *root*
 * The nodes under another node are called *children*
 * The node above a node is its *parent*
 * Any node with zero children is called a *leaf*
 * There are parent-child relations (ancestors, descendants, grandchildren, grandparent)
 * More structure: suppose that each node is limited to at most 2 children (no child, 1 child, 2 children)
   * You can have a left and/or right child (oriented left-to-right)
-  * Neither
+  * Neither (leaf)
   * Left child, no right child
   * Right child, no left child
   * Both
-  * This is called a *binary tree*
+* This is called a *binary tree*
 * Terminology:
   * The *depth* of a node $u$ is the length of the unique path from the root to $u$
-  * The depth of the root node is 0
-  * The depth of the tree itself is the maximal depth of any node
+  * THe depth of the root node is 0
+  * The depth of the tree itself is the maximal depth of any node in the tree
 
 ### How can we exploit this structure?
 
-* Suppose you had a *full* binary tree: every node was present at every level/depth up until the maximal depth of the tree.
-* If we can develop a way to insert/retrieve/delete elements from a binary tree such that
-  * all operations are proportional to the depth *and*
-  * we can guarantee that the depth is "small": $O(\log{n})$
+* Suppose you have a *full* binary tree: every node is present up to a depth of $d$
+* If we can develop a way to insert/retrieve/delete elements from a binary tree such that:
+  * all operations are proportional to the depth of the tree AND
+  * The depth of the tree is limited or "small"
+  * Then all operations will be efficient
 * A "full" or nearly full binary tree has a guarantee on its depth: $d = O(\log{n})$ where $n$ is the number of nodes
-* Unfortunately, there are "skewed" trees where the depth is linear: $d = O(n)$
 
-### Traversals
+## Tree Traversals
 
-* To be viable data structures, we need to ensure that all the data in a binary tree is *accessible*
-* Not as clear as a linked list: up to two directions for each node!
-* We'll look at 4 general traversal strategies that ensure that you can visit/access each node
+* To be viable as a data structure, we need to ensure that all nodes are *reachable* by some algorithm
+* Need algorithms for systematically *traversing* a tree: visiting all nodes
 * Preorder traversal: root-left-right
-  * It uses a stack to keep track of subtrees/sub nodes that *still need to be processed*
-  * We'll always prefer to go left *then* right
-  * Simplest and easiest to implement
+  * Simplest and easiest implementation
 * Inorder traversal: left-root-right
-  * Binary Search Trees: provides a sorted order
+  * Binary Search Trees: provides a *sorted* order!
 * Postorder traversal: left-right-root
-  * Tree Deletion
-* BFS = Breadth First Search traversal
-  * Uses a queue, but otherwise nearly exact same code as preorder
-* Efficiency: each one is designed/intended to process *every* node
-  * Nodes are only processed ONCE
-  * Nodes may be visited up to three times, but only processed once
-  * As a consequence: all of them are $O(n)$
+  * Deleting a tree node-by-node (C/C++)
+* BFS: breadth first search
+* Each one has a stack/queue-based solution (ideal)
+  * Avoid recursion: it abuses the call stack
+* Each one has its own applications
+* Efficiency:
+  * Each one is dependent on the *size* of the tree
+  * Size of the tree is $n$ = number of nodes in the tree
+  * Even if you consider edges: $m = n-1 = O(n)$
+  * Each algorithm "processes" the node exactly once!  Then its $O(n)$
+  * Each edges is traversed at most 2 times: once from the parent to the child, again from the child to the parent $2n = O(n)$
+  * Node Traversal: each node is "traversed" at most 3 times: $3n = O(n)$
 * Original goal: to have efficient operations for search/retrieve and insert/delete
 
 ## Binary Search Trees
@@ -110,29 +112,38 @@
   * This property holds for *every* node
 * Simplification:
   * For purposes, all keys will be integers
-  * In Java all keys are `int` types: `hashCode()`
   * We will assume that all keys are *unique*: there is always a way to break ties (memory address, surrogate database key, etc.)
 
 ### Operations
 
-* CRUD
-  * Create: insert stuff into a BST
-  * Retrieve: search a BST
-  * Destroy: remove a node from a BST
-  * ALL OPERATIONS **MUST** preserve the BST property
-
 * Search:
+  * You start at the root
+  * You make a comparison and traverse either left or right...
+  * Until: you find what you are looking for OR
+  * Until you fall off the edge of the tree: unsuccessful search
+  * Observation: at most, $d+1$ comparisons are made
+  * Its definitely $O(d)$, but we have no guarantee on the depth.  Ideally: $d = O(\log{n})$, but in general it can be the case that $d = O(n)$
+
+* Insert:
   * You always start at the root
-  * You make a comparison and traverse either left or right depending on your key
-  * Until: you find what you are looking for
-  * OR until: you fall of the edge of a tree (unsuccessful search)
-  * Observation: at most $d+1 = O(d)$ key comparisons are made
-  * Recall that you can have "skewed" trees where $d = O(n)$ and so search could be inefficient, $O(n)$
-  * However, if it is "balanced" then $d = O(\log{n})$
+  * You do a basic search:
+    * If the element exists you could: throw an exception, noop = no operation, special return value (successful or not)
+    * If no such element is found: then you end up at a node with no child and you insert as a child (a new leaf) where the element *should* have been
+    * Insert as a new leaf node; taking care of the left/right child of the parent and the parent reference
 
 * Delete
-  * Step 1: Find the element (if no such element: noop or exception, etc.)
+  * Step 1: search for the node containing the key you want to delete  (if does not exist: noop, throw exception)
+  * Case 1: the node is a leaf:
+    * simply remove it
+    * Set it's parent's left/right child to `null`
+  * Case 2: if only once child
+    * simply promote that child
+    * take care: is it a left child or a right child
+  * Case 3: swap the key with the max value in the left-sub-tree (or min value in the right); delete the old max node
 
+* In practice:
+  * Java has a "balanced" binary search tree
+  * `TreeSet` or `SortedSet`
 
 ## Heaps
 
@@ -151,8 +162,8 @@
   * Add an element
   * This ends up being a *restricted access* data structure
 * Get and remove the minimum element
-  * Save off the root element to return it
-  * Replace the root with the "last" element (the element at the lowest level, all the way to the right)
+  * Save off the value for a return value
+  * Replace the root with the "last" element (the element at the lowest level, all the way to the right): this assumes we have "free" access to it
   * Heapfiy/fix the heap: swap the element with the minimum of is left/right child until a) the heap property is satisified or b) you reach a leaf node
   * $O(d) = O(\log{n})$ (this assumes that you have free or efficient access to the "last" node)
 * Add an element
@@ -161,23 +172,20 @@
   * Swap with a parent all the way up the tree until a) the heap property is satisfied or b) you reach the root
   * $O(d)$ comparisons are made; this is $O(\log{n})$ because of the fullness property!
   * But: this assumes you have "free" access to the "next" available slot
-* Implementation:
-  * Use a basic array
-  * Ignore index 0
-  * Each element stored at index $i$ has a left child at $2i$ and right child at $2i+1$, parent at $\lfloor\frac{i}{2}\rfloor$
-  * Random access means you can "walk" along the tree efficiently.
-  * Keeping track of the size $n$ means you have access to the last element (index: $n$) and the next available spot: index = $n+1$
-* Implementation?
-  * Check out Lab 15
 * Applications
   * Efficient priority queue
-    * Minimum (max priority) is always at the top; you can get and remove it $O(\log{n})$
-    * Enqueueing something is also $O(\log{n})$
   * Sorting
-    * Put stuff in, take stuff out, magically sorted!
-    * $O(n\log{(n)})$
+
 
 ```text
+
+
+
+
+
+
+
+
 
 
 
