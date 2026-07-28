@@ -26,12 +26,11 @@ class Config:
     # Canvas API configuration
     # "live" instance is at mynu.instructure.com/doc/api/live
     canvas_url       = "mynu.instructure.com"
-    canvas_api_key   = "29076~87XRhR7EV9z2xrGXFCTvzYz4wxPLfuCEfZzUahJhu4BcHUfJRJJ9aRfMThQHZvcf"
-    canvas_course_id = "13367" #155E Fall 2026
+    canvas_api_key   = ""
+    canvas_course_id = ""
 
-    # To use canvas groups for assigning grading, set the name
-    # of the group here.
-    grading_group_name = "Project Pairs"
+    # To use canvas groups, set the name of the group here.
+    grading_group_name = None
 
     # Server Handin Path - this needs to be an *absolute* path
     # since the script may run without the HOME enviro variable
