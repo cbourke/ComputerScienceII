@@ -16,12 +16,16 @@ from assignment import Assignment
 from person import Person
 from group import Group
 
+DEBUG = False
 CANVAS_HOST = config.canvas_url
 CANVAS_BASE_API_PATH = "/api/v1"
 DEFAULT_PARAMS = {
   "access_token": config.canvas_api_key,
   "per_page": 100
  }
+HTTP_HEADERS = {
+  "User-Agent": 'nunyabusiness 1.0',
+}
 
 def get_canvas_data(path, user_parameters=None):
     """
@@ -44,9 +48,11 @@ def get_canvas_data(path, user_parameters=None):
     path = f"{CANVAS_BASE_API_PATH}/{path}?{params}"
     connection = http.client.HTTPSConnection(CANVAS_HOST)
     while more_data:
-        connection.request("GET", path)
+        connection.request("GET", path, headers=HTTP_HEADERS)
         response = connection.getresponse()
         raw_data = response.read().decode()
+        if DEBUG:
+            print(f'raw_data = {raw_data}')
         new_data = json.loads(raw_data)
         if isinstance(new_data, dict):
             # API has returned a single json object instead of a list of objects
