@@ -124,7 +124,7 @@ nearest cent.
 
 Over the course of this semester you will iteratively design an
 application to support this business model. Development has been broken
-down into 6 phases:
+down into 7 phases:
 
 -   Phase I: Data Representation & Electronic Data Interchange (EDI) --
     in the first phase you will design and implement the objects that
