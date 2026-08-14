@@ -8,6 +8,7 @@ import json
 import re
 from urllib.parse import urlencode
 from urllib.parse import urlparse
+from urllib.parse import parse_qsl
 import requests
 
 from config import config
@@ -64,11 +65,14 @@ def get_canvas_data(path, user_parameters=None):
         link_header = headers["Link"]
         links = parse_header_links(link_header)
         if "next" in links:
-            # python 3.9+:
+            # formulate the new path based on the 'next' URL page (pagination)
             next_url = links['next']
             parsed_next_url = urlparse(next_url)
             path = parsed_next_url.path
-            #path = links['next'].removeprefix("https://canvas.unl.edu") + f"&{params}"
+            returned_params_dict = dict(parse_qsl(parsed_next_url.query))
+            param_dict = {**DEFAULT_PARAMS, **user_parameters, **returned_params_dict}
+            params = urlencode(param_dict)
+            path = f"{path}?{params}"
         else:
             more_data = False
     connection.close()
