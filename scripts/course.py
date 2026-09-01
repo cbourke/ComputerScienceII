@@ -138,7 +138,7 @@ class Course:
             grading_groups.sort(key=lambda x: x.members[0].name)
             n = len(groups)
             r += f'{grader.name} ({n} assigned)\n'
-            for g in groups:
+            for g in grading_groups:
                 r += str(g)
         return r
 
@@ -158,7 +158,7 @@ class Course:
             name_tokens = grader.name.split(',')
             grader_last_name = name_tokens[0].strip()
             grader_first_name = name_tokens[1].strip()
-            for g in groups:
+            for g in grading_groups:
                 name_tokens = g.members[0].name.split(",")
                 student_last_name = name_tokens[0].strip()
                 student_first_name = name_tokens[1].strip()
