@@ -10,7 +10,7 @@ the University of Nebraska-Lincoln.
 
 ## Textbook
 
-A (draft) of a textbook for this course is available here:  
+A textbook for this course is available here:  
 https://bitbucket.org/chrisbourke/computerscienceii/src/master/ComputerScienceTwo.pdf
 
 ## YouTube Channel
@@ -40,14 +40,19 @@ https://www.youtube.com/playlist?list=PL4IH6CVPpTZXOMCZRaFy_WRc-GvANOZfk
 
 ## Course Offerings
 
-### Spring 2026
+### Spring 2027
 
-- Course Link: https://canvas.unl.edu/courses/209758
-- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZVqOQ5sjIm6_fKOsCDXE1xe
+- Course Link: https://mynu.instructure.com/courses/61920
+- Lectures: https://www.youtube.com/playlist?list=PLLswM0Zr9g90
 
 <details>
 
 <summary>Archived Offerings</summary>
+
+### Spring 2026
+
+- Course Link: https://canvas.unl.edu/courses/209758
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZVqOQ5sjIm6_fKOsCDXE1xe
 
 ### Spring 2025
 

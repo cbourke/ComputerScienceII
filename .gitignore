@@ -49,5 +49,6 @@ resources/objectaid/archive
 scratch.md
 dev.md
 dev/
+archive/
 pull_data.py
 instructor*.md

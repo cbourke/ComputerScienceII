@@ -10,14 +10,17 @@ This subdirectory hosts documents specific to the honors section
 
 ### Spring 2026
 
-- Course Link: https://canvas.unl.edu/courses/209771
-- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWy2dXSnEX0Vk6S5dF7LWg3
+- Course Link: https://mynu.instructure.com/courses/61933
+- Lectures: https://www.youtube.com/playlist?list=PLPz6Vud7K020
 
 <details>
 
-https://canvas.unl.edu/courses/188557
-
 <summary>Archived Offerings</summary>
+
+### Spring 2026
+
+- Course Link: https://canvas.unl.edu/courses/209771
+- Lectures: https://www.youtube.com/playlist?list=PL4IH6CVPpTZWy2dXSnEX0Vk6S5dF7LWg3
 
 ### Spring 2025
 
